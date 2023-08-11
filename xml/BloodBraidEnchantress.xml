@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="RayneForest">
+ <DesignGoal>a</DesignGoal>
+
+     <Card>
+        <Name>Argothian Enchantress</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Thunderscape Familiar</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Bloodbraid Elf</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RG</Cost>
+    </Card>
+    <Card>
+        <Name>Ground Seal</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Exploration</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Life From the Loam</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Altar</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Words of War</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Bombardment</Name>
+        <Quantity>3</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Saproling Burst</Name>
+        <Quantity>3</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>4G</Cost>
+    </Card>
+    <Card>
+        <Name>Fecundity</Name>
+        <Quantity>3</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Enchantress's Presence</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Seismic Assault</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>RRR</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>10</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>9</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Taiga</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+
+</Decklist>

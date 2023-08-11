@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="PlumGoneBlock">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Faerie Squadron</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Stormscape familiar</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Nightscape familiar</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Rager</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Urborg Drake</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BU</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Scuta</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3B</Cost>
+    </Card>
+    <Card>
+        <Name>Doomsday Specter</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2BU</Cost>
+    </Card>
+    <Card>
+        <Name>Disrupt</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Evasive Action</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Addle</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Probe</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Repulse</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Recoil</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1BU</Cost>
+    </Card>
+    <Card>
+        <Name>Undermine</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>UUB</Cost>
+    </Card>
+    <Card>
+        <Name>Lobotomy</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2BU</Cost>
+    </Card>
+    <Card>
+        <Name>Spite</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>10</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>9</Quantity>
+	<Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Underground Sea</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

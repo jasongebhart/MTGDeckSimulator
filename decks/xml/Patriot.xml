@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="PatriotBlock">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Stormscape Apprentice</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Legionnaire</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>RW</Cost>
+    </Card>
+    <Card>
+        <Name>Emblazoned Golem</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Rakavolver</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Voice of All</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Lightning Angel</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1WRU</Cost>
+    </Card>
+    <Card>
+        <Name>Chromatic Sphere</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Orim's Chant</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Aura Blast</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Fire or Ice</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Jilt</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Lashknife Barrier</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Trenches</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1RW</Cost>
+    </Card>
+    <Card>
+        <Name>Order Chaos</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Rout</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3WW</Cost>
+    </Card>
+    <Card>
+        <Name>Prophetic Bolt</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>3RU</Cost>
+    </Card>
+    <Card>
+        <Name>Arid Mesa</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plateau</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Shivan Reef</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>5</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<?xml-stylesheet type="text/xsl" href="mtg.xsl"?>-->
+<Decklist Deck="Classic">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Birds of Paradise</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Ivory Tower</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Kird Ape</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Zuran Orb</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Tracker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Swords to Plowshares</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Juggernaut</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Lightning Bolt</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Erhnam Djinn</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Spirit Link</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Dragon Whelp</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RR</Cost>
+    </Card>
+    <Card>
+        <Name>Balance</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Armageddon</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Serra Angel</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>3WW</Cost>
+    </Card>
+    <Card>
+        <Name>Disenchant</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Shivan Dragon</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Pyroclasm</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Disintegrate</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XR</Cost>
+    </Card>
+    <Card>
+        <Name>Fireball</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XR</Cost>
+    </Card>
+    <Card>
+        <Name>Wrath of God</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>5</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Savannah</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plateau</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Taiga</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Undiscovered Paradise</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Arid Mesa</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Gemstone Mine</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+</Decklist>

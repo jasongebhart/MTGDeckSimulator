@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="BlackDread">
+ <DesignGoal>Leverage Stitcher</DesignGoal>
+     <Card>
+        <Name>Kitesail Freebooter</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+     <Card>
+        <Name>Barrier of Bones</Name>
+        <Quantity>0</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+        <Card>
+        <Name>Stitcher's Supplier</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Seekers' Squire</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+        <Card>
+        <Name>Mire Triton</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Orzhov Enforcer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+     <Card>
+        <Name>Dusk Legion Zealot</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+     <Card>
+        <Name>Priest of Forgotten Gods</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Plaguecrafter</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Isareth the Awakener</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BB</Cost>
+    </Card>
+        <Card>
+        <Name>Dread Shade</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BB</Cost>
+    </Card>
+    <Card>
+        <Name>Windgrace Acolyte</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>4B</Cost>
+    </Card>
+    <Card>
+        <Name>Lotleth Giant</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>6B</Cost>
+    </Card>  
+    <Card>
+        <Name>Necrotic Wound</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Walk the Plank</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>BB</Cost>
+    </Card>
+    <Card>
+        <Name>Cast Down</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>The Eldest Reborn</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>4B</Cost>
+    </Card> 
+    <Card>
+        <Name>Memorial to Folly</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>19</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

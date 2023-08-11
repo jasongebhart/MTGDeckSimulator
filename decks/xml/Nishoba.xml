@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Nishoba">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Llanowar Elves</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Birds of Paradise</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Fyndhorn Elves</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Kavu Titan</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Utopia Tree</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Thornscape Familiar</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>River Boa</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Albino Troll</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Monk Realist</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Lone Wolf</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Blastoderm</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Charging Troll</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2GW</Cost>
+    </Card>
+    <Card>
+        <Name>Oracle of Mul Daya</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Serra Angel</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3WW</Cost>
+    </Card>
+    <Card>
+        <Name>Baneslayer Angel</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3WW</Cost>
+    </Card>
+    <Card>
+        <Name>Sabertooth Nishoba</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4GW</Cost>
+    </Card>
+    <Card>
+        <Name>Rancor</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Mulch</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Swords To Plowshares</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Disenchant</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Pariah</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Armadillo Cloak</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1GW</Cost>
+    </Card>
+    <Card>
+        <Name>Kismet</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Might of Oaks</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Armageddon</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Wrath of God</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Rout</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3WW</Cost>
+    </Card>
+	<Card>
+        <Name>Cursed Scroll</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Savannah</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Windswept Heath</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Treetop Village</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

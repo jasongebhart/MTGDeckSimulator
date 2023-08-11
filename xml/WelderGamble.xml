@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Welder Gamble">
+  <DesignGoal>Goblin Welder</DesignGoal>
+    <Card>
+        <Name>Goblin Welder</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Anger</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Copper Gnomes</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>2</Cost>
+    </Card>    
+    <Card>
+        <Name>Combustible Gearhulk</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Sundering Titan</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>8</Cost>
+    </Card>
+    <Card>
+        <Name>Platinum Emperion</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>8</Cost>
+    </Card>
+    <Card>
+        <Name>Inkwell Leviathan</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>7UU</Cost>
+    </Card>
+        <Card>
+        <Name>Darksteel Colossus</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>11</Cost>
+    </Card>
+    <Card>
+        <Name>Shriekhorn</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+    	<Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Jeweled Amulet</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+    	<Cost>0</Cost>
+    </Card>    
+    <Card>
+        <Name>Madcap Experiment</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+    	<Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Scroll Rack</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+	    <Cost>2</Cost>
+    </Card> 
+    <Card>
+        <Name>Shield Sphere</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+	    <Cost>0</Cost>
+    </Card> 
+    <Card>
+        <Name>Faithless Looting</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+	    <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Trash for Treasure</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+	    <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>12</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Great Furnace</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Pendelhaven</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Field of Ruin</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>    
+    <Card>
+        <Name>Darksteel Citadel</Name>
+        <Quantity>0</Quantity>
+        <Type>Land</Type>
+    	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's Factory</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+    	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Inkmoth Nexus</Name>
+        <Quantity>0</Quantity>
+        <Type>Land</Type>
+    	<Cost>NA</Cost>
+    </Card>
+</Decklist>

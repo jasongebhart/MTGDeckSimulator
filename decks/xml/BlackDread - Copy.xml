@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="BlackDread">
+ <DesignGoal>Leverage Stitcher</DesignGoal>
+     <Card>
+        <Name>Llanowar Elves</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Glowspore Shaman</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>GB</Cost>
+    </Card>
+    <Card>
+        <Name>Stitcher's Supplier</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+     <Card>
+        <Name>Diregraf Ghoul</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Plaguecrafter</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Golgari Raiders</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Poison-tip Archer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2BG</Cost>
+    </Card>
+    <Card>
+        <Name>Ravenous Chupacabra</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2BB</Cost>
+    </Card>
+    <Card>
+        <Name>Golgari Findbroker</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>BBGG</Cost>
+    </Card> 
+    <Card>
+        <Name>Underrealm Lich</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3GB</Cost>
+    </Card>  
+    <Card>
+        <Name>Karn, Scion of Urza</Name>
+        <Quantity>1</Quantity>
+        <Type>Planeswalker</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Dead Weight</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Walk the Plank</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>BB</Cost>
+    </Card>
+    <Card>
+        <Name>Murder</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1BB</Cost>
+    </Card>
+        <Card>
+        <Name>Status-Statue</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Find-Finality</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>4BG</Cost>
+    </Card>
+    <Card>
+        <Name>Vraska's Contempt</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2BB</Cost>
+    </Card>
+    <Card>
+        <Name>Cast Down</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1B</Cost>
+    </Card>
+     <Card>
+        <Name>Crucible of Worlds</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Liliana, Untouched by Death</Name>
+        <Quantity>1</Quantity>
+        <Type>Planeswalker</Type>
+        <Cost>2BB</Cost>
+    </Card> 
+        <Card>
+        <Name>Vraska, Relic Seeker</Name>
+        <Quantity>1</Quantity>
+        <Type>Planeswalker</Type>
+        <Cost>4BG</Cost>
+    </Card> 
+    <Card>
+        <Name>Memorial to Folly</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>11</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Overgrown Tomb</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Woodland Cemetery</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+        <Card>
+        <Name>Golgari Guildgate</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Foul Orchard</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+</Decklist>

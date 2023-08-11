@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+</style>
+<link rel="stylesheet" href="/assets/decks.css">
+<title>Deck Comparison</title>
+<script type="text/javascript" src="/scripts/alldecks.js"></script>
+</head>
+<body onload="startCompareDecks()">
+<div id="header">
+  <% include partials/nav.ejs %>
+</div>
+
+<div class="middle">
+	<table border="1" id="tblDeckList">
+		<tr>
+			<th colspan="9" class="style1 style1">All Decks</th>
+		</tr>
+		<tr style="font-size:24px">
+			<td>Deck Name</td>
+			<td>Cards</td>
+			<td>Total Cost</td>
+			<td>Lands</td>
+			<td>Creatures</td>
+			<td>Instants</td>
+			<td>Sorceries</td>
+			<td>Enchantments</td>
+			<td>Artifacts</td>
+		</tr>
+	</table>
+</div>
+
+	</body>
+</html>

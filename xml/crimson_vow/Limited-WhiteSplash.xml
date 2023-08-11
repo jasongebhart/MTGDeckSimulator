@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Crimsom Vow Limited White Splash">
+    <DesignGoal>...</DesignGoal>
+    <Card>
+        <Name>Ollenbock Escort</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Unholy Officiant</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Drogskol Infantry</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Parish-Blade Trainee</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Thalia, Guardian of Thraben</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Vampire Slayer</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Voice of the Blessed</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>WW</Cost>
+    </Card>
+    <Card>
+        <Name>Kindly Ancestor</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Heron of Hope</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Heron-Blessed Geist</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4W</Cost>
+    </Card>
+    <Card>
+        <Name>Angelic Quartermaster</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3WW</Cost>
+    </Card>
+    <Card>
+        <Name>Supernatural Rescue</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Piercing Light</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Adamant Will</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Circle of Confinement</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Sigarda's Imprisonment</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>16</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

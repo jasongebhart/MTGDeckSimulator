@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Oath">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Morphling</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Shard Phoenix</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Spike Feeder</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Abundance</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Aura of Silence</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Brainstorm</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Counterspell</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>UU</Cost>
+    </Card>
+    <Card>
+        <Name>Disrupt</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Enlightened Tutor</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Forbid</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1UU</Cost>
+    </Card>
+    <Card>
+        <Name>Force of Will</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Null Rod</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Gaea's Blessing</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Poweder Keg</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Ivory Mask</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchanment</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Oath of Druids</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Impulse</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Swords to Plowshares</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Sylvan Library</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Trade Routes</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Tundra</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Tropical Island</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Treetop Village</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Savannah</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Flood Plain</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Reflecting Pool</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Faerie Conclave</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Volcanic Island</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Wasteland</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Goblins">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Gempalm Incinerator</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Lackey</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Matron</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Piledriver</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Ringleader</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>3R</Cost>
+    </Card>
+	    <Card>
+        <Name>Goblin Warchief</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1RR</Cost>
+    </Card>
+	    <Card>
+        <Name>Mogg Fanatic</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Siege-Gang Commander</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>3RR</Cost>
+    </Card>
+    <Card>
+        <Name>Tin Street Hooligan</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Aether Vial</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Taiga</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Wasteland</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Wooded Foothills</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+   <Card>
+        <Name>Bloodstained Mire</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>5</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Rishadan Port</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Mantis Rider Pioneer">
+        <DesignGoal>Mantis Rider</DesignGoal>
+        <Card>
+                <Name>Thraben Inspector</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>W</Cost>
+        </Card>
+        <Card>
+                <Name>Venerable Knight</Name>
+                <Quantity>4</Quantity>
+                <Type>Creature</Type>
+                <Cost>W</Cost>
+        </Card>
+        <Card>
+                <Name>Usher of the Fallen</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>W</Cost>
+        </Card>
+        <Card>
+                <Name>Faeire Guidemother</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>W</Cost>
+        </Card>
+        <Card>
+                <Name>Monastery Swiftspear</Name>
+                <Quantity>3</Quantity>
+                <Type>Creature</Type>
+                <Cost>R</Cost>
+        </Card>
+        <Card>
+                <Name>Skly Terror</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>WR</Cost>
+        </Card>
+        <Card>
+                <Name>Ajani's Pridemate</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>1W</Cost>
+        </Card>
+        <Card>
+                <Name>Bomat Courier</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>1</Cost>
+        </Card>
+        <Card>
+                <Name>Chamber Sentry</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>X</Cost>
+        </Card>
+        <Card>
+                <Name>Mantis Rider</Name>
+                <Quantity>4</Quantity>
+                <Type>Creature</Type>
+                <Cost>URW</Cost>
+        </Card>
+        <Card>
+                <Name>Glorybringer</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>3RR</Cost>
+        </Card>
+        <Card>
+                <Name>Halvar, God Of Battle</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>2WW</Cost>
+        </Card>
+        <Card>
+                <Name>Adult Gold Dragon</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>3RW</Cost>
+        </Card>
+        <Card>
+                <Name>Legion's Landing</Name>
+                <Quantity>1</Quantity>
+                <Type>Enchantment</Type>
+                <Cost>W</Cost>
+        </Card>
+        <Card>
+                <Name>Defiant Strike</Name>
+                <Quantity>3</Quantity>
+                <Type>Instant</Type>
+                <Cost>W</Cost>
+        </Card>
+        <Card>
+                <Name>Shock</Name>
+                <Quantity>3</Quantity>
+                <Type>Instant</Type>
+                <Cost>R</Cost>
+        </Card>
+        <Card>
+                <Name>Samut's Sprint</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>R</Cost>
+        </Card>
+         <Card>
+                <Name>Lightning Strike</Name>
+                <Quantity>2</Quantity>
+                <Type>Instant</Type>
+                <Cost>1R</Cost>
+        </Card>
+         <Card>
+                <Name>Skewer the Critics</Name>
+                <Quantity>2</Quantity>
+                <Type>Instant</Type>
+                <Cost>2R</Cost>
+        </Card>
+        <Card>
+                <Name>Maul of The Skyclaves</Name>
+                <Quantity>1</Quantity>
+                <Type>Artifact</Type>
+                <Cost>2W</Cost>
+        </Card>
+        <Card>
+                <Name>Kaya's Onslaught</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>2W</Cost>
+        </Card>
+        <Card>
+                <Name>Warleader's Helix</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>2RW</Cost>
+        </Card>
+        <Card>
+                <Name>Showdown of the Skalds</Name>
+                <Quantity>1</Quantity>
+                <Type>Enchantment</Type>
+                <Cost>2RW</Cost>
+        </Card>
+        <Card>
+                <Name>The Akroan War</Name>
+                <Quantity>1</Quantity>
+                <Type>Enchantment</Type>
+                <Cost>3R</Cost>
+        </Card>
+         <Card>
+                <Name>Castle Ardenvale</Name>
+                <Quantity>2</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Plains</Name>
+                <Quantity>5</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Mystic Monastery</Name>
+                <Quantity>3</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+         <Card>
+                <Name>Mountain</Name>
+                <Quantity>3</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Island</Name>
+                <Quantity>4</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Needleverge Pathway</Name>
+                <Quantity>4</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Sacred Foundry</Name>
+                <Quantity>1</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Mutavault</Name>
+                <Quantity>1</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Steam Vents</Name>
+                <Quantity>0</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Hallowed Fountain</Name>
+                <Quantity>2</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+</Decklist>

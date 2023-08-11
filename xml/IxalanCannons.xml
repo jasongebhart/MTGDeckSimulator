@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Ixalan Cannons">
+ <DesignGoal>Vance's Blasting Cannons</DesignGoal>
+     <Card>
+        <Name>Rigging Runner</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Vicious Conquistador</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Deadeye Tracker</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Fathom Fleet Captain</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Dire Fleet Captain</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>BR</Cost>
+    </Card>    
+        <Card>
+        <Name>Fathom Fleet Firebrand</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Seekers' Squire</Name>
+        <Quantity>0</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card> 
+   <Card>
+        <Name>Ruin Raider</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card> 
+    <Card>
+        <Name>Captain Lannery Storm</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card> 
+    <Card>
+        <Name>Fiery Cannonade</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>2R</Cost>
+    </Card>  
+        <Card>
+        <Name>March of the Drowned</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>  
+   <Card>
+        <Name>Lightning Strike</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Repeating Barrage</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1RR</Cost>
+    </Card> 
+    <Card>
+        <Name>Elaborate Firecannon</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>      
+       <Card>
+        <Name>Fell Flagship</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>      
+   <Card>
+        <Name>Vance's Blasting Cannons</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3R</Cost>
+    </Card>     
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>11</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Dragonskull Summit</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+     <Card>
+        <Name>Mountain</Name>
+        <Quantity>9</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+     <Card>
+        <Name>Evolving Wilds</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>    
+</Decklist>

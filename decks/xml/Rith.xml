@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Rith">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Squee, Goblin Nabob</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Vine Dryad</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+        <Card>
+        <Name>Bloodbraid Elf</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RG</Cost>
+    </Card>
+    <Card>
+        <Name>Masticore</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Oracle of Mul Daya</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+       <Card>
+        <Name>Shivan Wurm</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3RG</Cost>
+    </Card>
+    <Card>
+        <Name>Baneslayer Angel</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3WW</Cost>
+    </Card>
+    <Card>
+        <Name>Dragonlord Atarka</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5RG</Cost>
+    </Card>
+    <Card>
+        <Name>Reya Dawnbringer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>6WWW</Cost>
+    </Card>
+   <Card>
+        <Name>Avenger of Zendikar</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5GG</Cost>
+    </Card>
+    <Card>
+        <Name>Life from the Loam</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Saproling Cluster</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Eladamri's Call</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>GW</Cost>
+    </Card>
+    <Card>
+        <Name>Vindicate</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1WB</Cost>
+    </Card>
+    <Card>
+        <Name>Recurring Nightmare</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Enduring Renewal</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Pyrokinesis</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>6</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Windswept Heath</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plateau</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Taiga</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Scrubland</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Savannah</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Arid Mesa</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Bloodstained Mire</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Verdant Catacombs</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's Factory</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+        <Card>
+        <Name>Mutavault</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="CharredDiscard">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Mogg Fanatic</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Thunderscape Familiar</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Suq'Ata Lancer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Ghitu Slinger</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Keldon Champion</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RR</Cost>
+    </Card>
+    <Card>
+        <Name>Avalanche Riders</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+	<Cost>3R</Cost>	
+    </Card>
+    <Card>
+        <Name>Shard Phoenix</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Soldevi Adnate</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Skulking Ghost</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Black Knight</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>BB</Cost>
+    </Card>
+    <Card>
+        <Name>Dauthi Marauder</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Abyssal Specter</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2BB</Cost>
+    </Card>
+    <Card>
+        <Name>Sengir Vampire</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Blazing Specter</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2BR</Cost>
+    </Card>
+    <Card>
+        <Name>Duress</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Funeral Charm</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+	    <Card>
+        <Name>Lightning Bolt</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Diabolic Edict</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Addle</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Stupor</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Yawgmoth's Agenda</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Terminate</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>BR</Cost>
+    </Card>
+    <Card>
+        <Name>Guerrilla Tactics</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Ghitu Fire</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XR</Cost>
+    </Card>
+    <Card>
+        <Name>Kaervek's Torch</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XR</Cost>
+    </Card>
+    <Card>
+        <Name>Pyrokinesis</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Fireblast</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>9</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Bloodstained Mire</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Badlands</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

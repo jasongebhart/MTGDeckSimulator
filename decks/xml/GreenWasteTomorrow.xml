@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="GreenWaste Tomorrow">
+    <DesignGoal>Keep opponent low on land so that most of their spells become useless.
+        Need to deal with Aether Vial and Goblin Lackey. Elves replaced Wild Growths to
+        give more resistance to the Goblin Lackey</DesignGoal>
+    <Card>
+        <Name>Haywire Mite</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Young Wolf</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Twinblade Slasher</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Ulvenwald Tracker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Noble Hierarch</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Stonecoil Serpent</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>X</Cost>
+    </Card>
+    <Card>
+        <Name>Bayou Groff</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Scavenging Ooze</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Steel Leaf Champion</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>GGG</Cost>
+    </Card>
+    <Card>
+        <Name>Questing Beast</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Rancor</Name>
+        <Quantity>3</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Fallow Earth</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Shadowspear</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Green Sun's Zenith</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>XG</Cost>
+    </Card>
+    <Card>
+        <Name>Green Sun's Twilight</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>XG</Cost>
+    </Card>
+    <Card>
+        <Name>Winter's Grasp</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Skysovereign, Consul Flagship</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Invoke the Ancients</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1GGGG</Cost>
+    </Card>
+    <Card>
+        <Name>Gaea's Cradle</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Khalni Garden</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Maze of Ith</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>17</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

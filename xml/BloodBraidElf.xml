@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="BloodBraidElf">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Mogg Fanatic</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+	<Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Birds of Paradise</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+	<Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Tinder Wall</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+	<Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Vine Trellis</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+	<Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Wall of Roots</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+	<Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Eternal Witness</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+	<Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Cunning Sparkmage</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+	<Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Kitchen Finks</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+		<Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Stampeding Wildebeests</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+	<Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Bloodbraid Elf</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+	<Cost>2RG</Cost>
+    </Card>
+    <Card>
+        <Name>Vengevine</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+	<Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Shard Phoenix</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+	<Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Shivan Wurm</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+	<Cost>3RG</Cost>
+    </Card>
+    <Card>
+        <Name>Shivan Dragon</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+	<Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Incinerate</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+	<Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Lightning Bolt</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+	<Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Survival of the Fittest</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+	<Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Stone Rain</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+	<Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Pillage</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+	<Cost>1RR</Cost>
+    </Card>
+    <Card>
+        <Name>Kyren Negotiations</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+	<Cost>2RR</Cost>
+    </Card>
+    <Card>
+        <Name>Creeping Mold</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+	<Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Fireblast</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+	<Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Pyrokinesis</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+	<Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>9</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Llanowar Reborn</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Taiga</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

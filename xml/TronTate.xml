@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Tron Tate">
+ <DesignGoal>m</DesignGoal>
+     <Card>
+        <Name>Barrier of bones</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>b</Cost>
+    </Card>
+    <Card>
+        <Name>Ulamog's crusher</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>8</Cost>
+    </Card>
+    <Card>
+        <Name>Thran temporal gateway</Name>
+        <Quantity>1</Quantity>
+        <Type>artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+     <Card>
+        <Name>Dark ritual</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Divest</Name>
+        <Quantity>4</Quantity>
+        <Type>sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Golgari thug</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1b</Cost>
+    </Card>
+    <Card>
+        <Name>Fulminator mage</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1bb</Cost>
+    </Card>
+    <Card>
+        <Name>Knight of malice</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Sparring construct</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1</Cost>
+    </Card> 
+    <Card>
+        <Name>Platinum emperion</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>8</Cost>
+    </Card>  
+    <Card>
+        <Name>Urza's mine</Name>
+        <Quantity>4</Quantity>
+        <Type>land</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Drill bit</Name>
+        <Quantity>1</Quantity>
+        <Type>sorcery</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Icy manipulator</Name>
+        <Quantity>2</Quantity>
+        <Type>artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card> 
+        <Name>Reanimate</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>b</Cost>
+    </Card>
+    <Card>
+        <Name>Entomb</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's helix</Name>
+        <Quantity>1</Quantity>
+        <Type>artifact</Type>
+        <Cost>1B</Cost>
+    </Card>
+     <Card>
+        <Name>Crucible of Worlds</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Kokusho, the Evening star</Name>
+        <Quantity>1</Quantity>
+        <Type>creature</Type>
+        <Cost>4BB</Cost>
+    </Card> 
+    <Card>
+        <Name>Artisan of kozilek</Name>
+        <Quantity>1</Quantity>
+        <Type>creature</Type>
+        <Cost>9</Cost>
+    </Card> 
+    <Card>
+        <Name>Urza's power plant</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's Factory</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Urza's tower</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Kozilek, butcher of truth</Name>
+        <Quantity>1</Quantity>
+        <Type>creature</Type>
+	    <Cost>10</Cost>
+    </Card>
+<Card>
+        <Name>Myr servitor</Name>
+        <Quantity>2</Quantity>
+        <Type>creature</Type>
+	<Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Dead weight</Name>
+        <Quantity>2</Quantity>
+        <Type>enchantment</Type>
+	<Cost>b</Cost>
+    </Card>
+    <Card>
+	 <Name>Wand of vertebrae</Name>
+        <Quantity>1</Quantity>
+        <Type>artifact</Type>
+	    <Cost>1</Cost>
+    </Card>
+    <Card>
+	<Name>Lotus petal</Name>
+        <Quantity>1</Quantity>
+        <Type>artifact</Type>
+	    <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Scroll rack</Name>
+        <Quantity>2</Quantity>
+        <Type>artifact</Type>
+	<Cost>2</Cost>
+    </Card>
+    <Card>
+	<Name>Dowsing dagger</Name>
+        <Quantity>1</Quantity>
+        <Type>artifact</Type>
+	<Cost>2</Cost>
+    </Card>
+    <Card>
+	<Name>Thespian's stage</Name>
+        <Quantity>1</Quantity>
+        <Type>land</Type>
+	 <Cost>na</Cost>
+    </Card>
+</Decklist>

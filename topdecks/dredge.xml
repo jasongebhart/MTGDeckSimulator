@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Dredge">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Cephalid Sage</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Flame-Kin Zealot</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1RRW</Cost>
+    </Card>
+    <Card>
+        <Name>Golgari Grave-Troll</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>4G</Cost>
+    </Card>
+    <Card>
+        <Name>Golgari Thug</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Ichorid</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>3B</Cost>
+    </Card>
+    <Card>
+        <Name>Narcomoeba</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Putrid Imp</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Stinkweed Imp</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Breakthrough</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XU</Cost>
+    </Card>
+    <Card>
+        <Name>Cabal Therapy</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Deep Analysis</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Bridge from Below</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>BBB</Cost>
+    </Card>
+    <Card>
+        <Name>Dread Return</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2BB</Cost>
+    </Card>
+    <Card>
+        <Name>Lion's Eye Diamond</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Cephalid Coliseum</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Underground River</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Underground Sea</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Watery Grave</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

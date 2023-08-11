@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Ixalan Cannons Red Blue">
+ <DesignGoal>x</DesignGoal>
+    <Card>
+        <Name>Siren Stormtamer</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Storm fleet Aerialist</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1U</Cost>
+    </Card>
+        <Card>
+        <Name>Raptor Hatchling</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Captain Lannery Storm</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Angrath's Marauders</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5RR</Cost>
+    </Card>     
+    <Card>
+        <Name>Lightning Strike</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Chart a Course</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Dowsing Dagger</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>    
+    <Card>
+        <Name>Opt</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+        <Card>
+        <Name>Repeating Barrage</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1RR</Cost>
+    </Card> 
+    <Card>
+        <Name>Treasure Map</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card> 
+    <Card>
+        <Name>Thaumatic Compass</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card> 
+    <Card>
+        <Name>Fiery Cannonade</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2R</Cost>
+    </Card> 
+    <Card>
+        <Name>Elaborate Firecannon</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+        <Card>
+        <Name>Search for Azcanta</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1U</Cost>
+    </Card>   
+    <Card>
+        <Name>Vance's Blasting Cannons</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>9</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>14</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+     <Card>
+        <Name>Evolving Wilds</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>          
+</Decklist>

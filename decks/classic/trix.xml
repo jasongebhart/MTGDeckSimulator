@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Trix">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Brainstorm</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Contagion</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Dark Ritual</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Demonic Consultation</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Donate</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Duress</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Force of Will</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Hoodwink</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Illusions of Grandeur</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Mana Vault</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Necropotence</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>BBB</Cost>
+    </Card>
+    <Card>
+        <Name>Vampiric Tutor</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>6</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Gemstone Mine</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Underground Sea</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Underground River</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+</Decklist>

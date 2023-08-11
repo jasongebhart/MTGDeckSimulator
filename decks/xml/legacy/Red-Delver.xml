@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Blue-Red Delver">
+    <DesignGoal>Delver</DesignGoal>
+    <Card>
+        <Name>Murktide Regent</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>5UU</Cost>
+    </Card>
+    <Card>
+        <Name>Delver Of Secrets</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Dragon's Rage Channeler</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Brazen Borrower</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1UU</Cost>
+    </Card>
+    <Card>
+        <Name>Brainstorm</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Daze</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Curate</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>UR</Cost>
+    </Card>
+    <Card>
+        <Name>Force Of Will</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Lightning Bolt</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Chain Lightning</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Ponder</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Force of Negation</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's Bauble</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Pyroblast</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Volcanic Island</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Wasteland</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Flooded Strand</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Polluted Delta</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Scalding Tarn</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Steam Vents</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mystic Sanctuary</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Misty Rainforest</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

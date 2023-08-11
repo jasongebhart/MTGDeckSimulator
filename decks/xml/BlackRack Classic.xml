@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="BlackRack">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Sengir Vampire</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Juggernaut</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Black knight</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>BB</Cost>
+    </Card>
+    <Card>
+        <Name>Dauthi Marauder</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Hypnotic Specter</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BB</Cost>
+    </Card>
+    <Card>
+        <Name>Sorceress Queen</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BB</Cost>
+    </Card>
+    <Card>
+        <Name>Dark Ritual</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Thoughtseize</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Duress</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Funeral Charm</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>The Rack</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Sword of Fire and Ice</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Hymn to tourach</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>BB</Cost>
+    </Card>
+    <Card>
+        <Name>Diabolic Edict</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Drain Life</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Choking Sands</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1BB</Cost>
+    </Card>
+    <Card>
+        <Name>Ashes to Ashes</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1BB</Cost>
+    </Card>
+    <Card>
+        <Name>Engineered Plague</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Grafted Skullcap</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>15</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Barren Moor</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

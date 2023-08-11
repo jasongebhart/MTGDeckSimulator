@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="BigRedMachine">
+  <DesignGoal>Leverage the mana producing artifacts to cast large creatures and powerful spells. </DesignGoal>
+    <Card>
+        <Name>Goblin Welder</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Bottle Gnomes</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Junk Diver</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Ticking Gnomes</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Rusting Golem</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Karn, Silver Golem</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Shard Phoenix</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Covetous Dragon</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Crater Hellion</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Shivan Hellkite</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5RR</Cost>
+    </Card>
+    <Card>
+        <Name>Lightning Bolt</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Pyroclasm</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Incinerate</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Disintegrate</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XR</Cost>
+    </Card>
+    <Card>
+        <Name>Obliterate</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>6RR</Cost>
+    </Card>
+    <Card>
+        <Name>Pyrokinesis</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Jeweled Amulet</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Temporal Aperture</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Worn Powerstone</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+	<Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Thran Dynamo</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+	<Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Nevinyrral's Disk</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+	<Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Mana Web</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Snake Basket</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Predator, Flagship</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Serrated Arrows</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Rejuvenation Chamber</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>13</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Blasted Landscape</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>City of Traitors</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's Factory</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

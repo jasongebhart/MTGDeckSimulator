@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Crimsom Vow Limited Black Green">
+    <DesignGoal>...</DesignGoal>
+    <Card>
+        <Name>Lantern Bearer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Toxic Scorpion</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Reclusive Taxidermist</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Weaver of Blossoms</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Hookhand Mariner</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Diver Skaab</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Infestation Expert</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4G</Cost>
+    </Card>
+    <Card>
+        <Name>Avabruck Caretaker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4GG</Cost>
+    </Card>
+    <Card>
+        <Name>Flourishing Hunter</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4GG</Cost>
+    </Card>
+    <Card>
+        <Name>Bramble Wurm</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>6G</Cost>
+    </Card>
+    <Card>
+        <Name>Hullbreaker Horror</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5UU</Cost>
+    </Card>
+    <Card>
+        <Name>Chill of the Grave</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Dormant Grove</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Massive Might</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>G</Cost>
+    </Card> 
+    <Card>
+        <Name>Alchemist's Retrieval</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Syncopate</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>XU</Cost>
+    </Card>
+    <Card>
+        <Name>Scattered Thoughts</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>9</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

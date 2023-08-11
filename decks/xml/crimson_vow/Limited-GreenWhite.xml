@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Crimsom Vow Limited White Green">
+    <DesignGoal>...</DesignGoal>
+    <Card>
+        <Name>Hopeful Initiate</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Traveling Minister</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Toxic Scorpion</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Dawnhart Disciple</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Dawnhart Geist</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Oakshade Stalker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Militia Rallier</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Weaver of Blossoms</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Faithbound Judge</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Hookhand Mariner</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Halana and Alena, Partners</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RG</Cost>
+    </Card>
+    <Card>
+        <Name>Ulvenwald Oddity</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Angelic Quartermaster</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3WW</Cost>
+    </Card>
+    <Card>
+        <Name>Cloaked Cadet</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4G</Cost>
+    </Card>
+    <Card>
+        <Name>Flourishing Hunter</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4GG</Cost>
+    </Card>
+    <Card>
+        <Name>Sheltering Boughs</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Nurturing Presence</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Fierce Retribution</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Sigarda's Imprisonment</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Nature's Embrace</Name>
+        <Quantity>0</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Spiked Ripsaw</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Dormant Grove</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

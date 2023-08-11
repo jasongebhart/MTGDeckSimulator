@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Creeping Chill">
+    <DesignGoal>Mill myself of cards and win with Thassa's Oracle or Creeping Chill</DesignGoal>
+    <Card>
+        <Name>stitcher's supplier</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>thassa's oracle</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>UU</Cost>
+    </Card>
+    <Card>
+        <Name>order of midnight</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>glowspore shaman</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>uro titan of nature's wrath</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>mire triton</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>liliana's reaver</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>diregraf ghoul</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>murderous rider</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>merfolk secretkeeper</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>narcomoeba</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>doom blade</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4G</Cost>
+    </Card>
+    <Card>
+        <Name>tamiyo collector of tales</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4W</Cost>
+    </Card>
+    <Card>
+        <Name>tymaret calls the death</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5GG</Cost>
+    </Card>
+    <Card>
+        <Name>the binding of the titans</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>lucky clover</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>creeping chill</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>liliana, untouched by death</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>breeding pool</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>temple of malady</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>overgrown tomb</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>temple of mystery</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>temple of diceit</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>watery grave</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>drowned catacombs</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>hinterland harbor</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>woodland cemetery</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>swamp</Name>
+        <Quantity>6</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>island</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

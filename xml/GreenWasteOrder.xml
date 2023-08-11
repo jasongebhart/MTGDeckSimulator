@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="GreenWaste Natural Order">
+ <DesignGoal>Keep opponent low on land so that most of their spells become useless. 
+ Need to deal with Aether Vial and Goblin Lackey. Elves replaced Wild Growths to 
+ give more resistance to the Goblin Lackey</DesignGoal>
+     <Card>
+        <Name>Noble Hierarch</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+     <Card>
+        <Name>Llanowar Elves</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+     <Card>
+        <Name>Young Wolf</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+     <Card>
+        <Name>Birds of Paradise</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Kitchen Finks</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Eternal Witness</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Oracle of Mul Daya</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Deus of Calamity</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>GGGGG</Cost>
+    </Card>
+    <Card>
+        <Name>Avenger Of Zendikar</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>5GG</Cost>
+    </Card>
+    <Card>
+        <Name>Pelakka Wurm</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4GGG</Cost>
+    </Card>
+    <Card>
+        <Name>Nature's Claim</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Naturalize</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Thermokarst</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Winter's Grasp</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Search for Tomorrow</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Fallow Earth</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Mwonvuli Acid-Moss</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Natural Order</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>16</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Khalni Garden</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Rishadan Port</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Maze of Ith</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Napoleon">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Armageddon</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Disenchant</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Disintegrate</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XR</Cost>
+    </Card>
+    <Card>
+     	<Name>Dragon Whelp</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RR</Cost>
+    </Card>
+    <Card>
+        <Name>Aura Blast</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Exploration</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Fires of yavimaya</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1GR</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Legionnaire</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>WR</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Trenches</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1WR</Cost>
+    </Card>
+    <Card>
+        <Name>Kird Ape</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Kavu titan</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Lightning bolt</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Meekstone</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Mirri's guile</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Pyroclasm</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Raging kavu</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1RG</Cost>
+    </Card>
+    <Card>
+        <Name>Rancor</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Rith's Charm</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>WGR</Cost>
+    </Card>
+    <Card>
+        <Name>Rith, the Awakener</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3WGR</Cost>
+    </Card>
+    <Card>
+        <Name>Serra angel</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>3WW</Cost>
+    </Card>
+    <Card>
+        <Name>Swords to plowshares</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Thornscape Battlemage</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Winter Orb</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Wrath of God</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Savannah</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Undiscovered paradise</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Taiga</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Rith's Grove</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plateau</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

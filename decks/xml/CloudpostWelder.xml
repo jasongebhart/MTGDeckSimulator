@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Cloudpost Welder">
+  <DesignGoal>Leverage Cloudpost lands </DesignGoal>
+    <Card>
+        <Name>Goblin Welder</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>   
+     <Card>
+        <Name>Lens Of Clarity</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+	<Cost>1</Cost>
+    </Card>  
+     <Card>
+        <Name>Ichor WellSpring</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+	<Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Solemn Simulacrum</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Wurmcoil Engine</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>6</Cost>
+    </Card>
+    <Card>
+        <Name>Kuldotha Phoenix</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RRR</Cost>
+    </Card>
+    <Card>
+        <Name>BatterSkull</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Sundering Titan</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>8</Cost>
+    </Card>
+    <Card>
+        <Name>Ulamog, the Infinite Gyre</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>11</Cost>
+    </Card>
+    <Card>
+        <Name>Blightsteel Colossus</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>11</Cost>
+    </Card>
+    <Card>
+        <Name>Kozilek, Butcher of Truth</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>10</Cost>
+    </Card>
+    <Card>
+        <Name>Shriekhorn</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+	<Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Tormenting Voice</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+	<Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Faithless Looting</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+	<Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Grim Monolith</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+	<Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Sneak Attack</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>11</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Cloudpost</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Glimmerpost</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>City of Traitors</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Ancient Tomb</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Buried Ruin</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Karakas</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

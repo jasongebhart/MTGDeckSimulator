@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Affinity">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Arcbound Ravager</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Arcbound Worker</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Disciple of the Vault</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Frogmite</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Meddling Mage</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>WU</Cost>
+    </Card>
+    <Card>
+        <Name>Myr Enforcer</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Somber Hoverguard</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>5U</Cost>
+    </Card>
+    <Card>
+        <Name>Aether Vial</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+	<Card>
+        <Name>Cranial Plating</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Chromatic Sphere</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Thoughtcast</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>4U</Cost>
+    </Card>
+    <Card>
+        <Name>Ancient Den</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>City of Brass</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Darksteel Citadel</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Glimmervoid</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Seat of the Synod</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Blinkmoth Nexus</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Vault of Whispers</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

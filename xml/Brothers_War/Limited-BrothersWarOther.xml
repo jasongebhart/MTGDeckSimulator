@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Limited Brothers War">
+    <DesignGoal>Limited Brother's War</DesignGoal>
+# Artifact 
+    <Card>
+        <Name>Mishra's Bauble</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Chromatic Star</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Energy Refractor</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Transmogrant Altar</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Pristine Talisman</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Transmogrant's Crown</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Aeronaut's Wings</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Thran Power Suit</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Staff of Domination</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Well of Lost Dreams</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    # Artifact ^
+    # Artifact Creature
+    <Card>
+        <Name>Combat Courier</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Mine Worker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Perennial Behemoth</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Scrapwork Rager</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Scrapwork Cohort</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Blitz Automaton</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Tocasia's Onulet</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Swiftgear Drake</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Depth Charge Colossus</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4UU</Cost>
+    </Card>
+    <Card>
+        <Name>Heavyweight Demolisher</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Argivian Avenger</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>6</Cost>
+    </Card>
+    # Artifact Creature ^
+# Black >
+    <Card>
+        <Name>Gnawing Vermin</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Kill-Zone Acrobat</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Gixian Skullflayer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Powerstone Fracture</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Moment Of Defiance</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Overwhelming Remorse</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>4B</Cost>
+    </Card>
+    <Card>
+        <Name>Disciples of Gix</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4BB</Cost>
+    </Card>
+    <Card>
+        <Name>Disfigure</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Transmogrant Altar</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Scrapwork Rager</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+# Black ^
+# Blue >
+<Card>
+    <Name>Fallaji Archaeologist</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature</Type>
+    <Cost>1U</Cost>
+</Card>
+<Card>
+    <Name>Lat-Nam Adept</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature</Type>
+    <Cost>3U</Cost>
+</Card>
+<Card>
+    <Name>Curate</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>1U</Cost>
+</Card>
+<Card>
+    <Name>Stern Lesson</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>2U</Cost>
+</Card>
+<Card>
+    <Name>Weakstone's Subjugation</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>U</Cost>
+</Card>
+<Card>
+    <Name>Take Flight</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>3U</Cost>
+</Card>
+<Card>
+    <Name>Desynchronize</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>4U</Cost>
+</Card>
+# Green ^
+# Green >
+<Card>
+    <Name>Argothian Sprite</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature</Type>
+    <Cost>1G</Cost>
+</Card>
+<Card>
+    <Name>Tomakul Honor Guard</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature</Type>
+    <Cost>1G</Cost>
+</Card>
+<Card>
+    <Name>Burrowing Razormaw</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature</Type>
+    <Cost>2G</Cost>
+</Card>
+<Card>
+    <Name>Perimeter Patrol</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature</Type>
+    <Cost>2G</Cost>
+</Card>
+<Card>
+    <Name>Fog of War</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>2G</Cost>
+</Card>
+<Card>
+    <Name>Epic Confrontation</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>1G</Cost>
+</Card>
+# Green ^
+# Red >
+    <Card>
+        <Name>Roc Hunter</Name>
+        <Quantity>0</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Fallaji Chaindancer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Sibling Rivalry</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Obliterating Bolt</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Visions of Phyrexia</Name>
+        <Quantity>0</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2RR</Cost>
+    </Card>
+    <Card>
+        <Name>Blitz Automaton</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Bitter Reunion</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1R</Cost>
+    </Card>
+# Red ^
+# White >
+    <Card>
+        <Name>Powerstone Engineer</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Survivor of Korlis</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Phalanx Vanguard</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Ambush Paratrooper</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Loran, Disciple of History</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Great Desert Prospector</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4W</Cost>
+    </Card>
+    <Card>
+        <Name>Myrel, Shield of Argive</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Loran's Escape</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Lay Down Arms</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Union of the Third Path</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Recommission</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+# White ^
+# Multi >
+    <Card>
+        <Name>Junkyard Genius</Name>
+        <Quantity>0</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BR</Cost>
+    </Card>
+    <Card>
+        <Name>Harbin, Vanguard Aviator</Name>
+        <Quantity>0</Quantity>
+        <Type>Creature</Type>
+        <Cost>WU</Cost>
+    </Card>
+# Multi ^
+
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Evolving Wilds</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    # Life Gain Package
+    <Card>
+        <Name>Lay Down Arms</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Mine Worker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Union of the Third Path</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Moment Of Defiance</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Pristine Talisman</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Staff of Domination</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Fog of War</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Well of Lost Dreams</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+</Decklist>

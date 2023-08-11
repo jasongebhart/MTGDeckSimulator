@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="GreenWaste Sakura">
+ <DesignGoal>Keep opponent low on land so that most of their spells become useless. 
+ Need to deal with Aether Vial and Goblin Lackey. Elves replaced Wild Growths to 
+ give more resistance to the Goblin Lackey</DesignGoal>
+     <Card>
+        <Name>Sakura-Tribe Elder</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Yavimaya Elder</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Argothian Wurm</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Blastoderm</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Acidic Slime</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3GG</Cost>
+    </Card>
+    <Card>
+        <Name>Avenger Of Zendikar</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>5GG</Cost>
+    </Card>
+    <Card>
+        <Name>Pelakka Wurm</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4GGG</Cost>
+    </Card>
+    <Card>
+        <Name>Cursed Scroll</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Nature's Lore</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Thermokarst</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Winter's Grasp</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1GG</Cost>
+    </Card>
+    <Card>
+        <Name>Fallow Earth</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Processor</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Predator, Flagship</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Plow Under</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3GG</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>15</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Khalni Garden</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Rishadan Port</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Mishra's Factory</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Desert</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Maze of Ith</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

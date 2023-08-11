@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="JunkDiver">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Flood</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Disrupt</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Snap</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Daze</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Counterspell</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>UU</Cost>
+    </Card>
+    <Card>
+        <Name>Propaganda</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Tinker</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Fact or Fiction</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Treachery</Name>
+        <Quantity>3</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Palinchron</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5UU</Cost>
+    </Card>
+    <Card>
+        <Name>Mahamoti Djinn</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4UU</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Walker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Cursed Totem</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Tsabo's Web</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Junk Diver</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Nevinyrral's Disk</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Monkey Cage</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Karn, Silver Golem</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Urza's Armor</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>6</Cost>
+    </Card>
+    <Card>
+        <Name>Teeka's Dragon</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>9</Cost>
+    </Card>
+    <Card>
+        <Name>Faerie Conclave</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Rath's Edge</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>City Of Traitors</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>17</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Crimsom Vow Limited Red Green">
+    <DesignGoal>Mantis Rider</DesignGoal>
+    <Card>
+        <Name>Snarling Wolf</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Voldaren Epicure</Name>
+        <Quantity>0</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Packsong Pup</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Apprentice Sharpshooter</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Kessig Flamebreather</Name>
+        <Quantity>0</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Voltaic Visionary</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Alluring Suitor</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Belligerent Guest</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Daybreak Combatants</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Creepy Puppeteer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Lambholt Raconteur</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Hookhand Mariner</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Rural Recruit</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Infestation Expert</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4G</Cost>
+    </Card>
+    <Card>
+        <Name>Abrade</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Sure Strike</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Lacerate Flesh</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Spiked Ripsaw</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Dormant Grove</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>9</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

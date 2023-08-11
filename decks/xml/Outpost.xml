@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Outpost">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Mother of Runes</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Savannah Lions</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Serra Zealot</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Soltari Foot Soldier</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Cho-Arrim Alchemist</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Soul Warden</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Soltari Monk</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>WW</Cost>
+    </Card>
+    <Card>
+        <Name>White Knight</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>WW</Cost>
+    </Card>
+    <Card>
+        <Name>Paladin en-Vec</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Soltari Visionary</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Preacher</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Blinking Spirit</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Swords to Plowshares</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Disenchant</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Crusade</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>WW</Cost>
+    </Card>
+    <Card>
+        <Name>Glorious Anthem</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Spirit Mirror</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Lashknife Barrier</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Orim's Prayer</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Exile</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Crackdown</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Empyrial Armor</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>20</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Kjeldoran Outpost</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

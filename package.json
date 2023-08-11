@@ -1,0 +1,17 @@
+{
+  "name": "mtg",
+  "version": "1.0.0",
+  "description": "Magic The Gathering Test Application",
+  "main": "startmtg.js",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.17.1",
+    "xml2json": "^0.11.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason Gebhart",
+  "license": "ISC"
+}

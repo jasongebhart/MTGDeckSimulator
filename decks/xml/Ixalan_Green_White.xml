@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Ixalan Green White">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Imperial Lancer</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Priest of the Wakening Sun</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Merfolk Branchwalker</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Drover of the Mighty</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card> 
+    <Card>
+        <Name>Wildgrowth Walker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>  
+    <Card>
+        <Name>Emissary of Sunrise</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2W</Cost>
+    </Card>  
+   <Card>
+        <Name>Territorial Hammerskull</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2W</Cost>
+    </Card>
+       <Card>
+        <Name>Ranging Raptors</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+   <Card>
+        <Name>Imperial Aerosaur</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3W</Cost>
+    </Card>
+   <Card>
+        <Name>Emperor's Vanguard</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card> 
+   <Card>
+        <Name>Ripjaw Raptor</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2GG</Cost>
+    </Card>   
+   <Card>
+        <Name>Snapping Sailback</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4G</Cost>
+    </Card>
+     <Card>
+        <Name>Sunrise Seeker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4W</Cost>
+    </Card>   
+     <Card>
+        <Name>Thundering Spineback</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5GG</Cost>
+    </Card>            
+    <Card>
+        <Name>Prying Blade</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Commune with Dinosaurs</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>G</Cost>
+    </Card>    
+    <Card>
+        <Name>Sheltering Light</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>    
+    <Card>
+        <Name>Savage Stomp</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2G</Cost>
+    </Card>   
+    <Card>
+        <Name>Pounce</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>1G</Cost>
+    </Card>       
+    <Card>
+        <Name>Ritual of Rejuvenation</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2W</Cost>
+    </Card> 
+    <Card>
+        <Name>Legion's Judgment</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Ixalan's Binding</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Pious Interdiction</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Slice in Twain</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2GG</Cost>
+    </Card> 
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>12</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>12</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Sunpetal Grove</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>      
+</Decklist>

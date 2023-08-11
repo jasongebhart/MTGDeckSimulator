@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="HighTide">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Palinchron</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5UU</Cost>
+    </Card>
+    <Card>
+        <Name>Arcane Denial</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Brainstorm</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Counterspell</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>UU</Cost>
+    </Card>
+    <Card>
+        <Name>Force of Will</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Frantic Search</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>High Tide</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Impulse</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Merchant Scroll</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Mystical Tutor</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Stroke of Genius</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>X2U</Cost>
+    </Card>
+    <Card>
+        <Name>Time Spiral</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>4UU</Cost>
+    </Card>
+    <Card>
+        <Name>Turnabout</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>2UU</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>16</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Thawing Glaciers</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Volcanic Island</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

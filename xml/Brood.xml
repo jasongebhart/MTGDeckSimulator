@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Brood">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Soul Warden</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Blood Pet</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Soldevi Adnate</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Ravenous Rats</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Broodlings</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BB</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Ghoul</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Academy Rector</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Duress</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Swords to Plowshares</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Seal Of Cleansing</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1W</Cost>
+    </Card>
+    <Card>
+        <Name>Story Circle</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Attrition</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1WW</Cost>
+    </Card>
+    <Card>
+        <Name>Grave Pact</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1BBB</Cost>
+    </Card>
+    <Card>
+        <Name>Breeding Pit</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2BB</Cost>
+    </Card>
+    <Card>
+        <Name>No Mercy</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2BB</Cost>
+    </Card>
+    <Card>
+        <Name>Spirit Mirror</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Living Death</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Reflecting Pool</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Scrubland</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+	</Card>
+    <Card>
+        <Name>Gemstone Mine</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forbidding Watchtower</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="KindofBlue">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Sage of Epityr</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Whirlpool Rider</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Rayne, Academy Chancellor</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Man-O'-War</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Temporal Adept</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1UU</Cost>
+    </Card>
+    <Card>
+        <Name>Somnophore</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2UU</Cost>
+    </Card>
+    <Card>
+        <Name>Palinchron</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>5UU</Cost>
+    </Card>
+    <Card>
+        <Name>Sleight of Mind</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>High Tide</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Tidal Bore</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Counterspell</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>UU</Cost>
+    </Card>
+    <Card>
+        <Name>Misstep</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Stasis</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Energy Field</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Tolarian Winds</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Overburden</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Twitch</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Exclude</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Rushing River</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Repulse</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Theft of Dreams</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Fact or Fiction</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Clone</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Control Magic</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2UU</Cost>
+    </Card>
+    <Card>
+        <Name>Treachery</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Force of Will</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's Factory</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Rishadan Port</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Desert</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>22</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

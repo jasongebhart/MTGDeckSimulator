@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Mulch and Loam">
+	<DesignGoal>Abuse the Mulch and Loam card drawing engine </DesignGoal>
+    <author></author>
+	<Card>
+        <Name>Ob Nixilis, the Fallen</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Dark Confidant</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Hedron Crab</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>U</Cost>
+    </Card>
+	<Card>
+        <Name>Raven's Crime</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+	<Card>
+        <Name>Leyline of The Void</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2BB</Cost>
+    </Card>
+    <Card>
+        <Name>Life From the Loam</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Exploration</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+	    <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Zuran Orb</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+	    <Cost>0</Cost>
+    </Card>
+	<Card>
+        <Name>Crucible of Worlds</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+	    <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Manabond</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+	    <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Island</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Misty Rainforest</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Verdant Catacombs</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+	<Card>
+        <Name>Evolving Wilds</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Wasteland</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Bayou</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Maze of Ith</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+	 <Card>
+        <Name>Underground Sea</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Horizon Canopy</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Tropical Island</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Cabal Pit</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+</Decklist>

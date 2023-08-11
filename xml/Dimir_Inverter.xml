@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Dimir Inverter">
+ <DesignGoal>Win game by drawing last card</DesignGoal>
+<Card>
+        <Name>Inverter of Truth</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2BB</Cost>
+</Card>
+<Card>
+        <Name>Thassa's Oracle</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>UU</Cost>
+</Card>
+<Card>
+        <Name>Jace, Wielder of Mysteries</Name>
+        <Quantity>3</Quantity>
+        <Type>Planeswalker</Type>
+        <Cost>1UUU</Cost>
+</Card>
+<Card>
+        <Name>Opt</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+</Card>
+<Card>
+        <Name>Thoughtseize</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+</Card>
+<Card>
+        <Name>Dig Through Time</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>6UU</Cost>
+</Card>
+<Card>
+        <Name>Fatal Push</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+</Card>
+<Card>
+        <Name>Censor</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+</Card>
+<Card>
+        <Name>Thought Erasure</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>UB</Cost>
+    </Card>
+<Card>
+        <Name>Drown in the Loch</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>UB</Cost>
+    </Card>
+<Card>
+        <Name>Omen of the Sea</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>6</Quantity>
+        <Type>Land</Type>
+	 <Cost>NA</Cost>
+    </Card> 
+    <Card>
+        <Name>Watery Grave</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	 <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Drowned Catacomb</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	 <Cost>NA</Cost>
+    </Card> 
+    <Card>
+        <Name>Choked Estuary</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	 <Cost>NA</Cost>
+    </Card> 
+    <Card>
+        <Name>Fetid Pools</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	 <Cost>NA</Cost>
+    </Card>  
+    <Card>
+        <Name>Fabled Passage</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	 <Cost>NA</Cost>
+    </Card>         
+</Decklist>
+ 

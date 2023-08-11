@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="RedPatrol">
+ <DesignGoal>a</DesignGoal>
+     <Card>
+        <Name>Goblin Lackey</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Akki Blizzard-Herder</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Mogg War Marshal</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Tuktuk the Explorer</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Sharpshooter</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Ball Lightning</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>RRR</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Ringleader</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Lightning Dragon</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RR</Cost>
+    </Card>
+    <Card>
+        <Name>Siege-Gang Commander</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3RR</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Grenade</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Lightning Bolt</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Aether Vial</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Meekstone</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Winter Orb</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Earthquake</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XR</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Bombardment</Name>
+        <Quantity>3</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Boggart Shenanigans</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>18</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Rishadan Port</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>City of Traitors</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Wasteland</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

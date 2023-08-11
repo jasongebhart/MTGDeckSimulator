@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Legacy Elves">
+    <DesignGoal>Elves</DesignGoal>
+    <Card>
+        <Name>Junkyard Genius</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BR</Cost>
+    </Card>
+    <Card>
+        <Name>Obliterating Bolt</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Visions of Phyrexia</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2RR</Cost>
+    </Card>
+    <Card>
+        <Name>Bitter Reunion</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Fallaji Archaeologist</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Lat-Nam Adept</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Stern Lesson</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2U</Cost>
+    </Card>
+    <Card>
+        <Name>Desynchronize</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>4U</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's Bauble</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Combat Courier</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Chromatic Star</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Energy Refractor</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Transmogrant's Crown</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Scrapwork Cohort</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Blitz Automaton</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Heavyweight Demolisher</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Argivian Avenger</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>6</Cost>
+    </Card>
+    <Card>
+        <Name>Kill-Zone Acrobat</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Gixian Skullflayer</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Powerstone Fracture</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Moment Of Defiance</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Overwhelming Remorse</Name>
+        <Quantity>0</Quantity>
+        <Type>Instant</Type>
+        <Cost>4B</Cost>
+    </Card>
+    <Card>
+        <Name>Disfigure</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Aeronaut's Wings</Name>
+        <Quantity>0</Quantity>
+        <Type>Artifact</Type>
+        <Cost>2</Cost>
+    </Card>
+     <Card>
+        <Name>Swamp</Name>
+        <Quantity>6</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>5</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Evolving Wilds</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

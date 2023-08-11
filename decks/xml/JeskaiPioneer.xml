@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Jeskai Pioneer">
+        <DesignGoal>Mantis Rider</DesignGoal>
+        <Card>
+                <Name>Chaplain of Alms</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>W</Cost>
+        </Card>
+        <Card>
+                <Name>Lunarch Veteran</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>w</Cost>
+        </Card>
+        <Card>
+                <Name>Devler of Secrets</Name>
+                <Quantity>3</Quantity>
+                <Type>Creature</Type>
+                <Cost>1W</Cost>
+        </Card>
+        <Card>
+                <Name>Melevolent Hermit</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>1U</Cost>
+        </Card>
+        <Card>
+                <Name>Devoted Grafkeeper</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>WU</Cost>
+        </Card>
+        <Card>
+                <Name>Dennick, Pious Apprentice</Name>
+                <Quantity>2</Quantity>
+                <Type>Creature</Type>
+                <Cost>WU</Cost>
+        </Card>       
+        <Card>
+                <Name>Mantis Rider</Name>
+                <Quantity>4</Quantity>
+                <Type>Creature</Type>
+                <Cost>URW</Cost>
+        </Card>
+        <Card>
+                <Name>Archon of Emeria</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>2W</Cost>
+        </Card>
+        <Card>
+                <Name>Lier, Disciple of the Drowned</Name>
+                <Quantity>1</Quantity>
+                <Type>Creature</Type>
+                <Cost>3UU</Cost>
+        </Card>
+        <Card>
+                <Name>Fading Hope</Name>
+                <Quantity>3</Quantity>
+                <Type>Instant</Type>
+                <Cost>U</Cost>
+        </Card>
+        <Card>
+                <Name>Consider</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>U</Cost>
+        </Card>
+         <Card>
+                <Name>Play with Fire</Name>
+                <Quantity>4</Quantity>
+                <Type>Instant</Type>
+                <Cost>R</Cost>
+        </Card>
+        <Card>
+                <Name>Shock</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>R</Cost>
+        </Card>
+                <Card>
+                <Name>Banefire</Name>
+                <Quantity>1</Quantity>
+                <Type>Sorcery</Type>
+                <Cost>xR</Cost>
+        </Card>
+         <Card>
+                <Name>Cinderclasm</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>1R</Cost>
+        </Card>
+         <Card>
+                <Name>Dovin's Veto</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>WU</Cost>
+        </Card>
+         <Card>
+                <Name>Faithful Mending</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>WU</Cost>
+        </Card>
+        <Card>
+                <Name>Favorable Winds</Name>
+                <Quantity>1</Quantity>
+                <Type>Enchantment</Type>
+                <Cost>1U</Cost>
+        </Card>
+        <Card>
+                <Name>Search For Azcanta</Name>
+                <Quantity>1</Quantity>
+                <Type>Enchantment</Type>
+                <Cost>1U</Cost>
+        </Card>
+        <Card>
+                <Name>Ral's Outburst</Name>
+                <Quantity>2</Quantity>
+                <Type>Instant</Type>
+                <Cost>2UR</Cost>
+        </Card>
+        <Card>
+                <Name>Starnheim Unleashed</Name>
+                <Quantity>2</Quantity>
+                <Type>Sorcery</Type>
+                <Cost>2WW</Cost>
+        </Card>
+         <Card>
+                <Name>Alrund's Epiphany</Name>
+                <Quantity>1</Quantity>
+                <Type>Instant</Type>
+                <Cost>5UU</Cost>
+        </Card>
+        <Card>
+                <Name>Plains</Name>
+                <Quantity>1</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Mystic Monastery</Name>
+                <Quantity>2</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+         <Card>
+                <Name>Mountain</Name>
+                <Quantity>1</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Island</Name>
+                <Quantity>2</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Needleverge Pathway</Name>
+                <Quantity>4</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Mistgate Pathway</Name>
+                <Quantity>4</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Riverglid Pathway</Name>
+                <Quantity>4</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Sacred Foundry</Name>
+                <Quantity>1</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Temple Of Epiphany</Name>
+                <Quantity>3</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Temple Of Triumph</Name>
+                <Quantity>2</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+        <Card>
+                <Name>Hallowed Fountain</Name>
+                <Quantity>1</Quantity>
+                <Type>Land</Type>
+                <Cost>NA</Cost>
+        </Card>
+</Decklist>

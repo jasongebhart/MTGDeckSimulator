@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Belcher">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Elvish Spirit Guide</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Simian Spirit Guide</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Street Wraith</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Tinder Wall</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Burning Wish</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Chrome Mox</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Dark Ritual</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Desperate Ritual</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Empty the Warrens</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3R</Cost>
+    </Card>
+    <Card>
+        <Name>Goblin Charbelcher</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Land Grant</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Lion's Eye Diamond</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Lotus Petal</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Rite of Flame</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Seething Song</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Bayou</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Taiga</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

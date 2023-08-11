@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="ZombieRenewal">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Ornithopter</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Walker</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>0</Cost>
+    </Card>
+    <Card>
+        <Name>Maggot Carrier</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Ghoul</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Lord of the Undead</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1BB</Cost>
+    </Card>
+    <Card>
+        <Name>Gravedigger</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3B</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Delver</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Academy Rector</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>3W</Cost>
+    </Card>
+    <Card>
+        <Name>Soul Warden</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Monk Idealist</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2W</Cost>
+    </Card>
+    <Card>
+        <Name>Flickering Ward</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Spirit Mirror</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Enduring Renewal</Name>
+        <Quantity>2</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Duress</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>B</Cost>
+    </Card>
+    <Card>
+        <Name>Recurring Nightmare</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>2B</Cost>
+    </Card>
+    <Card>
+        <Name>Grave Pact</Name>
+        <Quantity>1</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1BBB</Cost>
+    </Card>
+    <Card>
+        <Name>Living Death</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>3BB</Cost>
+    </Card>
+    <Card>
+        <Name>Gerrard's Verdict</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>WB</Cost>
+    </Card>
+    <Card>
+        <Name>Vindicate</Name>
+        <Quantity>3</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>WB</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Altar</Name>
+        <Quantity>2</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Death Grasp</Name>
+        <Quantity>2</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XWB</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>7</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Scrubland</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Tower</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Marsh Flats</Name>
+        <Quantity>2</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Reflecting Pool</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+		<Cost>NA</Cost>
+    </Card>
+</Decklist>

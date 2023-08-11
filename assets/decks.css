@@ -1,0 +1,191 @@
+/* Shared Styles */
+.text-center {
+  text-align: center;
+}
+
+.inline,
+.inline-block {
+  display: inline;
+}
+
+.vertical-align-top {
+  vertical-align: top;
+}
+
+/* Navigation Styles */
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  display: inline-block; /* Better alignment and spacing */
+  border: 1px solid;
+  border-width: 1px 1px 0 1px;
+  margin: 0 0.5em 0 0;
+}
+
+.nav-link {
+  padding: 0 1em;
+  text-decoration: none;
+  color: black;
+  background: var(--nav-link-bg, #FFFFCC); /* CSS variable for background color */
+}
+
+/* Main Content Styles */
+.content {
+  border-top: 2px solid white;
+  padding: 1em;
+  background-color: #9933FF;
+}
+
+/* Selected Item Styles */
+.selected {
+  padding-bottom: 2px;
+  font-weight: bold;
+  color: black;
+  background: #fc0;
+}
+
+/* Large Header Styles */
+.large-header {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 42px;
+  text-align: center;
+}
+
+/* Select Dropdown Styles */
+.select-dropdown {
+  display: block;
+  padding: 6px 4px;
+  box-sizing: border-box;
+  height: 85px;
+}
+
+/* Sidebar and Main Area */
+.sidebar {
+  float: left;
+  padding: 0% 2% 0% 0%;
+  width: 12%;
+}
+
+.main-area {
+  float: right;
+  width: 95%;
+  margin: 2em 0.5em 2em 0;
+}
+
+/* Deck Size Styles */
+.deck-size {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 36px;
+}
+
+/* Section Styles */
+.page-section {
+  margin: 1em 0.5em 1em 0.5em;
+}
+
+/* Footer Styles */
+.footer {
+  padding-top: 2%;
+  text-align: center;
+  clear: both;
+}
+
+/* Info Box and Card List */
+.highlighted-box {
+  /* Use this class for both info-box and card-list */
+  display: inline-block;
+  vertical-align: top;
+  border: 0;
+  padding: 0 2em;
+  background-color: var(--highlight-bg, #FFFFCC); /* CSS variable for background color */
+}
+
+/* Body Styles */
+.body-text {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 80%;
+}
+
+/* Button Styles */
+.button {
+  color: #050;
+  font: bold 88% 'trebuchet ms', helvetica, sans-serif;
+  background-color: #fed;
+  border: 1px solid;
+  border-color: #696 #363 #363 #696;
+}
+
+/* Hand, On The Draw, Mulligan */
+.white-bg {
+  background-color: #FFFFFF;
+}
+
+.blue-bg {
+  background-color: #99FFFF;
+}
+
+.red-bg {
+  background-color: #FF0000;
+  color: white;
+}
+
+/* Image Preview and Scaling Effect */
+.image-preview:hover {
+  transform: translate(10em, 0em) scale(4.50);
+  transition: all 0.3s;
+  position: relative;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.image-preview {
+  width: 90px;
+  transition: transform 0.3s; /* Apply transition property directly to improve readability */
+}
+
+/* Scaling Effect Styles */
+.scaling-effect:hover {
+  position: relative;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 0 auto;
+  overflow: hidden;
+  transform: scale(1.2);
+  transition: all 0.3s;
+}
+
+/* Flex Layouts */
+.flex-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Flex Container and Item Styles */
+.flex-container {
+  width: 350px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Flex Item Styles */
+.flex-item {
+  flex: 1 1 auto;
+  padding: 5px;
+  width: 110px;
+  -webkit-transition: width 0.7s ease-out;
+  transition: width 0.7s ease-out;
+}
+
+/* Flex Item Hover Styles */
+.flex-item:hover {
+  width: 200px;
+}

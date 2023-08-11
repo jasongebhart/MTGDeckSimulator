@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Crimsom Vow Limited Black Green">
+    <DesignGoal>...</DesignGoal>
+    <Card>
+        <Name>Snarling Wolf</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>G</Cost>
+    </Card>
+    <Card>
+        <Name>Apprentice Sharpshooter</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Sporeback Wolf</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>1G</Cost>
+    </Card>
+    <Card>
+        <Name>Oakshade Stalker</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2G</Cost>
+    </Card>
+    <Card>
+        <Name>Diregraf Scavenger</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3B</Cost>
+    </Card>
+    <Card>
+        <Name>Hookhand Mariner</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>3G</Cost>
+    </Card>
+    <Card>
+        <Name>Ulvenwald Oddity</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2GG</Cost>
+    </Card>
+    <Card>
+        <Name>Wolfkin Outcast</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>5G</Cost>
+    </Card>
+    <Card>
+        <Name>Bramble Wurm</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>6G</Cost>
+    </Card>
+    <Card>
+        <Name>Cultivator Colossus</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4GGG</Cost>
+    </Card>
+    <Card>
+        <Name>Parasitic Grasp</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>1B</Cost>
+    </Card>
+    <Card>
+        <Name>Bleed Dry</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>2BB</Cost>
+    </Card>
+    <Card>
+        <Name>Grisly Ritual</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>5B</Cost>
+    </Card>
+    <Card>
+        <Name>Swamp</Name>
+        <Quantity>8</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Forest</Name>
+        <Quantity>9</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

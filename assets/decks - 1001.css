@@ -1,0 +1,199 @@
+/* Styles for the header navigation */
+#header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#header li {
+  display: inline;
+  border: solid;
+  border-width: 1px 1px 0 1px;
+  margin: 0 0.5em 0 0;
+}
+
+#header li a {
+  padding: 0 1em;
+  text-decoration: none;
+  color: black;
+  background: #FFFFCC;
+}
+
+/* Styling for the main content section */
+#content {
+  border-top: 2px solid white;
+  padding: 1em;
+  background-color: #9933FF;
+}
+
+/* Styling for selected items in the header */
+#header #selected {
+  padding-bottom: 2px;
+  font-weight: bold;
+  color: black;
+  background: #fc0;
+}
+
+/* Styling for large headers */
+.Largeheader {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 42px;
+  text-align: center;
+}
+
+/* Styling for select dropdowns */
+select {
+  display: block;
+  padding: 6px 4px;
+  box-sizing: border-box;
+  height: 85px;
+}
+
+/* Styling for headings */
+.heading {
+  text-align: center;
+}
+
+/* Styling for the sidebar */
+.sidebar {
+  float: left;
+  padding: 0% 2% 0% 0%;
+  width: 12%;
+}
+
+/* Styling for the main content area */
+div#main {
+  float: right;
+  width: 95%;
+  margin: 2em 0.5em 2em 0;
+}
+
+/* Styling for deck size */
+#deckSize {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 36px;
+}
+
+/* Styling for section elements */
+section {
+  margin: 1em 0.5em 1em 0.5em;
+}
+
+/* Styling for footer */
+.footer {
+  padding-top: 2%;
+  text-align: center;
+  clear: both;
+}
+
+/* Styling for elements with class "with" */
+.with {
+  display: inline-block;
+  vertical-align: top;
+  border: 0;
+  padding: 0 2em 0 2em;
+  background-color: #FFFFCC;
+}
+
+/* Styling for card lists */
+.cardlist {
+  display: inline-block;
+  vertical-align: top;
+  border: 0;
+  padding: 0 2em 0 2em;
+}
+
+/* Global body styling */
+body {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 80%;
+}
+
+/* Styling for buttons */
+input.btn {
+  color: #050;
+  font: bold 88% 'trebuchet ms', helvetica, sans-serif;
+  background-color: #fed;
+  border: 1px solid;
+  border-color: #696 #363 #363 #696;
+}
+
+/* Styling for hand elements */
+.hand {
+  background-color: #FFFFFF;
+}
+
+/* Styling for elements with class "OnTheDraw" */
+.OnTheDraw {
+  background-color: #99FFFF;
+}
+
+/* Styling for elements with class "IsMulligan" */
+.IsMulligan {
+  background-color: #FF0000;
+  color: white;
+}
+
+/* Styling for image previews on hover */
+.preview:hover {
+  transform: translate(10em, 0em) scale(4.50);
+  transition: all 0.3s;
+  position: relative;
+  padding: 0px;
+  vertical-align: middle;
+}
+
+.preview {
+  width: 90px;
+}
+
+/* Styling for elements with scaling effect on hover */
+.effectscale:hover {
+  position: relative;
+  padding: 10px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  margin: 0 auto;
+  overflow: hidden;
+  transform: scale(1.2);
+  transition: all 0.3s;
+  transform: scale;
+}
+
+/* Styling for flexbox layout */
+.flexlibrary {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Styling for flexbox hand layout */
+.flexhand {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Styling for flex containers */
+.flex {
+  width: 350px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Styling for flex items */
+.flex > div {
+  flex: 1 1 auto;
+  padding: 5px;
+  width: 110px;
+  -webkit-transition: width 0.7s ease-out;
+  transition: width 0.7s ease-out;
+}
+
+/* Styling for flex items on hover */
+.flex > div:hover {
+  width: 200px;
+}

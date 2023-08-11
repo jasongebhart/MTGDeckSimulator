@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+</style>
+<title>Hand Simulation</title>
+<script src="./scripts/playhand.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/assets/decks.css">
+</head>
+
+<div id="header">
+  <% include partials/nav.ejs %>
+</div>
+<body>
+<div id="container">
+<section id="deck" class="flexlibrary">
+  <% include partials/decklist.ejs %>
+	    <button type="button" class="btn" onclick="startDrawOneCard()">
+            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
+            Draw
+        </button>
+        <button id="DrawHandButton" type="button" value="Draw Hand" class="btn" onclick="startSimulateHandDraw()">
+            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
+            Draw Hand
+        </button>
+
+        <button type="button" class="btn" onclick="startLibrarySearch('Enchantment Sorcery Instant Artifact Planeswalker')">
+            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
+            Spells
+        </button>
+	    <button type="button" class="btn" onclick="startLibrarySearch('Creature')">
+            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
+            Creatures
+        </button>
+	    <button type="button" class="btn" onclick="startLibrarySearch('Land')">
+            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
+            Land
+        </button>
+	    <button type="button" class="btn" onclick="startLibraryDrawAll()">
+            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
+            Library
+        </button>
+        <p class="deckSize flexlibrary" id="deckSize"></p>
+
+
+</section>
+    <section class="flexlibrary">
+        <section id="section_library" class="flexlibrary">
+            <h2>Library</h2>
+        </section>
+    </section>
+
+
+    <section id="section_hand">
+        <h3>Hand</h3>
+        <section id="section_spells" class="flex">
+        </section>
+        <section id="section_lands" class="flex">
+        </section>
+    </section>
+    <h3>BattleField</h3>
+    <section id="section_battlefield" class="flex">
+    </section>
+    <h3>Graveyard</h3>
+        <section id="section_graveyard" class="flex">
+    </section>
+
+</div>
+</body>
+</html>

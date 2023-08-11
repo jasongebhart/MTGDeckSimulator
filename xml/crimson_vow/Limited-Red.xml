@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Crimsom Vow Limited Red">
+    <DesignGoal>Mantis Rider</DesignGoal>
+    <Card>
+        <Name>End the Festivities</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Flame-Blessed Bolt</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Voldaren Epicure</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Abrade</Name>
+        <Quantity>1</Quantity>
+        <Type>Instant</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Blood Petal Celebrant</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Hungry Ridgewolf</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Kessig Flamebreather</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Kessig Flamebreather</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Kessig Flamebreather</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Runebound Wolf</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>1R</Cost>
+    </Card>
+    <Card>
+        <Name>Alluring Suitor</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Belligerent Guest</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2R</Cost>
+    </Card>
+    <Card>
+        <Name>Ballista Watcher</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>2RR</Cost>
+    </Card>
+    <Card>
+        <Name>Falkenrath Celebrants</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Frenzied Devils</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Pyre Spawn</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>4RR</Cost>
+    </Card>
+    <Card>
+        <Name>Lacerate Flesh</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Dollhouse of Horrors</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>17</Quantity>
+        <Type>Land</Type>
+        <Cost>NA</Cost>
+    </Card>
+</Decklist>

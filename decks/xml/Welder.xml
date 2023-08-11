@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Welder">
+  <DesignGoal>Leverage the Welder </DesignGoal>
+    <Card>
+        <Name>Goblin Welder</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+        <Cost>R</Cost>
+    </Card>
+    <Card>
+        <Name>Junk Diver</Name>
+        <Quantity>4</Quantity>
+        <Type>Creature</Type>
+	    <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Karn, Silver Golem</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>5</Cost>
+    </Card>
+    <Card>
+        <Name>Covetous Dragon</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>4R</Cost>
+    </Card>
+    <Card>
+        <Name>Mage-Ring Responder</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Platinum Angel</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Myr Battlesphere</Name>
+        <Quantity>1</Quantity>
+        <Type>Creature</Type>
+        <Cost>7</Cost>
+    </Card>
+    <Card>
+        <Name>Sundering Titan</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>8</Cost>
+    </Card>
+    <Card>
+        <Name>Darksteel Colossus</Name>
+        <Quantity>2</Quantity>
+        <Type>Creature</Type>
+        <Cost>11</Cost>
+    </Card>
+    <Card>
+        <Name>Voltaic Key</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+	    <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Sensei's Divining Top</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+	    <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Grim Monolith</Name>
+        <Quantity>4</Quantity>
+        <Type>Artifact</Type>
+	    <Cost>2</Cost>
+    </Card>
+    <Card>
+        <Name>Codex Shredder</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+	    <Cost>1</Cost>
+    </Card>
+    <Card>
+        <Name>Crucible of Worlds</Name>
+        <Quantity>1</Quantity>
+        <Type>Artifact</Type>
+        <Cost>3</Cost>
+    </Card>
+    <Card>
+        <Name>Thran Dynamo</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+        <Cost>4</Cost>
+    </Card>
+    <Card>
+        <Name>Mountain</Name>
+        <Quantity>11</Quantity>
+        <Type>Land</Type>
+	    <Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Darksteel Citadel</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Great Furnace</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Phyrexian Tower</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>

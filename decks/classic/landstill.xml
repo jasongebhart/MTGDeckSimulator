@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="LandStill">
+ <DesignGoal>a</DesignGoal>
+    <Card>
+        <Name>Exalted Angel</Name>
+        <Quantity>3</Quantity>
+        <Type>Creature</Type>
+        <Cost>4WW</Cost>
+    </Card>
+     <Card>
+        <Name>Brainstorm</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Counterspell</Name>
+        <Quantity>4</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>UU</Cost>
+    </Card>
+    <Card>
+        <Name>Decree of Justice</Name>
+        <Quantity>1</Quantity>
+        <Type>Sorcery</Type>
+        <Cost>XX2WW</Cost>
+    </Card>
+    <Card>
+        <Name>Engineered Explosives</Name>
+        <Quantity>3</Quantity>
+        <Type>Artifact</Type>
+        <Cost>X</Cost>
+    </Card>
+    <Card>
+        <Name>Fact or Fiction</Name>
+        <Quantity>2</Quantity>
+        <Type>Instant</Type>
+        <Cost>3U</Cost>
+    </Card>
+    <Card>
+        <Name>Fire // Ice</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Force of Will</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>3UU</Cost>
+    </Card>
+    <Card>
+        <Name>Standstill</Name>
+        <Quantity>4</Quantity>
+        <Type>Enchantment</Type>
+        <Cost>1U</Cost>
+    </Card>
+    <Card>
+        <Name>Stifle</Name>
+        <Quantity>3</Quantity>
+        <Type>Instant</Type>
+        <Cost>U</Cost>
+    </Card>
+    <Card>
+        <Name>Swords to Plowshares</Name>
+        <Quantity>4</Quantity>
+        <Type>Instant</Type>
+        <Cost>W</Cost>
+    </Card>
+    <Card>
+        <Name>Flooded Strand</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Island</Name>
+        <Quantity>3</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Mishra's Factory</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Plains</Name>
+        <Quantity>1</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Tundra</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Volcanic Island</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+    <Card>
+        <Name>Wasteland</Name>
+        <Quantity>4</Quantity>
+        <Type>Land</Type>
+	<Cost>NA</Cost>
+    </Card>
+</Decklist>
