@@ -256,3 +256,27 @@ function displayMulliganChart(xmlDoc) {
 	document.getElementById("TwentySeven").innerHTML = arrMulligan[8];
 	document.getElementById("TwentyEight").innerHTML = arrMulligan[9];
 }
+function displayMulliganChartNEW(xmlDoc) {
+    var arrMulligan = [];  // Use array literal for better readability
+    var mulliganList = xmlDoc.getElementsByTagName("Mulligan")[0];
+    var mulliganLand = mulliganList.getElementsByTagName("Quantity").length;
+    
+    for (var i = 0; i < mulliganLand; i++) {
+        var intZero = parseInt(mulliganList.getElementsByTagName("Zero")[i].firstChild.data);
+        var intOne = parseInt(mulliganList.getElementsByTagName("One")[i].firstChild.data);
+        var totalPercentage = intZero + intOne;
+        arrMulligan[i] = totalPercentage + "%";
+    }
+
+    var mulliganElements = [
+        "Nineteen", "Twenty", "TwentyOne", "TwentyTwo", "TwentyThree",
+        "TwentyFour", "TwentyFive", "TwentySix", "TwentySeven", "TwentyEight"
+    ];
+
+    // Populate HTML elements using a loop
+    for (var j = 0; j < mulliganElements.length; j++) {
+        var elementId = mulliganElements[j];
+        document.getElementById(elementId).innerHTML = arrMulligan[j];
+    }
+}
+
