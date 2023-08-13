@@ -147,16 +147,27 @@
 
 /* Image Preview and Scaling Effect */
 .image-preview:hover {
-  transform: translate(10em, 0em) scale(4.50);
+  transform: translate(10em, 0em) scale(1.50); /* Adjust the scale value as needed */
   transition: all 0.3s;
   position: relative;
   padding: 0;
   vertical-align: middle;
 }
 
+/* Display images horizontally within section_spells */
+.section_spells {
+  display: flex;
+  flex-wrap: wrap; /* Wrap the images to a new line when needed */
+  justify-content: flex-start; /* Align images to the start of the container */
+}
+
 .image-preview {
   width: 90px;
-  transition: transform 0.3s; /* Apply transition property directly to improve readability */
+  transition: transform 0.3s;
+  margin: 5px; /* Add margin between images */
+  display: flex;
+  flex-wrap: wrap; /* Wrap the images to a new line when needed */
+  justify-content: flex-start; /* Align images to the start of the container */
 }
 
 /* Scaling Effect Styles */
@@ -166,7 +177,7 @@
   border: 1px solid #ccc;
   margin: 0 auto;
   overflow: hidden;
-  transform: scale(1.2);
+  transform: scale(1); /* Adjust the scale value back to 1 */
   transition: all 0.3s;
 }
 
@@ -175,6 +186,22 @@
   display: flex;
   flex-direction: row;
 }
+
+.flex {
+  /* basic styling */
+  width: 350px;
+  height: 200px;
+  //border: 1px solid #555;
+  font: 14px Arial;
+
+  /* flexbox setup */
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+
+  display: flex;
+  flex-direction: row;
+}
+
 
 /* Flex Container and Item Styles */
 .flex-container {
