@@ -617,7 +617,7 @@ function createCardLinkPreview(strCardDrawn) {
 function createCardImagePreview(strCardDrawn) {
     var image = document.createElement("img");
     image.src = "/assets/MagicImages/" + strCardDrawn + ".jpg";
-    image.className = "preview";
+    image.className = "image-preview";
     image.title = strCardDrawn;
     //image.alt="alt Hello";
     return image;
@@ -627,7 +627,7 @@ function createCardImagePreview(strCardDrawn) {
 function createCardImage(strCardDrawn) {
     var image = document.createElement("img");
     image.src = "/assets/MagicImages/" + strCardDrawn + ".jpg";
-    image.className = "preview";
+    image.className = "image-preview";
     image.title = strCardDrawn;
     image.style.cssText = 'display:block;text-align:center;';
     //image.alt="alt Hello";
