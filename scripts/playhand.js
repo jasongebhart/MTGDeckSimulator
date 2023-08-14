@@ -4,30 +4,78 @@ var arrTypes = new Array();
 var deckSize;
 var fs = require('fs');
 
-
 function startSimulateHandDraw() {
+    const selectedXMLFile = GetSelectedItem();
+
+    // Clear sections
+    clearGameSections();
+
+    // Load XML data
+    loadXMLData(selectedXMLFile);
+
+    // Retrieve deck information
+    const deckInformation = getDeckInformationFromXML();
+    const { cardNames, deckSize, types, totalLands } = deckInformation;
+
+    // Simulate card draw
+    const cardsToDraw = 7;
+    const handInformation = simulateCardDraw(cardNames, deckSize, types, cardsToDraw);
+    const { hand, handString, lands, landsString, handTypes, updatedDeckSize } = handInformation;
+
+    // Display hand and update deck size
+    displayHandAndDeck(hand, handString, lands, landsString, handTypes, updatedDeckSize);
+}
+
+function clearGameSections() {
+    const sectionsToClear = ["section_spells", "section_lands", "section_battlefield", "section_graveyard"];
+    sectionsToClear.forEach(section => deleteSection(section));
+}
+
+function loadXMLData(XMLFile) {
+    loadXMLDoc(XMLFile);
+}
+
+function getDeckInformationFromXML() {
+    const deckInfo = getCardNames(xmlDoc);
+    return {
+        cardNames: deckInfo[0],
+        deckSize: deckInfo[1],
+        types: deckInfo[2],
+        totalLands: deckInfo[3]
+    };
+}
+
+function simulateCardDraw(cardNames, deckSize, types, cardsToDraw) {
+    const handInfo = cardDraw(cardNames, deckSize, types, cardsToDraw);
+    return {
+        hand: handInfo[0],
+        handString: handInfo[1],
+        lands: handInfo[2],
+        landsString: handInfo[3],
+        handTypes: handInfo[4],
+        updatedDeckSize: handInfo[5]
+    };
+}
+
+function displayHandAndDeck(hand, handString, lands, landsString, handTypes, updatedDeckSize) {
+    displayHand(hand, handString, lands, landsString, handTypes);
+    setDeckSize(updatedDeckSize);
+}
+
+function startSimulateHandDrawold() {
 	var XMLFile = GetSelectedItem();
-    //deleteRows("tblSpells");
     deleteSection("section_spells");
     deleteSection("section_lands");
     deleteSection("section_battlefield");
     deleteSection("section_graveyard");
-    //deleteRows("tblLands");
-    //deleteRows("tblLibrary");
-    //deleteRows("tblDraw");
-    //deleteRows("tblInGameDraw");
-    //deleteRows("tblBattleField");
-		console.log('test');
-	//fetchXMLDocSim(XMLFile);
+	console.log('test');
     loadXMLDoc(XMLFile);
-	//loadXMLDocSim(XMLFile);
 	var arrDeckInformation = getCardNames(xmlDoc);
 	arrCardNames = arrDeckInformation[0]
 	deckSize = arrDeckInformation[1];
 	arrTypes = arrDeckInformation[2];
 	intTotLands = arrDeckInformation[3];
 	var strDeckName = getDeckName();
-	//document.getElementById("HandSimulation").innerHTML = "Hand";
     intCardstoDraw = 7;
 	var arrHandInformation = cardDraw(arrCardNames,deckSize,arrTypes,intCardstoDraw);
 	arrHand = arrHandInformation[0];
