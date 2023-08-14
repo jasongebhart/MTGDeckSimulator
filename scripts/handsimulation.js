@@ -229,7 +229,7 @@ function startMulliganCheck() {
 }
 
 
-function displayMulliganChart(xmlDoc) {
+function displayMulliganChartOld(xmlDoc) {
 	var arrMulligan = new Array();
 	var intZero = 0;
 	var intOne = 0;
@@ -256,7 +256,7 @@ function displayMulliganChart(xmlDoc) {
 	document.getElementById("TwentySeven").innerHTML = arrMulligan[8];
 	document.getElementById("TwentyEight").innerHTML = arrMulligan[9];
 }
-function displayMulliganChartNEW(xmlDoc) {
+function displayMulliganChart(xmlDoc) {
     var arrMulligan = [];  // Use array literal for better readability
     var mulliganList = xmlDoc.getElementsByTagName("Mulligan")[0];
     var mulliganLand = mulliganList.getElementsByTagName("Quantity").length;
