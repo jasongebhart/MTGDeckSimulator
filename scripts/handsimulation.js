@@ -229,33 +229,6 @@ function startMulliganCheck() {
 }
 
 
-function displayMulliganChartOld(xmlDoc) {
-	var arrMulligan = new Array();
-	var intZero = 0;
-	var intOne = 0;
-	var mulliganList = xmlDoc.getElementsByTagName("Mulligan")[0];
-	var mulliganLand = mulliganList.getElementsByTagName("Quantity").length;
-	for (var i=0; i <mulliganLand; i++) {
-	    var intLandQuantity = mulliganList.getElementsByTagName("Quantity")[i].firstChild.data;
-	    intZero = mulliganList.getElementsByTagName("Zero")[i].firstChild.data;
-	    if (intZero < 1) {
-		intZero = Math.round(intZero);
-	    }
-	    intOne = mulliganList.getElementsByTagName("One")[i].firstChild.data;
-	    arrMulligan[i] = (parseInt(intZero) + parseInt(intOne)) + "%";
- 	}
-
-	document.getElementById("Nineteen").innerHTML = arrMulligan[0];
-	document.getElementById("Twenty").innerHTML = arrMulligan[1];
-	document.getElementById("TwentyOne").innerHTML = arrMulligan[2];
-	document.getElementById("TwentyTwo").innerHTML = arrMulligan[3];
-	document.getElementById("TwentyThree").innerHTML = arrMulligan[4];
-	document.getElementById("TwentyFour").innerHTML = arrMulligan[5];
-	document.getElementById("TwentyFive").innerHTML = arrMulligan[6];
-	document.getElementById("TwentySix").innerHTML = arrMulligan[7];
-	document.getElementById("TwentySeven").innerHTML = arrMulligan[8];
-	document.getElementById("TwentyEight").innerHTML = arrMulligan[9];
-}
 function displayMulliganChart(xmlDoc) {
     var arrMulligan = [];  // Use array literal for better readability
     var mulliganList = xmlDoc.getElementsByTagName("Mulligan")[0];
