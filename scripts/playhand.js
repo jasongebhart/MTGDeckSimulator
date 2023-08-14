@@ -62,32 +62,6 @@ function displayHandAndDeck(hand, handString, lands, landsString, handTypes, upd
     setDeckSize(updatedDeckSize);
 }
 
-function startSimulateHandDrawold() {
-	var XMLFile = GetSelectedItem();
-    deleteSection("section_spells");
-    deleteSection("section_lands");
-    deleteSection("section_battlefield");
-    deleteSection("section_graveyard");
-	console.log('test');
-    loadXMLDoc(XMLFile);
-	var arrDeckInformation = getCardNames(xmlDoc);
-	arrCardNames = arrDeckInformation[0]
-	deckSize = arrDeckInformation[1];
-	arrTypes = arrDeckInformation[2];
-	intTotLands = arrDeckInformation[3];
-	var strDeckName = getDeckName();
-    intCardstoDraw = 7;
-	var arrHandInformation = cardDraw(arrCardNames,deckSize,arrTypes,intCardstoDraw);
-	arrHand = arrHandInformation[0];
-	strHand = arrHandInformation[1];
-	arrLands = arrHandInformation[2];
-	strLands = arrHandInformation[3];
-	intHandTypes = arrHandInformation[4];
-	deckSize = arrHandInformation[5];
-	displayHand(arrHand,strHand,arrLands,strLands,intHandTypes);
-	setDeckSize(deckSize)
-}
-
 function loadXMLDoc(XMLFile) {
     // Create a connection to the file.
     var Connect = new XMLHttpRequest();
