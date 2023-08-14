@@ -1,8 +1,8 @@
 //Initialize variables
-var arrCardNames = new Array();
-var arrTypes = new Array();
-var deckSize;
-var fs = require('fs');
+let arrCardNames = [];
+let arrTypes = [];
+let deckSize;
+const fs = require('fs');
 
 function startSimulateHandDraw() {
     const selectedXMLFile = GetSelectedItem();
@@ -16,7 +16,8 @@ function startSimulateHandDraw() {
     // Retrieve deck information
     const deckInformation = getDeckInformationFromXML();
     const { cardNames, deckSize, types, totalLands } = deckInformation;
-
+    arrCardNames = cardNames
+    arrTypes = types
     // Simulate card draw
     const cardsToDraw = 7;
     const handInformation = simulateCardDraw(cardNames, deckSize, types, cardsToDraw);
@@ -36,7 +37,7 @@ function loadXMLData(XMLFile) {
 }
 
 function getDeckInformationFromXML() {
-    const deckInfo = getCardNames(xmlDoc);
+    const deckInfo = getCardNames();
     return {
         cardNames: deckInfo[0],
         deckSize: deckInfo[1],
@@ -185,7 +186,7 @@ function getDeckName() {
 	return deckListName;
 }
 
-function getCardNames(xmlDoc) {
+function getCardNames() {
     // Evaluate XML file and build card array with multiple entries for each
     // name with multiple quantities
     var arrDeckInfo = new Array(4);

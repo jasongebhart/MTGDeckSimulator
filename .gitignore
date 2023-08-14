@@ -1,5 +1,6 @@
 # assets/magicimages/*
 decks/xml
 topdecks
+package-lock.json
 xml/
 node_modules/
