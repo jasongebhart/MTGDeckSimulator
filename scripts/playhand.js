@@ -100,14 +100,20 @@ function loadXMLDocOLD(XMLFile) {
     xmlDoc=Connect.responseXML;
 }
 // delete table rows with an index greater then 0
-function deleteRows(tblDelete) {
-    var tbl = document.getElementById(tblDelete); // table reference
-    // set the last row index
-    var lastRow = tbl.rows.length - 1;
-    // delete rows with index greater then 0
-    for (var i = lastRow; i > 0; i--) tbl.deleteRow(i);
-    tbl.insertRow(1);
-    //tbl.deleteTHead();
+function deleteRows(tableId) {
+    const table = document.getElementById(tableId);
+    
+    // Remove all rows except the header row (index 0)
+    for (let i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+    
+    // Add a new row after clearing the existing rows
+    const newRow = table.insertRow(1); // Index 1, assuming you want to keep the header row
+    // Insert cells and set content if needed
+    // Example:
+    // const cell1 = newRow.insertCell(0);
+    // cell1.textContent = 'New Cell Content';
 }
 
 
