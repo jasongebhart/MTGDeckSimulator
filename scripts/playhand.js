@@ -62,7 +62,26 @@ function displayHandAndDeck(hand, handString, lands, landsString, handTypes, upd
     setDeckSize(updatedDeckSize);
 }
 
-function loadXMLDoc(XMLFile) {
+async function loadXMLDoc(XMLFile) {
+    try {
+        // Create a Fetch API request to load the XML file.
+        const response = await fetch(XMLFile);
+        
+        if (!response.ok) {
+            throw new Error('Failed to load the requested file.');
+        }
+        
+        // Parse the XML response into a document.
+        xmlDoc = await response.text();
+        const parser = new DOMParser();
+        xmlDoc = parser.parseFromString(xmlDoc, 'text/xml');
+    } catch (error) {
+        console.error(error);
+        window.alert('Unable to load the requested file.');
+    }
+}
+
+function loadXMLDocOLD(XMLFile) {
     // Create a connection to the file.
     var Connect = new XMLHttpRequest();
 
