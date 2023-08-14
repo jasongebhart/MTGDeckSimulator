@@ -62,7 +62,6 @@ function displayHandAndDeck(hand, handString, lands, landsString, handTypes, upd
     setDeckSize(updatedDeckSize);
 }
 
-<<<<<<< HEAD
 function startSimulateHandDraw() {
 	var XMLFile = GetSelectedItem();
     deleteSection("section_spells");
@@ -89,8 +88,6 @@ function startSimulateHandDraw() {
 	setDeckSize(deckSize)
 }
 
-=======
->>>>>>> 443911904601463317bf5b54464189091cdd3bd6
 function loadXMLDoc(XMLFile) {
     // Create a connection to the file.
     var Connect = new XMLHttpRequest();
