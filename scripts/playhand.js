@@ -4,7 +4,7 @@ var arrTypes = new Array();
 var deckSize;
 var fs = require('fs');
 
-function startSimulateHandDraw() {
+function startSimulateHandDrawNew() {
     const selectedXMLFile = GetSelectedItem();
 
     // Clear sections
@@ -62,7 +62,7 @@ function displayHandAndDeck(hand, handString, lands, landsString, handTypes, upd
     setDeckSize(updatedDeckSize);
 }
 
-function startSimulateHandDrawold() {
+function startSimulateHandDraw() {
 	var XMLFile = GetSelectedItem();
     deleteSection("section_spells");
     deleteSection("section_lands");
