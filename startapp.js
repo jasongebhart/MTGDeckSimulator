@@ -1,22 +1,22 @@
-//var express = require('express');
-const express = require('express');
+// Import required modules
+import express from 'express';
+import { setupRoutes } from './controllers/controller.js'; // Adjust the import path to match your file structure
+import fs from 'fs';
+import parser from 'xml2json';
 
-var controller = require('./controllers/controller.js');
-var fs = require('fs');
-var parser = require('xml2json');
+// Create an instance of Express
+const app = express();
 
-var app = express();
-
-//setup template engine
+// Setup template engine
 app.set('view engine', 'ejs');
 
-// static files
+// Static files
 app.use('/assets', express.static('assets'));
 app.use('/scripts', express.static('scripts'));
 app.use('/xml', express.static('xml'));
 
-//fire controllers
-controller(app);
+// Fire controllers
+setupRoutes(app); // Use the imported setupRoutes function
 
 // Listen to port
 app.listen(3000, () => {

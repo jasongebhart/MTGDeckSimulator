@@ -1,24 +1,32 @@
-function startSimulateHandDraw() {
-	var XMLFile = GetSelectedItem();
-	loadXMLDoc(XMLFile);
-	var arrDeckInformation = getCardNames(xmlDoc);
-		arrCardNames = arrDeckInformation[0]
-		deckSize = arrDeckInformation[1];
-		arrTypes = arrDeckInformation[2];
-		intTotLands = arrDeckInformation[3];
-	var strDeckName = getDeckName();
-	document.getElementById("HandSimulation").innerHTML = "Hand Simulation - " + strDeckName;
-	var arrHandInformation = cardDraw(arrCardNames,deckSize,arrTypes);
-		arrHand = arrHandInformation[0];
-		strHand = arrHandInformation[1];
-		intHandTypes = arrHandInformation[2];
-	loadXMLDoc("./xml/mulligan.xml");
-	var strMulligan = getMulliganRate(intTotLands);
-        displayHand(arrHand,strHand,intHandTypes);
-	getMulliganStats();
+async function startSimulateHandDraw() {
+    try {
+        const selectedXMLFile = getSelectedItem();
+        
+        // Load deck information and XML data
+        const [arrCardNames, deckSize, arrTypes, intTotLands] = await loadDeckInformation(selectedXMLFile);
+        const strDeckName = getDeckName();
+
+        document.getElementById("HandSimulation").innerHTML = `Hand Simulation - ${strDeckName}`;
+        
+        const [arrHand, strHand, intHandTypes] = cardDraw(arrCardNames, deckSize, arrTypes);
+        
+        await loadXMLDoc("./xml/mulligan.xml");
+        const strMulligan = getMulliganRate(intTotLands);
+        
+        displayHand(arrHand, strHand, intHandTypes);
+        getMulliganStats();
+    } catch (error) {
+        console.error(error);
+        window.alert('An error occurred while loading XML data.');
+    }
 }
 
-function GetSelectedItem() {
+async function loadDeckInformation(selectedXMLFile) {
+    await loadXMLDoc(selectedXMLFile);
+    return getCardNames(xmlDoc);
+}
+
+function getSelectedItem() {
     len = document.formDecks.selectDeck.length;
 	i = 0
 	XMLFile = "none"
@@ -30,42 +38,24 @@ function GetSelectedItem() {
 	return XMLFile;
 }
 
-function loadXMLDoc(XMLFile) {
-	// Create a connection to the file.
-	var Connect = new XMLHttpRequest();
-
-	try
-	{
- 	// Define which file to open and
-	// send the request.
-  	Connect.open("GET", XMLFile, false);
-  	Connect.send();
-	}
-	catch(e) {
-		window.alert("unable to load the requested file.");
-		return;
-	}
-
-  	xmlDoc=Connect.responseXML;
+async function loadXMLDoc(XMLFile) {
+    try {
+        // Create a Fetch API request to load the XML file.
+        const response = await fetch(XMLFile);
+        
+        if (!response.ok) {
+            throw new Error('Failed to load the requested file.');
+        }
+        
+        // Parse the XML response into a document.
+        const xmlText = await response.text(); // Use a different variable name
+        const parser = new DOMParser();
+        xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // Use xmlDoc here, not xmlDoc
+    } catch (error) {
+        console.error(error);
+        window.alert('Unable to load the requested file.');
+    }
 }
-function loadXMLDocSim(xmlFile) {
-	if (window.ActiveXObject) {
-		xmlDoc= new ActiveXObject("Microsoft.XMLDOM");
-		xmlDoc.async="false";
-		xmlDoc.load(xmlFile);
-		return;
-	}		
-	else if (document.implementation && document.implementation.createDocument) {
-		//alert('This is Firefox');
-		xmlDoc = document.implementation.createDocument("", "", null);
-		//xmlDoc.load(xmlFile);
-		xmlDoc.async=false;
-		xmlDoc.onload = function (){};xmlDoc.load(xmlFile);
-		return;
-	}
-}
-
-
 
 function getDeckName() { 
 	var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
@@ -223,8 +213,8 @@ function getMulliganStats() {
 	document.getElementById("MulliganPercentage").innerHTML = "Current Mulligan Percentage: " + parseInt(intNumMulligans/lastRow*100) + "%"
 }
 
-function startMulliganCheck() {
-	 loadXMLDocSim("./xml/mulligan.xml");
+async function startMulliganCheck() {
+	await loadXMLDoc("./xml/mulligan.xml");
 	 displayMulliganChart(xmlDoc);
 }
 

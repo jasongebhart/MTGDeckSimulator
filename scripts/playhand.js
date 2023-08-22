@@ -1,40 +1,50 @@
-//Initialize variables
+// import { xmlDoc, xmlFile } from './config.js';
+// import * as fs from 'fs';
+// Declare variables
+var xmlDoc;
+var xmlFile;
 let arrCardNames = [];
 let arrTypes = [];
 let deckSize;
-const fs = require('fs');
 
-function startSimulateHandDraw() {
-    const selectedXMLFile = GetSelectedItem();
 
-    // Clear sections
-    clearGameSections();
 
-    // Load XML data
-    loadXMLData(selectedXMLFile);
+// Function to start simulating hand draw
+async function startSimulateHandDraw() {
+    try {
+        const selectedXMLFile = GetSelectedItem();
 
-    // Retrieve deck information
-    const deckInformation = getDeckInformationFromXML();
-    const { cardNames, deckSize, types, totalLands } = deckInformation;
-    arrCardNames = cardNames
-    arrTypes = types
-    // Simulate card draw
-    const cardsToDraw = 7;
-    const handInformation = simulateCardDraw(cardNames, deckSize, types, cardsToDraw);
-    const { hand, handString, lands, landsString, handTypes, updatedDeckSize } = handInformation;
+        // Clear sections
+        clearGameSections();
 
-    // Display hand and update deck size
-    displayHandAndDeck(hand, handString, lands, landsString, handTypes, updatedDeckSize);
+        // Load XML data
+        await loadXMLDoc(selectedXMLFile); // Await the async function
+
+        // Retrieve deck information
+        const deckInformation = getDeckInformationFromXML();
+        const { cardNames, deckSize, types, totalLands } = deckInformation;
+        arrCardNames = cardNames;
+        arrTypes = types;
+
+        // Simulate card draw
+        const cardsToDraw = 7;
+        const handInformation = simulateCardDraw(cardNames, deckSize, types, cardsToDraw);
+        const { hand, handString, lands, landsString, handTypes, updatedDeckSize } = handInformation;
+
+        // Display hand and update deck size
+        displayHandAndDeck(hand, handString, lands, landsString, handTypes, updatedDeckSize);
+    } catch (error) {
+        console.error(error);
+        window.alert('An error occurred while loading XML data.');
+    }
 }
+
 
 function clearGameSections() {
     const sectionsToClear = ["section_spells", "section_lands", "section_battlefield", "section_graveyard"];
     sectionsToClear.forEach(section => deleteSection(section));
 }
 
-function loadXMLData(XMLFile) {
-    loadXMLDoc(XMLFile);
-}
 
 function getDeckInformationFromXML() {
     const deckInfo = getCardNames();
@@ -73,14 +83,15 @@ async function loadXMLDoc(XMLFile) {
         }
         
         // Parse the XML response into a document.
-        xmlDoc = await response.text();
+        const xmlText = await response.text(); // Use a different variable name
         const parser = new DOMParser();
-        xmlDoc = parser.parseFromString(xmlDoc, 'text/xml');
+        xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // Use xmlDoc here, not xmlDoc
     } catch (error) {
         console.error(error);
         window.alert('Unable to load the requested file.');
     }
 }
+
 
 function loadXMLDocOLD(XMLFile) {
     // Create a connection to the file.

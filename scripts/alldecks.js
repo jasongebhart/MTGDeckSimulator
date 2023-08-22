@@ -1,101 +1,89 @@
+
 var xmlDoc;
 var xmlFile;
 
-function startCompareDecks() {
-	var mtgDeck = []; // regular array
-		mtgDeck.push("./xml/BigRedMachine.xml"); 
-		mtgDeck.push("./xml/Stasis.xml");
-		mtgDeck.push("./xml/ZombieRenewal.xml");
-		mtgDeck.push("./xml/Rith.xml");
-		mtgDeck.push("./xml/BlackRack.xml");
-		mtgDeck.push("./xml/BlackDread.xml");
-		mtgDeck.push("./xml/Brood.xml");
-		mtgDeck.push("./xml/CharredDiscard.xml");
-		mtgDeck.push("./xml/Classic.xml");
-		mtgDeck.push("./xml/CreepingChill.xml");
-		mtgDeck.push("./xml/FireandIce.xml");
-		mtgDeck.push("./xml/GreenWaste.xml");
-		mtgDeck.push("./xml/GreenWasteOrder.xml");
-		mtgDeck.push("./xml/GreenWasteSakura.xml");	
-		mtgDeck.push("./xml/Ixalan_Cannons_RedBlue.xml");
-		mtgDeck.push("./xml/Ixalan_Green_White.xml");	
-		mtgDeck.push("./xml/JeskaiPioneer.xml");
-		mtgDeck.push("./xml/Dimir_Inverter.xml");
-		mtgDeck.push("./xml/JunkDiver.xml");
-		mtgDeck.push("./xml/KindofBlue.xml");
-		mtgDeck.push("./xml/Lumberjack.xml");
-		mtgDeck.push("./xml/MantisRiderPioneer.xml");
-		mtgDeck.push("./xml/Napoleon.xml");
-		mtgDeck.push("./xml/Nishoba.xml");
-		mtgDeck.push("./xml/Outpost.xml");
-		mtgDeck.push("./xml/PatriotBlock.xml");
-		mtgDeck.push("./xml/Pernicious.xml");
-		mtgDeck.push("./xml/Plum.xml");
-		mtgDeck.push("./xml/PlumGoneBlock.xml");
-		mtgDeck.push("./xml/RayneForest.xml");
-		mtgDeck.push("./xml/RedPatrol.xml");
-		mtgDeck.push("./xml/affinity.xml");
-		mtgDeck.push("./xml/hightide.xml");
-		mtgDeck.push("./xml/oath.xml");
-		mtgDeck.push("./xml/trix.xml");
-		mtgDeck.push("./xml/belcher.xml");	
-		mtgDeck.push("./xml/counterbalance.xml");
-		mtgDeck.push("./xml/dredge.xml");
-		mtgDeck.push("./xml/goblins.xml");
-		mtgDeck.push("./xml/landstill.xml");
-		mtgDeck.push("./xml/BloodBraidElf.xml");
-		mtgDeck.push("./xml/BloodBraidEnchantress.xml");
-		mtgDeck.push("./xml/Patriot.xml");
-		mtgDeck.push("./xml/WelderGamble.xml"); 
-		mtgDeck.push("./xml/CloudpostWelder.xml"); 
-		mtgDeck.push("./xml/Welder.xml"); 
-		mtgDeck.push("./xml/TronTate.xml"); 
+const mtgDeck = [
+    "./xml/BigRedMachine.xml",
+    "./xml/Stasis.xml",
+    "./xml/ZombieRenewal.xml",
+    "./xml/Rith.xml",
+    "./xml/BlackRack.xml",
+    "./xml/BlackDread.xml",
+    "./xml/Brood.xml",
+    "./xml/CharredDiscard.xml",
+    "./xml/Classic.xml",
+    "./xml/CreepingChill.xml",
+    "./xml/FireandIce.xml",
+    "./xml/GreenWaste.xml",
+    "./xml/GreenWasteOrder.xml",
+    "./xml/GreenWasteSakura.xml",
+    "./xml/Ixalan_Cannons_RedBlue.xml",
+    "./xml/Ixalan_Green_White.xml",
+    "./xml/JeskaiPioneer.xml",
+    "./xml/Dimir_Inverter.xml",
+    "./xml/JunkDiver.xml",
+    "./xml/KindofBlue.xml",
+    "./xml/Lumberjack.xml",
+    "./xml/MantisRiderPioneer.xml",
+    "./xml/Napoleon.xml",
+    "./xml/Nishoba.xml",
+    "./xml/Outpost.xml",
+    "./xml/PatriotBlock.xml",
+    "./xml/Pernicious.xml",
+    "./xml/Plum.xml",
+    "./xml/PlumGoneBlock.xml",
+    "./xml/RayneForest.xml",
+    "./xml/RedPatrol.xml",
+    "./xml/affinity.xml",
+    "./xml/hightide.xml",
+    "./xml/oath.xml",
+    "./xml/trix.xml",
+    "./xml/belcher.xml",
+    "./xml/counterbalance.xml",
+    "./xml/dredge.xml",
+    "./xml/goblins.xml",
+    "./xml/landstill.xml",
+    "./xml/BloodBraidElf.xml",
+    "./xml/BloodBraidEnchantress.xml",
+    "./xml/Patriot.xml",
+    "./xml/WelderGamble.xml",
+    "./xml/CloudpostWelder.xml",
+    "./xml/Welder.xml",
+    "./xml/TronTate.xml"
+];
 
+async function startCompareDecks() {
+    try {
+        const len = mtgDeck.length;
 
-
-
-	var len=mtgDeck.length;
-	for(var i=0; i<len; i++) {
-		xmlFile = mtgDeck[i];
-		//loadXMLDocSim(xmlFile);
-		loadXMLDoc(xmlFile);
-		displayDeckComparison();
-		}
+        for (let i = 0; i < len; i++) {
+            xmlFile = mtgDeck[i];
+            await loadXMLDoc(xmlFile);
+            displayDeckComparison();
+        }
+    } catch (error) {
+        console.error(error);
+        window.alert("An error occurred while comparing decks.");
+    }
 }
 
-function loadXMLDocSim(xmlFile) {
-	if (window.ActiveXObject) {
-		xmlDoc= new ActiveXObject("Microsoft.XMLDOM");
-		xmlDoc.async="false";
-		xmlDoc.load(xmlFile);
-		return;
-	}		
-	else if (document.implementation && document.implementation.createDocument) {
-		//alert('This is Firefox');
-		xmlDoc = document.implementation.createDocument("", "", null);
-		//xmlDoc.load(xmlFile);
-		xmlDoc.async=false;
-		xmlDoc.onload = function (){};xmlDoc.load(xmlFile);
-		return;
-	}
-}
-function loadXMLDoc(XMLFile) {
-	// Create a connection to the file.
-	var Connect = new XMLHttpRequest();
-
-	try
-	{
- 	// Define which file to open and
-	// send the request.
-  	Connect.open("GET", XMLFile, false);
-  	Connect.send();
-	}
-	catch(e) {
-		window.alert("unable to load the requested file.");
-		return;
-	}
-
-  	xmlDoc=Connect.responseXML;
+async function loadXMLDoc(XMLFile) {
+    try {
+        // Create a Fetch API request to load the XML file.
+        const response = await fetch(XMLFile);
+        
+        if (!response.ok) {
+            throw new Error('Failed to load the requested file.');
+        }
+        
+        // Parse the XML response into a document.
+        const xmlText = await response.text(); // Use a different variable name
+        const parser = new DOMParser();
+        xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // Use xmlDoc here, not xmlDoc
+    } catch (error) {
+        console.error(error);
+        window.alert('Unable to load the requested file.');
+    }
 }
 
 // This returns a string with everything but the digits removed.

@@ -2,30 +2,30 @@
 var xmlDoc;
 var xmlFile;
 
-async function startListDeck() {
-    const XMLFile = GetSelectedItem();
-    console.log('Request was made: ' + XMLFile);
-	await loadXMLDoc(XMLFile);
-    displayDeck(xmlDoc);
+function startListDeck() {
+	var XMLFile = GetSelectedItem();
+	console.log('request was made: ' + xmlFile);
+	loadXMLDoc(XMLFile);
+	displayDeck(xmlDoc);
 }
 
-async function loadXMLDoc(XMLFile) {
-    try {
-        // Create a Fetch API request to load the XML file.
-        const response = await fetch(XMLFile);
-        
-        if (!response.ok) {
-            throw new Error('Failed to load the requested file.');
-        }
-        
-        // Parse the XML response into a document.
-        const xmlText = await response.text(); // Use a different variable name
-        const parser = new DOMParser();
-        xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // Use xmlDoc here, not xmlDoc
-    } catch (error) {
-        console.error(error);
-        window.alert('Unable to load the requested file.');
-    }
+function loadXMLDoc(XMLFile) {
+	// Create a connection to the file.
+	var Connect = new XMLHttpRequest();
+
+	try
+	{
+ 	// Define which file to open and
+	// send the request.
+  	Connect.open("GET", XMLFile, false);
+  	Connect.send();
+	}
+	catch(e) {
+		window.alert("unable to load the requested file.");
+		return;
+	}
+
+  	xmlDoc=Connect.responseXML;
 }
 
 function GetSelectedItem() {
@@ -42,8 +42,7 @@ function GetSelectedItem() {
 
 // This returns a string with everything but the digits removed.
 function getConvertedCost(currentCost) {
-    var arrConvertedCost = [];
-	// var arrConvertedCost = new Array(2);
+	var arrConvertedCost = new Array(2);
 	var intColorless = currentCost.replace (/[^\d]/g, "");
 	if (intColorless.length > 0) {
 		var lenintColorless = intColorless.length
@@ -60,38 +59,79 @@ function getConvertedCost(currentCost) {
 	return arrConvertedCost;
 }
 
-function countColorOccurrences(currentCost) {
-    const colorCounts = {
-        "U": { count: 0, cards: 0 },
-        "R": { count: 0, cards: 0 },
-        "B": { count: 0, cards: 0 },
-        "W": { count: 0, cards: 0 },
-        "G": { count: 0, cards: 0 },
-        "X": { count: 0, cards: 0 }
-    };
+function getColorCosts(currentCost) {
+	var arrColorDist = new Array(12);
+	intBlueCount = 0;
+	intBlueCards = 0;
+	intRedCount = 0;
+	intRedCards = 0;
+	intBlackCount = 0;
+	intBlackCards = 0;
+	intWhiteCount = 0;
+	intWhiteCards = 0;
+	intGreenCount = 0;
+	intGreenCards = 0;
+	intClearCount = 0;
+	intClearCards = 0;
 
-    for (var i = 0; i < currentCost.length; i++) {
-        var strColorCharacter = currentCost.charAt(i);
-        if (colorCounts.hasOwnProperty(strColorCharacter)) {
-            colorCounts[strColorCharacter].count += 1;
-            colorCounts[strColorCharacter].cards = 1;
-        }
-    }
+	var strLength = currentCost.length
+	//currentCost = currentCost.toUpperCase();
+	for (var i=0; i <(strLength); i++) {
+	var strColorCharacter = currentCost.charAt(i);
+		switch (strColorCharacter) {
+		   case "U":
+			 intBlueCount = intBlueCount + 1;
+			 intBlueCards = 1;
+			 break;
+		   case "R":
+			 intRedCount = intRedCount + 1;
+			 intRedCards = 1;
+			 break;
+		   case "B":
+			 intBlackCount = intBlackCount + 1;
+			 intBlackCards = 1;
+			 break;
+		   case "W":
+			  intWhiteCount = intWhiteCount + 1;
+			  intWhiteCards = 1;
+			  break;
+		   case "G":
+			  intGreenCount = intGreenCount + 1;
+			  intGreenCards = 1;
+			  break;
+		   case "X":
+			  intClearCount = parseInt(intClearCount) + 1;
+			  intClearCards = 1;
+			  break;
+		   default :
+			  break;
+		}
+	}
+	arrColorDist[0] = intBlueCount;
+	arrColorDist[1] = intBlueCards;
+	arrColorDist[2] = intRedCount;
+	arrColorDist[3] = intRedCards;
+	arrColorDist[4] = intBlackCount;
+	arrColorDist[5] = intBlackCards;
+	arrColorDist[6] = intWhiteCount;
+	arrColorDist[7] = intWhiteCards;
+	arrColorDist[8] = intGreenCount;
+	arrColorDist[9] = intGreenCards;
+	arrColorDist[10] = intClearCount;
+	arrColorDist[11] = intClearCards;
 
-    const arrColorDist = Object.values(colorCounts).flatMap(color => [color.count, color.cards]);
-    return arrColorDist;
+	return arrColorDist;
+	//return [intBlueCount,intBlueCards,intRedCount,intRedCards,intBlackCount,intBlackCards,intWhiteCount,intWhiteCards,intGreenCount,intGreenCards,intClearCount,intClearCards];
 }
 
 // delete table rows with index greater then 0
-function deleteRows(tableId) {
-	var table = document.getElementById(tableId);
-
-	// Delete all rows except the header row (first row)
-	for (var i = table.rows.length - 1; i > 0; i--) {
-		table.deleteRow(i);
+function deleteRows(tblDelete){
+	var tbl = document.getElementById(tblDelete); // table reference
+	// set the last row index
+	var lastRow = tbl.rows.length -1;
+	// delete rows with index greater then 0
+	for (var i=lastRow; i>1; i--) tbl.deleteRow(i);
 	}
-}
-	
 
 function displayDeck(xmlDoc) {
 	var deckList = xmlDoc.getElementsByTagName("Decklist")[0];
@@ -187,7 +227,7 @@ function displayDeck(xmlDoc) {
 		deckSize = deckSize + parseInt(currentQuantity);
 			if (currentCost != "NA") {
 
-				var arrColorDistribution = countColorOccurrences(currentCost);
+				var arrColorDistribution = getColorCosts(currentCost);
 				//[intBlueCount,intBlueCards,intRedCount,intRedCards,intBlackCount,intBlackCards,intWhiteCount,intWhiteCards,intGreenCount,intGreenCards,intClearCount,intClearCards] = getColorCosts(currentCost);
 
 					intBlueCount = arrColorDistribution[0];
@@ -319,83 +359,96 @@ function displayDeck(xmlDoc) {
 
 	}
 }
-
 function initializeCardTable(tblChosen) {
-    // Get the reference for the body
+    // get the reference for the body
     var body = document.getElementsByTagName("body")[0];
-    
-    // Get the existing table or create a new one
-    var tbl = document.getElementById(tblChosen) || document.createElement("table");
-    tbl.setAttribute("display", "inline-block");
-
-    // Create a table row
+    // creates a <table> element and a <tbody> element
+    var tbl     = document.getElementById(tblChosen);
+    var tblBody = document.createElement("tbody");
+	// creating all cells
+    // creates a table row
     var row = document.createElement("tr");
+    // add the row to the end of the table body
+    // Create a <td> element and a text node, make the text
+    // node the contents of the <td>, and put the <td> at
+    // the end of the table row
 
-    // Create and add cells for headings
-    createHeadingCell(row, "Card");
-    createHeadingCell(row, "Quantity");
-    createHeadingCell(row, "Cost");
-    createHeadingCell(row, "Converted Cost");
-
-    // Add the row to the end of the table body
-    tbl.appendChild(row);
-
-    // Append the table to the body if it's newly created
-    if (!tbl.parentElement) {
-        body.appendChild(tbl);
-    }
-}
-
-// Helper function to create a heading cell and append it to a row
-function createHeadingCell(row, text) {
-    var cell = document.createElement("td");
-    cell.appendChild(document.createTextNode(text));
+    var nameStr = document.createTextNode("Card");
+	var cell = document.createElement("td");
+    cell.appendChild(nameStr);
     row.appendChild(cell);
+
+	var quantityStr = document.createTextNode("Quantity");
+	var cell = document.createElement("td");
+    cell.appendChild(quantityStr);
+    row.appendChild(cell);
+
+	var costStr = document.createTextNode("Cost");
+	var cell = document.createElement("td");
+	cell.appendChild(costStr);
+    row.appendChild(cell);
+
+	var convertedStr = document.createTextNode("Converted Cost");
+    var cell = document.createElement("td");
+	cell.appendChild(convertedStr);
+	row.appendChild(cell);
+
+	// add the row to the end of the table body
+	tblBody.appendChild(row);
+	// put the <tbody> in the <table>
+	tbl.appendChild(tblBody);
+	// appends <table> into <body>
+	body.appendChild(tbl);
+	// sets the border attribute of tbl to 2;
+	//tbl.setAttribute("border", "2");
+	tbl.setAttribute("display", "inline-block");
 }
 
-
-function createCardTable(tblChosen, currentCard, currentQuantity, currentCost, strConvertedCost) {
-    // Get the reference for the body
+function createCardTable(tblChosen,currentCard,currentQuantity,currentCost,strConvertedCost) {
+    // get the reference for the body
     var body = document.getElementsByTagName("body")[0];
-    
-    // Get the existing table or create a new one
-    var tbl = document.getElementById(tblChosen) || document.createElement("table");
-    tbl.setAttribute("display", "inline-block");
-
-    // Create a table row
+    // creates a <table> element and a <tbody> element
+    var tbl     = document.getElementById(tblChosen);
+    var tblBody = document.createElement("tbody");
+	// creating all cells
+    // creates a table row
     var row = document.createElement("tr");
-    
-    // Create and add cell for card name with link
+    // add the row to the end of the table body
+    // Create a <td> element and a text node, make the text
+    // node the contents of the <td>, and put the <td> at
+    // the end of the table row
     var cell = document.createElement("td");
-    var link = document.createElement('a');
+    link = document.createElement('A');
     link.href = "http://www.magiccards.info/autocard/" + currentCard;
-    link.appendChild(document.createTextNode(currentCard));
     cell.appendChild(link);
+    var nameStr = document.createTextNode(currentCard);
+    link.appendChild(nameStr);
     row.appendChild(cell);
 
-    // Create and add cell for quantity
-    cell = document.createElement("td");
-    cell.appendChild(document.createTextNode(currentQuantity));
+	var quantityStr = document.createTextNode(currentQuantity);
+	var cell = document.createElement("td");
+    cell.appendChild(quantityStr);
     row.appendChild(cell);
 
-    // Check if currentCost is not "NA" before creating cost-related cells
-    if (currentCost !== "NA") {
-        // Create and add cell for currentCost
-        cell = document.createElement("td");
-        cell.appendChild(document.createTextNode(currentCost));
-        row.appendChild(cell);
+	if (currentCost != "NA") {
+	var costStr = document.createTextNode(currentCost);
+	var cell = document.createElement("td");
+	cell.appendChild(costStr);
+    row.appendChild(cell);
 
-        // Create and add cell for strConvertedCost
-        cell = document.createElement("td");
-        cell.appendChild(document.createTextNode(strConvertedCost));
-        row.appendChild(cell);
-    }
+	var convertedStr = document.createTextNode(strConvertedCost);
+    var cell = document.createElement("td");
+	cell.appendChild(convertedStr);
+	row.appendChild(cell);
+	}
 
-    // Add the row to the end of the table body
-    tbl.appendChild(row);
-    
-    // Append the table to the body if it's newly created
-    if (!tbl.parentElement) {
-        body.appendChild(tbl);
-    }
+	// add the row to the end of the table body
+	tblBody.appendChild(row);
+	// put the <tbody> in the <table>
+	tbl.appendChild(tblBody);
+	// appends <table> into <body>
+	body.appendChild(tbl);
+	// sets the border attribute of tbl to 2;
+	//tbl.setAttribute("border", "2");
+	tbl.setAttribute("display", "inline-block");
 }

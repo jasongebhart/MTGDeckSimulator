@@ -1,265 +1,223 @@
-// comment
-// 
-var xmlDoc;
-var xmlFile;
+// main.js
+
+// Import the configuration
+import * as config from './config';
+
+// Set values for global variables
+// config.globalVariable1 = "new value for globalVariable1";
+// config.globalVariable2 = "new value for globalVariable2";
+
+// Access and use the configured values directly
+// console.log(config.globalVariable1); // Output: new value for globalVariable1
+// console.log(config.globalVariable2); // Output: new value for globalVariable2
+
+// Your main script logic
+// You can use config.globalVariable1, config.globalVariable2, etc. directly
+
+// Assuming you have the xml2js library installed via npm
+const xml2js = require('xml2js');
+const fs = require('fs');
 
 function start() {
-    var mtgDeck=new Array();
-    // regular array
-    mtgDeck[0]= "./xml/BigRedMachine.xml";
-    mtgDeck[1] = "./xml/Stasis.xml";
-    mtgDeck[2] = "./xml/ZombieRenewal.xml";
-    mtgDeck[3] = "./xml/Rith.xml";
-    mtgDeck[4] = "./xml/BlackRack.xml";
-    mtgDeck[5] = "./xml/Brood.xml";
-    mtgDeck[6] = "./xml/CharredDiscard.xml";
-    mtgDeck[7] = "./xml/Classic.xml";
-    mtgDeck[8] = "./xml/FireandIce.xml";
-    mtgDeck[9] = "./xml/GreenWaste.xml";
-    mtgDeck[10] = "./xml/JunkDiver.xml";
-    mtgDeck[11] = "./xml/KindofBlue.xml";
-    mtgDeck[12] = "./xml/Lumberjack.xml";
-    mtgDeck[13] = "./xml/Napoleon.xml";
-    mtgDeck[14] = "./xml/Nishoba.xml";
-    mtgDeck[15] = "./xml/Outpost.xml";
-    mtgDeck[16] = "./xml/PatriotBlock.xml";
-    mtgDeck[17] = "./xml/Pernicious.xml";
-    mtgDeck[18] = "./xml/Plum.xml";
-    mtgDeck[19] = "./xml/PlumGoneBlock.xml";
-    mtgDeck[20] = "./xml/RayneForest.xml";
-    mtgDeck[21] = "./xml/RedPatrol.xml";
-    mtgDeck[22] = "./xml/affinity.xml";
-    mtgDeck[23] =  "./xml/hightide.xml";
-    mtgDeck[24] =  "./xml/oath.xml";
-    mtgDeck[25] =  "./xml/trix.xml";
-    mtgDeck[26] =  "./xml/belcher.xml";
-    mtgDeck[27] =  "./xml/counterbalance.xml";
-    mtgDeck[28] =  "./xml/dredge.xml";
-    mtgDeck[29] =  "./xml/goblins.xml";
-    mtgDeck[30] =  "./xml/landstill.xml";
-    mtgDeck[29] =  "./xml/BloodBraidElf.xml";
-    mtgDeck[30] =  "./xml/BloodBraidEnchantress.xml";
-	mtgDeck.push( "./xml/CloudpostWelder.xml");
-	mtgDeck.push( "./xml/BlackDread.xml");
+    const mtgDeck = [
+        "./xml/BigRedMachine.xml",
+        "./xml/Stasis.xml",
+        "./xml/ZombieRenewal.xml",
+        "./xml/Rith.xml",
+        "./xml/BlackRack.xml",
+        "./xml/Brood.xml",
+        "./xml/CharredDiscard.xml",
+        "./xml/Classic.xml",
+        "./xml/FireandIce.xml",
+        "./xml/GreenWaste.xml",
+        "./xml/JunkDiver.xml",
+        "./xml/KindofBlue.xml",
+        "./xml/Lumberjack.xml",
+        "./xml/Napoleon.xml",
+        "./xml/Nishoba.xml",
+        "./xml/Outpost.xml",
+        "./xml/PatriotBlock.xml",
+        "./xml/Pernicious.xml",
+        "./xml/Plum.xml",
+        "./xml/PlumGoneBlock.xml",
+        "./xml/RayneForest.xml",
+        "./xml/RedPatrol.xml",
+        "./xml/affinity.xml",
+        "./xml/hightide.xml",
+        "./xml/oath.xml",
+        "./xml/trix.xml",
+        "./xml/belcher.xml",
+        "./xml/counterbalance.xml",
+        "./xml/dredge.xml",
+        "./xml/goblins.xml",
+        "./xml/landstill.xml",
+        "./xml/BloodBraidElf.xml",
+        "./xml/BloodBraidEnchantress.xml"
+    ];
 
-    var len=mtgDeck.length;
+    mtgDeck.push(
+        "./xml/CloudpostWelder.xml",
+        "./xml/BlackDread.xml"
+    );
 
-    for(var i=0; i<len; i++) {
-        xmlFile = mtgDeck[i];
+    for (const xmlFile of mtgDeck) {
         loadXMLDoc(xmlFile);
         //displayDeck();
     }
 }
 
 function loadXMLDoc(xmlFile) {
-    if (window.ActiveXObject) {xmlDoc= new ActiveXObject("Microsoft.XMLDOM");
-        xmlDoc.async="false";
-        xmlDoc.load(xmlFile);
-        rootdisplayDeck();
-    }else if (document.implementation && document.implementation.createDocument) {
-        //alert('This is Firefox');
-        xmlDoc = document.implementation.createDocument("", "", null);
-        //xmlDoc.load(xmlFile);
-        xmlDoc.async=false;
-        xmlDoc.onload = function (){};
-        xmlDoc.load(xmlFile);
-        rootdisplayDeck();
-    }
-}
+    fs.readFile(xmlFile, 'utf8', (err, xmlData) => {
+        if (err) {
+            console.error('Error reading XML file:', err);
+            return;
+        }
 
-function rootdisplayDeck() {
-    displayDeck();
+        // Parse XML data using xml2js library
+        xml2js.parseString(xmlData, (parseErr, result) => {
+            if (parseErr) {
+                console.error('Error parsing XML:', parseErr);
+                return;
+            }
+
+            // Process the parsed XML data (result)
+            displayDeck(result);
+        });
+    });
 }
 
 function displayDeck() {
-    var deckList = xmlDoc.getElementsByTagName("Decklist")[0];
-    var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
-    var uniqueCards = deckList.getElementsByTagName("Name").length;
-    // get the reference for the body
-    var body = document.getElementsByTagName("body")[0];
-    // creates a <table> element and a <tbody> element
-    var tbl     = document.createElement("table");
-    var tblBody = document.createElement("tbody");
-    var totConvertedCost = 0;
-    var intLandCount = 0;
-    var intCreatureCount = 0;
-    var intInstantCount = 0;
-    var intSorceryCount = 0;
-    var intEnchantmentCount = 0;
-    var intArtifactCount = 0;
-    var deckSize = 0;
-    
-    for (var i=0; i <uniqueCards; i++) {
-	    var currentQuantity = deckList.getElementsByTagName("Quantity")[i].firstChild.data;
-	    var currentType = deckList.getElementsByTagName("Type")[i].firstChild.data;
-	    var currentCost = deckList.getElementsByTagName("Cost")[i].firstChild.data;
-	    switch (currentType) {
-		    case "Land" : intLandCount = intLandCount + parseInt(currentQuantity);
-		    break; 
-            case "Creature" : intCreatureCount = intCreatureCount + parseInt(currentQuantity); 
-		    break; 
-		    case "Instant" : intInstantCount = intInstantCount + parseInt(currentQuantity);
-		    break; 
-		    case "Sorcery" : intSorceryCount = intSorceryCount + parseInt(currentQuantity);
-		    break; 
-		    case "Enchantment" : intEnchantmentCount = intEnchantmentCount + parseInt(currentQuantity);
-		    break; 
-		    case "Artifact" : intArtifactCount = intArtifactCount + parseInt(currentQuantity);
-		    break; 
-    	    default : 
-    }
-    deckSize = deckSize + parseInt(currentQuantity);
-    if (currentCost != "NA") {
-        var convertedCost = getConvertedCost(currentCost);
-        var convertedStr = document.createTextNode("Converted Cost: " + convertedCost);
-        totConvertedCost = totConvertedCost + (parseInt(convertedCost)*parseInt(currentQuantity));
-    }
-    }
-var deckListNameNode = document.createTextNode(deckListName);
-var intTotalConvertedCost = document.createTextNode(totConvertedCost);
-var intLandCountNode = document.createTextNode("Lands: " + intLandCount);
-var intCreatureCountNode = document.createTextNode("Creatures: " + intCreatureCount);
+	const deckList = xmlDoc.getElementsByTagName("Decklist")[0];
+	const deckListName = deckList.getAttribute("Deck");
+	const uniqueCards = deckList.getElementsByTagName("Name").length;
 
-// creating all cells
-// creates a table row
-var row = document.createElement("tr");
- 
-// add the row to the end of the table body
-tblBody.appendChild(row);
- 
-// Create a <td> element and a text node, make the text
-// node the contents of the <td>, and put the <td> at
-// the end of the table row
-  
-var cell = document.createElement("td");
-cell.appendChild(deckListNameNode);
-  
-row.appendChild(cell);
-	
-var cell = document.createElement("td");
+	const deckInfo = {
+		convertedCost: 0,
+		landCount: 0,
+		creatureCount: 0,
+		instantCount: 0,
+		sorceryCount: 0,
+		enchantmentCount: 0,
+		artifactCount: 0,
+		deckSize: 0
+	};
 
-cell.appendChild(intTotalConvertedCost);
-  
-row.appendChild(cell);
-		
-var cell = document.createElement("td");
-
-
-cell.appendChild(intLandCountNode);
-
-  
-row.appendChild(cell);
-
-var cell = document.createElement("td");
-
-
-cell.appendChild(intCreatureCountNode);
-
-       
-row.appendChild(cell);
-
-		
-// add the row to the end of the table body
-
-  
-tblBody.appendChild(row);
-
-
-
-	
-// put the <tbody> in the <table>
-
-
-tbl.appendChild(tblBody);
-
-
-// appends <table> into <body>
-
-	
-body.appendChild(tbl);
-
-
-// sets the border attribute of tbl to 2;
-
-
-tbl.setAttribute("border", "2");
-return;
-
+	for (let i = 0; i < uniqueCards; i++) {
+		updateDeckInfo(deckList, deckInfo, i);
 	}
 
+	const deckInfoNode = createDeckInfoNode(deckListName, deckInfo.convertedCost, deckInfo.landCount, deckInfo.creatureCount);
 
+	appendDeckInfoToTable(deckInfoNode);
+}
 
+function updateDeckInfo(deckList, deckInfo, index) {
+	const currentQuantity = parseInt(deckList.getElementsByTagName("Quantity")[index].firstChild.data);
+	const currentType = deckList.getElementsByTagName("Type")[index].firstChild.data;
+	const currentCost = deckList.getElementsByTagName("Cost")[index].firstChild.data;
 
+	// Update deck size
+	deckInfo.deckSize += currentQuantity;
+
+	// Update card type counts
+	switch (currentType) {
+		case "Land":
+			deckInfo.landCount += currentQuantity;
+			break;
+		case "Creature":
+			deckInfo.creatureCount += currentQuantity;
+			break;
+		case "Instant":
+			deckInfo.instantCount += currentQuantity;
+			break;
+		case "Sorcery":
+			deckInfo.sorceryCount += currentQuantity;
+			break;
+		case "Enchantment":
+			deckInfo.enchantmentCount += currentQuantity;
+			break;
+		case "Artifact":
+			deckInfo.artifactCount += currentQuantity;
+			break;
+		default:
+			break;
+	}
+
+	// Update converted cost
+	if (currentCost !== "NA") {
+		const convertedCost = getConvertedCost(currentCost);
+		deckInfo.convertedCost += parseInt(convertedCost) * currentQuantity;
+	}
+}
+
+function createDeckInfoNode(deckName, convertedCost, landCount, creatureCount) {
+	const deckInfoNode = document.createElement("div");
+	deckInfoNode.textContent = `Deck: ${deckName} | Converted Cost: ${convertedCost} | Lands: ${landCount} | Creatures: ${creatureCount}`;
+	return deckInfoNode;
+}
+
+function appendDeckInfoToTable(deckInfoNode) {
+	const body = document.getElementsByTagName("body")[0];
+	body.appendChild(deckInfoNode);
+}
 	
 // This returns a string with everything but the digits removed.
 function getConvertedCost(currentCost) {
-var intColorless = currentCost.replace (/[^\d]/g, "");
-if (intColorless.length > 0) {
+    // Remove all non-digit characters from the string
+    const digitsOnly = currentCost.replace(/\D/g, "");
+    
+    // Calculate the converted cost
+    const intColorless = parseInt(digitsOnly);
+    const lenintColorless = digitsOnly.length;
+    const totStrLength = currentCost.length;
+    const intConvertedCost = intColorless + (totStrLength - lenintColorless);
 
-		
-var lenintColorless = intColorless.length}
-
-else {
-
-
-var lenintColorless = 0
-intColorless = 0
-
-
+    return intConvertedCost;
 }
-var totStrLength = currentCost.length
-var intConvertedCost = parseInt(intColorless) + (parseInt(totStrLength) - parseInt(lenintColorless))
-
-	
-return intConvertedCost
-}
-
 
 function startCompareDecks() {
-	var mtgDeck=new Array(); // regular array
-		mtgDeck[0] = "./xml/BigRedMachine.xml"; 
-		mtgDeck[1] = "./xml/Stasis.xml";
-		mtgDeck[2] = "./xml/ZombieRenewal.xml";
-		mtgDeck[3] = "./xml/Rith.xml";
-		mtgDeck[4] = "./xml/BlackRack.xml";
-		mtgDeck[5] = "./xml/Brood.xml";
-		mtgDeck[6] = "./xml/CharredDiscard.xml";
-		mtgDeck[7] = "./xml/Classic.xml";
-		mtgDeck[8] = "./xml/FireandIce.xml";
-		mtgDeck[9] = "./xml/GreenWaste.xml";
-		mtgDeck[10] = "./xml/GreenWasteExploration.xml";
-		mtgDeck[11] = "./xml/GreenWasteSakura.xml";		
-		mtgDeck[12] = "./xml/JunkDiver.xml";
-		mtgDeck[13] = "./xml/KindofBlue.xml";
-		mtgDeck[14] = "./xml/Lumberjack.xml";
-		mtgDeck[15] = "./xml/Napoleon.xml";
-		mtgDeck[16] = "./xml/Nishoba.xml";
-		mtgDeck[17] = "./xml/Outpost.xml";
-		mtgDeck[18] = "./xml/PatriotBlock.xml";
-		mtgDeck[19] = "./xml/Pernicious.xml";
-		mtgDeck[20] = "./xml/Plum.xml";
-		mtgDeck[21] = "./xml/PlumGoneBlock.xml";
-		mtgDeck[22] = "./xml/RayneForest.xml";
-		mtgDeck[23] = "./xml/RedPatrol.xml";
-	    mtgDeck[24] = "./xml/affinity.xml";
-		mtgDeck[25] = "./xml/hightide.xml";
-		mtgDeck[26] = "./xml/oath.xml";
-		mtgDeck[27] = "./xml/trix.xml";
-		mtgDeck[28] = "./xml/belcher.xml";	
-		mtgDeck[29] = "./xml/counterbalance.xml";
-		mtgDeck[30] = "./xml/dredge.xml";
-		mtgDeck[31] = "./xml/goblins.xml";
-		mtgDeck[32] = "./xml/landstill.xml";
-		mtgDeck[31] = "./xml/BloodBraidElf.xml";
-		mtgDeck[32] = "./xml/BloodBraidEnchantress.xml";
+    const mtgDeck = [
+        "./xml/BigRedMachine.xml",
+        "./xml/Stasis.xml",
+        "./xml/ZombieRenewal.xml",
+        "./xml/Rith.xml",
+        "./xml/BlackRack.xml",
+        "./xml/Brood.xml",
+        "./xml/CharredDiscard.xml",
+        "./xml/Classic.xml",
+        "./xml/FireandIce.xml",
+        "./xml/GreenWaste.xml",
+        "./xml/GreenWasteExploration.xml",
+        "./xml/GreenWasteSakura.xml",
+        "./xml/JunkDiver.xml",
+        "./xml/KindofBlue.xml",
+        "./xml/Lumberjack.xml",
+        "./xml/Napoleon.xml",
+        "./xml/Nishoba.xml",
+        "./xml/Outpost.xml",
+        "./xml/PatriotBlock.xml",
+        "./xml/Pernicious.xml",
+        "./xml/Plum.xml",
+        "./xml/PlumGoneBlock.xml",
+        "./xml/RayneForest.xml",
+        "./xml/RedPatrol.xml",
+        "./xml/affinity.xml",
+        "./xml/hightide.xml",
+        "./xml/oath.xml",
+        "./xml/trix.xml",
+        "./xml/belcher.xml",
+        "./xml/counterbalance.xml",
+        "./xml/dredge.xml",
+        "./xml/goblins.xml",
+        "./xml/landstill.xml",
+        "./xml/BloodBraidElf.xml",
+        "./xml/BloodBraidEnchantress.xml"
+    ];
 
-
-	var len=mtgDeck.length;
-	for(var i=0; i<len; i++) {
-		xmlFile = mtgDeck[i];
-		loadXMLDocSim(xmlFile);
-		displayDeckComparison();
-		}
+    for (const xmlFile of mtgDeck) {
+        loadXMLDoc(xmlFile);
+        displayDeckComparison();
+    }
 }
 
 function loadXMLDocSim(xmlFile) {
@@ -474,25 +432,6 @@ function GetSelectedItem() {
 	}
 	return XMLFile;
 }
-
-function loadXMLDocSim(xmlFile) {
-	if (window.ActiveXObject) {
-		xmlDoc= new ActiveXObject("Microsoft.XMLDOM");
-		xmlDoc.async="false";
-		xmlDoc.load(xmlFile);
-		return;
-	}		
-	else if (document.implementation && document.implementation.createDocument) {
-		//alert('This is Firefox');
-		xmlDoc = document.implementation.createDocument("", "", null);
-		//xmlDoc.load(xmlFile);
-		xmlDoc.async=false;
-		xmlDoc.onload = function (){};xmlDoc.load(xmlFile);
-		return;
-	}
-}
-
-
 
 function getDeckName() { 
 	var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
@@ -967,25 +906,6 @@ function GetSelectedItem() {
 	return XMLFile;
 }
 
-function loadXMLDocSim(xmlFile) {
-	if (window.ActiveXObject) {
-		xmlDoc= new ActiveXObject("Microsoft.XMLDOM");
-		xmlDoc.async="false";
-		xmlDoc.load(xmlFile);
-		return;
-	}		
-	else if (document.implementation && document.implementation.createDocument) {
-		//alert('This is Firefox');
-		xmlDoc = document.implementation.createDocument("", "", null);
-		//xmlDoc.load(xmlFile);
-		xmlDoc.async=false;
-		xmlDoc.onload = function (){};xmlDoc.load(xmlFile);
-		return;
-	}
-}
-
-
-
 function getDeckName() { 
 	var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
 	return deckListName;
@@ -1142,68 +1062,6 @@ function getMulliganStats() {
 	document.getElementById("MulliganPercentage").innerHTML = "Current Mulligan Percentage: " + parseInt(intNumMulligans/lastRow*100) + "%"
 }
 
-function startMulliganCheck() {
-	 loadXMLDocSim("./xml/mulligan.xml");
-	 displayMulliganChart(xmlDoc);
-}
-
-
-function displayMulliganChart(xmlDoc) {
-	var arrMulligan = new Array();
-	var intZero = 0;
-	var intOne = 0;
-	var mulliganList = xmlDoc.getElementsByTagName("Mulligan")[0];
-	var mulliganLand = mulliganList.getElementsByTagName("Quantity").length;
-	for (var i=0; i <mulliganLand; i++) {
-	    var intLandQuantity = mulliganList.getElementsByTagName("Quantity")[i].firstChild.data;
-	    intZero = mulliganList.getElementsByTagName("Zero")[i].firstChild.data;
-	    if (intZero < 1) {
-		intZero = Math.round(intZero);
-	    }
-	    intOne = mulliganList.getElementsByTagName("One")[i].firstChild.data;
-	    arrMulligan[i] = (parseInt(intZero) + parseInt(intOne)) + "%";
- 	}
-
-	document.getElementById("Nineteen").innerHTML = arrMulligan[0];
-	document.getElementById("Twenty").innerHTML = arrMulligan[1];
-	document.getElementById("TwentyOne").innerHTML = arrMulligan[2];
-	document.getElementById("TwentyTwo").innerHTML = arrMulligan[3];
-	document.getElementById("TwentyThree").innerHTML = arrMulligan[4];
-	document.getElementById("TwentyFour").innerHTML = arrMulligan[5];
-	document.getElementById("TwentyFive").innerHTML = arrMulligan[6];
-	document.getElementById("TwentySix").innerHTML = arrMulligan[7];
-	document.getElementById("TwentySeven").innerHTML = arrMulligan[8];
-	document.getElementById("TwentyEight").innerHTML = arrMulligan[9];
-}
-
-
-var xmlDoc;
-var xmlFile;
-	
-function startListDeck() {
-	var XMLFile = GetSelectedItem();
-	loadXMLDoc(XMLFile);
-	displayDeck(xmlDoc);
-}
-
-function loadXMLDoc(XMLFile) {
-	// Create a connection to the file.
-	var Connect = new XMLHttpRequest();
- 	
-	try
-	{
- 	// Define which file to open and
-	// send the request.
-  	Connect.open("GET", XMLFile, false);
-  	Connect.send();
-	}
-	catch(e) {
-		window.alert("unable to load the requested file.");
-		return;
-	}
-
-  	xmlDoc=Connect.responseXML;
-}
 
 function GetSelectedItem() {
     len = document.formDecks.selectDeck.length;
