@@ -9,7 +9,7 @@ async function startListDeck() {
     displayDeck(xmlDoc);
 }
 
-async function loadXMLDoc(XMLFile) {
+export async function loadXMLDoc(XMLFile) {
     try {
         // Create a Fetch API request to load the XML file.
         const response = await fetch(XMLFile);
@@ -22,6 +22,8 @@ async function loadXMLDoc(XMLFile) {
         const xmlText = await response.text(); // Use a different variable name
         const parser = new DOMParser();
         xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // Use xmlDoc here, not xmlDoc
+
+		return xmlDoc;
     } catch (error) {
         console.error(error);
         window.alert('Unable to load the requested file.');

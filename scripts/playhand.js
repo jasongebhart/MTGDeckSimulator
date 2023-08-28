@@ -92,25 +92,6 @@ async function loadXMLDoc(XMLFile) {
     }
 }
 
-
-function loadXMLDocOLD(XMLFile) {
-    // Create a connection to the file.
-    var Connect = new XMLHttpRequest();
-
-    try
-    {
-    // Define which file to open and
-    // send the request.
-    Connect.open("GET", XMLFile, false);
-    Connect.send();
-    }
-    catch(e) {
-        window.alert("unable to load the requested file.");
-        return;
-    }
-
-    xmlDoc=Connect.responseXML;
-}
 // delete table rows with an index greater then 0
 function deleteRows(tableId) {
     const table = document.getElementById(tableId);

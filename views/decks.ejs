@@ -10,12 +10,12 @@
 </head>
 <body>
 <div id="header">
-  <% include partials/nav.ejs %>
+    <%- include('partials/nav'); -%>
 </div>
 <div id="container">
    <div id="sidebar">
 	<a href="https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/banned-restricted">Banned List</a>
-  <% include partials/decklist.ejs %>
+    <%- include('partials/decklist'); -%>
 	<button type="button" onClick="startListDeck()">List Deck</button>
   </div>
      <h2>Design Goal</h2>

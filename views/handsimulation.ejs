@@ -10,11 +10,11 @@
 </head>
 <body onload="startMulliganCheck()">
 <div id="header">
-  <% include partials/nav.ejs %>
+    <%- include('partials/nav'); -%>
 </div>
 <div id="container">
 <div id="sidebar">
-  <% include partials/decklist.ejs %>
+    <%- include('partials/decklist'); -%>
 <button type="button" onclick="startSimulateHandDraw()">Simulate Hand Draw</button>
 </div>
 

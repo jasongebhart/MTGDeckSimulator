@@ -8,14 +8,13 @@
 <script src="./scripts/playhand.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/assets/decks.css">
 </head>
-
 <div id="header">
-  <% include partials/nav.ejs %>
+    <%- include('partials/nav'); -%>
 </div>
 <body>
 <div id="container">
 <section id="deck" class="flexlibrary">
-  <% include partials/decklist.ejs %>
+    <%- include('partials/decklist'); -%>
 	    <button type="button" class="btn" onclick="startDrawOneCard()">
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Draw
@@ -42,16 +41,12 @@
             Library
         </button>
         <p class="deckSize flexlibrary" id="deckSize"></p>
-
-
 </section>
     <section class="flexlibrary">
         <section id="section_library" class="flexlibrary">
             <h2>Library</h2>
         </section>
     </section>
-
-
     <section id="section_hand">
         <h3>Hand</h3>
         <section id="section_spells" class="flex">
@@ -65,7 +60,6 @@
     <h3>Graveyard</h3>
         <section id="section_graveyard" class="flex">
     </section>
-
 </div>
 </body>
 </html>

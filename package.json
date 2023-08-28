@@ -3,13 +3,12 @@
   "version": "1.0.1",
   "description": "Magic The Gathering Test Application",
   "main": "startmtg.js",
-  "type": "module",  
+  "type": "module",
   "dependencies": {
-    "ejs": "^2.6.1",
-    "express": "^4.17.1",
-    "xml2json": "^0.11.2"
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "xml2json": "^0.12.0"
   },
-  "devDependencies": {},
   "engines": {
     "node": "18.17.1"
   },
