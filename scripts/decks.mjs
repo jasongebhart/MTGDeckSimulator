@@ -1,15 +1,16 @@
-
+//import { loadXMLDoc } from './config.mjs'; // Import the loadXMLDoc function from the correct path
+//import { xmlDoc, xmlFile } from './config.js';
+// import * as fs from 'fs';
+// Declare variables
 var xmlDoc;
 var xmlFile;
-
 async function startListDeck() {
     const XMLFile = GetSelectedItem();
     console.log('Request was made: ' + XMLFile);
-	await loadXMLDoc(XMLFile);
+    await loadXMLDoc(XMLFile);
     displayDeck(xmlDoc);
 }
-
-export async function loadXMLDoc(XMLFile) {
+async function loadXMLDoc(XMLFile) {
     try {
         // Create a Fetch API request to load the XML file.
         const response = await fetch(XMLFile);
@@ -19,11 +20,11 @@ export async function loadXMLDoc(XMLFile) {
         }
         
         // Parse the XML response into a document.
-        const xmlText = await response.text(); // Use a different variable name
+        const xmlText = await response.text();
         const parser = new DOMParser();
-        xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // Use xmlDoc here, not xmlDoc
-
-		return xmlDoc;
+        xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        
+        return xmlDoc;
     } catch (error) {
         console.error(error);
         window.alert('Unable to load the requested file.');

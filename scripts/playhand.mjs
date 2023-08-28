@@ -1,13 +1,11 @@
-// import { xmlDoc, xmlFile } from './config.js';
+// import { xmlDoc } from './config.mjs';
 // import * as fs from 'fs';
 // Declare variables
-var xmlDoc;
-var xmlFile;
+//var xmlDoc;
+//var xmlFile;
 let arrCardNames = [];
 let arrTypes = [];
 let deckSize;
-
-
 
 // Function to start simulating hand draw
 async function startSimulateHandDraw() {
@@ -73,10 +71,10 @@ function displayHandAndDeck(hand, handString, lands, landsString, handTypes, upd
     setDeckSize(updatedDeckSize);
 }
 
-async function loadXMLDoc(XMLFile) {
+async function loadXMLDoc(xmlFile) {
     try {
         // Create a Fetch API request to load the XML file.
-        const response = await fetch(XMLFile);
+        const response = await fetch(xmlFile);
         
         if (!response.ok) {
             throw new Error('Failed to load the requested file.');

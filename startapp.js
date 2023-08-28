@@ -1,8 +1,9 @@
 // Import required modules
 import express from 'express';
-import { setupRoutes } from './controllers/controller.js'; // Adjust the import path to match your file structure
+import { setupRoutes } from './controllers/controller.mjs'; // Adjust the import path to match your file structure
 import fs from 'fs';
 import parser from 'xml2json';
+import { xmlDoc } from './scripts/config.mjs';
 
 // Create an instance of Express
 const app = express();

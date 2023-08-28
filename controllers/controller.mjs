@@ -1,5 +1,5 @@
 // controller.js
-//import { loadXMLDoc } from '../scripts/decks.js'; // Import the loadXMLDoc function
+import { loadXMLDoc, xmlDoc } from '../scripts/config.mjs'; // Import the loadXMLDoc function
 
 // Function to set up routes for the Express app
 export function setupRoutes(app) {
@@ -28,8 +28,8 @@ export function setupRoutes(app) {
       console.log(XMLFile);
       console.log({ clickTime });
 
-      //await loadXMLDoc(XMLFile); // Wait for the async operation to complete
-  
+      await loadXMLDoc(XMLFile); // Wait for the async operation to complete
+      console.log(xmlDoc);
       // Send a success status code (201) back to the client
       res.sendStatus(201);
     } catch (error) {
