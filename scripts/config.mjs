@@ -1,5 +1,5 @@
 // config.mjs
-let xmlDoc = undefined; // Declare xmlDoc without assigning a value
+export let xmlDoc = undefined; // Declare xmlDoc without assigning a value
   
 export async function loadXMLDoc(xmlFile) {
     try {
@@ -21,4 +21,3 @@ export async function loadXMLDoc(xmlFile) {
         window.alert('Unable to load the requested file.');
     }
 }
-export { xmlDoc }; // Export the xmlDoc variable

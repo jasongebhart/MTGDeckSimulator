@@ -1,4 +1,6 @@
-import { xmlDoc } from './config.mjs';
+// import { loadXMLDoc, xmlDoc } from './config.mjs';
+
+
 // import * as fs from 'fs';
 // Declare variables
 //var xmlDoc;
@@ -71,7 +73,7 @@ function displayHandAndDeck(hand, handString, lands, landsString, handTypes, upd
     setDeckSize(updatedDeckSize);
 }
 
-async function loadXMLDoc(xmlFile) {
+async function loadXMLDocOld(xmlFile) {
     try {
         // Create a Fetch API request to load the XML file.
         const response = await fetch(xmlFile);
