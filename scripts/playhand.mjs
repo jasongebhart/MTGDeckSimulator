@@ -1,4 +1,4 @@
-// import { xmlDoc } from './config.mjs';
+import { xmlDoc } from './config.mjs';
 // import * as fs from 'fs';
 // Declare variables
 //var xmlDoc;

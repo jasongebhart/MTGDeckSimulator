@@ -13,7 +13,7 @@
     "node": "18.17.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --experimental-modules startapp.mjs"
   },
   "author": "Jason Gebhart",
   "license": "ISC"
