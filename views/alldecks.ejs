@@ -6,7 +6,12 @@
 </style>
 <link rel="stylesheet" href="/assets/decks.css">
 <title>Deck Comparison</title>
-<script type="text/javascript" src="./scripts/alldecks.mjs" type="module"></script>
+<script type="module">
+import { startCompareDecks } from "./scripts/alldecks.mjs";
+window.onload = () => {
+	startCompareDecks();
+};
+</script>
 </head>
 <body onload="startCompareDecks()">
 <div id="header">

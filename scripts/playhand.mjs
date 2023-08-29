@@ -1,16 +1,9 @@
-// import { loadXMLDoc, xmlDoc } from './config.mjs';
-
-
-// import * as fs from 'fs';
-// Declare variables
-//var xmlDoc;
-//var xmlFile;
+import { loadXMLDoc, xmlDoc } from './config.mjs';
 let arrCardNames = [];
 let arrTypes = [];
 let deckSize;
-
 // Function to start simulating hand draw
-async function startSimulateHandDraw() {
+export async function startSimulateHandDraw() {
     try {
         const selectedXMLFile = GetSelectedItem();
 
@@ -23,8 +16,8 @@ async function startSimulateHandDraw() {
         // Retrieve deck information
         const deckInformation = getDeckInformationFromXML();
         const { cardNames, deckSize, types, totalLands } = deckInformation;
-        arrCardNames = cardNames;
-        arrTypes = types;
+        let arrCardNames = cardNames;
+        let arrTypes = types;
 
         // Simulate card draw
         const cardsToDraw = 7;
@@ -73,7 +66,7 @@ function displayHandAndDeck(hand, handString, lands, landsString, handTypes, upd
     setDeckSize(updatedDeckSize);
 }
 
-async function loadXMLDocOld(xmlFile) {
+async function _loadXMLDoc(xmlFile) {
     try {
         // Create a Fetch API request to load the XML file.
         const response = await fetch(xmlFile);
@@ -120,9 +113,9 @@ function setDeckSize(deckSize) {
 }
 
 function GetSelectedItem() {
-    len = document.formDecks.selectDeck.length;
-	i = 0
-	XMLFile = "none"
+    var len = document.formDecks.selectDeck.length;
+	let i = 0
+	let XMLFile = "none"
 	for (i = 0; i < len; i++) {
 	    if (document.formDecks.selectDeck[i].selected) {
 	        XMLFile = document.formDecks.selectDeck[i].value
@@ -200,7 +193,7 @@ function getCardNames() {
 
 	for (var k=0; k <(uniqueCards); k++) {
         //Start loop through unique cards
-		currentCard = deckList.getElementsByTagName("Name")[k].firstChild.data;
+		var currentCard = deckList.getElementsByTagName("Name")[k].firstChild.data;
 		var currentQuantity = deckList.getElementsByTagName("Quantity")[k].firstChild.data;
 		var currentType = deckList.getElementsByTagName("Type")[k].firstChild.data;
 		//Build arrCardNames with each card and quantity in order
@@ -633,7 +626,7 @@ function removeCardFromLocation(strCardDrawn,FromLocation) {
 }
 
 function createCardLink(strCardDrawn) {
-    link = document.createElement('A');
+    let link = document.createElement('A');
     link.href = "http://www.magiccards.info/autocard/" + strCardDrawn;
     //var cardpicture = "/assets/MagicImages/" + strCardDrawn + ".jpg";
     //link.setAttribute('data-value',cardpicture);

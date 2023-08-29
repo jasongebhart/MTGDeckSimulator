@@ -5,7 +5,20 @@
 <style type="text/css">
 </style>
 <title>Hand Simulation</title>
-<script type="text/javascript" src="./scripts/handsimulation.mjs" type="module"></script>
+<script type="module">
+	import { startMulliganCheck } from "./scripts/handsimulation.mjs";
+    import { startSimulateHandDraw } from "./scripts/handsimulation.mjs";
+	window.onload = () => {
+		startMulliganCheck();
+	};
+    // Wait for the DOM to be fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+      const listHandDraw = document.getElementById("listHandDraw");
+      listHandDraw.addEventListener("click", () => {
+        startSimulateHandDraw();
+      });
+    });
+  </script>
 <link rel="stylesheet" href="/assets/decks.css">
 </head>
 <body onload="startMulliganCheck()">
@@ -15,7 +28,7 @@
 <div id="container">
 <div id="sidebar">
     <%- include('partials/decklist'); -%>
-<button type="button" onclick="startSimulateHandDraw()">Simulate Hand Draw</button>
+<button type="button" id="listHandDraw">Simulate Hand Draw</button>
 </div>
 
 <div id="sidebar">

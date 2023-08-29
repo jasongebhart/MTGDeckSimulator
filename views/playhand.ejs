@@ -5,7 +5,17 @@
 <style type="text/css">
 </style>
 <title>Hand Simulation</title>
-<script type="text/javascript" src="./scripts/playhand.mjs" type="module"></script>
+<script type="module">
+    import { startSimulateHandDraw } from "./scripts/playhand.mjs";
+
+    // Wait for the DOM to be fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+      const DrawHandButton = document.getElementById("DrawHandButton");
+      DrawHandButton.addEventListener("click", () => {
+        startSimulateHandDraw();
+      });
+    });
+</script>
 <link rel="stylesheet" href="/assets/decks.css">
 </head>
 <div id="header">
@@ -19,7 +29,7 @@
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Draw
         </button>
-        <button id="DrawHandButton" type="button" value="Draw Hand" class="btn" onclick="startSimulateHandDraw()">
+        <button id="DrawHandButton" type="button" value="Draw Hand" class="btn">
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Draw Hand
         </button>

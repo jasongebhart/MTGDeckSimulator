@@ -1,16 +1,11 @@
-//import { loadXMLDoc } from './config.mjs'; // Import the loadXMLDoc function from the correct path
-//import { xmlDoc, xmlFile } from './config.js';
-// import * as fs from 'fs';
-// Declare variables
-var xmlDoc;
-var xmlFile;
-async function startListDeck() {
+import { loadXMLDoc, xmlDoc } from './config.mjs';
+export async function startListDeck() {
     const XMLFile = GetSelectedItem();
     console.log('Request was made: ' + XMLFile);
     await loadXMLDoc(XMLFile);
     displayDeck(xmlDoc);
 }
-async function loadXMLDoc(XMLFile) {
+async function _loadXMLDoc(XMLFile) {
     try {
         // Create a Fetch API request to load the XML file.
         const response = await fetch(XMLFile);
@@ -32,9 +27,9 @@ async function loadXMLDoc(XMLFile) {
 }
 
 function GetSelectedItem() {
-    len = document.formDecks.selectDeck.length;
-	i = 0
-	XMLFile = "none"
+    var len = document.formDecks.selectDeck.length;
+	let i = 0
+	let XMLFile = "none"
 	for (i = 0; i < len; i++) {
 	    if (document.formDecks.selectDeck[i].selected) {
 	        XMLFile = document.formDecks.selectDeck[i].value

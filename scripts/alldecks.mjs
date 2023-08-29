@@ -1,6 +1,6 @@
-
-var xmlDoc;
-var xmlFile;
+import { loadXMLDoc, xmlDoc } from './config.mjs';
+//var xmlDoc;
+//var xmlFile;
 
 const mtgDeck = [
     "./xml/BigRedMachine.xml",
@@ -52,12 +52,12 @@ const mtgDeck = [
     "./xml/TronTate.xml"
 ];
 
-async function startCompareDecks() {
+export async function startCompareDecks() {
     try {
         const len = mtgDeck.length;
 
         for (let i = 0; i < len; i++) {
-            xmlFile = mtgDeck[i];
+            const xmlFile = mtgDeck[i];
             await loadXMLDoc(xmlFile);
             displayDeckComparison();
         }
@@ -67,7 +67,7 @@ async function startCompareDecks() {
     }
 }
 
-async function loadXMLDoc(XMLFile) {
+async function _loadXMLDoc(XMLFile) {
     try {
         // Create a Fetch API request to load the XML file.
         const response = await fetch(XMLFile);

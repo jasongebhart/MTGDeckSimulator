@@ -1,4 +1,6 @@
-async function startSimulateHandDraw() {
+import { loadXMLDoc, xmlDoc } from './config.mjs';
+
+export async function startSimulateHandDraw() {
     try {
         const selectedXMLFile = getSelectedItem();
         
@@ -27,18 +29,18 @@ async function loadDeckInformation(selectedXMLFile) {
 }
 
 function getSelectedItem() {
-    len = document.formDecks.selectDeck.length;
-	i = 0
-	XMLFile = "none"
+    var len = document.formDecks.selectDeck.length;
+	let i = 0
+	let XMLFile = "none"
 	for (i = 0; i < len; i++) {
 	    if (document.formDecks.selectDeck[i].selected) {
-	        XMLFile = document.formDecks.selectDeck[i].value		
+	        XMLFile = document.formDecks.selectDeck[i].value
 	    }
 	}
 	return XMLFile;
 }
 
-async function loadXMLDoc(XMLFile) {
+async function _loadXMLDoc(XMLFile) {
     try {
         // Create a Fetch API request to load the XML file.
         const response = await fetch(XMLFile);
@@ -77,7 +79,7 @@ function getCardNames(xmlDoc) {
 	var arrTypes = new Array(deckSize);
 
 	for (var k=0; k <(uniqueCards); k++) {
-		currentCard = deckList.getElementsByTagName("Name")[k].firstChild.data;
+		var currentCard = deckList.getElementsByTagName("Name")[k].firstChild.data;
 		var currentQuantity = deckList.getElementsByTagName("Quantity")[k].firstChild.data;
 		var currentType = deckList.getElementsByTagName("Type")[k].firstChild.data;
 		for (var j=0; j<currentQuantity; j++) {
@@ -149,7 +151,7 @@ function displayHand(arrHand,strHand,intHandTypes) {
 		} else {
 		cell.setAttribute('class','OnTheDraw');
 		}
-        link = document.createElement('A');
+        let link = document.createElement('A');
 	    link.href = "http://www.magiccards.info/autocard/" + arrHand[i];
 	    cell.appendChild(link);
     	    var nameStr = document.createTextNode(arrHand[i]);
@@ -213,7 +215,7 @@ function getMulliganStats() {
 	document.getElementById("MulliganPercentage").innerHTML = "Current Mulligan Percentage: " + parseInt(intNumMulligans/lastRow*100) + "%"
 }
 
-async function startMulliganCheck() {
+export async function startMulliganCheck() {
 	await loadXMLDoc("./xml/mulligan.xml");
 	 displayMulliganChart(xmlDoc);
 }
