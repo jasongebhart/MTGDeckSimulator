@@ -152,48 +152,6 @@ function GetSelectedItem() {
 	return XMLFile;
 }
 
-function fetchXMLDocSim(XMLFile) {
-	 console.log('fetching xml:' + XMLFile);
-	 var myHeaders = new Headers();
-	 var myInit = {
-		 	method: 'POST',
-			headers: myHeaders,
-      body: "XMLFile=test"
-		};
-
- var myRequest = new Request('/clicked', myInit);
-	fetch(myRequest).then(function(response) {
-		 if(response.ok) {
-			 console.log('Click was recorded');
-			 return;
-		 }
-		 throw new Error('Request failed.');
-	 })
-	 .catch(function(error) {
-		 console.log(error);
-	 });
-}
-
-function loadXMLDocSim(xmlFile) {
-	if (window.ActiveXObject) {
-		xmlDoc= new ActiveXObject("Microsoft.XMLDOM");
-		xmlDoc.async="false";
-		xmlDoc.load(xmlFile);
-		return;
-	}
-	else if (document.implementation && document.implementation.createDocument) {
-		//alert('This is Firefox');
-		xmlDoc = document.implementation.createDocument("", "", null);
-		//xmlDoc.load(xmlFile);
-		xmlDoc.async=false;
-		xmlDoc.onload = function (){};
-		xmlDoc.load(xmlFile);
-		return;
-	}
-}
-
-
-
 function getDeckName() {
 	var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
 	return deckListName;
@@ -220,8 +178,6 @@ function getCardNames() {
         totalLands
     };
 }
-
-
 
 function cardDraw(arrCardNames,deckSize,arrTypes,intCardstoDraw) {
       var arrHandInfo = new Array(3);
@@ -272,7 +228,6 @@ function cardDraw(arrCardNames,deckSize,arrTypes,intCardstoDraw) {
 }
 
 
-
 function displayHand(arrHand,strHand,arrLands,strLands,intHandTypes) {
     // var function = [];
     for (var i=0; i <arrHand.length; i++) {
@@ -293,8 +248,6 @@ function displayHand(arrHand,strHand,arrLands,strLands,intHandTypes) {
     //var typeStr = document.createTextNode(intHandTypes);
     return;
 }
-
-
 
 
 function startLibrarySearchFilter(arrCardNames,arrTypes,cardtype) {
@@ -321,9 +274,6 @@ function startLibrarySearchFilter(arrCardNames,arrTypes,cardtype) {
     //alert("StartLibrarySearchFilter: " + arrLibraryInfo.length);
     return arrLibraryInfo;
 }
-
-
-
 
 export function startLibraryDrawAll() {
   deleteSection("section_library");
@@ -353,58 +303,6 @@ function searchLibraryAll(arrCardNames,arrTypes) {
 }
 
 
-function displayOneCardOnly(strCardDrawn) {
-    // get the reference for the body
-    var body = document.getElementsByTagName("body")[0];
-    // creates a <table> element and a <tbody> element
-    var tbl = document.getElementById("tblInGameDraw");
-    var tblBody = document.createElement("tbody");
-    var oTHead = document.createElement("THEAD");
-    var oTFoot = document.createElement("TFOOT");
-    var oCaption = document.createElement("CAPTION");
-
-    // creating all cells
-    // creates a table row
-    var row = document.createElement("tr");
-    // add the row to the end of the table body
-    tblBody.appendChild(row);
-
-    var cell = document.createElement("td");
-    link = document.createElement('A');
-    link.href = "http://www.magiccards.info/autocard/" + strCardDrawn;
-    cell.appendChild(link);
-    var nameStr = document.createTextNode(strCardDrawn);
-    link.appendChild(nameStr);
-    row.appendChild(cell);
-
-    // add the row to the end of the table body
-    // put the <tbody> in the <table>
-    tbl.appendChild(tblBody);
-    // appends <table> into <body>
-    body.appendChild(tbl);
-    // sets the border attribute of tbl to 2;
-    tbl.setAttribute("border", "2");
-    return;
-}
-
-
-function addToBattlefield(arrCardNames, strRunButton) {
-    var strCardDrawn = "";
-    //alert(strRunButton);
-    //Remove card from library and add to card effect draw
-    for (var i = 0; i < arrCardNames.length; i++) {
-        if (arrCardNames[i] == strRunButton) {
-            deckSize -= 1
-            strCardDrawn = arrCardNames.splice(i, 1);
-            //alert(strCardDrawn);
-            displayOnBattlefield(strCardDrawn);
-            deleteRows("tblLibrary");
-            setDeckSize(arrCardNames.length);
-            return;
-        }
-    }
-    return;
-}
 
 function addToGraveyardFromPlay(arrCardNames,strCardDrawn){
     //Remove card from hand and add to card effect draw
@@ -468,17 +366,6 @@ function deleteCardFromBattlefield(strCardDrawn) {
     card.remove();
 }
 
-
-
-function deleteCellFromGraveyard(strCardDrawn) {
-    var cell = document.getElementById("graveyard_"+strCardDrawn);
-    cell.remove();
-}
-
-function deleteCellFromHand(strCardDrawn) {
-    var cell = document.getElementById("Hand_"+strCardDrawn);
-    cell.remove();
-}
 function deleteCellFromBattlefield(strCardDrawn) {
     var cell = document.getElementById("battlefield_"+strCardDrawn);
     cell.remove();
@@ -518,57 +405,6 @@ function addToHandFromLibrary(strCardDrawn) {
     createCardAtSection(strCardDrawn,ToLocation,FromLocation);
     return;
 }
-
-
-function addToHandFromLibraryNew(strCardDrawn) {
-    strCardDrawn = strCardDrawn.replace(',','');
-    //The / mark the beginning and end of the regular expression
-    //The , matches the comma
-    //The \s means whitespace characters (space, tab, etc) and the * means 0 or more
-    //The $ at the end signifies the end of the string
-    var strCardDrawn = new String(strCardDrawn);
-    var ToLocation = "spells";
-    var FromLocation = "library";
-    createCardAtSection(strCardDrawn,ToLocation,FromLocation);
-    return;
-}
-
-function displayToLocation(strCardDrawn,ToLocation,FromLocation) {
-    switch(ToLocation) {
-        case "Hand":
-            row = document.getElementById("tblSpells").rows[1];
-            break;
-
-        case "spells":
-            row = document.getElementById("tblSpells").rows[1];
-            break;
-
-        case "lands":
-            row = document.getElementById("tblLands").rows[1];
-            break;
-
-        case "graveyard":
-            var row = document.getElementById("tblGraveyard").rows[1];
-            break;
-
-        case "battlefield":
-            var row = document.getElementById("tblBattleField").rows[1];
-            break;
-
-        case "library":
-            var row = document.getElementById("tblLibrary").rows[1];
-            break;
-
-        default:
-    }
-
-
-    strCardDrawn = strCardDrawn.replace(',','');
-    var strCardDrawn = new String(strCardDrawn);
-    createCardAtLocation(strCardDrawn,ToLocation,FromLocation);
-    return;
-}
-
 
 function removeCardFromLocation(strCardDrawn,FromLocation) {
 
@@ -612,26 +448,6 @@ function createCardLink(strCardDrawn) {
     //link.appendChild(cardimagepreview);
     return link;
 }
-
-
-function createCardLinkPreview(strCardDrawn) {
-    link = document.createElement('A');
-    link.href = "/assets/MagicImages/" + strCardDrawn + ".jpg";
-    var nameStr = document.createTextNode(strCardDrawn);
-    link.appendChild(nameStr);
-    return link;
-}
-
-
-function createCardImagePreview(strCardDrawn) {
-    var image = document.createElement("img");
-    image.src = "/assets/MagicImages/" + strCardDrawn + ".jpg";
-    image.className = "image-preview";
-    image.title = strCardDrawn;
-    //image.alt="alt Hello";
-    return image;
-}
-
 
 function createCardImage(strCardDrawn) {
     var image = document.createElement("img");
@@ -834,20 +650,6 @@ function createCardButton(strCardDrawn,ToLocation) {
         }
         return buttonnode;
 }
-
-function createCardAtLocation(strCardDrawn,ToLocation,FromLocation) {
-    var strCardDrawn = new String(strCardDrawn);
-    strCardDrawn = strCardDrawn.trim();
-
-    if (FromLocation != "none") {
-        removeCardFromLocation(strCardDrawn,FromLocation);
-    }
-    var cardlink = createCardLink(strCardDrawn);
-    var cardimage = createCardImage(strCardDrawn);
-
-    createCardCell(strCardDrawn,ToLocation,cardimage,cardlink);
-}
-
 
 function createCardAtSection(strCardDrawn,ToLocation,FromLocation) {
     var strCardDrawn = new String(strCardDrawn);
