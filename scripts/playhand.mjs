@@ -60,22 +60,41 @@ export function startDrawOneCard() {
 	setDeckSize(deckSize)
 }
 
-
 function clearGameSections() {
-    const sectionsToClear = ["section_spells", "section_lands", "section_battlefield", "section_graveyard"];
-    sectionsToClear.forEach(section => deleteSection(section));
+    const sectionIdsToClear = ["section_spells", "section_lands", "section_battlefield", "section_graveyard"];
+    
+    sectionIdsToClear.forEach(sectionId => {
+        if (document.getElementById(sectionId)) {
+            deleteSection(sectionId);
+        }
+    });
 }
-
 
 function getDeckInformationFromXML() {
-    const deckInfo = getCardNames();
+    const cardNames = getCardNames();
+    const deckSize = cardNames.length;
+    const types = [];
+    const totalLands = 0;
+    for (const cardName of cardNames) {
+        const type = getCardType(cardName);
+        types.push(type);
+        if (type === "Land") {
+            totalLands++;
+        }
+    }
     return {
-        cardNames: deckInfo[0],
-        deckSize: deckInfo[1],
-        types: deckInfo[2],
-        totalLands: deckInfo[3]
+        cardNames,
+        deckSize,
+        types,
+        totalLands
     };
 }
+
+function getCardType(cardName) {
+    const type = cardName.split(" - ")[1];
+    return type;
+}
+
 
 function simulateCardDraw(cardNames, deckSize, types, cardsToDraw) {
     const handInfo = cardDraw(cardNames, deckSize, types, cardsToDraw);
@@ -92,25 +111,6 @@ function simulateCardDraw(cardNames, deckSize, types, cardsToDraw) {
 function displayHandAndDeck(hand, handString, lands, landsString, handTypes, updatedDeckSize) {
     displayHand(hand, handString, lands, landsString, handTypes);
     setDeckSize(updatedDeckSize);
-}
-
-async function _loadXMLDoc(xmlFile) {
-    try {
-        // Create a Fetch API request to load the XML file.
-        const response = await fetch(xmlFile);
-        
-        if (!response.ok) {
-            throw new Error('Failed to load the requested file.');
-        }
-        
-        // Parse the XML response into a document.
-        const xmlText = await response.text(); // Use a different variable name
-        const parser = new DOMParser();
-        xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // Use xmlDoc here, not xmlDoc
-    } catch (error) {
-        console.error(error);
-        window.alert('Unable to load the requested file.');
-    }
 }
 
 // delete table rows with an index greater then 0
@@ -200,48 +200,27 @@ function getDeckName() {
 }
 
 function getCardNames() {
-    // Evaluate XML file and build card array with multiple entries for each
-    // name with multiple quantities
-    var arrDeckInfo = new Array(4);
-    var deckSize = 0;
-    var intCounter = 0;
-	var intTotLands = 0;
-	var deckList = xmlDoc.getElementsByTagName("Decklist")[0];
-    // Retrieve the total number of unique names from the XML file
-	var uniqueCards = deckList.getElementsByTagName("Name").length;
-	for (var i=0; i <uniqueCards; i++) {
-        // for each unique card add the quantity to determine the number of cards in the deck
-        // set deckSize
-        // parseInt will convert string to integer
-	    var currentQuantity = deckList.getElementsByTagName("Quantity")[i].firstChild.data;
-		deckSize = deckSize + parseInt(currentQuantity);
-	}
-	var arrCardNames = new Array(deckSize);
-	var arrTypes = new Array(deckSize);
-
-	for (var k=0; k <(uniqueCards); k++) {
-        //Start loop through unique cards
-		var currentCard = deckList.getElementsByTagName("Name")[k].firstChild.data;
-		var currentQuantity = deckList.getElementsByTagName("Quantity")[k].firstChild.data;
-		var currentType = deckList.getElementsByTagName("Type")[k].firstChild.data;
-		//Build arrCardNames with each card and quantity in order
-        for (var j=0; j<currentQuantity; j++) {
-    		arrCardNames[intCounter]=currentCard;
-			arrTypes[intCounter]=currentType;
-			var intCounter = intCounter + 1;
-		}
-	}
-	for (var i=0; i <arrTypes.length; i++) {
-		if (arrTypes[i] == "Land") {
-			intTotLands = parseInt(intTotLands) + 1;
-		}
-	}
-		arrDeckInfo[0] = arrCardNames;
-		arrDeckInfo[1] = deckSize;
-		arrDeckInfo[2] = arrTypes;
-		arrDeckInfo[3] = intTotLands;
-		return arrDeckInfo;
+    const deckList = xmlDoc.getElementsByTagName("Decklist")[0];
+    const cardNames = [];
+    const quantities = [];
+    const types = [];
+    for (const card of deckList.getElementsByTagName("Card")) {
+        const name = card.getElementsByTagName("Name")[0].textContent;
+        const quantity = card.getElementsByTagName("Quantity")[0].textContent;
+        const type = card.getElementsByTagName("Type")[0].textContent;
+        cardNames.push(name);
+        quantities.push(quantity);
+        types.push(type);
+    }
+    const totalLands = quantities.reduce((sum, quantity) => sum + (quantity === "Land" ? 1 : 0), 0);
+    return {
+        cardNames,
+        quantities,
+        types,
+        totalLands
+    };
 }
+
 
 
 function cardDraw(arrCardNames,deckSize,arrTypes,intCardstoDraw) {
