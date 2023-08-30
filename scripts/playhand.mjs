@@ -250,30 +250,19 @@ function displayHand(arrHand,strHand,arrLands,strLands,intHandTypes) {
 }
 
 
-function startLibrarySearchFilter(arrCardNames,arrTypes,cardtype) {
-    var arrLibrary = new Array();
-    var librarySize = arrCardNames.length;
-    //alert(librarySize);
-    arrLibrary = arrCardNames.slice(0);
-    //Find only each index for land type
-    var myCards = new Set();
- 	for (let i = 0; i < librarySize-1; i++) {
-       var currentcardtype = arrTypes[i]
-       //alert(cardtype.indexOf(currentcardtype));
-       //doing an indexOf compare rather than == so that Enchanments, Instants etc. group together
-       if (cardtype.indexOf(currentcardtype) >= 0) {
-          //alert(arrLibrary[i]);
-          //Build a new set with the name of each found card of specified type
-          // A set will eliminate duplicates
-          myCards.add(arrLibrary[i]);
-          //alert(arrLibrary[i]);
-       }
+function startLibrarySearchFilter(arrCardNames, arrTypes, cardtype) {
+    const librarySize = arrCardNames.length;
+    const library = arrCardNames.slice();
+    const myCards = new Set();
+    for (let i = 0; i < librarySize - 1; i++) {
+        const currentcardtype = arrTypes[i];
+        if (cardtype.indexOf(currentcardtype) >= 0) {
+            myCards.add(library[i]);
+        }
     }
-    //alert(myCards.size);
-    var arrLibraryInfo = [...myCards];
-    //alert("StartLibrarySearchFilter: " + arrLibraryInfo.length);
-    return arrLibraryInfo;
+    return Array.from(myCards);
 }
+
 
 export function startLibraryDrawAll() {
   deleteSection("section_library");
