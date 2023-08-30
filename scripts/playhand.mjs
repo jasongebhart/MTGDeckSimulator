@@ -502,56 +502,6 @@ function createCardCell(strCardDrawn,ToLocation,cardimage,cardlink,buttonnode) {
 }
 
 
-function createCardItem(strCardDrawn,ToLocation) {
-    switch(ToLocation) {
-        case "spells":
-            var section = document.getElementById("section_spells");
-            break;
-
-        case "lands":
-            var section = document.getElementById("section_lands");
-            break;
-
-        case "graveyard":
-            var section = document.getElementById("section_graveyard");
-            break;
-
-        case "battlefield":
-            var section = document.getElementById("section_battlefield");
-            break;
-
-        case "library":
-            var section = document.getElementById("section_library");
-            break;
-
-        default:
-    }
-
-    var carddiv = document.createElement("div");
-    var newID = new String("div1_");
-    carddiv.id = newID.concat(ToLocation,"_",strCardDrawn);
-
-    var cardlink = createCardLink(strCardDrawn);
-    var cardimage = createCardImage(strCardDrawn);
-    //var cardimagepreview = createCardImagePreview(strCardDrawn);
-    var buttonnode = createCardButton(strCardDrawn,ToLocation);
-    //var cardlinkpreview = createCardLinkPreview(strCardDrawn);
-
-
-    carddiv.appendChild(cardimage);
-    carddiv.appendChild(cardlink);
-    //carddiv.appendChild(cardlinkpreview);
-    //carddiv.appendChild(cardimagepreview);
-    carddiv.appendChild(buttonnode);
-
-    //section.appendChild(cardlink);
-    //section.appendChild(cardimage);
-    //section.appendChild(buttonnode);
-
-    section.appendChild(carddiv);
-    //return carddiv;
-}
-
 function createCardButton(strCardDrawn,ToLocation) {
     var buttonnode
     //alert(ToLocation);
@@ -651,20 +601,17 @@ function createCardButton(strCardDrawn,ToLocation) {
         return buttonnode;
 }
 
-function createCardAtSection(strCardDrawn,ToLocation,FromLocation) {
-    var strCardDrawn = new String(strCardDrawn);
-    strCardDrawn = strCardDrawn.trim();
-
-    if (FromLocation != "none") {
-        removeCardFromLocation(strCardDrawn,FromLocation);
+function createCardAtSection(cardName, toLocation, fromLocation) {
+    if (fromLocation !== "none") {
+        removeCardFromLocation(cardName, fromLocation);
     }
+    return createCardItem(cardName, toLocation);
+}
 
-    //var cardlink = createCardLink(strCardDrawn);
-    //var cardimage = createCardImage(strCardDrawn);
-    //var buttonnode = createCardButton(strCardDrawn,ToLocation);
-
-    var cardItem = createCardItem(strCardDrawn,ToLocation);
-
-
+function createCardItem(cardName, toLocation) {
+    const cardItem = document.createElement("div");
+    cardItem.classList.add("card-item");
+    cardItem.textContent = cardName;
+    document.getElementById(toLocation).appendChild(cardItem);
     return cardItem;
 }
