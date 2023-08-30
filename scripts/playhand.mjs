@@ -1,7 +1,7 @@
 import { loadXMLDoc, xmlDoc } from './config.mjs';
-let arrCardNames = [];
-let arrTypes = [];
-let deckSize;
+var arrCardNames = [];
+var arrTypes = [];
+var deckSize;
 // Function to start simulating hand draw
 export async function startSimulateHandDraw() {
     try {
@@ -30,6 +30,34 @@ export async function startSimulateHandDraw() {
         console.error(error);
         window.alert('An error occurred while loading XML data.');
     }
+}
+//Build functions to select from multiple card types
+export function startLibrarySearch(cardtype) {
+    deleteSection("section_library");
+    //deleteRows("tblLibrary");
+    var arrLibraryInformation = startLibrarySearchFilter(arrCardNames,arrTypes,cardtype);
+    //alert(arrLibraryInformation.length);
+    for (let i = 0; i < arrLibraryInformation.length; i++) {
+        //alert(arrLibraryInformation[i]);
+        var ToLocation = "library";
+        var FromLocation = "library";
+        var strCardDrawn = arrLibraryInformation[i];
+        //alert(strCardDrawn);
+        createCardAtSection(strCardDrawn,ToLocation,FromLocation);
+    }
+}
+export function startDrawOneCard() {
+    deleteSection("section_library");
+    const intCardstoDraw = 1;
+	var arrHandInformation = cardDraw(arrCardNames,deckSize,arrTypes,intCardstoDraw);
+	var arrHand = arrHandInformation[0];
+	var strHand = arrHandInformation[1];
+	var arrLands = arrHandInformation[2];
+	var strLands = arrHandInformation[3];
+	var intHandTypes = arrHandInformation[4];
+	var deckSize = arrHandInformation[5];
+	displayHand(arrHand,strHand,arrLands,strLands,intHandTypes);
+	setDeckSize(deckSize)
 }
 
 
@@ -288,37 +316,6 @@ function displayHand(arrHand,strHand,arrLands,strLands,intHandTypes) {
 }
 
 
-function startDrawOneCard() {
-    deleteSection("section_library");
-    intCardstoDraw = 1;
-	var arrHandInformation = cardDraw(arrCardNames,deckSize,arrTypes,intCardstoDraw);
-	arrHand = arrHandInformation[0];
-	strHand = arrHandInformation[1];
-	arrLands = arrHandInformation[2];
-	strLands = arrHandInformation[3];
-	intHandTypes = arrHandInformation[4];
-	deckSize = arrHandInformation[5];
-	displayHand(arrHand,strHand,arrLands,strLands,intHandTypes);
-	setDeckSize(deckSize)
-}
-
-
-//Build functions to select from multiple card types
-function startLibrarySearch(cardtype) {
-    deleteSection("section_library");
-    //deleteRows("tblLibrary");
-    var arrLibraryInformation = startLibrarySearchFilter(arrCardNames,arrTypes,cardtype);
-    //alert(arrLibraryInformation.length);
-    for (i = 0; i < arrLibraryInformation.length; i++) {
-        //alert(arrLibraryInformation[i]);
-        var ToLocation = "library";
-        var FromLocation = "library";
-        var strCardDrawn = arrLibraryInformation[i];
-        //alert(strCardDrawn);
-        createCardAtSection(strCardDrawn,ToLocation,FromLocation);
-    }
-}
-
 
 
 function startLibrarySearchFilter(arrCardNames,arrTypes,cardtype) {
@@ -328,7 +325,7 @@ function startLibrarySearchFilter(arrCardNames,arrTypes,cardtype) {
     arrLibrary = arrCardNames.slice(0);
     //Find only each index for land type
     var myCards = new Set();
- 	for (i = 0; i < librarySize-1; i++) {
+ 	for (let i = 0; i < librarySize-1; i++) {
        var currentcardtype = arrTypes[i]
        //alert(cardtype.indexOf(currentcardtype));
        //doing an indexOf compare rather than == so that Enchanments, Instants etc. group together
@@ -349,7 +346,7 @@ function startLibrarySearchFilter(arrCardNames,arrTypes,cardtype) {
 
 
 
-function startLibraryDrawAll() {
+export function startLibraryDrawAll() {
   deleteSection("section_library");
   //deleteRows("tblLibrary");
   var strCardDrawn = searchLibraryAll(arrCardNames,arrTypes);
@@ -368,7 +365,7 @@ function searchLibraryAll(arrCardNames,arrTypes) {
   //Simulate card drawing;
   var intCardDrawn = 0;
   var strCardDrawn = "";
-  strTypeDrawn = "";
+  var strTypeDrawn = "";
   var randomnumber = Math.floor(Math.random()*deckSize);
   //If the library Size is 60 then the randomnumber will equal a number from 0 to 59
   strCardDrawn = arrlibraryAll[randomnumber];

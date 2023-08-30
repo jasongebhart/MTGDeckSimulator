@@ -6,7 +6,7 @@
 </style>
 <title>Hand Simulation</title>
 <script type="module">
-    import { startSimulateHandDraw } from "./scripts/playhand.mjs";
+    import { startSimulateHandDraw, startDrawOneCard, startLibrarySearch, startLibraryDrawAll } from "./scripts/playhand.mjs";
 
     // Wait for the DOM to be fully loaded
     document.addEventListener("DOMContentLoaded", () => {
@@ -14,6 +14,36 @@
       DrawHandButton.addEventListener("click", () => {
         startSimulateHandDraw();
       });
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        const DrawACard = document.getElementById("DrawACard");
+        DrawACard.addEventListener("click", () => {
+            startDrawOneCard();
+    });
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        const DrawSpellButton = document.getElementById("DrawSpellButton");
+        DrawSpellButton.addEventListener("click", () => {
+            startLibrarySearch('Spell');
+    });
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        const DrawSpellButton = document.getElementById("DrawSpellButton");
+        DrawSpellButton.addEventListener("click", () => {
+            startLibrarySearch('Creature');
+    });
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        const DrawLandButton = document.getElementById("DrawLandButton");
+        DrawLandButton.addEventListener("click", () => {
+            startLibrarySearch('Land');
+    });
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        const DrawLibrary = document.getElementById("DrawLibrary");
+        DrawLibrary.addEventListener("click", () => {
+            startLibraryDrawAll();
+    });
     });
 </script>
 <link rel="stylesheet" href="/assets/decks.css">
@@ -25,7 +55,7 @@
 <div id="container">
 <section id="deck" class="flexlibrary">
     <%- include('partials/decklist'); -%>
-	    <button type="button" class="btn" onclick="startDrawOneCard()">
+	    <button  id="DrawACard"  type="button" class="btn" >
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Draw
         </button>
@@ -33,20 +63,19 @@
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Draw Hand
         </button>
-
-        <button type="button" class="btn" onclick="startLibrarySearch('Enchantment Sorcery Instant Artifact Planeswalker')">
+        <button type="button" class="btn" id="DrawSpellButton">
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Spells
         </button>
-	    <button type="button" class="btn" onclick="startLibrarySearch('Creature')">
+	    <button type="button" class="btn" id="DrawCreatureButton">
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Creatures
         </button>
-	    <button type="button" class="btn" onclick="startLibrarySearch('Land')">
+	    <button type="button" class="btn" id="DrawLandButton">
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Land
         </button>
-	    <button type="button" class="btn" onclick="startLibraryDrawAll()">
+	    <button type="button" class="btn" id="DrawLibrary">
             <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
             Library
         </button>
