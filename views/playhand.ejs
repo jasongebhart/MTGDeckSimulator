@@ -2,50 +2,121 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
 </style>
 <title>Hand Simulation</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
 <script type="module">
-    import { startSimulateHandDraw, startDrawOneCard, startLibrarySearch, startLibraryDrawAll } from "./scripts/playhand.mjs";
+    // Import necessary functions
+    import { startSimulateHandDraw, startDrawOneCard, startLibrarySearch, startLibraryDrawAll, viewEntireLibrary, cardNames, cardInfo } from "./scripts/playhand.mjs";
 
-    // Wait for the DOM to be fully loaded
-    document.addEventListener("DOMContentLoaded", () => {
-      const DrawHandButton = document.getElementById("DrawHandButton");
-      DrawHandButton.addEventListener("click", () => {
-        startSimulateHandDraw();
-      });
-    });
+    // Attach event listeners to buttons when the DOM is ready
     document.addEventListener("DOMContentLoaded", () => {
         const DrawACard = document.getElementById("DrawACard");
         DrawACard.addEventListener("click", () => {
-            startDrawOneCard();
+            console.log("Draw A Card clicked");
+            startDrawOneCard(cardNames, cardInfo);
+        });
+        // JavaScript to open the library popup when a button in the group is clicked
+        const libraryPopup = document.getElementById("libraryPopup");
+
+
+        const ViewLibrary = document.getElementById("ViewLibrary");
+        ViewLibrary.addEventListener("click", () => {
+            // Clear the content by removing all child nodes
+            while (libraryPopup.firstChild) {
+                libraryPopup.removeChild(libraryPopup.firstChild);
+            }
+            // Create the "Close Library" button element
+            const closeLibraryPopupButton = document.createElement("button");
+            closeLibraryPopupButton.id = "closeLibraryPopup";
+            closeLibraryPopupButton.textContent = "Close";
+
+            // Append the button to the libraryPopup
+            libraryPopup.appendChild(closeLibraryPopupButton);
+            console.log("Look at the entire library clicked");
+            viewEntireLibrary();
+        });
+
+
+        // JavaScript to close the library popup
+        document.addEventListener("click", (event) => {
+            if (event.target.id === "closeLibraryPopup") {
+                // Clear the content by removing all child nodes
+                libraryPopup.innerHTML = '';
+                libraryPopup.style.display = "none"; // Hide the popup
+            }
+        });
+
+        // Get all tab buttons and content sections within the left-sidebar
+        const tabButtons = document.querySelectorAll('#left-sidebar .tab-button');
+        const tabContents = document.querySelectorAll('#left-sidebar .tab-content');
+
+        // Add event listeners to the tab buttons
+        tabButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                // Remove the 'active' class from all tab buttons
+                tabButtons.forEach((btn) => {
+                    btn.classList.remove('active');
+                });
+
+                // Hide all tab content sections
+                tabContents.forEach((content) => {
+                    content.style.display = 'none';
+                });
+
+                // Get the data-tab attribute from the clicked button
+                const tabId = button.getAttribute('data-tab');
+
+                // Add the 'active' class to the clicked button
+                button.classList.add('active');
+
+                // Display the corresponding content section
+                console.log("tabId: " + tabId + " clicked");
+                const selectedTab = document.getElementById(tabId);
+                selectedTab.style.display = 'block';
+            });
+        });
+
+        // Get a reference to the dropdown menu
+        const cardTypeMenu = document.getElementById('cardTypeMenu');
+
+        // Add an event listener to the dropdown menu
+        // Add an event listener to the dropdown menu
+        cardTypeMenu.addEventListener('change', function () {
+            const selectedOption = cardTypeMenu.value;
+
+            // Clear the content by removing all child nodes
+            while (libraryPopup.firstChild) {
+                libraryPopup.removeChild(libraryPopup.firstChild);
+            }
+            // Create the "Close Library" button element
+            const closeLibraryPopupButton = document.createElement("button");
+            closeLibraryPopupButton.id = "closeLibraryPopup";
+            closeLibraryPopupButton.textContent = "Close";
+
+            // Append the button to the libraryPopup
+            libraryPopup.appendChild(closeLibraryPopupButton);
+            // Call startLibrarySearch with the selected card type
+            startLibrarySearch(selectedOption);
+
+        });
+
+
+        const DrawHandButton = document.getElementById("DrawHandButton");
+        DrawHandButton.addEventListener("click", () => {
+            startSimulateHandDraw();
+        });
+
+        // Call the main function to set up the initial state
+        startSimulateHandDraw();
     });
-    });
-    document.addEventListener("DOMContentLoaded", () => {
-        const DrawSpellButton = document.getElementById("DrawSpellButton");
-        DrawSpellButton.addEventListener("click", () => {
-            startLibrarySearch('Spell');
-    });
-    });
-    document.addEventListener("DOMContentLoaded", () => {
-        const DrawSpellButton = document.getElementById("DrawSpellButton");
-        DrawSpellButton.addEventListener("click", () => {
-            startLibrarySearch('Creature');
-    });
-    });
-    document.addEventListener("DOMContentLoaded", () => {
-        const DrawLandButton = document.getElementById("DrawLandButton");
-        DrawLandButton.addEventListener("click", () => {
-            startLibrarySearch('Land');
-    });
-    });
-    document.addEventListener("DOMContentLoaded", () => {
-        const DrawLibrary = document.getElementById("DrawLibrary");
-        DrawLibrary.addEventListener("click", () => {
-            startLibraryDrawAll();
-    });
-    });
+
 </script>
+
+
 <link rel="stylesheet" href="/assets/decks.css">
 </head>
 <div id="header">
@@ -53,52 +124,68 @@
 </div>
 <body>
 <div id="container">
-<section id="deck" class="flexlibrary">
-    <%- include('partials/decklist'); -%>
-	    <button  id="DrawACard"  type="button" class="btn" >
-            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
-            Draw
-        </button>
-        <button id="DrawHandButton" type="button" value="Draw Hand" class="btn">
-            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
-            Draw Hand
-        </button>
-        <button type="button" class="btn" id="DrawSpellButton">
-            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
-            Spells
-        </button>
-	    <button type="button" class="btn" id="DrawCreatureButton">
-            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
-            Creatures
-        </button>
-	    <button type="button" class="btn" id="DrawLandButton">
-            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
-            Land
-        </button>
-	    <button type="button" class="btn" id="DrawLibrary">
-            <img src="/assets/MagicImages/Magic_the_gathering-card_back.jpg" alt="Draw" style="display:block;width:50px;border:0">
-            Library
-        </button>
-        <p class="deckSize flexlibrary" id="deckSize"></p>
-</section>
-    <section class="flexlibrary">
+    <div id="left-sidebar">
+        <div class="tab-container">
+          <button class="tab-button active" data-tab="section_graveyard">Graveyard</button>
+          <button class="tab-button" data-tab="section_exile">Exile</button>
+        </div>
+        <section id="section_graveyard" class="tab-content graveyard" style="display: block;">
+          <!-- Content for Graveyard Tab -->
+        </section>
+        <section id="section_exile" class="tab-content ">
+          <!-- Content for Exile Tab -->
+        </section>
+    </div>
+    <div id="middle-content">
+        <section id="section_hand">
+            <h3>Hand <button id="DrawHandButton" type="button" value="New" class="medium-button">New</button>
+            <button  id="DrawACard" type="button" class="medium-button" >Draw</button></h3>
+            <section id="section_spells" class="flex">
+            </section>
+            <section id="section_lands" class="flex">
+            </section>
+        </section>
+        <section id="section_battlefield" class="flex">
+            <h3>BattleField</h3>
+            <section id="section_battlefield-content" class="flex"></section>
+        </section>
+    </div>
+    <div id="right-sidebar">
         <section id="section_library" class="flexlibrary">
-            <h2>Library</h2>
+            <section id="deck" class="flexlibrary">
+                <%- include('partials/decklist'); -%>
+            </section>
+            <h2 class="flexlibrary">Library
+                <p class="deckSize flexlibrary" id="deckSize">(0)</p> <!-- Default value is 0 -->
+                <button type="button" class="medium-button" id="ViewLibrary">
+                    Library
+                 </button>
+                <!-- Dropdown menu for card type -->
+                <select id="cardTypeMenu" class="medium-button custom-dropdown">
+                    <option value="Spells">Instants & Sorceries</option>
+                    <option value="Creatures">Creatures</option>
+                    <option value="Planeswalkers">Planeswalkers</option>
+                    <option value="Artifacts">Artifacts</option>
+                    <option value="Enchantments">Enchantments</option>
+                    <option value="Land">Land</option>
+                </select>
+                
+            </h2>
+            <section id="section_library-content" class="flexlibrary">
+                <!-- Your library content goes here -->
+            </section>
+            <div id="libraryPopup" style="display: none;">
+                <button id="closeLibraryPopup">Close</button>
+            </div>
         </section>
-    </section>
-    <section id="section_hand">
-        <h3>Hand</h3>
-        <section id="section_spells" class="flex">
-        </section>
-        <section id="section_lands" class="flex">
-        </section>
-    </section>
-    <h3>BattleField</h3>
-    <section id="section_battlefield" class="flex">
-    </section>
-    <h3>Graveyard</h3>
-        <section id="section_graveyard" class="flex">
-    </section>
+    </div>
+    <div id="popup-container" class="popup">
+        <img id="popup-image" class="popup-content" />
+        <span class="popup-close" onclick="closePopup()">&times;</span>
+      </div>
+        <div id="customContextMenu" style="display: none;">
+            <div class="context-menu-option" data-action="moveToHand">Move to Hand</div>
+        </div>
 </div>
 </body>
 </html>
