@@ -64,7 +64,7 @@
     <Card>
         <Name>Lightning Bolt</Name>
         <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
+        <Type>Instant</Type>
         <Cost>R</Cost>
     </Card>
     <Card>

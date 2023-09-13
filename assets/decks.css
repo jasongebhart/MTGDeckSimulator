@@ -1,13 +1,4 @@
 /* Shared Styles */
-.text-center {
-  text-align: center;
-}
-
-.inline,
-.inline-block {
-  display: inline;
-}
-
 .vertical-align-top {
   vertical-align: top;
 }
@@ -30,7 +21,7 @@
   text-align: center;
   text-decoration: none;
   color: black;
-  background: var(--nav-link-bg, #FFFFCC);
+  background: linear-gradient(45deg, #FFD700, #FFA500); /* Gradient from gold to orange */
   border: 1px solid;
   border-width: 1px 1px 0 1px;
   transition: background-color 0.3s, color 0.3s; /* Add transition effect for smoother hover */
@@ -41,26 +32,8 @@
   color: black;
 }
 
-/* Main Content Styles */
-.content {
-  border-top: 2px solid white;
-  padding: 1em;
-  background-color: #9933FF;
-}
-
-/* Selected Item Styles */
-.selected {
-  padding-bottom: 2px;
-  font-weight: bold;
-  color: black;
-  background: #fc0;
-}
-
-/* Large Header Styles */
-.large-header {
-  font-family: Georgia, "Times New Roman", Times, serif;
-  font-size: 42px;
-  text-align: center;
+#container {
+  display: flex;
 }
 
 /* Select Dropdown Styles */
@@ -71,37 +44,126 @@
   height: 85px;
 }
 
-/* Sidebar and Main Area */
-.sidebar {
-  float: left;
-  padding: 0% 2% 0% 0%;
-  width: 12%;
+#section_library {
+  width: 9%; /* Adjust the width as needed */
+  margin-left: left; /* Move to the right by setting margin-left to auto */
+  background-color: #f0f0f0; /* Background color for library */
+  padding: 5px; /* Add padding for spacing */
 }
 
-.main-area {
-  float: right;
-  width: 95%;
-  margin: 2em 0.5em 2em 0;
+#section_library-content {
+  display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to the next line */
+  justify-content: flex-start; /* Start from the left */
+  background-color: #f0f0f0; /* Background color for library */
+  padding: 20px; /* Add padding for spacing */
+  gap: 10px; /* Add some spacing between cards */
+  /* width: 20%; */ /* You can remove this width to allow the container to adjust to its content */
 }
 
-/* Deck Size Styles */
-.deck-size {
-  font-family: Georgia, "Times New Roman", Times, serif;
-  color: #000000;
-  background-color: #FFFFFF;
-  font-size: 36px;
+#section_library-content .image-preview {
+  width: 70px;
+  height: auto;
 }
 
-/* Section Styles */
-.page-section {
-  margin: 1em 0.5em 1em 0.5em;
+/* Adjust styles for #middle-content */
+#middle-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Create space between sections */
+  max-width: 100%; /* Ensure it doesn't exceed the screen width */
 }
 
-/* Footer Styles */
-.footer {
-  padding-top: 2%;
-  text-align: center;
-  clear: both;
+/* Adjust styles for #section_hand and #section_lands */
+#section_hand,
+#section_lands {
+  flex: 1;
+  padding: 20px;
+  width: calc(50% - 20px); /* Set both sections to take up 50% of the available space with spacing */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+  max-width: 100%; /* Ensure it doesn't exceed the screen width */
+}
+
+/* Adjust styles for #section_battlefield */
+#section_battlefield {
+  flex: 1;
+  padding: 20px;
+  width: 100%; /* Take up 100% of the available space */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+  max-width: 100%; /* Ensure it doesn't exceed the screen width */
+}
+
+#section_battlefield {
+  flex: 1;
+  padding: 20px;
+  width: 100%; /* Take up 100% of the available space */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+  max-width: 100%; /* Ensure it doesn't exceed the screen width */
+}
+#left-sidebar {
+  width: 20%; /* Adjust the width as needed */
+  background-color: rgba(240, 240, 240, 0.7); /* Background color with transparency */
+  padding: 20px; /* Add padding for spacing */
+}
+/* Adjust styles for #right-sidebar */
+#right-sidebar {
+  width: 15%; /* Adjust the width as needed */
+  background-color: rgba(240, 240, 240, 0.7); /* Background color with transparency */
+  padding: 20px; /* Add padding for spacing */
+  margin-left: auto; /* Push it to the right by setting margin-left to auto */
+}
+
+
+#left-sidebar h3 {
+  font-size: 20px; /* Adjust the font size as needed */
+  margin-bottom: 10px; /* Add spacing below the heading */
+}
+
+#left-sidebar section,
+#left-sidebar .flexlibrary,
+#left-sidebar #exilePopup {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 10px;
+  background-color: rgba(240, 240, 240, 0.7); /* Background color with transparency */
+  /* Add styles for the sections and the popup as needed */
+}
+
+
+.tab-container {
+  display: flex;
+  width: 20%;
+}
+
+.tab-button {
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+}
+
+.tab-button.active {
+  background-color: #ccc;
+}
+
+.tab-content .image-preview {
+  width: 70px; /* Set the desired width for graveyard images */
+  height: auto; /* Auto height to maintain aspect ratio */
+  /* Add other styling as needed */
+}
+
+.tab-content {
+  display: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.deckSize {
+  display: inline; /* Make the deck size inline */
+  font-weight: normal;
+  /* margin-left: 10px; /* Add some spacing between "Library" and the deck size */
 }
 
 /* Info Box and Card List */
@@ -131,6 +193,42 @@
   border-color: #696 #363 #363 #696;
 }
 
+/* CSS for the custom dropdown menu */
+.custom-dropdown {
+  padding: 6px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  /* Add more styling as needed */
+}
+
+/* CSS for the medium-sized buttons */
+.medium-button {
+  color: #050;
+  font: bold 88% 'trebuchet ms', helvetica, sans-serif;
+  background-color: #fed;
+  border: 5px solid;
+  border-color: #696 #363 #363 #696;
+  margin-top: 20px;
+}
+
+.button-group {
+  width: 20%; /* Adjust the width as needed */
+  margin-left: left; /* Move to the right by setting margin-left to auto */
+  display: table-cell; /* Use flexbox layout */
+  flex-direction: column; /* Arrange content vertically */
+  justify-content: flex-start; /* Start from the top */
+  align-items: flex-start; /* Align content to the left */
+}
+.large-button {
+  color: #050;
+  font: bold 88% 'trebuchet ms', helvetica, sans-serif;
+  background-color: #fed;
+  border: 10px solid;
+  border-color: #696 #363 #363 #696;
+}
+
 /* Hand, On The Draw, Mulligan */
 .white-bg {
   background-color: #FFFFFF;
@@ -147,22 +245,61 @@
 
 /* Image Preview and Scaling Effect */
 .image-preview:hover {
-  transform: translate(10em, 0em) scale(1.50); /* Adjust the scale value as needed */
+  transform: translate(0em, 0em) scale(1.05); /* Adjust the scale value as needed */
   transition: all 0.3s;
-  position: relative;
   padding: 0;
-  vertical-align: middle;
 }
 
 /* Display images horizontally within section_spells */
-.section_spells {
+.middle-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+#section_spells {
+  /* Define styles for the spells section */
+  flex: 1;
+  padding: 20px;
+}
+
+#section_lands {
+  /* Define styles for the lands section */
+  flex: 1;
+  padding: 20px;
+}
+#section_lands .image-preview {
+  width: 70px; /* Set the desired width for graveyard images */
+  height: auto; /* Auto height to maintain aspect ratio */
+}
+
+.modal .image-preview {
+  width: 350px;
+  height: auto;
+}
+.image-preview {
+  width: 90px;
+  transform: scale(1); /* Initial state */
+  transition: transform 0.3s;
+  margin: 5px; /* Add margin between images */
   display: flex;
   flex-wrap: wrap; /* Wrap the images to a new line when needed */
   justify-content: flex-start; /* Align images to the start of the container */
 }
 
-.image-preview {
-  width: 90px;
+/* CSS to style the close button */
+.xclose-button {
+  position: absolute;
+  top: 10px; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+.image-large {
+  width: 105px;
   transition: transform 0.3s;
   margin: 5px; /* Add margin between images */
   display: flex;
@@ -223,4 +360,130 @@
 /* Flex Item Hover Styles */
 .flex-item:hover {
   width: 200px;
+}
+
+/* Style for the library popup container */
+/* Style for the close button */
+#closeLibraryPopup {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  cursor: pointer;
+  background-color: #f44336; /* Red background color for the close button */
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 3px 3px;
+}
+
+/* Style for the library content (customize this as needed) */
+#libraryContent {
+  /* Add your styles for the library content here */
+}
+
+/* Style for the library popup container */
+#libraryPopup {
+  display: none;
+  position: fixed;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the popup */
+  width: auto; /* Allow it to grow as needed */
+  min-width: 300px; /* Set a minimum width for the popup */
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Ensure it's on top of other content */
+    flex-direction: row; /* Horizontal layout */
+  flex-wrap: wrap; /* Prevent wrapping to the next row */
+  justify-content: flex-start; /* Start from the left */
+  align-items: center; /* Center vertically */
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.popup-content {
+  display: block;
+  margin: 0 auto;
+  max-width: 90%;
+  max-height: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+
+/* Style for each card item in the library popup */
+.card-item {
+  /* Add styles for each card item here */
+  margin-right: 10px; /* Add spacing between cards */
+}
+
+/* Style for the context menu */
+.context-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  z-index: 100;
+}
+/* Style for context menu options */
+.context-menu-option {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.context-menu-option:hover {
+  background-color: #f0f0f0;
+}
+/* Hover Menu Styles */
+.hover-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff; /* Background color for the menu */
+  border: 1px solid #ccc;
+  padding: 5px;
+  z-index: 100; /* Ensure it's on top of other content */
+  cursor: pointer;
+  margin-top: 10px; /* Add some spacing between menu and card */
+}
+
+/* Hover Menu Option Styles */
+.hover-menu-option {
+  cursor: pointer;
+  padding: 5px;
+  font-weight: bold;
+  color: #333; /* Text color for options */
+  background-color: #f5f5f5; /* Background color for options */
+  border: 1px solid #ccc;
+  margin: 2px; /* Add some spacing between options */
+  text-align: center; /* Center-align text within options */
+  width: 180px; /* Adjust the width as needed */
+}
+
+/* Hover Menu Option Hover Styles */
+.hover-menu-option:hover {
+  background-color: #ddd; /* Background color on hover */
+  color: #000; /* Text color on hover */
 }
