@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
-</style>
 <title>Hand Simulation</title>
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
@@ -25,43 +23,49 @@
   </script>
 <link rel="stylesheet" href="/assets/decks.css">
 </head>
-<body onload="startMulliganCheck()">
 <div id="header">
-    <%- include('partials/nav'); -%>
+	<% include('partials/nav'); %>
 </div>
+<body onload="startMulliganCheck()">
 <div id="container">
-<div id="sidebar">
-    <%- include('partials/decklist'); -%>
-<button type="button" id="listHandDraw">Simulate Hand Draw</button>
-</div>
-
-<div id="sidebar">
- <table border="1" id="tblMulliganStats">
- 	<tr><th colspan="2">Mulligan Stats (based on 60 cards)</th></tr>
- 	<tr><td>Lands</td><td>Mulligan Percentage</td></tr>
-	<tr id="19"><td>19</td>
-    <td class="Nineteen" id="Nineteen"></td></tr>
-	<tr id="20"><td>20</td><td class="Twenty" id="Twenty"></td></tr>
-	<tr id="21"><td>21</td><td class="TwentyOne" id="TwentyOne"></td></tr>
-	<tr id="22"><td>22</td><td class="TwentyTwo" id="TwentyTwo"></td></tr>
-	<tr id="23"><td>23</td><td class="TwentyThree" id="TwentyThree"></td></tr>
-	<tr id="24"><td>24</td><td class="TwentyFour" id="TwentyFour"></td></tr>
-	<tr id="25"><td>25</td><td class="TwentyFive" id="TwentyFive"></td></tr>
-	<tr id="26"><td>26</td><td class="TwentySix" id="TwentySix"></td></tr>
-	<tr id="27"><td>27</td><td class="TwentySeven" id="TwentySeven"></td></tr>
-	<tr id="28"><td>28</td><td class="TwentyEight" id="TwentyEight"></td></tr>
- </table>
-</div>
-<div id="main">
-  <table border="1" id="tblHand">
-	<tr><th id="HandSimulation" colspan="8">Hand Simulation</th>
-<td id="HypergeometricDistribution">Mathematical Mulligan rate - 60 cards</td><td id="TotalHandsDrawn">Hands</td><td id="TotalMulligans">Mulligans</td>
-<td id="MulliganPercentage">Current Mulligan Percentage</td></tr>
-	<tr><th class="hand" colspan="7">Cards</th>
- <th class="OnTheDraw" colspan="4">On The Draw</th><td>Lands</td></tr>
-  </table>
-</div>
-</div>
+	<div id="left-sidebar">
+		<section id="deck" class="decklist">
+			<%- include('partials/decklist'); -%>
+			<button type="button" id="listHandDraw">Simulate Hand Draw</button>
+		</section>
+	</div>
+	<div id="middle">
+		<table border="1" id="tblHand">
+			<tr>
+				<th id="HandSimulation" colspan="8">Hand Simulation</th>
+				<td id="HypergeometricDistribution">Mathematical Mulligan rate - 60 cards</td>
+				<td id="TotalHandsDrawn">Hands</td>
+				<td id="TotalMulligans">Mulligans</td>
+				<td id="MulliganPercentage">Current Mulligan Percentage</td>
+			</tr>
+			<tr>
+				<th class="hand" colspan="7">Cards</th>
+				<th class="OnTheDraw" colspan="4">On The Draw</th>
+				<td>Lands</td>
+			</tr>
+			<!-- Add rows for card details if needed -->
+		</table>
+		<table border="1" id="tblMulliganStats">
+			<tr><th colspan="2">Mulligan Stats (based on 60 cards)</th></tr>
+			<tr><td>Lands</td><td>Mulligan Percentage</td></tr>
+			<tr id="19"><td>19</td>
+			<td class="Nineteen" id="Nineteen"></td></tr>
+			<tr id="20"><td>20</td><td class="Twenty" id="Twenty"></td></tr>
+			<tr id="21"><td>21</td><td class="TwentyOne" id="TwentyOne"></td></tr>
+			<tr id="22"><td>22</td><td class="TwentyTwo" id="TwentyTwo"></td></tr>
+			<tr id="23"><td>23</td><td class="TwentyThree" id="TwentyThree"></td></tr>
+			<tr id="24"><td>24</td><td class="TwentyFour" id="TwentyFour"></td></tr>
+			<tr id="25"><td>25</td><td class="TwentyFive" id="TwentyFive"></td></tr>
+			<tr id="26"><td>26</td><td class="TwentySix" id="TwentySix"></td></tr>
+			<tr id="27"><td>27</td><td class="TwentySeven" id="TwentySeven"></td></tr>
+			<tr id="28"><td>28</td><td class="TwentyEight" id="TwentyEight"></td></tr>
+		</table>
+	</div>
 </div>
 </body>
 </html>

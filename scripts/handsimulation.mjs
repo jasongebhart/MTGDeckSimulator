@@ -1,4 +1,5 @@
-import { loadXMLDoc, xmlDoc } from './config.mjs';
+import { loadXMLDoc, xmlDoc, getSelectedItem} from './config.mjs';
+
 
 export async function startSimulateHandDraw() {
     try {
@@ -28,36 +29,6 @@ async function loadDeckInformation(selectedXMLFile) {
     return getCardNames(xmlDoc);
 }
 
-function getSelectedItem() {
-    var len = document.formDecks.selectDeck.length;
-	let i = 0
-	let XMLFile = "none"
-	for (i = 0; i < len; i++) {
-	    if (document.formDecks.selectDeck[i].selected) {
-	        XMLFile = document.formDecks.selectDeck[i].value
-	    }
-	}
-	return XMLFile;
-}
-
-async function _loadXMLDoc(XMLFile) {
-    try {
-        // Create a Fetch API request to load the XML file.
-        const response = await fetch(XMLFile);
-        
-        if (!response.ok) {
-            throw new Error('Failed to load the requested file.');
-        }
-        
-        // Parse the XML response into a document.
-        const xmlText = await response.text(); // Use a different variable name
-        const parser = new DOMParser();
-        xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // Use xmlDoc here, not xmlDoc
-    } catch (error) {
-        console.error(error);
-        window.alert('Unable to load the requested file.');
-    }
-}
 
 function getDeckName() { 
 	var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
@@ -238,10 +209,14 @@ function displayMulliganChart(xmlDoc) {
         "TwentyFour", "TwentyFive", "TwentySix", "TwentySeven", "TwentyEight"
     ];
 
-    // Populate HTML elements using a loop
+    // Populate the mulliganContent element using a loop
+    var mulliganContent = document.getElementById("main");
     for (var j = 0; j < mulliganElements.length; j++) {
         var elementId = mulliganElements[j];
-        document.getElementById(elementId).innerHTML = arrMulligan[j];
+        // Create a new <p> element for each value and append it to mulliganContent
+        var paragraph = document.createElement("p");
+        paragraph.textContent = elementId + ": " + arrMulligan[j];
+        mulliganContent.appendChild(paragraph);
     }
 }
 

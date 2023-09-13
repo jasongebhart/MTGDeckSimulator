@@ -6,7 +6,6 @@ export var allcardTypes = ['Creatures','Lands','Spells','Enchantments','Artifact
 export var basiccardTypes = ['Creatures','Land','Spells'];
 var deckSize;
 
-
 // Function to start simulating hand draw
 export async function startSimulateHandDraw() {
     try {
@@ -41,9 +40,6 @@ export async function startSimulateHandDraw() {
         window.alert('An error occurred while loading XML data.');
     }
 }
-
-// Constants
-//const SPELL_TYPES = ["Instant", "Sorcery"];
 
 // Clear the library section before populating
 export function startLibrarySearch(cardType) {
@@ -140,52 +136,6 @@ function openLibraryPopup() {
     libraryPopup.style.display = "flex"; // Display the popup
 }
 
-function BrokenopenLibraryPopup() {
-    // Check if the section with the specified ID exists
-    if (document.getElementById("section_library-content")) {
-        // If it exists, then delete it
-        deleteSection("section_library-content");
-    } else {
-        // If it doesn't exist, you can handle it accordingly or log a message
-        console.log("The section 'section_library-content' does not exist.");
-    }
-
-    // Create a close button for the popup
-    const closeButton = document.createElement("button");
-    closeButton.textContent = "Close";
-    closeButton.addEventListener("click", () => {
-        // Close the popup when the close button is clicked
-        libraryPopup.style.display = "none"; // Hide the popup
-    });
-
-    // Create a card grid container
-    const cardGrid = document.createElement("div");
-    cardGrid.classList.add("card-grid"); // Apply a CSS class for styling
-
-    // Limit the number of cards to display
-    const maxCardsToShow = 10;
-    const cardsToShow = cardNames.slice(0, maxCardsToShow);
-
-    // Loop through each card to display
-    cardsToShow.forEach((cardName) => {
-        const toLocation = "library";
-        const fromLocation = "librarypopup";
-        const cardDiv = createCardInPopup(cardName, toLocation, fromLocation);
-
-        // Append the card to the card grid
-        cardGrid.appendChild(cardDiv);
-    });
-
-    // Append the card grid and close button to the libraryPopup element
-    libraryPopup.appendChild(cardGrid);
-    libraryPopup.appendChild(closeButton);
-
-    // Show the libraryPopup and adjust its size
-    libraryPopup.style.display = "flex"; // Display the popup
-    libraryPopup.style.width = "80%"; // Adjust the width as needed
-    libraryPopup.style.height = "80%"; // Adjust the height as needed
-}
-
 // Modify viewEntireLibrary to open the popup
 export function viewEntireLibrary() {
     // Open the popup with card images
@@ -194,23 +144,7 @@ export function viewEntireLibrary() {
     // Update the deck size
     setDeckSize(cardNames.length);
 }
-
-
-function _filterCardsByTypes(cardInfo, cardTypes) {
-    const filteredCards = {};
-  
-    for (const cardName in cardInfo) {
-        console.log("cardName:", cardName);
-      const card = cardInfo[cardName];
-      console.log("card:", card);
-      if (cardTypes.includes(card.type)) {
-        filteredCards[cardName] = card;
-      }
-    }
-  
-    return filteredCards;
-  }
-  
+ 
 function filterCardsByTypesAndNames(cardInfo, cardTypes) {
     const filteredCards = {};
 
@@ -226,32 +160,17 @@ function filterCardsByTypesAndNames(cardInfo, cardTypes) {
     return filteredCards;
 }
 
-function displayNoCardsFoundMessage(selectedCardTypes) {
-    // Display a message indicating that no cards of the specified type were found
-    const librarySection = document.getElementById("section_library");
-    const message = document.createElement("p");
-    message.textContent = `No cards of the type ${selectedCardTypes.join(", ")} were found.`;
-    librarySection.appendChild(message);
+function addCardToLibrary(cardName) {
+    // Add the card to the library (cardNames)
+    cardNames.push(cardName);
+    console.log(`Card "${cardName}" added to the library.`);
+    
+    // Optionally, you can update the deck size here if needed
+    setDeckSize(cardNames.length);
 }
-
-
-
-function startLibrarySearchFilter(cardNames, basiccardTypes, cardtype) {
-    const filteredCards = new Set();
-
-    for (let i = 0; i < cardNames.length; i++) {
-        const currentCardType = basiccardTypes[i];
-        if (cardtype.indexOf(currentCardType) >= 0) {
-            filteredCards.add(cardNames[i]);
-        }
-    }
-
-    return Array.from(filteredCards);
-}
-
 
 export function startDrawOneCard(cardNames, cardInfo) {
-    deleteSection("section_library");
+    //deleteSection("section_library");
     const cardsToDraw = 1;
     const handInformation = cardDraw(cardNames, cardInfo, 1);
     const { spells, lands } = handInformation;
@@ -261,7 +180,7 @@ export function startDrawOneCard(cardNames, cardInfo) {
 }
 
 function clearGameSections() {
-    const sectionIdsToClear = ["section_spells", "section_lands", "section_battlefield_cards", "section_graveyard"];
+    const sectionIdsToClear = ["section_spells", "section_lands", "section_battlefield-lands", "section_battlefield-spells", "section_graveyard", "section_exile"];
     
     sectionIdsToClear.forEach(sectionId => {
         if (document.getElementById(sectionId)) {
@@ -285,16 +204,25 @@ function setDeckSize(deckSize) {
 }
 
 function getSelectedItem() {
+    // Get the number of options in the select element
     var len = document.formDecks.selectDeck.length;
-	let i = 0
-	let XMLFile = "none"
-	for (i = 0; i < len; i++) {
-	    if (document.formDecks.selectDeck[i].selected) {
-	        XMLFile = document.formDecks.selectDeck[i].value
-	    }
-	}
-	return XMLFile;
+
+    // Initialize variables
+    let i = 0;
+    let XMLFile = "none";
+
+    // Loop through the options to find the selected one
+    for (i = 0; i < len; i++) {
+        if (document.formDecks.selectDeck[i].selected) {
+            // Set XMLFile to the value of the selected option
+            XMLFile = document.formDecks.selectDeck[i].value;
+        }
+    }
+
+    // Return the selected XML file (or "none" if nothing is selected)
+    return XMLFile;
 }
+
 
 function extractCardInfo(deckList) {
     const cardInfo = {};
@@ -392,15 +320,6 @@ function displayHand(spells, lands) {
     }
 }
 
-export function _startLibraryDrawAll() {
-  deleteSection("section_library-content");
-  //deleteRows("tblLibrary");
-  var cardDrawn = searchLibraryAll();
-  var toLocation = "library-content";
-  var fromLocation = "library-content";
-  createCardAtSection(cardDrawn,toLocation,fromLocation);
-  setDeckSize(cardNames.length);
-}
 
 export function startLibraryDrawAll() {
     // Check if the section with the specified ID exists
@@ -422,97 +341,6 @@ export function startLibraryDrawAll() {
     // Update the deck size
     setDeckSize(cardNames.length);
   }
-
-  
-function searchLibraryAll() {
-  var arrlibraryAll = new Array();
-  arrlibraryAll = cardNames.slice(0);
-
-  //Simulate card drawing;
-  var cardDrawn = "";
-  var randomnumber = Math.floor(Math.random()*deckSize);
-  //If the library Size is 60 then the randomnumber will equal a number from 0 to 59
-  cardDrawn = arrlibraryAll[randomnumber];
-  console.log("cardDrawn:", cardDrawn);
-  return cardDrawn;
-}
-
-function addToGraveyardFromSpells(cardDrawn){
-    //Remove card from hand and add to card effect draw
-    //alert(cardDrawn);
-    var toLocation = "graveyard";
-    var FromLocation = "spells";
-    createCardAtSection(cardDrawn,toLocation,FromLocation);
-    //deleteCellFromBattlefield(cardDrawn);
-    return;
-}
-
-function addToGraveyardFromPlay(cardNames,cardDrawn){
-    //Remove card from hand and add to card effect draw
-    //alert(cardDrawn);
-    var toLocation = "graveyard";
-    var FromLocation = "battlefield_content";
-    createCardAtSection(cardDrawn,toLocation,FromLocation);
-    //deleteCellFromBattlefield(cardDrawn);
-    return;
-}
-
-function addToBattlefieldFromGraveyard(cardNames,cardDrawn){
-    //Remove card from hand and add to card effect draw
-    //alert(cardDrawn);
-    var toLocation = "battlefield_content";
-    var FromLocation = "graveyard";
-    createCardAtSection(cardDrawn,toLocation,FromLocation);
-    //deleteCellFromGraveyard(cardDrawn);
-    return;
-}
-
-function addToBattlefieldFromSpells(cardNames, cardDrawn) {
-    //alert(cardDrawn);
-    //Remove card from hand and add to card effect draw
-    var toLocation = "battlefield_content";
-    var FromLocation = "spells";
-    createCardAtSection(cardDrawn,toLocation,FromLocation);
-    //deleteCellFromHand(cardDrawn);
-    return;
-}
-
-function addToBattlefieldFromLand(cardNames, cardDrawn) {
-    //alert(cardDrawn);
-    //Remove card from hand and add to card effect draw
-    var toLocation = "battlefield_content";
-    var FromLocation = "lands";
-    createCardAtSection(cardDrawn,toLocation,FromLocation);
-    //deleteCellFromHand(cardDrawn);
-    return;
-}
-
-
-function addToHand(cardNames, cardDrawn) {
-    const index = cardNames.indexOf(cardDrawn);
-  
-    if (index !== -1) {
-      deckSize -= 1; // Decrease deck size
-      // Remove card from library
-      cardNames.splice(index, 1);
-      addToHandFromLibrary(cardDrawn);
-      // Optionally, update UI elements
-      deleteSection("section_library");
-      setDeckSize(cardNames.length);
-    }
-  }
-  
-
-function addToHandFromLibrary(cardDrawn) {
-    //alert(intDrawTypes);
-    cardDrawn = cardDrawn.replace(/,\s*$/, "");
-    //cardDrawn = cardDrawn.replace(',','');
-    var cardDrawn = new String(cardDrawn);
-    var toLocation = "spells";
-    var FromLocation = "library";
-    createCardAtSection(cardDrawn,toLocation,FromLocation);
-    return;
-}
 
 function removeCardFromLocation(cardDrawn,FromLocation) {
 
@@ -545,17 +373,6 @@ function removeCardFromLocation(cardDrawn,FromLocation) {
     }
 }
 
-function createCardLink(cardDrawn) {
-    let link = document.createElement('A');
-    link.href = "http://www.magiccards.info/autocard/" + cardDrawn;
-    //var cardpicture = "/assets/MagicImages/" + cardDrawn + ".jpg";
-    //link.setAttribute('data-value',cardpicture);
-    var nameStr = document.createTextNode(cardDrawn);
-    link.appendChild(nameStr);
-    //var cardimagepreview = createCardImagePreview(cardDrawn);
-    //link.appendChild(cardimagepreview);
-    return link;
-}
 
 function createCardImage(cardDrawn, className) {
     var image = document.createElement("img");
@@ -573,126 +390,6 @@ function createCardImage(cardDrawn, className) {
     image.style.cssText = 'display:block;text-align:center;';
     //image.alt="alt Hello";
     return image;
-}
-
-
-function createCardButton(cardDrawn,toLocation) {
-    var buttonnode
-    //alert(toLocation);
-     switch(toLocation) {
-        case "graveyard":
-             //Battlefield Button Creation
-            buttonnode = document.createElement('input');
-            buttonnode.setAttribute('type','button');
-            buttonnode.setAttribute('name','Battlefield');
-            buttonnode.setAttribute('value','Battlefield');
-            buttonnode.setAttribute('class','btn');
-
-            buttonnode.onclick = (function(cardNames,cardDrawn) {
-                return function () {
-                    addToBattlefieldFromGraveyard(cardNames,cardDrawn);
-                };
-            })(cardNames,cardDrawn);
-            break;
-
-        case "battlefield":
-            //Graveyard Button Creation
-            buttonnode = document.createElement('input');
-            buttonnode.setAttribute('type','button');
-            buttonnode.setAttribute('name','Graveyard');
-            buttonnode.setAttribute('value','Graveyard');
-            buttonnode.setAttribute('class','btn');
-            buttonnode.setAttribute('id', "gravebtn_"+cardDrawn);
-            //alert("To Location battlefield " + cardDrawn);
-            buttonnode.onclick = (function(cardNames,cardDrawn) {
-                return function () {
-                    addToGraveyardFromPlay(cardNames,cardDrawn);
-                };
-            })(cardNames,cardDrawn);
-            break;
-
-        case "Hand":
-            buttonnode = document.createElement('input');
-            buttonnode.setAttribute('type','button');
-            buttonnode.setAttribute('name','Battlefield');
-            buttonnode.setAttribute('value','Battlefield');
-            buttonnode.setAttribute('class','btn');
-
-            buttonnode.onclick = (function(cardNames,cardDrawn) {
-                return function () {
-                    addToBattlefieldFromHand(cardNames,cardDrawn);
-                };
-            })(cardNames,cardDrawn);
-            break;
-
-        case "spells":
-            buttonnode = document.createElement('input');
-            buttonnode.setAttribute('type','button');
-            buttonnode.setAttribute('name','Battlefield');
-            buttonnode.setAttribute('value','Battlefield');
-            buttonnode.setAttribute('class','btn');
-
-            buttonnode.onclick = (function(cardNames,cardDrawn) {
-                return function () {
-                    addToBattlefieldFromSpells(cardNames,cardDrawn);
-                };
-            })(cardNames,cardDrawn);
-            break;
-
-        case "lands":
-            buttonnode = document.createElement('input');
-            buttonnode.setAttribute('type','button');
-            buttonnode.setAttribute('name','Battlefield');
-            buttonnode.setAttribute('value','Battlefield');
-            buttonnode.setAttribute('class','btn');
-
-            buttonnode.onclick = (function(cardNames,cardDrawn) {
-                return function () {
-                    addToBattlefieldFromLand(cardNames,cardDrawn);
-                };
-            })(cardNames,cardDrawn);
-            break;
-
-
-        case "library":
-            //Add library list
-            buttonnode = document.createElement('input');
-            buttonnode.setAttribute('type','button');
-            buttonnode.setAttribute('name','Add to Hand');
-            buttonnode.setAttribute('value','Hand');
-            buttonnode.setAttribute('class', 'btn');
-            buttonnode.setAttribute('id', "btn_"+cardDrawn);
-
-            buttonnode.onclick = (function (cardNames,cardDrawn) {
-                return function () {
-                    addToHand(cardNames,cardDrawn);
-                };
-            })(cardNames,cardDrawn);
-            break;
-
-         default:
-        }
-        return buttonnode;
-}
-
-function createCardButtonNew(cardName, toLocation, buttonText, clickHandler) {
-    const buttonnode = document.createElement('input');
-    buttonnode.setAttribute('type', 'button');
-    buttonnode.setAttribute('name', buttonText);
-    buttonnode.setAttribute('value', buttonText);
-    buttonnode.setAttribute('class', 'btn');
-
-    if (toLocation === "battlefield") {
-        buttonnode.setAttribute('id', "gravebtn_" + cardName);
-    }
-
-    buttonnode.onclick = (function (cardName) { // Keep the parameter name as cardName
-        return function () {
-            clickHandler(cardName);
-        };
-    })(cardName);
-
-    return buttonnode;
 }
 
 
@@ -716,32 +413,48 @@ function getSectionFromCardId(cardId) {
     // Return null if the ID format doesn't match expectations
     return null;
 }
+function getDestinationSection(toLocation, cardDrawn) {
+    // Default to the provided 'toLocation'
+    let destinationSection = toLocation;
+
+    // Determine the destination section based on card type and 'toLocation'
+    if (toLocation === "hand") {
+        // Lookup the card type from the global 'cardInfo'
+        const card = cardInfo[cardDrawn];
+
+        // Check if the card type exists and proceed accordingly
+        if (card) {
+            if (card.type === "land") {
+                destinationSection = "lands";
+            } else {
+                destinationSection = "spells";
+            }
+        } else {
+            console.error(`Card "${cardDrawn}" not found in cardInfo.`);
+        }
+    } else if (toLocation === "battlefield") {
+        // Determine the destination section within the battlefield based on card type
+        const card = cardInfo[cardDrawn];
+
+        if (card) {
+            if (card.type === "land") {
+                destinationSection = "battlefield-lands";
+            } else {
+                destinationSection = "battlefield-spells";
+            }
+        } else {
+            console.error(`Card "${cardDrawn}" not found in cardInfo.`);
+        }
+    }
+
+    return destinationSection;
+}
+
+
 
 function moveCard(cardDrawn, toLocation, fromLocation) {
     // Determine the destination section based on the 'toLocation' parameter
-    let destinationSection;
-
-    if (toLocation === "hand") {
-         // Lookup the card type from the global 'cardInfo'
-         const card = cardInfo[cardDrawn];
-        
-         // Check if the card type exists and proceed accordingly
-         if (card) {
-             //if (card.type === "Instant" || card.type === "Sorcery") {
-            console.log("card type:", card.type);
-            if (card.type === "land") {
-                destinationSection = "lands";
-             } else {
-                destinationSection = "spells";
-             }
-         } else {
-             console.error(`Card "${cardDrawn}" not found in cardInfo.`);
-             return;
-         }
-    } else {
-        // Handle other locations if needed
-        destinationSection = toLocation;
-    }
+    const destinationSection = getDestinationSection(toLocation, cardDrawn);
 
     if (!destinationSection) {
         console.error(`Destination section "${toLocation}" not found.`);
@@ -786,89 +499,6 @@ function deleteCard(cardDrawn, location) {
 }
 
 
-function newcreateCardItem(cardName, toLocation) {
-    const section = document.getElementById(`section_${toLocation}`);
-    if (!section) {
-        console.error(`Section "${toLocation}" not found.`);
-        return;
-    }
-
-    const carddiv = document.createElement("div");
-    carddiv.id = `div1_${toLocation}_${cardName}`;
-    carddiv.classList.add("card");
-
-    // Create a card image element
-    const cardimage = createCardImage(cardName);
-    const fromsection = getSectionFromCardId(carddiv.id);
-    cardimage.addEventListener("click", () => {
-        // When the card is clicked, move it to the battlefield
-        moveCard(cardName, "battlefield-content", fromsection);
-    });
-    carddiv.appendChild(cardimage);
-
-    // Create a container for the hover spot
-    const hoverSpot = createHoverSpot();
-
-    // Define menu options
-    const menuOptions = [
-        { label: "Move to Hand", action: "hand" },
-        { label: "Move to Graveyard", action: "graveyard" },
-        { label: "Move to Exile", action: "exile" },
-        { label: "Move to Library", action: "library" },
-        { label: "Move to Battlefield", action: "battlefield-content" },
-        { label: "View Larger", action: "view-larger" }, // Add "View Larger" option
-        { label: "Preview", action: "preview" }
-    ];
-
-    // Create menu options and event listeners
-    menuOptions.forEach(({ label, action }) => {
-        const option = createHoverMenuOption(label, action);
-
-        option.addEventListener("mouseenter", () => {
-            option.style.backgroundColor = "#ddd";
-        });
-
-        option.addEventListener("mouseleave", () => {
-            option.style.backgroundColor = "";
-        });
-
-        if (action === "view-larger") {
-            option.classList.add("view-larger"); // Add the CSS class for hover effect
-          
-            // Add a click event listener to show the larger card in a popup
-            option.addEventListener("click", () => {
-              const section = getSectionFromCardId(carddiv.id);
-              moveCard(cardName, action, section);
-              openPopup(cardName); // Open the popup
-            });
-          }
-          
-    
-        hoverSpot.appendChild(option);
-    });
-
-    // Hide the hover spot initially
-    hoverSpot.style.display = "none";
-
-    // Add event listener to the card to show/hide the hover spot
-    carddiv.addEventListener("mouseenter", () => {
-        hoverSpot.style.display = "block";
-        carddiv.style.backgroundColor = "#f0f0f0"; // Change card background color on hover
-    });
-
-    carddiv.addEventListener("mouseleave", () => {
-        hoverSpot.style.display = "none";
-        carddiv.style.backgroundColor = ""; // Reset card background color on mouse leave
-    });
-
-    // Append the hover spot to the card item
-    carddiv.appendChild(hoverSpot);
-
-    // Append the card item to the section
-    section.appendChild(carddiv);
-}
-
-
 function createCardItem(cardName, toLocation) {
     const section = document.getElementById(`section_${toLocation}`);
     if (!section) {
@@ -885,7 +515,7 @@ function createCardItem(cardName, toLocation) {
     const fromsection = getSectionFromCardId(carddiv.id);
     cardimage.addEventListener("click", () => {
         // When the card is clicked, move it to the battlefield
-        moveCard(cardName, "battlefield-content", fromsection);
+        moveCard(cardName, "battlefield", fromsection);
     });
     carddiv.appendChild(cardimage);
 
@@ -894,11 +524,11 @@ function createCardItem(cardName, toLocation) {
 
     // Define menu options
     const menuOptions = [
-        { label: "Move to Hand", action: "hand" },
-        { label: "Move to Graveyard", action: "graveyard" },
-        { label: "Move to Exile", action: "exile" },
-        { label: "Move to Library", action: "library" },
-        { label: "Move to Battlefield", action: "battlefield-content" },
+        { label: "Hand", action: "hand" },
+        { label: "Graveyard", action: "graveyard" },
+        { label: "Exile", action: "exile" },
+        { label: "Library", action: "library" },
+        { label: "Battlefield", action: "battlefield" },
         { label: "Preview", action: "preview" }
     ];
 
@@ -913,12 +543,22 @@ function createCardItem(cardName, toLocation) {
         option.addEventListener("mouseleave", () => {
             option.style.backgroundColor = "";
         });
-        // Add a click event listener to show the larger card on click
-        option.addEventListener("click", () => {
-        // For other actions, move the card
-        const section = getSectionFromCardId(carddiv.id);
-        moveCard(cardName, action, section);
-    });
+        // Check if the action is "Move to Library"
+        if (action === "library") {
+            // For the library action, add the card to the library and remove it from the original location
+            option.addEventListener("click", () => {
+                addCardToLibrary(cardName);
+                // Remove the card from the original location
+                deleteCard(cardName, fromsection);
+            });
+        } else {
+            // For other actions, move the card
+            option.addEventListener("click", () => {
+                const section = getSectionFromCardId(carddiv.id);
+                moveCard(cardName, action, section);
+            });
+        }
+
         hoverSpot.appendChild(option);
     });
 
@@ -936,16 +576,16 @@ function createCardItem(cardName, toLocation) {
         carddiv.style.backgroundColor = ""; // Reset card background color on mouse leave
     });
 
-    // Add event listener to the card to show the larger image on hover
-carddiv.addEventListener("mouseenter", () => {
-    // Call the function to show the larger card image
-    showLargerCard(cardName);
-});
+        // Add event listener to the card to show the larger image on hover
+    carddiv.addEventListener("mouseenter", () => {
+        // Call the function to show the larger card image
+        showLargerCard(cardName);
+    });
 
-carddiv.addEventListener("mouseleave", () => {
-    // Hide the larger card image when the mouse leaves the card
-    hideLargerCard();
-});
+    carddiv.addEventListener("mouseleave", () => {
+        // Hide the larger card image when the mouse leaves the card
+        hideLargerCard();
+    });
 
     // Append the hover spot to the card item
     carddiv.appendChild(hoverSpot);
@@ -994,8 +634,45 @@ function showLargerCard(cardName) {
     modal.appendChild(closeButton);
     modal.appendChild(largerCardImage);
 
+    // Append the modal to the right-sidebar
+    const Sidebar = document.getElementById("left-sidebar");
+    Sidebar.appendChild(modal);
+}
+
+function showLargerCardPopup(cardName) {
+    // Create a modal with the larger card image
+    const largerCardImage = createCardImage(cardName);
+    const modal = document.createElement("div");
+    modal.classList.add("modal");
+
+    // Add a close button to the modal (optional)
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "Close";
+    closeButton.classList.add("close-button"); // Add a CSS class for styling
+
+    // Add a click event listener to close the modal on button click
+    closeButton.addEventListener("click", () => {
+        hideLargerCard();
+    });
+
+    modal.appendChild(closeButton);
+    modal.appendChild(largerCardImage);
+
     // Append the modal to the body
     document.body.appendChild(modal);
+    
+    // Center the modal on the screen (you may need to adjust the CSS for positioning)
+    modal.style.position = "fixed";
+    modal.style.left = "50%";
+    modal.style.top = "50%";
+    modal.style.transform = "translate(-50%, -50%)";
+    modal.style.zIndex = "1000";
+    modal.style.backgroundColor = "white";
+    modal.style.padding = "20px";
+    modal.style.border = "1px solid #ccc";
+    modal.style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.5)";
+    
+    // You can add more styling and adjust the position as needed
 }
 
 // Function to hide the larger card image
@@ -1006,28 +683,7 @@ function hideLargerCard() {
     }
 }
 
-// Function to generate the source for the larger card image
-function getLargerCardImageSrc(cardName) {
-    // Implement your logic to get the source for the larger card image
-    // Return the URL of the larger card image based on the cardName
-    return `/path/to/larger/card/images/${cardName}.jpg`;
-}
-
-function openPopup(cardName) {
-    const popupContainer = document.getElementById("popup-container");
-    const popupImage = document.getElementById("popup-image");
-  
-    // Get the source of the larger card image based on the cardName
-    const largerCardImageSrc = getLargerCardImageSrc(cardName);
-  
-    // Set the source of the popup image to the larger version
-    popupImage.src = largerCardImageSrc;
-  
-    // Display the popup
-    popupContainer.style.display = "block";
-}
-
-  
+ 
 function closePopup(container) {
     const popupContainer = document.getElementById(container);
   
@@ -1056,12 +712,6 @@ function displayNoCardsMessage(container) {
     container.appendChild(message);
 }
 
-// Usage:
-// Call this function when you want to display the message.
-// Pass the container (popup) as an argument.
-// For example:
-// displayNoCardsMessage(document.getElementById("libraryPopup"));
-
 
 function createCardItemInPopup(cardName, toLocation, container) {
     console.log("cardName", cardName);
@@ -1076,7 +726,7 @@ function createCardItemInPopup(cardName, toLocation, container) {
     const fromsection = getSectionFromCardId(carddiv.id);
     cardimage.addEventListener("click", () => {
         // When the card is clicked, move it to the battlefield
-        moveCard(cardName, "battlefield-content", fromsection);
+        moveCard(cardName, "battlefield", fromsection);
         // Remove the popup from the DOM
         //removePopup(container);
         closePopup("libraryPopup")
@@ -1086,11 +736,11 @@ function createCardItemInPopup(cardName, toLocation, container) {
 
     // Define menu options
     const menuOptions = [
-        { label: "Move to Hand", action: "hand" },
-        { label: "Move to Graveyard", action: "graveyard" },
-        { label: "Move to Exile", action: "exile" },
-        { label: "Move to Library", action: "library" },
-        { label: "Move to Battlefield", action: "battlefield-content" },
+        { label: "Hand", action: "hand" },
+        { label: "Graveyard", action: "graveyard" },
+        { label: "Exile", action: "exile" },
+        { label: "Library", action: "library" },
+        { label: "Battlefield", action: "battlefield" },
         { label: "Preview", action: "preview" }
     ];
 
@@ -1148,12 +798,4 @@ function createCardItemInPopup(cardName, toLocation, container) {
     carddiv.appendChild(hoverMenu);
 
     container.appendChild(carddiv); // Append the card info to the container (popup)
-}
-
-
-// Function to remove the popup element from the DOM
-function removePopup(popup) {
-    if (popup && popup.parentElement) {
-        popup.parentElement.removeChild(popup);
-    }
 }

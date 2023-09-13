@@ -34,6 +34,19 @@
 
 #container {
   display: flex;
+  width: 1920px; /* Set a fixed width for the container */
+  height: 1080px; /* Set a fixed height for the container */
+    /* Set the background image */
+    background-image: url('/assets/wallpaper/Wallpaper_2560x1600_Sunpetal_Grove.png');
+  
+    /* Set background size to cover the entire element */
+    background-size: cover;
+    
+    /* Specify how the image should be positioned */
+    background-position: center;
+    
+    /* Optional: Add a background color in case the image doesn't load */
+    background-color: #f0f0f0;
 }
 
 /* Select Dropdown Styles */
@@ -47,7 +60,6 @@
 #section_library {
   width: 9%; /* Adjust the width as needed */
   margin-left: left; /* Move to the right by setting margin-left to auto */
-  background-color: #f0f0f0; /* Background color for library */
   padding: 5px; /* Add padding for spacing */
 }
 
@@ -74,42 +86,77 @@
   max-width: 100%; /* Ensure it doesn't exceed the screen width */
 }
 
-/* Adjust styles for #section_hand and #section_lands */
-#section_hand,
+/* Adjust styles for #section_battlefield */
+
+#section_hand {
+  padding: 1px;
+  box-sizing: border-box;
+  width: auto; /* Use 'auto' to fit content width */
+  overflow: auto;
+  margin-left: auto;
+}
+
+.hand-container {
+  width: auto; /* Use 'auto' to fit content width */
+}
+
+#section_spells,
 #section_lands {
   flex: 1;
-  padding: 20px;
-  width: calc(50% - 20px); /* Set both sections to take up 50% of the available space with spacing */
-  box-sizing: border-box; /* Include padding and border in the width calculation */
+  padding: 1px;
+  box-sizing: border-box;
   max-width: 100%; /* Ensure it doesn't exceed the screen width */
+  flex-wrap: wrap; /* Allow cards to wrap to the next line */
 }
 
+#section_lands .image-preview {
+  width: 50px; /* Set the desired width for graveyard images */
+  height: auto; /* Auto height to maintain aspect ratio */
+}
+#section_spells .image-preview {
+  width: 65px; /* Set the desired width for graveyard images */
+  height: auto; /* Auto height to maintain aspect ratio */
+}
 /* Adjust styles for #section_battlefield */
 #section_battlefield {
-  flex: 1;
   padding: 20px;
-  width: 100%; /* Take up 100% of the available space */
-  box-sizing: border-box; /* Include padding and border in the width calculation */
-  max-width: 100%; /* Ensure it doesn't exceed the screen width */
+  box-sizing: border-box;
+  width: auto; /* Use 'auto' to fit content width */
+  max-height: 50vh; /* Set maximum height to 50% of the viewport height */
+  overflow: auto;
+  margin-left: auto;
+}
+#section_battlefield-lands .image-preview {
+  width: 70px; /* Set the desired width for graveyard images */
+  height: auto; /* Auto height to maintain aspect ratio */
+}
+/* Style the battlefield-container to display sections vertically */
+.battlefield-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Add spacing between the sections */
 }
 
-#section_battlefield {
+
+/* Adjust styles for #section_battlefield-lands and #section_battlefield-spells */
+#section_battlefield-lands,
+#section_battlefield-spells {
   flex: 1;
-  padding: 20px;
-  width: 100%; /* Take up 100% of the available space */
-  box-sizing: border-box; /* Include padding and border in the width calculation */
+  box-sizing: border-box;
   max-width: 100%; /* Ensure it doesn't exceed the screen width */
+  flex-wrap: wrap; /* Allow cards to wrap to the next line */
+  /* Adjust width as needed based on your design */
 }
+
+
 #left-sidebar {
-  width: 20%; /* Adjust the width as needed */
-  background-color: rgba(240, 240, 240, 0.7); /* Background color with transparency */
-  padding: 20px; /* Add padding for spacing */
+  width: 25%; /* Adjust the width as needed */
+  padding: 10px; /* Add padding for spacing */
 }
 /* Adjust styles for #right-sidebar */
 #right-sidebar {
   width: 15%; /* Adjust the width as needed */
-  background-color: rgba(240, 240, 240, 0.7); /* Background color with transparency */
-  padding: 20px; /* Add padding for spacing */
+  padding: 10px; /* Add padding for spacing */
   margin-left: auto; /* Push it to the right by setting margin-left to auto */
 }
 
@@ -123,14 +170,13 @@
 #left-sidebar .flexlibrary,
 #left-sidebar #exilePopup {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin: 10px;
-  background-color: rgba(240, 240, 240, 0.7); /* Background color with transparency */
+  background-color: rgba(240, 240, 240, 0.3); /* Background color with transparency */
   /* Add styles for the sections and the popup as needed */
 }
 
-
+.exile_graveyard-container {
+  display: flex;
+}
 .tab-container {
   display: flex;
   width: 20%;
@@ -187,7 +233,7 @@
 /* Button Styles */
 .button {
   color: #050;
-  font: bold 88% 'trebuchet ms', helvetica, sans-serif;
+  font-size: 16px;
   background-color: #fed;
   border: 1px solid;
   border-color: #696 #363 #363 #696;
@@ -195,9 +241,9 @@
 
 /* CSS for the custom dropdown menu */
 .custom-dropdown {
-  padding: 6px 10px;
+  padding: 4px 4px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #000
   background-color: #fff;
   color: #333;
   /* Add more styling as needed */
@@ -250,56 +296,25 @@
   padding: 0;
 }
 
-/* Display images horizontally within section_spells */
-.middle-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-#section_spells {
-  /* Define styles for the spells section */
-  flex: 1;
-  padding: 20px;
-}
-
-#section_lands {
-  /* Define styles for the lands section */
-  flex: 1;
-  padding: 20px;
-}
-#section_lands .image-preview {
-  width: 70px; /* Set the desired width for graveyard images */
-  height: auto; /* Auto height to maintain aspect ratio */
-}
 
 .modal .image-preview {
   width: 350px;
   height: auto;
 }
 .image-preview {
-  width: 90px;
+  width: 100px;
   transform: scale(1); /* Initial state */
   transition: transform 0.3s;
-  margin: 5px; /* Add margin between images */
+  margin: 1px; /* Add margin between images */
+  border-color: #000;
   display: flex;
   flex-wrap: wrap; /* Wrap the images to a new line when needed */
   justify-content: flex-start; /* Align images to the start of the container */
 }
 
-/* CSS to style the close button */
-.xclose-button {
-  position: absolute;
-  top: 10px; /* Adjust the top position as needed */
-  right: 10px; /* Adjust the right position as needed */
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
 
 .image-large {
-  width: 105px;
+  width: 95px;
   transition: transform 0.3s;
   margin: 5px; /* Add margin between images */
   display: flex;
@@ -326,24 +341,14 @@
 
 .flex {
   /* basic styling */
-  width: 350px;
-  height: 200px;
-  //border: 1px solid #555;
   font: 14px Arial;
-
   /* flexbox setup */
-  display: -webkit-flex;
-  -webkit-flex-direction: row;
-
   display: flex;
   flex-direction: row;
 }
 
-
 /* Flex Container and Item Styles */
 .flex-container {
-  width: 350px;
-  height: 200px;
   display: flex;
   flex-direction: row;
 }
@@ -351,15 +356,14 @@
 /* Flex Item Styles */
 .flex-item {
   flex: 1 1 auto;
-  padding: 5px;
-  width: 110px;
-  -webkit-transition: width 0.7s ease-out;
+  padding: 4px;
+  width: 300px;
   transition: width 0.7s ease-out;
 }
 
 /* Flex Item Hover Styles */
 .flex-item:hover {
-  width: 200px;
+  width: 300px;
 }
 
 /* Style for the library popup container */
@@ -369,17 +373,13 @@
   top: -1px;
   right: -1px;
   cursor: pointer;
-  background-color: #f44336; /* Red background color for the close button */
+  background-color: #368bf4; /* Red background color for the close button */
   color: #fff;
-  border: none;
-  border-radius: 50%;
+  border none;
+  border-radius: 80%;
   padding: 3px 3px;
 }
 
-/* Style for the library content (customize this as needed) */
-#libraryContent {
-  /* Add your styles for the library content here */
-}
 
 /* Style for the library popup container */
 #libraryPopup {
@@ -390,7 +390,7 @@
   transform: translate(-50%, -50%); /* Center the popup */
   width: auto; /* Allow it to grow as needed */
   min-width: 300px; /* Set a minimum width for the popup */
-  padding: 20px;
+  padding: 10px;
   background-color: #fff;
   border: 1px solid #ccc;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -461,7 +461,7 @@
 .hover-menu {
   display: none;
   position: absolute;
-  background-color: #fff; /* Background color for the menu */
+  background-color: #72a747; /* Background color for the menu */
   border: 1px solid #ccc;
   padding: 5px;
   z-index: 100; /* Ensure it's on top of other content */
@@ -472,14 +472,15 @@
 /* Hover Menu Option Styles */
 .hover-menu-option {
   cursor: pointer;
-  padding: 5px;
+  padding: 3px;
   font-weight: bold;
   color: #333; /* Text color for options */
-  background-color: #f5f5f5; /* Background color for options */
-  border: 1px solid #ccc;
+  background-color: #72a747; /* Background color for options */
+  border: 1px solid #ffed41;
   margin: 2px; /* Add some spacing between options */
   text-align: center; /* Center-align text within options */
-  width: 180px; /* Adjust the width as needed */
+  width:inherit; /* Adjust the width as needed */
+  font-size: smaller;
 }
 
 /* Hover Menu Option Hover Styles */
