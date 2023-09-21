@@ -1,4 +1,13 @@
-import { loadXMLDoc, xmlDoc } from './config.mjs';
+import {
+    loadXMLDoc,
+    xmlDoc,
+    getSelectedItem,
+    createCardImage,
+    getCardNames,
+    extractCardInfo,
+    buildCardNamesArray
+} from './config.mjs';
+
 export let cardNames = [];
 export let cardInfo = {};
 //var cardNames = [];
@@ -78,13 +87,6 @@ export function startLibrarySearch(cardType) {
     // Check if any cards of the specified type were found
     if (!filteredCards || Object.keys(filteredCards).length === 0) {
         console.log("No cards of the type " + selectedCardTypes + "were found");
-        //displayNoCardsFoundMessage(selectedCardTypes);
-        //const libraryPopup = document.getElementById("libraryPopup");
-        // Clear the content by removing all child nodes
-        //libraryPopup.innerHTML = '';
-        //.style.display = "none"; // Hide the popup
-        //deleteSection("libraryPopup");
-        //closePopup("libraryPopup");
         displayNoCardsMessage(document.getElementById("libraryPopup"))
         libraryPopup.style.display = "flex";
         return;
@@ -203,7 +205,7 @@ function setDeckSize(deckSize) {
     document.getElementById("deckSize").innerHTML = "(" + deckSize + ")";
 }
 
-function getSelectedItem() {
+function _getSelectedItem() {
     // Get the number of options in the select element
     var len = document.formDecks.selectDeck.length;
 
@@ -224,58 +226,6 @@ function getSelectedItem() {
 }
 
 
-function extractCardInfo(deckList) {
-    const cardInfo = {};
-
-    for (const card of deckList.getElementsByTagName("Card")) {
-        const name = card.getElementsByTagName("Name")[0].textContent;
-        const quantity = parseInt(card.getElementsByTagName("Quantity")[0].textContent);
-        const type = card.getElementsByTagName("Type")[0].textContent.toLowerCase();
-
-        console.log("Name:", name);
-        console.log("Quantity:", quantity);
-        console.log("Type:", type);
-
-        if (!cardInfo[name]) {
-            cardInfo[name] = {
-                quantity: 0,
-                type: type,
-            };
-        }
-        cardInfo[name].quantity += quantity;
-    }
-    const totalCardObjects = Object.keys(cardInfo).length;
-    console.log("Total Card Objects:", totalCardObjects);
-
-    const totalLands = Object.values(cardInfo).reduce((sum, card) => {
-        return sum + (card.type === "land" ? card.quantity : 0);
-    }, 0);
-    
-    console.log("Total Lands:", totalLands);
-    return cardInfo;
-}
-
-function buildCardNamesArray(cardInfo) {
-    const cardNames = [];
-
-    for (const cardName in cardInfo) {
-        const quantity = cardInfo[cardName].quantity;
-        cardNames.push(...Array(quantity).fill(cardName)); // Push the name multiple times based on quantity
-    }
-    console.log("Deck Size:", cardNames.length);
-    return cardNames;
-}
-
-function getCardNames() {
-    const deckList = xmlDoc.getElementsByTagName("Decklist")[0];
-    const cardInfo = extractCardInfo(deckList);
-    const cardNames = buildCardNamesArray(cardInfo);
-
-    return {
-        cardNames,
-        cardInfo
-    };
-}
 
 function cardDraw(cardNames, cardInfo, cardsToDraw) {
     const initialDeckSize = cardNames.length; // Store the initial deck size
@@ -373,24 +323,6 @@ function removeCardFromLocation(cardDrawn,FromLocation) {
     }
 }
 
-
-function createCardImage(cardDrawn, className) {
-    var image = document.createElement("img");
-    image.src = "/assets/MagicImages/" + cardDrawn + ".jpg";
-    
-    // Check if className is provided and not empty, then set it
-    if (className && className.trim() !== "") {
-        image.className = className;
-    } else {
-        // If className is not provided or empty, you can set a default class here
-        image.className = "image-preview";
-    }
-    
-    image.title = cardDrawn;
-    image.style.cssText = 'display:block;text-align:center;';
-    //image.alt="alt Hello";
-    return image;
-}
 
 
 function createCardAtSection(cardName, toLocation, fromLocation) {
@@ -550,12 +482,18 @@ function createCardItem(cardName, toLocation) {
                 addCardToLibrary(cardName);
                 // Remove the card from the original location
                 deleteCard(cardName, fromsection);
+                // After changing content in graveyard or exile, trigger visibility check
+                toggleVisibility('exile-graveyard-container');
+
             });
         } else {
             // For other actions, move the card
             option.addEventListener("click", () => {
                 const section = getSectionFromCardId(carddiv.id);
                 moveCard(cardName, action, section);
+                // After changing content in graveyard or exile, trigger visibility check
+                toggleVisibility('exile-graveyard-container');
+
             });
         }
 
@@ -593,6 +531,23 @@ function createCardItem(cardName, toLocation) {
     // Append the card item to the section
     section.appendChild(carddiv);
 }
+
+// Define a function to toggle the visibility based on the content of graveyard or exile
+function toggleVisibility(targetClass) {
+    // Get references to the elements using the provided class
+    const targetElement = document.querySelector(`.${targetClass}`);
+
+    // Check if the target element has content
+    if (targetElement.innerHTML.trim() !== '') {
+        // If it has content, display the target element
+        targetElement.style.display = 'flex';
+    } else {
+        // If it's empty, hide the target element
+        targetElement.style.display = 'none';
+    }
+}
+
+
 
 // Helper function to create a hover menu option
 function createHoverMenuOption(label, action) {

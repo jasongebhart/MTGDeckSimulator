@@ -57,28 +57,6 @@
   height: 85px;
 }
 
-#section_library {
-  width: 9%; /* Adjust the width as needed */
-  margin-left: left; /* Move to the right by setting margin-left to auto */
-  padding: 5px; /* Add padding for spacing */
-}
-
-#section_library-content {
-  display: flex;
-  flex-wrap: wrap; /* Allow cards to wrap to the next line */
-  justify-content: flex-start; /* Start from the left */
-  background-color: #f0f0f0; /* Background color for library */
-  padding: 20px; /* Add padding for spacing */
-  gap: 10px; /* Add some spacing between cards */
-  /* width: 20%; */ /* You can remove this width to allow the container to adjust to its content */
-}
-
-#section_library-content .image-preview {
-  width: 70px;
-  height: auto;
-}
-
-/* Adjust styles for #middle-content */
 #middle-content {
   display: flex;
   flex-wrap: wrap;
@@ -90,84 +68,77 @@
 
 #section_hand {
   padding: 1px;
+  font-size: x-large;
+  background-color: rgba(240, 240, 240, 0.8); /* Background color with transparency */
   box-sizing: border-box;
   width: auto; /* Use 'auto' to fit content width */
   overflow: auto;
   margin-left: auto;
+}
+
+.highlight {
+  /* Define your highlighting styles here */
+  background-color: yellow;
+  /* Other styles */
 }
 
 .hand-container {
-  width: auto; /* Use 'auto' to fit content width */
+  display: flex;
+  justify-content: space-between; /* Spacing between line and totals */
+  align-items: center; /* Vertically center the line and totals */
 }
 
-#section_spells,
-#section_lands {
-  flex: 1;
+.onthedraw {
+  display: flex;
+  justify-content: space-between; /* Spacing between line and totals */
+  align-items: center; /* Vertically center the line and totals */
+}
+.hand-line {
+  display: flex;
+  justify-content: space-between; /* Spacing between line and totals */
+  align-items: center; /* Vertically center the line and totals */
+}
+.lands-spells-container {
+  margin-left: 20px; /* Adjust the margin to separate lands and spells */
+  margin-right: 20px; 
+}
+
+
+#section_lands,
+#section_spells {
   padding: 1px;
   box-sizing: border-box;
-  max-width: 100%; /* Ensure it doesn't exceed the screen width */
-  flex-wrap: wrap; /* Allow cards to wrap to the next line */
+  max-width: 100%;
+  flex-wrap: wrap;
+  margin-right: 30px; 
 }
 
-#section_graveyard {
-  background-image:url(/assets/wallpaper/graveyard_as_icon.jpg);
-  background-size: cover;
+#section_lands:last-child,
+#section_spells:last-child {
+  margin-right: 0; /* Remove the margin for the last element */
 }
 
-#section_exile {
-  background-image:url(/assets/wallpaper/exile_right.jpg);
-  background-size: cover;
-  }
+#section_lands {
+  margin-right: 10px; /* Add margin to the right */
+}
+
+#section_spells {
+  margin-left: 10px; /* Add margin to the left */
+}
 
 #section_lands .image-preview {
-  width: 50px; /* Set the desired width for graveyard images */
+  width: 40px; /* Set the desired width for graveyard images */
   height: auto; /* Auto height to maintain aspect ratio */
 }
 #section_spells .image-preview {
-  width: 65px; /* Set the desired width for graveyard images */
+  width: 40px; /* Set the desired width for graveyard images */
   height: auto; /* Auto height to maintain aspect ratio */
 }
-/* Adjust styles for #section_battlefield */
-#section_battlefield {
-  padding: 20px;
-  box-sizing: border-box;
-  width: auto; /* Use 'auto' to fit content width */
-  max-height: 50vh; /* Set maximum height to 50% of the viewport height */
-  overflow: auto;
-  margin-left: auto;
-}
-#section_battlefield-lands .image-preview {
-  width: 70px; /* Set the desired width for graveyard images */
-  height: auto; /* Auto height to maintain aspect ratio */
-}
-/* Style the battlefield-container to display sections vertically */
-.battlefield-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Add spacing between the sections */
-}
-
-
-/* Adjust styles for #section_battlefield-lands and #section_battlefield-spells */
-#section_battlefield-lands,
-#section_battlefield-spells {
-  flex: 1;
-  box-sizing: border-box;
-  max-width: 100%; /* Ensure it doesn't exceed the screen width */
-  flex-wrap: wrap; /* Allow cards to wrap to the next line */
-  /* Adjust width as needed based on your design */
-}
-
 
 #left-sidebar {
   width: 25%; /* Adjust the width as needed */
+  font-size: x-large;
   padding: 10px; /* Add padding for spacing */
-}
-/* Adjust styles for #right-sidebar */
-#right-sidebar {
-  width: 15%; /* Adjust the width as needed */
-  padding: 10px; /* Add padding for spacing */
-  margin-left: auto; /* Push it to the right by setting margin-left to auto */
 }
 
 
@@ -180,41 +151,8 @@
 #left-sidebar .flexlibrary,
 #left-sidebar #exilePopup {
   flex: 1;
-  background-color: rgba(240, 240, 240, 0.3); /* Background color with transparency */
+  background-color: rgba(240, 240, 240, 0.6); /* Background color with transparency */
   /* Add styles for the sections and the popup as needed */
-}
-
-.exile-graveyard-container {
-  display: none;
-}
-.tab-container {
-  display: flex;
-  width: 20%;
-}
-
-.tab-button {
-  cursor: pointer;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 5px;
-}
-
-
-.tab-button.active {
-  background-color: #ccc;
-}
-
-.tab-content .image-preview {
-  width: 70px; /* Set the desired width for graveyard images */
-  height: auto; /* Auto height to maintain aspect ratio */
-  /* Add other styling as needed */
-}
-
-.tab-content {
-  display: none;
-  padding: 10px;
-  border: 1px solid #ccc;
 }
 
 .deckSize {
@@ -243,21 +181,16 @@
 
 /* Button Styles */
 .button {
-  color: #050;
-  font-size: 16px;
-  background-color: #fed;
+  font-size:larger;
+  background-color: #fbf4af;
   border: 1px solid;
   border-color: #696 #363 #363 #696;
 }
 
-/* CSS for the custom dropdown menu */
-.custom-dropdown {
-  padding: 4px 4px;
-  font-size: 16px;
-  border: 1px solid #000
-  background-color: #fff;
-  color: #333;
-  /* Add more styling as needed */
+.Largeheader {
+  font-size:larger;
+  background-color: #fbf4af;
+  max-width:fit-content ;
 }
 
 /* CSS for the medium-sized buttons */
@@ -272,7 +205,6 @@
 
 .button-group {
   width: 20%; /* Adjust the width as needed */
-  margin-left: left; /* Move to the right by setting margin-left to auto */
   display: table-cell; /* Use flexbox layout */
   flex-direction: column; /* Arrange content vertically */
   justify-content: flex-start; /* Start from the top */
@@ -300,13 +232,10 @@
   color: white;
 }
 
-/* Image Preview and Scaling Effect */
-.image-preview:hover {
-  transform: translate(0em, 0em) scale(1.05); /* Adjust the scale value as needed */
-  transition: all 0.3s;
-  padding: 0;
+#right-sidebar-hover-image .image-preview {
+  width: 350px;
+  height: auto;
 }
-
 
 .modal .image-preview {
   width: 350px;
@@ -323,9 +252,27 @@
   justify-content: flex-start; /* Align images to the start of the container */
 }
 
+/* Image Preview and Scaling Effect */
+.image-preview:hover {
+  transform: translate(0em, 0em) scale(1.05); /* Adjust the scale value as needed */
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.image-preview {
+  width: 50px;
+  transform: scale(1); /* Initial state */
+  transition: transform 0.3s;
+  margin: 1px; /* Add margin between images */
+  border-color: #000;
+  display: flex;
+  flex-wrap: wrap; /* Wrap the images to a new line when needed */
+  justify-content: flex-start; /* Align images to the start of the container */
+}
+
 
 .image-large {
-  width: 90px;
+  width: 95px;
   transition: transform 0.3s;
   margin: 5px; /* Add margin between images */
   display: flex;
@@ -343,6 +290,7 @@
   transform: scale(1); /* Adjust the scale value back to 1 */
   transition: all 0.3s;
 }
+
 
 /* Flex Layouts */
 .flex-layout {
@@ -366,7 +314,6 @@
 
 /* Flex Item Styles */
 .flex-item {
-  flex: 1 1 auto;
   padding: 4px;
   width: 300px;
   transition: width 0.7s ease-out;
@@ -376,78 +323,6 @@
 .flex-item:hover {
   width: 300px;
 }
-
-/* Style for the library popup container */
-/* Style for the close button */
-#closeLibraryPopup {
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  cursor: pointer;
-  background-color: #368bf4; /* Red background color for the close button */
-  color: #fff;
-  border none;
-  border-radius: 80%;
-  padding: 3px 3px;
-}
-
-
-/* Style for the library popup container */
-#libraryPopup {
-  display: none;
-  position: fixed;
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Center the popup */
-  width: auto; /* Allow it to grow as needed */
-  min-width: 300px; /* Set a minimum width for the popup */
-  padding: 30px;
-  padding-bottom: 200px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000; /* Ensure it's on top of other content */
-    flex-direction: row; /* Horizontal layout */
-  flex-wrap: wrap; /* Prevent wrapping to the next row */
-  justify-content: flex-start; /* Start from the left */
-  align-items: center; /* Center vertically */
-  /* Adjust the background image position */
-  background-image: url('/assets/wallpaper/library_phoenixcrop.jpg');
-  background-size: cover; /* Cover the entire popup */
-  background-position: center bottom; /* Anchor the image to the center at the bottom */
-} 
-
-.popup {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1;
-}
-
-.popup-content {
-  display: block;
-  margin: 0 auto;
-  max-width: 90%;
-  max-height: 90%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.popup-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  color: white;
-}
-
 
 /* Style for each card item in the library popup */
 .card-item {

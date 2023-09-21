@@ -8,64 +8,83 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
 <link rel="manifest" href="/assets/site.webmanifest">
 <script type="module">
-	import { startMulliganCheck } from "./scripts/handsimulation.mjs";
-    import { startSimulateHandDraw } from "./scripts/handsimulation.mjs";
-	window.onload = () => {
+	import { startMulliganCheck, startHandDraw } from "./scripts/handsimulation.mjs";
+   	window.onload = () => {
 		startMulliganCheck();
 	};
     // Wait for the DOM to be fully loaded
     document.addEventListener("DOMContentLoaded", () => {
       const listHandDraw = document.getElementById("listHandDraw");
       listHandDraw.addEventListener("click", () => {
-        startSimulateHandDraw();
+        //startSimulateHandDraw();
+		startHandDraw();
       });
     });
   </script>
-<link rel="stylesheet" href="/assets/decks.css">
+<link rel="stylesheet" href="/assets/handsimulation-whitequeen.css">
 </head>
 <div id="header">
-	<% include('partials/nav'); %>
+    <%- include('partials/nav'); -%>
 </div>
 <body onload="startMulliganCheck()">
 <div id="container">
 	<div id="left-sidebar">
 		<section id="deck" class="decklist">
 			<%- include('partials/decklist'); -%>
-			<button type="button" id="listHandDraw">Simulate Hand Draw</button>
+			<button type="button" class="button" id="listHandDraw">Draw Hand</button>
+		</section>
+		<section id="section_mulliganstats">
+			<table border="1" id="tblMulliganStats">
+				<tr><th colspan="2">Mulligan Stats (based on 60 cards)</th></tr>
+				<tr><td>Lands</td><td>Mulligan Percentage</td></tr>
+				<tr id="19"><td>19</td>
+				<td class="Nineteen" id="Nineteen"></td></tr>
+				<tr id="20"><td>20</td><td class="Twenty" id="Twenty"></td></tr>
+				<tr id="21"><td>21</td><td class="TwentyOne" id="TwentyOne"></td></tr>
+				<tr id="22"><td>22</td><td class="TwentyTwo" id="TwentyTwo"></td></tr>
+				<tr id="23"><td>23</td><td class="TwentyThree" id="TwentyThree"></td></tr>
+				<tr id="24"><td>24</td><td class="TwentyFour" id="TwentyFour"></td></tr>
+				<tr id="25"><td>25</td><td class="TwentyFive" id="TwentyFive"></td></tr>
+				<tr id="26"><td>26</td><td class="TwentySix" id="TwentySix"></td></tr>
+				<tr id="27"><td>27</td><td class="TwentySeven" id="TwentySeven"></td></tr>
+				<tr id="28"><td>28</td><td class="TwentyEight" id="TwentyEight"></td></tr>
+			</table>
+			<div class="info-container">
+				<div class="info-item">
+					<label for="totalLandsInDeck">Lands in Deck:</label>
+					<span id="totalLandsInDeck">[Value]</span>
+				</div>
+			
+				<div class="info-item">
+					<label for="currentMulliganRate">Expected Mulligan rate (60 cards):</label>
+					<span id="currentMulliganRate">[Value]</span>
+				</div>
+			
+				<div class="info-item">
+					<label for="TotalHandsDrawn">Hands:</label>
+					<span id="TotalHandsDrawn">[Value]</span>
+				</div>
+			
+				<div class="info-item">
+					<label for="TotalMulligans">Mulligans:</label>
+					<span id="TotalMulligans">[Value]</span>
+				</div>
+			
+				<div class="info-item">
+					<label for="MulliganPercentage">Current Mulligan Percentage:</label>
+					<span id="MulliganPercentage">[Value]</span>
+				</div>
+			</div>	
+			
 		</section>
 	</div>
-	<div id="middle">
-		<table border="1" id="tblHand">
-			<tr>
-				<th id="HandSimulation" colspan="8">Hand Simulation</th>
-				<td id="HypergeometricDistribution">Mathematical Mulligan rate - 60 cards</td>
-				<td id="TotalHandsDrawn">Hands</td>
-				<td id="TotalMulligans">Mulligans</td>
-				<td id="MulliganPercentage">Current Mulligan Percentage</td>
-			</tr>
-			<tr>
-				<th class="hand" colspan="7">Cards</th>
-				<th class="OnTheDraw" colspan="4">On The Draw</th>
-				<td>Lands</td>
-			</tr>
-			<!-- Add rows for card details if needed -->
-		</table>
-		<table border="1" id="tblMulliganStats">
-			<tr><th colspan="2">Mulligan Stats (based on 60 cards)</th></tr>
-			<tr><td>Lands</td><td>Mulligan Percentage</td></tr>
-			<tr id="19"><td>19</td>
-			<td class="Nineteen" id="Nineteen"></td></tr>
-			<tr id="20"><td>20</td><td class="Twenty" id="Twenty"></td></tr>
-			<tr id="21"><td>21</td><td class="TwentyOne" id="TwentyOne"></td></tr>
-			<tr id="22"><td>22</td><td class="TwentyTwo" id="TwentyTwo"></td></tr>
-			<tr id="23"><td>23</td><td class="TwentyThree" id="TwentyThree"></td></tr>
-			<tr id="24"><td>24</td><td class="TwentyFour" id="TwentyFour"></td></tr>
-			<tr id="25"><td>25</td><td class="TwentyFive" id="TwentyFive"></td></tr>
-			<tr id="26"><td>26</td><td class="TwentySix" id="TwentySix"></td></tr>
-			<tr id="27"><td>27</td><td class="TwentySeven" id="TwentySeven"></td></tr>
-			<tr id="28"><td>28</td><td class="TwentyEight" id="TwentyEight"></td></tr>
-		</table>
+    <div id="middle-content">
+		<section id="section_hand">
+		</section>
 	</div>
+	<div id="right-sidebar">
+		<div id="right-sidebar-hover-image"></div>
+    </div>
 </div>
 </body>
 </html>

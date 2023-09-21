@@ -175,7 +175,7 @@
 }
 
 .exile_graveyard-container {
-  display: flex;
+    display: none; /* Hide the element by default */
 }
 .tab-container {
   display: flex;
