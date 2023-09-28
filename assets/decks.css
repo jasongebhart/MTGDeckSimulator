@@ -21,7 +21,7 @@
   text-align: center;
   text-decoration: none;
   color: black;
-  background: linear-gradient(45deg, #FFD700, #FFA500); /* Gradient from gold to orange */
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5); 
   border: 1px solid;
   border-width: 1px 1px 0 1px;
   transition: background-color 0.3s, color 0.3s; /* Add transition effect for smoother hover */
@@ -36,17 +36,9 @@
   display: flex;
   width: 1920px; /* Set a fixed width for the container */
   height: 1080px; /* Set a fixed height for the container */
-    /* Set the background image */
-    background-image: url('/assets/wallpaper/Wallpaper_2560x1600_Sunpetal_Grove.png');
-  
-    /* Set background size to cover the entire element */
-    background-size: cover;
-    
-    /* Specify how the image should be positioned */
-    background-position: center;
-    
-    /* Optional: Add a background color in case the image doesn't load */
-    background-color: #f0f0f0;
+  background-image: linear-gradient(to bottom, #f0f0f0, #d3d3d3);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Select Dropdown Styles */
@@ -67,7 +59,7 @@
   display: flex;
   flex-wrap: wrap; /* Allow cards to wrap to the next line */
   justify-content: flex-start; /* Start from the left */
-  background-color: #f0f0f0; /* Background color for library */
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
   padding: 20px; /* Add padding for spacing */
   gap: 10px; /* Add some spacing between cards */
   /* width: 20%; */ /* You can remove this width to allow the container to adjust to its content */
@@ -80,7 +72,7 @@
 
 /* Adjust styles for #middle-content */
 #middle-content {
-  display: flex;
+  display:block;
   flex-wrap: wrap;
   justify-content: space-between; /* Create space between sections */
   max-width: 100%; /* Ensure it doesn't exceed the screen width */
@@ -110,13 +102,15 @@
 }
 
 #section_graveyard {
-  background-image:url(/assets/wallpaper/graveyard_as_icon.jpg);
+  background-image:url(/assets/wallpaper/graveyard_wide.jpg);
   background-size: cover;
+  padding-bottom: 100px;
 }
 
 #section_exile {
-  background-image:url(/assets/wallpaper/exile_right.jpg);
+  background-image:url(/assets/wallpaper/planeswalker_button.png);
   background-size: cover;
+  padding-bottom: 100px;
   }
 
 #section_lands .image-preview {
@@ -180,7 +174,7 @@
 #left-sidebar .flexlibrary,
 #left-sidebar #exilePopup {
   flex: 1;
-  background-color: rgba(240, 240, 240, 0.3); /* Background color with transparency */
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
   /* Add styles for the sections and the popup as needed */
 }
 
@@ -194,7 +188,7 @@
 
 .tab-button {
   cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
   border: 1px solid #ccc;
   padding: 10px;
   margin: 5px;
@@ -202,7 +196,7 @@
 
 
 .tab-button.active {
-  background-color: #ccc;
+  background-color: #555353;
 }
 
 .tab-content .image-preview {
@@ -237,7 +231,7 @@
 .body-text {
   font-family: Georgia, "Times New Roman", Times, serif;
   color: #000000;
-  background-color: #FFFFFF;
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
   font-size: 80%;
 }
 
@@ -245,7 +239,7 @@
 .button {
   color: #050;
   font-size: 16px;
-  background-color: #fed;
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
   border: 1px solid;
   border-color: #696 #363 #363 #696;
 }
@@ -255,7 +249,7 @@
   padding: 4px 4px;
   font-size: 16px;
   border: 1px solid #000
-  background-color: #fff;
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
   color: #333;
   /* Add more styling as needed */
 }
@@ -264,7 +258,7 @@
 .medium-button {
   color: #050;
   font: bold 88% 'trebuchet ms', helvetica, sans-serif;
-  background-color: #fed;
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
   border: 5px solid;
   border-color: #696 #363 #363 #696;
   margin-top: 20px;
@@ -281,7 +275,7 @@
 .large-button {
   color: #050;
   font: bold 88% 'trebuchet ms', helvetica, sans-serif;
-  background-color: #fed;
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
   border: 10px solid;
   border-color: #696 #363 #363 #696;
 }
@@ -384,8 +378,8 @@
   top: -1px;
   right: -1px;
   cursor: pointer;
-  background-color: #368bf4; /* Red background color for the close button */
-  color: #fff;
+  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  color: #100f0f;
   border none;
   border-radius: 80%;
   padding: 3px 3px;
@@ -471,13 +465,13 @@
 }
 
 .context-menu-option:hover {
-  background-color: #f0f0f0;
+  background-color: #a39f9f;
 }
 /* Hover Menu Styles */
 .hover-menu {
   display: none;
   position: absolute;
-  background-color: #72a747; /* Background color for the menu */
+  background-color: linear-gradient(45deg, #777776, #646362);
   border: 1px solid #ccc;
   padding: 5px;
   z-index: 100; /* Ensure it's on top of other content */
@@ -491,8 +485,8 @@
   padding: 3px;
   font-weight: bold;
   color: #333; /* Text color for options */
-  background-color: #72a747; /* Background color for options */
-  border: 1px solid #ffed41;
+  background-color: linear-gradient(45deg, #7c7c7a, #646362);
+  border: 1px solid #3d3d3c;
   margin: 2px; /* Add some spacing between options */
   text-align: center; /* Center-align text within options */
   width:inherit; /* Adjust the width as needed */
@@ -501,6 +495,6 @@
 
 /* Hover Menu Option Hover Styles */
 .hover-menu-option:hover {
-  background-color: #ddd; /* Background color on hover */
+  background-color: #b1b0b0; /* Background color on hover */
   color: #000; /* Text color on hover */
 }
