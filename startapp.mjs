@@ -23,5 +23,5 @@ setupRoutes(app); // Use the imported setupRoutes function
 
 // Listen on the port specified by the PORT environment variable
 app.listen(app.get('port'), () => {
-  console.log(`Example app listening at http://localhost:${app.get('port')}`);
+  console.log(`MTG Simularot listening at http://localhost:${app.get('port')}`);
 });
