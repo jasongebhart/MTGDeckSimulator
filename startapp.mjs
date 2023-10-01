@@ -8,6 +8,10 @@ import { loadXMLDoc, xmlDoc } from './scripts/config.mjs';
 // Create an instance of Express
 const app = express();
 
+// Define a CSP policy that allows loading from localhost and a specific domain for the favicon
+const cspHeader = "default-src 'self'; img-src 'self' http://localhost:3000;";
+
+
 // Setup template engine
 app.set('view engine', 'ejs');
 // Set the port number

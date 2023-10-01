@@ -5,6 +5,7 @@ import { loadXMLDoc, xmlDoc } from '../scripts/config.mjs'; // Import the loadXM
 export function setupRoutes(app) {
   // Define routes and their handlers using an array of route objects
   const routes = [
+    { path: '/', template: 'decks' },
     { path: '/decks', template: 'decks' },
     { path: '/playhand', template: 'playhand' },
     { path: '/handsimulation', template: 'handsimulation' },
