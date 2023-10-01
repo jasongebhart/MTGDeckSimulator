@@ -5,6 +5,7 @@
   "main": "startmtg.mjs",
   "type": "module",
   "dependencies": {
+    "@hapi/topo": "^6.0.2",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "xml2json": "^0.12.0"
@@ -13,7 +14,7 @@
     "node": "18.17.1"
   },
   "scripts": {
-    "start": "node startapp.mjs"
+    "start": "node startapp"
   },
   "author": "Jason Gebhart",
   "license": "ISC"
