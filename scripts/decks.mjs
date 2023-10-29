@@ -25,7 +25,38 @@ async function _loadXMLDoc(XMLFile) {
         window.alert('Unable to load the requested file.');
     }
 }
+export function convertToXml(deckData) {
+	const root = document.implementation.createDocument(null, 'Decklist', null);
+	const deckElement = root.documentElement;
+	deckElement.setAttribute('Deck', deckData.deckName);
+  
+	// Loop through card data and create XML elements
+	deckData.cards.forEach((card) => {
+	  const cardElement = root.createElement('Card');
+	  const nameElement = root.createElement('Name');
+	  nameElement.textContent = card.name;
+	  const quantityElement = root.createElement('Quantity');
+	  quantityElement.textContent = card.quantity;
+	  const typeElement = root.createElement('Type');
+	  typeElement.textContent = card.type;
+	  const costElement = root.createElement('Cost');
+	  costElement.textContent = card.cost;
+  
+	  cardElement.appendChild(nameElement);
+	  cardElement.appendChild(quantityElement);
+	  cardElement.appendChild(typeElement);
+	  cardElement.appendChild(costElement);
+  
+	  deckElement.appendChild(cardElement);
+	});
+  
+	const serializer = new XMLSerializer();
+	const xmlString = serializer.serializeToString(root);
+  
+	return xmlString;
+}
 
+  
 function GetSelectedItem() {
     var len = document.formDecks.selectDeck.length;
 	let i = 0

@@ -1,0 +1,95 @@
+<!-- views/create-deck-form.ejs -->
+
+<h2>Create a New Deck</h2>
+<form method="POST" action="/create-deck">
+  <!-- Deck Name Input -->
+  <label for="deckName">Deck Name:</label>
+  <input type="text" name="deckName" required>
+
+  <!-- Container for Card Information Inputs -->
+  <div id="cardInputsContainer">
+    <!-- Card Information Inputs for the First Card -->
+    <div class="card-info">
+      <label for="cardName1">Card Name:</label>
+      <input type="text" name="cardName1" required>
+      <label for="cardQuantity1">Quantity:</label>
+      <input type="number" name="cardQuantity1" required>
+      <label for="cardType1">Type:</label>
+      <input type="text" name="cardType1" required>
+      <label for="cardCost1">Cost:</label>
+      <input type="text" name="cardCost1" required>
+    </div>
+  </div>
+
+  <!-- "Add Card" Button -->
+  <button type="button" id="addCardButton">Add Card</button>
+
+  <button type="submit">Create Deck</button>
+  <button type="button" id="saveDeckButton">Save Deck</button>
+
+</form>
+
+<script type="module">
+  import { convertToXml } from "./scripts/decks.mjs";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const addCardButton = document.getElementById("addCardButton");
+    const cardInputsContainer = document.getElementById("cardInputsContainer");
+    let cardCount = 1;
+
+    addCardButton.addEventListener("click", () => {
+      cardCount++;
+
+      // Create a new set of card input fields
+      const cardInfo = document.createElement("div");
+      cardInfo.className = "card-info";
+      cardInfo.innerHTML = `
+        <label for="cardName${cardCount}">Card Name:</label>
+        <input type="text" name="cardName${cardCount}" required>
+        <label for="cardQuantity${cardCount}">Quantity:</label>
+        <input type="number" name="cardQuantity${cardCount}" required>
+        <label for="cardType${cardCount}">Type:</label>
+        <input type="text" name="cardType${cardCount}" required>
+        <label for="cardCost${cardCount}">Cost:</label>
+        <input type="text" name="cardCost${cardCount}" required>
+      `;
+
+      cardInputsContainer.appendChild(cardInfo);
+    });
+
+    // "Save Deck" Button
+    const saveDeckButton = document.getElementById("saveDeckButton");
+    saveDeckButton.addEventListener("click", () => {
+      // Create an object to store the deck data
+      const deckData = {
+        deckName: document.querySelector("input[name='deckName']").value,
+        cards: [],
+      };
+
+      // Collect card data from input fields
+      for (let i = 1; i <= cardCount; i++) {
+        deckData.cards.push({
+          name: document.querySelector(`input[name='cardName${i}']`).value,
+          quantity: document.querySelector(`input[name='cardQuantity${i}']`).value,
+          type: document.querySelector(`input[name='cardType${i}']`).value,
+          cost: document.querySelector(`input[name='cardCost${i}']`).value,
+        });
+      }
+
+      // Convert deckData to XML (you may need to use an XML library)
+      const xmlString = convertToXml(deckData); // Implement this function
+
+      // Create a Blob with the XML data
+      const blob = new Blob([xmlString], { type: "text/xml" });
+
+      // Create a download link
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `${deckData.deckName}.xml`;
+
+      // Trigger a click event to start the download
+      a.click();
+    });
+  });
+</script>
+</html>
