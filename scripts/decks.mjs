@@ -25,6 +25,30 @@ async function _loadXMLDoc(XMLFile) {
         window.alert('Unable to load the requested file.');
     }
 }
+
+// Function to delete a card entry from the web page
+export function deleteCardInDeck(button) {
+	// Find the parent card element and remove it
+	const card = button.closest(".card-info");
+	if (card) {
+	  card.remove();
+	}
+}
+  
+window.deleteCardInDeck = deleteCardInDeck; // Make it a global function	  
+  
+export function __deleteCard(index) {
+	const cardElements = xmlDoc.querySelectorAll("card-info");
+	if (index >= 0 && index < cardElements.length) {
+	  // Remove the card element from the XML
+	 // const removedCard = cardElements[index];
+	 // removedCard.parentNode.removeChild(removedCard);
+  
+	  // Remove the card input fields from the web page
+	  const cardInput = document.querySelector(`.card-info:nth-child(${index + 1})`);
+	  cardInput.parentNode.removeChild(cardInput);
+	}
+  }
 export function convertToXml(deckData) {
 	const root = document.implementation.createDocument(null, 'Decklist', null);
 	const deckElement = root.documentElement;
@@ -54,6 +78,44 @@ export function convertToXml(deckData) {
 	const xmlString = serializer.serializeToString(root);
   
 	return xmlString;
+}
+
+// Function to load data from an XML file
+// Modify the loadFromXml function to populate form fields
+export async function loadFromXml(xmlFile) {
+    try {
+        const response = await fetch(xmlFile);
+        if (!response.ok) {
+            throw new Error('Failed to load the XML file.');
+        }
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+        // Extract data from the XML document and populate form fields
+        const deckName = xmlDoc.querySelector('deckName').textContent;
+        const cardElements = xmlDoc.querySelectorAll('card');
+
+        // Set the deck name input field
+        document.querySelector("input[name='deckName']").value = deckName;
+
+        // Populate card input fields
+        cardElements.forEach((card, index) => {
+            const cardName = card.querySelector('name').textContent;
+            const cardQuantity = card.querySelector('quantity').textContent;
+            const cardType = card.querySelector('type').textContent;
+            const cardCost = card.querySelector('cost').textContent;
+
+            // Set the input fields for the card
+            document.querySelector(`input[name='cardName${index + 1}']`).value = cardName;
+            document.querySelector(`input[name='cardQuantity${index + 1}']`).value = cardQuantity;
+            document.querySelector(`input[name='cardType${index + 1}']`).value = cardType;
+            document.querySelector(`input[name='cardCost${index + 1}']`).value = cardCost;
+        });
+    } catch (error) {
+        console.error(error);
+        window.alert('Unable to load the XML file. Please check the file and try again.');
+    }
 }
 
   

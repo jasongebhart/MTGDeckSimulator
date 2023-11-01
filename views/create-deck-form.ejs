@@ -1,50 +1,28 @@
-<!-- views/create-deck-form.ejs -->
-
-<h2>Create a New Deck</h2>
-<form method="POST" action="/create-deck">
-  <!-- Deck Name Input -->
-  <label for="deckName">Deck Name:</label>
-  <input type="text" name="deckName" required>
-
-  <!-- Container for Card Information Inputs -->
-  <div id="cardInputsContainer">
-    <!-- Card Information Inputs for the First Card -->
-    <div class="card-info">
-      <label for="cardName1">Card Name:</label>
-      <input type="text" name="cardName1" required>
-      <label for="cardQuantity1">Quantity:</label>
-      <input type="number" name="cardQuantity1" required>
-      <label for="cardType1">Type:</label>
-      <input type="text" name="cardType1" required>
-      <label for="cardCost1">Cost:</label>
-      <input type="text" name="cardCost1" required>
-    </div>
-  </div>
-
-  <!-- "Add Card" Button -->
-  <button type="button" id="addCardButton">Add Card</button>
-
-  <button type="submit">Create Deck</button>
-  <button type="button" id="saveDeckButton">Save Deck</button>
-
-</form>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+</style>
+<title>Build Deck</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
 <script type="module">
-  import { convertToXml } from "./scripts/decks.mjs";
+  import { convertToXml, loadFromXml, deleteCardInDeck } from "./scripts/decks.mjs";
 
   document.addEventListener("DOMContentLoaded", () => {
     const addCardButton = document.getElementById("addCardButton");
     const cardInputsContainer = document.getElementById("cardInputsContainer");
-    let cardCount = 1;
+    let cardCount = 0;
 
     addCardButton.addEventListener("click", () => {
-      cardCount++;
-
       // Create a new set of card input fields
       const cardInfo = document.createElement("div");
       cardInfo.className = "card-info";
       cardInfo.innerHTML = `
-        <label for="cardName${cardCount}">Card Name:</label>
+        <label for="cardName${cardCount}">Name:</label>
         <input type="text" name="cardName${cardCount}" required>
         <label for="cardQuantity${cardCount}">Quantity:</label>
         <input type="number" name="cardQuantity${cardCount}" required>
@@ -52,9 +30,11 @@
         <input type="text" name="cardType${cardCount}" required>
         <label for="cardCost${cardCount}">Cost:</label>
         <input type="text" name="cardCost${cardCount}" required>
+        <button type="button" class="delete-card-button" onclick="deleteCardInDeck(this)">Delete</button>
       `;
 
       cardInputsContainer.appendChild(cardInfo);
+      cardCount++;
     });
 
     // "Save Deck" Button
@@ -90,6 +70,95 @@
       // Trigger a click event to start the download
       a.click();
     });
+
+    // "Upload and Load XML File"
+    const xmlFileInput = document.getElementById("xmlFile");
+    xmlFileInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          const xmlText = e.target.result;
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+          // Extract and populate the form fields with XML data here
+          const deckName = xmlDoc.querySelector("Decklist").getAttribute("Deck");
+          document.querySelector("input[name='deckName']").value = deckName;
+
+          const cardElements = xmlDoc.querySelectorAll("Card");
+
+          // Clear the cardInputsContainer before populating it
+          cardInputsContainer.innerHTML = '';
+
+          // Iterate through card elements and create card input fields
+          for (let i = 0; i < cardElements.length; i++) {
+            const card = cardElements[i];
+            const name = card.querySelector("Name").textContent;
+            const quantity = card.querySelector("Quantity").textContent;
+            const type = card.querySelector("Type").textContent;
+            const cost = card.querySelector("Cost").textContent;
+
+            // Create new card input fields and populate them
+            const cardInfo = document.createElement("div");
+            cardInfo.className = "card-info";
+            cardInfo.innerHTML = `
+              <label for="cardName${i}">Name:</label>
+              <input type="text" name="cardName${i}" value="${name}" required>
+              <label for="cardQuantity${i}">Quantity:</label>
+              <input type="number" name="cardQuantity${i}" value="${quantity}" required>
+              <label for "cardType${i}">Type:</label>
+              <input type="text" name="cardType${i}" value="${type}" required>
+              <label for="cardCost${i}">Cost:</label>
+              <input type="text" name="cardCost${i}" value="${cost}" required>
+              <button type="button" class="delete-card-button" onclick="deleteCardInDeck(this)">Delete</button>
+            `;
+
+            cardInputsContainer.appendChild(cardInfo);
+          }
+
+          // Add an event listener to the document to handle the click event on the "Delete" buttons
+          document.addEventListener("click", (event) => {
+            if (event.target.classList.contains("delete-card-button")) {
+              const index = event.target.getAttribute("data-index");
+              deleteCardInDeck(index);
+            }
+          });
+        };
+
+        reader.readAsText(file);
+      }
   });
+});
 </script>
+<link rel="stylesheet" href="/assets/decks.css">
+</head>
+<div id="header">
+    <%- include('partials/nav'); -%>
+</div>
+<body>
+  <form method="POST" action="/create-deck">
+    <!-- Deck Name Input -->
+    <label for="deckName">Deck Name:</label>
+    <input type="text" name="deckName" required>
+  
+    <!-- Upload XML File Input -->
+    <label for="xmlFile">Upload XML File:</label>
+    <input type="file" name="xmlFile" accept=".xml" id="xmlFile">
+  
+    <!-- Container for Card Information Inputs -->
+    <div id="cardInputsContainer">
+      <!-- Card Information Inputs for the First Card -->
+    </div>
+  
+    <!-- "Add Card" Button -->
+    <button type="button" id="addCardButton">Add Card</button>
+  
+    <!-- "Create Deck" Button -->
+    <button type="submit">Create Deck</button>
+    <!-- "Save Deck" Button -->
+    <button type="button" id="saveDeckButton">Save Deck</button>
+  </form>
+</body>
 </html>

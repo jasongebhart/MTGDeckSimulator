@@ -1,0 +1,32 @@
+<form method="POST" action="/create-deck">
+  <!-- Deck Name Input -->
+  <label for="deckName">Deck Name:</label>
+  <input type="text" name="deckName" required>
+
+  <!-- Upload XML File Input -->
+  <label for="xmlFile">Upload XML File:</label>
+  <input type="file" name="xmlFile" accept=".xml" id="xmlFile">
+
+  <!-- Container for Card Information Inputs -->
+  <div id="cardInputsContainer">
+    <!-- Card Information Inputs for the First Card -->
+    <div class="card-info">
+      <label for="cardName1">Card Name:</label>
+      <input type="text" name="cardName1" required>
+      <label for="cardQuantity1">Quantity:</label>
+      <input type="number" name="cardQuantity1" required>
+      <label for="cardType1">Type:</label>
+      <input type="text" name="cardType1" required>
+      <label for="cardCost1">Cost:</label>
+      <input type="text" name="cardCost1" required>
+    </div>
+  </div>
+
+  <!-- "Add Card" Button -->
+  <button type="button" id="addCardButton">Add Card</button>
+
+  <!-- "Create Deck" Button -->
+  <button type="submit">Create Deck</button>
+  <!-- "Save Deck" Button -->
+  <button type="button" id="saveDeckButton">Save Deck</button>
+</form>
