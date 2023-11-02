@@ -1,4 +1,5 @@
 import { loadXMLDoc, xmlDoc } from './config.mjs';
+
 export async function startListDeck() {
     const XMLFile = GetSelectedItem();
     console.log('Request was made: ' + XMLFile);

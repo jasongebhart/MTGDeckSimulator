@@ -183,3 +183,126 @@ export function hideLargerCard(itemSelector) {
     }
 }
 
+export async function _fetchCardInformation(index, cardName) {
+    const cardTypeInput = document.querySelector(`input[name="cardType${index}"]`);
+  
+    // Use the Scryfall API function to get card details
+    const cardDetails = await getCardDetails(cardName);
+  
+    // Update the card's type input with the fetched card type
+    cardTypeInput.value = cardDetails.cardType;
+  
+    // You may also want to display the rules text somewhere
+    // For example, you can create a new element to show the rules text
+    const rulesTextElement = document.createElement("p");
+    rulesTextElement.textContent = cardDetails.rulesText;
+    // You can append this element wherever you want to display the rules text.
+  }
+
+  export async function fetchCardInformation(index, cardName) {
+    // Use the Scryfall API function to get card details
+    const cardDetails = await getCardDetails(cardName);
+    // You'll need to implement this part to fetch card data from your API or source.
+  
+    // For demonstration purposes, let's assume you've received card data in the response.
+    const cardData = {
+      name: cardName,
+      type: cardDetails.cardType, // Replace with the actual card type data
+      cost: cardDetails.cardCost, // Replace with the actual card cost data
+    };
+  
+    // Update the input fields with the fetched data
+    document.querySelector(`input[name='cardType${index}']`).value = cardData.type;
+    document.querySelector(`input[name='cardCost${index}']`).value = cardData.cost;
+  }
+  
+
+  export async function getCardDetails(cardName) {
+    try {
+      // Construct the Scryfall API URL with the card name as the search query
+      const apiUrl = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cardName)}`;
+  
+      // Make a GET request to the API using the fetch API
+      const response = await fetch(apiUrl);
+  
+      // Check if the request was successful
+      if (response.ok) {
+        const cardData = await response.json();
+  
+        // Check if the card exists
+        if (cardData.object === 'card') {
+          const rulesText = cardData.oracle_text;
+          const cardType = cardData.type_line;
+  
+          // Now, make an additional request to get the card cost information
+          const costApiUrl = `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(cardName)}`;
+          const costResponse = await fetch(costApiUrl);
+  
+          if (costResponse.ok) {
+            const costCardData = await costResponse.json();
+            const cardCost = costCardData.mana_cost || 'Unknown'; // You might need to handle the case where cost is not available
+            console.log("CardType",cardType);
+            return { rulesText, cardType, cardCost };
+          } else {
+            return 'Error fetching card cost';
+          }
+        } else {
+          return 'Card not found';
+        }
+      } else {
+        return 'Request to Scryfall API failed';
+      }
+    } catch (error) {
+      return 'Error: ' + error.message;
+    }
+  }
+  
+// Function to display the card name suggestions
+export function displaySuggestions(suggestions) {
+    console.log('displaySuggestions function is called'); // Log a message
+    const suggestionsContainer = document.getElementById("suggestionsContainer");
+    suggestionsContainer.innerHTML = ""; // Clear previous suggestions
+
+    if (suggestions.data && Array.isArray(suggestions.data) && suggestions.data.length > 0) {
+        const dropdown = document.createElement("select"); // Create a dropdown element
+
+        suggestionsContainer.appendChild(dropdown); // Add the dropdown to the container
+
+        suggestions.data.forEach((suggestion) => {
+            const option = document.createElement("option"); // Create an option element
+            option.value = suggestion;
+            option.textContent = suggestion;
+            dropdown.appendChild(option); // Add the option to the dropdown
+        });
+
+        
+        dropdown.addEventListener("change", () => {
+            cardNameInput.value = dropdown.value; // Set the input value to the selected option
+            suggestionsContainer.style.display = "block"; // Hide the dropdown when an option is selected
+        });
+
+        suggestionsContainer.style.display = "block"; // Show the dropdown
+    } else {
+        suggestionsContainer.style.display = "none"; // Hide the container when no suggestions
+    }
+}
+
+
+
+// Function to create card input fields
+export function createCardInputFields(index, name, quantity, type, cost) {
+    const cardInfo = document.createElement("div");
+    cardInfo.className = "card-info";
+    cardInfo.innerHTML = `
+      <label for="cardName${index}">Name:</label>
+      <input type="text" name="cardName${index}" value="${name}" required>
+      <label for="cardQuantity${index}">Quantity:</label>
+      <input type="number" name="cardQuantity${index}" value="${quantity || 1}" required>
+      <label for="cardType${index}">Type:</label>
+      <input type="text" name="cardType${index}" value="${type}" required>
+      <label for="cardCost${index}">Cost:</label>
+      <input type="text" name="cardCost${index}" value="${cost}" required>
+      <button type="button" class="delete-card-button" onclick="deleteCardInDeck(this)">Delete</button>
+    `;
+    cardInputsContainer.appendChild(cardInfo);
+  }

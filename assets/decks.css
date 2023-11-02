@@ -51,7 +51,7 @@
 
 #section_library {
   width: 9%; /* Adjust the width as needed */
-  margin-left: left; /* Move to the right by setting margin-left to auto */
+  /*argin-left: left; /* Move to the right by setting margin-left to auto */
   padding: 5px; /* Add padding for spacing */
 }
 
@@ -59,7 +59,7 @@
   display: flex;
   flex-wrap: wrap; /* Allow cards to wrap to the next line */
   justify-content: flex-start; /* Start from the left */
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   padding: 20px; /* Add padding for spacing */
   gap: 10px; /* Add some spacing between cards */
   /* width: 20%; */ /* You can remove this width to allow the container to adjust to its content */
@@ -174,7 +174,7 @@
 #left-sidebar .flexlibrary,
 #left-sidebar #exilePopup {
   flex: 1;
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   /* Add styles for the sections and the popup as needed */
 }
 
@@ -188,7 +188,7 @@
 
 .tab-button {
   cursor: pointer;
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   border: 1px solid #ccc;
   padding: 10px;
   margin: 5px;
@@ -231,7 +231,7 @@
 .body-text {
   font-family: Georgia, "Times New Roman", Times, serif;
   color: #000000;
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   font-size: 80%;
 }
 
@@ -239,7 +239,7 @@
 .button {
   color: #050;
   font-size: 16px;
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   border: 1px solid;
   border-color: #696 #363 #363 #696;
 }
@@ -248,8 +248,8 @@
 .custom-dropdown {
   padding: 4px 4px;
   font-size: 16px;
-  border: 1px solid #000
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  border: 1px solid #000;
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   color: #333;
   /* Add more styling as needed */
 }
@@ -258,7 +258,7 @@
 .medium-button {
   color: #050;
   font: bold 88% 'trebuchet ms', helvetica, sans-serif;
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   border: 5px solid;
   border-color: #696 #363 #363 #696;
   margin-top: 20px;
@@ -266,7 +266,6 @@
 
 .button-group {
   width: 20%; /* Adjust the width as needed */
-  margin-left: left; /* Move to the right by setting margin-left to auto */
   display: table-cell; /* Use flexbox layout */
   flex-direction: column; /* Arrange content vertically */
   justify-content: flex-start; /* Start from the top */
@@ -275,7 +274,7 @@
 .large-button {
   color: #050;
   font: bold 88% 'trebuchet ms', helvetica, sans-serif;
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   border: 10px solid;
   border-color: #696 #363 #363 #696;
 }
@@ -378,9 +377,9 @@
   top: -1px;
   right: -1px;
   cursor: pointer;
-  background-color: linear-gradient(45deg, #EAE9E2, #AEABA5);
+  background: linear-gradient(45deg, #EAE9E2, #AEABA5);
   color: #100f0f;
-  border none;
+  border: none;
   border-radius: 80%;
   padding: 3px 3px;
 }
@@ -471,7 +470,7 @@
 .hover-menu {
   display: none;
   position: absolute;
-  background-color: linear-gradient(45deg, #777776, #646362);
+  background: linear-gradient(45deg, #777776, #646362);
   border: 1px solid #ccc;
   padding: 5px;
   z-index: 100; /* Ensure it's on top of other content */
@@ -485,7 +484,7 @@
   padding: 3px;
   font-weight: bold;
   color: #333; /* Text color for options */
-  background-color: linear-gradient(45deg, #7c7c7a, #646362);
+  background: linear-gradient(45deg, #7c7c7a, #646362);
   border: 1px solid #3d3d3c;
   margin: 2px; /* Add some spacing between options */
   text-align: center; /* Center-align text within options */
