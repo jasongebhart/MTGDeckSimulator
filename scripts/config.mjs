@@ -290,7 +290,7 @@ export function displaySuggestions(suggestions) {
 
 
 // Function to create card input fields
-export function createCardInputFields(index, name, quantity, type, cost) {
+export function createCardInputFields(index, name, quantity, type, cost, rulesText) {
     const cardInfo = document.createElement("div");
     cardInfo.className = "card-info";
     cardInfo.innerHTML = `
@@ -302,7 +302,10 @@ export function createCardInputFields(index, name, quantity, type, cost) {
       <input type="text" name="cardType${index}" value="${type}" required>
       <label for="cardCost${index}">Cost:</label>
       <input type="text" name="cardCost${index}" value="${cost}" required>
+      <label for="cardRulesText${index}">Rules Text:</label>
+      <input type="text" name="cardRulesText${index}" value="${rulesText}">
       <button type="button" class="delete-card-button" onclick="deleteCardInDeck(this)">Delete</button>
     `;
     cardInputsContainer.appendChild(cardInfo);
   }
+  

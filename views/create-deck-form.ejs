@@ -158,7 +158,7 @@ addCardButton.addEventListener("click", async () => {
         console.log(`input[name='cardType${cardCount}']`);
         document.querySelector(`input[name='cardType${cardCount}']`).value = cardDetails.cardType;
         document.querySelector(`input[name='cardCost${cardCount}']`).value = cardDetails.cardCost;
-
+        document.querySelector(`input[name='cardRulesText${cardCount}']`).value = cardDetails.rulesText;
     } catch (error) {
         // Handle any errors that occur during the fetch or processing
         console.error("Error fetching card details: " + error.message);
