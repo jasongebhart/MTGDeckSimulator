@@ -64,50 +64,74 @@
       a.click();
     });
 
-  // "Upload and Load XML File"
-  const xmlFileInput = document.getElementById("xmlFile");
-  xmlFileInput.addEventListener("change", (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
+// "Upload and Load XML File" Event Listener
+const xmlFileInput = document.getElementById("xmlFile");
+xmlFileInput.addEventListener("change", async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
 
-      reader.onload = (e) => {
-        const xmlText = e.target.result;
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+    reader.onload = async (e) => {
+      const xmlText = e.target.result;
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
 
-        // Extract and populate the form fields with XML data here
-        const deckName = xmlDoc.querySelector("Decklist").getAttribute("Deck");
-        document.querySelector("input[name='deckName']").value = deckName;
+      // Extract and populate the form fields with XML data here
+      const deckName = xmlDoc.querySelector("Decklist").getAttribute("Deck");
+      document.querySelector("input[name='deckName']").value = deckName;
 
-        const cardElements = xmlDoc.querySelectorAll("Card");
+      const cardElements = xmlDoc.querySelectorAll("Card");
 
-        // Clear the cardInputsContainer before populating it
-        cardInputsContainer.innerHTML = '';
+      // Clear the cardInputsContainer before populating it
+      cardInputsContainer.innerHTML = '';
 
-        // Iterate through card elements and create card input fields
-        cardCount = 0; // Reset card count
-        cardElements.forEach((card, index) => {
-          const name = card.querySelector("Name").textContent;
-          const quantity = card.querySelector("Quantity").textContent;
-          const type = card.querySelector("Type").textContent;
-          const cost = card.querySelector("Cost").textContent;
+      cardCount = 0; // Reset card count
 
-          cardCount++; // Increment the card count
-          createCardInputFields(cardCount, name, quantity, type, cost);
-        });
+// Iterate through card elements and create card input fields
+for (const card of cardElements) {
+  const name = card.querySelector("Name").textContent;
+  const quantity = card.querySelector("Quantity").textContent;
+  const type = card.querySelector("Type").textContent;
+  const cost = card.querySelector("Cost").textContent;
 
-        // Add an event listener to the document to handle the click event on the "Delete" buttons
-        document.addEventListener("click", (event) => {
-          if (event.target.classList.contains("delete-card-button")) {
-            // Handle the delete action here
-          }
-        });
-      };
+  cardCount++; // Increment the card count
+  createCardInputFields(cardCount, name, quantity, type, cost);
 
-      reader.readAsText(file);
-    }
-  });
+  // Check if the XML contains rules text for a card
+  if (card.querySelector("RulesText")) {
+    // The XML contains rules text for this card
+    const rulesText = card.querySelector("RulesText").textContent;
+    // Update the input field for rules text
+    document.querySelector(`input[name='cardRulesText${cardCount}']`).value = rulesText;
+
+    // Update the input fields for type and cost from the API
+    const cardName = name;
+
+    // Fetch card details (type and cost) based on the card name
+    const cardDetails = await getCardDetails(cardName);
+
+    // Update the input fields with the fetched data
+    document.querySelector(`input[name='cardType${cardCount}']`).value = cardDetails.cardType;
+    document.querySelector(`input[name='cardCost${cardCount}']`).value = cardDetails.cardCost;
+  } else {
+    // The XML does not contain rules text, so fetch it from the API
+    const cardName = name;
+
+    // Fetch the rules text and other details from the API using a function like getCardDetails
+    const cardDetails = await getCardDetails(cardName);
+
+    // Update the input fields with the fetched data
+    document.querySelector(`input[name='cardType${cardCount}']`).value = cardDetails.cardType;
+    document.querySelector(`input[name='cardCost${cardCount}']`).value = cardDetails.cardCost;
+    document.querySelector(`input[name='cardRulesText${cardCount}']`).value = cardDetails.rulesText;
+  }
+}
+    };
+
+    reader.readAsText(file);
+  }
+});
+
     // In your code, create an input field for card name suggestions
     const cardNameInput = document.getElementById("lookupCardName");
 

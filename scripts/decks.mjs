@@ -6,26 +6,6 @@ export async function startListDeck() {
     await loadXMLDoc(XMLFile);
     displayDeck(xmlDoc);
 }
-async function _loadXMLDoc(XMLFile) {
-    try {
-        // Create a Fetch API request to load the XML file.
-        const response = await fetch(XMLFile);
-        
-        if (!response.ok) {
-            throw new Error('Failed to load the requested file.');
-        }
-        
-        // Parse the XML response into a document.
-        const xmlText = await response.text();
-        const parser = new DOMParser();
-        xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-        
-        return xmlDoc;
-    } catch (error) {
-        console.error(error);
-        window.alert('Unable to load the requested file.');
-    }
-}
 
 // Function to delete a card entry from the web page
 export function deleteCardInDeck(button) {
@@ -38,18 +18,6 @@ export function deleteCardInDeck(button) {
   
 window.deleteCardInDeck = deleteCardInDeck; // Make it a global function	  
   
-export function __deleteCard(index) {
-	const cardElements = xmlDoc.querySelectorAll("card-info");
-	if (index >= 0 && index < cardElements.length) {
-	  // Remove the card element from the XML
-	 // const removedCard = cardElements[index];
-	 // removedCard.parentNode.removeChild(removedCard);
-  
-	  // Remove the card input fields from the web page
-	  const cardInput = document.querySelector(`.card-info:nth-child(${index + 1})`);
-	  cardInput.parentNode.removeChild(cardInput);
-	}
-  }
 export function convertToXml(deckData) {
 	const root = document.implementation.createDocument(null, 'Decklist', null);
 	const deckElement = root.documentElement;
