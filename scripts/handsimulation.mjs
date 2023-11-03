@@ -5,7 +5,8 @@ import {
 	createCardImage,
 	cardDraw,
     getCardNames,
-    hideLargerCard
+    hideLargerCard,
+    isCardOfType
 	//displayHandNew
    // extractCardInfo
    // buildCardNamesArray
@@ -38,6 +39,7 @@ export async function startHandDraw() {
 		
 		console.log("Deck Size:", cardNames.length); // Total number of cards
 		console.log("Populated cardNames:", cardNames); // Array of card names
+        console.log("Total Lands", totalLandsInDeck); // Array of card names
 
 		// Simulate card draw
 		const cardsToDraw = 7;
@@ -65,7 +67,7 @@ export async function startHandDraw() {
         window.alert('An error occurred while processing the simulation.');
     }
 }
-function countCardsByType(cardInfo, targetType) {
+function __countCardsByType(cardInfo, targetType) {
     let total = 0;
   
     for (const cardName in cardInfo) {
@@ -78,6 +80,22 @@ function countCardsByType(cardInfo, targetType) {
     return total;
   }
   
+function countCardsByType(cardInfo, targetType) {
+    let total = 0;
+
+    for (const cardName in cardInfo) {
+        const card = cardInfo[cardName];
+        if (isCardOfType(card, targetType)) {
+            total += card.quantity;
+        }
+    }
+
+    console.log(targetType + ": " + total);
+    return total;
+}
+
+
+
 
 function getDeckName() { 
 	var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
@@ -246,8 +264,11 @@ function createCard(card, parentElement) {
 }
 
 function getMulliganRate(xmlDoc, totalLands) {
-    // Find the "Land" elements in the XML
+    // Find the "Land" elements in the XML document
     var landElements = xmlDoc.getElementsByTagName("Land");
+
+    // Log the input parameter for debugging
+    console.log("getMulliganRate parameter totalLands:", totalLands);
 
     // Iterate through the "Land" elements
     for (var i = 0; i < landElements.length; i++) {
@@ -256,20 +277,26 @@ function getMulliganRate(xmlDoc, totalLands) {
         var zeroElement = landElement.getElementsByTagName("Zero")[0];
         var oneElement = landElement.getElementsByTagName("One")[0];
 
-        // Check if all required elements are found
+        // Check if all required elements are found within the current "Land" element
         if (quantityElement && zeroElement && oneElement) {
+            // Extract the quantity of land from the "Quantity" element
             var intLandQuantity = parseInt(quantityElement.textContent);
 
+            // Check if the extracted quantity matches the desired totalLands
             if (intLandQuantity === totalLands) {
+                // Extract the values of "Zero" and "One" elements and calculate the mulliganRate
                 var intZero = parseFloat(zeroElement.textContent);
                 var intOne = parseFloat(oneElement.textContent);
-                var mulliganRate = (intZero + intOne) ;
+                var mulliganRate = intZero + intOne;
+                
+                // Return the calculated mulliganRate
+                console.log('mulliganRate:', mulliganRate);
                 return mulliganRate;
             }
         }
     }
 
-    // If mulligan rate is not found, return an error message
+    // If mulligan rate is not found for the specified totalLands, return an error message
     return "Mulligan rate not found for " + totalLands + " lands.";
 }
 
@@ -298,7 +325,8 @@ function displayMulliganChart(mulliganXml) {
     // Define the elements and their corresponding IDs
     const mulliganElements = [
       "Nineteen", "Twenty", "TwentyOne", "TwentyTwo", "TwentyThree",
-      "TwentyFour", "TwentyFive", "TwentySix", "TwentySeven", "TwentyEight"
+      "TwentyFour", "TwentyFive", "TwentySix", "TwentySeven", "TwentyEight",
+      "TwentyNine", "Thirty"
     ];
   
     // Calculate the array length once
@@ -330,8 +358,13 @@ function displayMulliganChart(mulliganXml) {
 }
   
 function formatPercentage(number) {
-    // Multiply by 100 to convert to a percentage and use toFixed(2) for two decimal places
-    return (number).toFixed(0) + "%";
+    if (typeof number !== 'number' || isNaN(number)) {
+        // Check if the input is not a valid number
+        return "Invalid Input";
+    }
+    
+    // Multiply by 100 to convert to a percentage and use toFixed(0) for rounding to the nearest integer
+    return (number * 1).toFixed(0) + "%";
 }
 
 function setupCardHoverBehavior(carddiv, cardName) {

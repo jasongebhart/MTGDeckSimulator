@@ -224,9 +224,18 @@
   vertical-align: top;
   border: 0;
   padding: 0 2em;
-  background-color: var(--highlight-bg, #FFFFCC); /* CSS variable for background color */
+  background-color: var(--highlight-bg, #e3e2db); /* CSS variable for background color */
 }
 
+/* Info Box and Card List */
+.sidebar-box {
+  /* Use this class for both info-box and card-list */
+  display: inline-block;
+  vertical-align: top;
+  border: 0;
+  padding: 0 2em;
+  background-color: var(--highlight-bg, #d2d2c9); /* CSS variable for background color */
+}
 /* Body Styles */
 .body-text {
   font-family: Georgia, "Times New Roman", Times, serif;

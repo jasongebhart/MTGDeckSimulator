@@ -90,6 +90,14 @@ export function extractCardInfo(deckList) {
     return cardInfo;
 }
 
+
+export function isCardOfType(card, targetType) {
+    if (targetType.toLowerCase() === "land" && card.type.toLowerCase().startsWith("basic land")) {
+        return true;
+    }
+    return card.type.toLowerCase() === targetType.toLowerCase();
+}
+
 export function buildCardNamesArray(cardInfo) {
     const cardNames = [];
 
@@ -120,6 +128,34 @@ export function createCardImage(cardDrawn, className) {
 }
 
 export function cardDraw(cardNames, cardInfo, cardsToDraw) {
+    const initialDeckSize = cardNames.length; // Store the initial deck size
+    const spells = [];
+    const lands = [];
+    console.log("card To Draw:", cardsToDraw);
+    console.log("initialDeckSize in cardDraw:", initialDeckSize);
+
+    for (let i = 0; i < cardsToDraw; i++) {
+        const randomIndex = Math.floor(Math.random() * (initialDeckSize - i)); // Use initialDeckSize here
+        const drawnCard = cardNames.splice(randomIndex, 1)[0];
+        const drawnType = cardInfo[drawnCard].type.toLowerCase();
+        console.log("drawnCard:", drawnCard);
+        console.log("drawnType:", drawnType);
+
+        if (drawnType.toLowerCase() === "land" || drawnType.toLowerCase().startsWith("basic land")) {
+            lands.push(drawnCard);
+        } else {
+            spells.push(drawnCard);
+        }
+    }
+
+    return {
+        spells,
+        lands
+    };
+}
+
+
+export function __cardDraw(cardNames, cardInfo, cardsToDraw) {
     const initialDeckSize = cardNames.length; // Store the initial deck size
     const spells = [];
     const lands = [];

@@ -105,7 +105,7 @@ function getConvertedCost(currentCost) {
 	return arrConvertedCost;
 }
 	
-function displayDeckComparison() {
+function __displayDeckComparison() {
 	var deckList = xmlDoc.getElementsByTagName("Decklist")[0];
 	var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
 	var uniqueCards = deckList.getElementsByTagName("Name").length;
@@ -225,3 +225,150 @@ function displayDeckComparison() {
 	tbl.setAttribute("border", "2");
 	return;
 }
+
+function displayDeckComparison() {
+    var deckList = xmlDoc.getElementsByTagName("Decklist")[0];
+    var deckListName = deckList.getAttribute("Deck");
+    var uniqueCards = deckList.getElementsByTagName("Name").length;
+    var deckStatistics = calculateDeckStatistics(deckList);
+
+    createDeckComparisonTable(deckListName, deckStatistics);
+}
+
+function calculateDeckStatistics(deckList) {
+    var stats = {
+        landCount: 0,
+        creatureCount: 0,
+        instantCount: 0,
+        sorceryCount: 0,
+        enchantmentCount: 0,
+        artifactCount: 0,
+        deckSize: 0,
+        totalConvertedCost: 0,
+    };
+
+    for (var i = 0; i < deckList.children.length; i++) {
+        var card = deckList.children[i];
+        var currentQuantity = parseInt(card.querySelector("Quantity")?.textContent || 0);
+        var currentTypeElement = card.querySelector("Type");
+        var currentCost = card.querySelector("Cost")?.textContent || "NA";
+
+        if (currentTypeElement) {
+            var currentType = currentTypeElement.textContent;
+            // Use regular expressions to check for "Land" or "Creature" keywords
+            if (/Land/i.test(currentType)) {
+                stats.landCount += currentQuantity;
+            } else if (/Creature/i.test(currentType)) {
+                stats.creatureCount += currentQuantity;
+            } else {
+                switch (currentType) {
+                    case "Instant":
+                        stats.instantCount += currentQuantity;
+                        break;
+                    case "Sorcery":
+                        stats.sorceryCount += currentQuantity;
+                        break;
+                    case "Enchantment":
+                        stats.enchantmentCount += currentQuantity;
+                        break;
+                    case "Artifact":
+                        stats.artifactCount += currentQuantity;
+                        break;
+                }
+            }
+        }
+
+        stats.deckSize += currentQuantity;
+
+        if (currentCost !== "NA") {
+            var convertedCost = getConvertedCost(currentCost);
+            stats.totalConvertedCost += parseInt(convertedCost) * currentQuantity;
+        }
+    }
+
+    return stats;
+}
+
+
+function __calculateDeckStatistics(deckList) {
+    var stats = {
+        landCount: 0,
+        creatureCount: 0,
+        instantCount: 0,
+        sorceryCount: 0,
+        enchantmentCount: 0,
+        artifactCount: 0,
+        deckSize: 0,
+        totalConvertedCost: 0,
+    };
+
+    for (var i = 0; i < deckList.children.length; i++) {
+        var card = deckList.children[i];
+        var currentQuantity = parseInt(card.querySelector("Quantity")?.textContent || 0);
+        var currentTypeElement = card.querySelector("Type");
+        var currentCost = card.querySelector("Cost")?.textContent || "NA";
+
+        if (currentTypeElement) {
+            var currentType = currentTypeElement.textContent;
+            switch (currentType) {
+                case "Land":
+                    stats.landCount += currentQuantity;
+                    break;
+                case "Creature":
+                    stats.creatureCount += currentQuantity;
+                    break;
+                case "Instant":
+                    stats.instantCount += currentQuantity;
+                    break;
+                case "Sorcery":
+                    stats.sorceryCount += currentQuantity;
+                    break;
+                case "Enchantment":
+                    stats.enchantmentCount += currentQuantity;
+                    break;
+                case "Artifact":
+                    stats.artifactCount += currentQuantity;
+                    break;
+            }
+        }
+
+        stats.deckSize += currentQuantity;
+
+        if (currentCost !== "NA") {
+            var convertedCost = getConvertedCost(currentCost);
+            stats.totalConvertedCost += parseInt(convertedCost) * currentQuantity;
+        }
+    }
+
+    return stats;
+}
+
+
+function createDeckComparisonTable(deckName, stats) {
+    var table = document.getElementById("tblDeckList");
+    var row = document.createElement("tr");
+
+    // Add table cells with deck statistics
+    appendTableCell(row, deckName);
+    appendTableCell(row, stats.deckSize);
+    appendTableCell(row, stats.totalConvertedCost);
+    appendTableCell(row, stats.landCount);
+    appendTableCell(row, stats.creatureCount);
+    appendTableCell(row, stats.instantCount);
+    appendTableCell(row, stats.sorceryCount);
+    appendTableCell(row, stats.enchantmentCount);
+    appendTableCell(row, stats.artifactCount);
+
+    var tbody = document.createElement("tbody");
+    tbody.appendChild(row);
+
+    table.appendChild(tbody);
+    table.setAttribute("border", "2");
+}
+
+function appendTableCell(row, content) {
+    var cell = document.createElement("td");
+    cell.appendChild(document.createTextNode(content));
+    row.appendChild(cell);
+}
+
