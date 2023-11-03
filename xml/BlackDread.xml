@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="BlackDread">
+ <DesignGoal>a</DesignGoal>
     <Card>
         <Name>Kitesail Freebooter</Name>
         <Quantity>2</Quantity>

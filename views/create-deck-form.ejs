@@ -36,8 +36,10 @@
       // Create an object to store the deck data
       const deckData = {
         deckName: document.querySelector("input[name='deckName']").value,
+        designGoal: 'a', // Set the value for DesignGoal
         cards: [],
       };
+
 
       // Collect card data from input fields
       for (let i = 1; i <= cardCount; i++) {
@@ -52,6 +54,7 @@
 
       // Convert deckData to XML (you may need to use an XML library)
       const xmlString = convertToXml(deckData); // Implement this function
+      console.log(xmlString); // Log the XML string to the console
 
       // Create a Blob with the XML data
       const blob = new Blob([xmlString], { type: "text/xml" });

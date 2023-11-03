@@ -17,40 +17,58 @@ export function deleteCardInDeck(button) {
 }
   
 window.deleteCardInDeck = deleteCardInDeck; // Make it a global function	  
-  
+
 export function convertToXml(deckData) {
-  const root = document.implementation.createDocument(null, 'Decklist', null);
-  const deckElement = root.documentElement;
-  deckElement.setAttribute('Deck', deckData.deckName);
+	const root = document.implementation.createDocument(null, 'Decklist', null);
+	const deckElement = root.documentElement;
+	deckElement.setAttribute('Deck', deckData.deckName);
+  
+	// Add XML declaration
+	const xmlDeclaration = root.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8"');
+	root.insertBefore(xmlDeclaration, root.firstChild);
+  
+	// Add custom elements
+	const designGoalElement = root.createElement('DesignGoal');
+	designGoalElement.textContent = deckData.designGoal; // Set the value for the DesignGoal
+  
+	deckElement.appendChild(designGoalElement);
+	// Loop through card data and create XML elements
+	deckData.cards.forEach((card) => {
+	  const cardElement = root.createElement('Card');
+	  const nameElement = root.createElement('Name');
+	  nameElement.textContent = card.name;
+	  const quantityElement = root.createElement('Quantity');
+	  quantityElement.textContent = card.quantity;
+	  const typeElement = root.createElement('Type');
+	  typeElement.textContent = card.type;
+	  const costElement = root.createElement('Cost');
+	  costElement.textContent = card.cost;
+	  const rulesTextElement = root.createElement('RulesText');
+	  rulesTextElement.textContent = card.rulesText;
+  
+	  cardElement.appendChild(nameElement);
+	  cardElement.appendChild(quantityElement);
+	  cardElement.appendChild(typeElement);
+	  cardElement.appendChild(costElement);
+	  cardElement.appendChild(rulesTextElement);
+  
+	  deckElement.appendChild(cardElement);
+	});
+  
+	const serializer = new XMLSerializer();
+	const xmlString = serializer.serializeToString(root);
 
-  // Loop through card data and create XML elements
-  deckData.cards.forEach((card) => {
-    const cardElement = root.createElement('Card');
-    const nameElement = root.createElement('Name');
-    nameElement.textContent = card.name;
-    const quantityElement = root.createElement('Quantity');
-    quantityElement.textContent = card.quantity;
-    const typeElement = root.createElement('Type');
-    typeElement.textContent = card.type;
-    const costElement = root.createElement('Cost');
-    costElement.textContent = card.cost;
-    const rulesTextElement = root.createElement('RulesText'); // Create a "Rules Text" element
-    rulesTextElement.textContent = card.rulesText; // Set the "Rules Text" content
+	// Create a new XML document to parse and format the content
+	const formattedXmlDocument = new DOMParser().parseFromString(xmlString, 'application/xml');
+	const formattedXmlString = new XMLSerializer().serializeToString(formattedXmlDocument);
 
-    cardElement.appendChild(nameElement);
-    cardElement.appendChild(quantityElement);
-    cardElement.appendChild(typeElement);
-    cardElement.appendChild(costElement);
-    cardElement.appendChild(rulesTextElement); // Append the "Rules Text" element
-
-    deckElement.appendChild(cardElement);
-  });
-
-  const serializer = new XMLSerializer();
-  const xmlString = serializer.serializeToString(root);
-
-  return xmlString;
-}
+	return formattedXmlString;
+ }
+ function __formatXml(xmlString) {
+	const formattedXmlDocument = new DOMParser().parseFromString(xmlString, 'application/xml');
+	const formattedXmlString = new XMLSerializer().serializeToString(formattedXmlDocument);
+	return `<?xml version="1.0" encoding="UTF-8"?>\n${formattedXmlString}`;
+  }
 
 // Function to load data from an XML file
 // Modify the loadFromXml function to populate form fields
@@ -133,6 +151,30 @@ function countColorOccurrences(currentCost) {
         "X": { count: 0, cards: 0 }
     };
 
+    // Split the currentCost string by non-alphabetic characters
+    const colorCharacters = currentCost.split(/[^A-Za-z]+/);
+
+    colorCharacters.forEach(strColorCharacter => {
+        if (colorCounts.hasOwnProperty(strColorCharacter)) {
+            colorCounts[strColorCharacter].count += 1;
+            colorCounts[strColorCharacter].cards = 1;
+        }
+    });
+
+    const arrColorDist = Object.values(colorCounts).flatMap(color => [color.count, color.cards]);
+    return arrColorDist;
+}
+
+function __countColorOccurrences(currentCost) {
+    const colorCounts = {
+        "U": { count: 0, cards: 0 },
+        "R": { count: 0, cards: 0 },
+        "B": { count: 0, cards: 0 },
+        "W": { count: 0, cards: 0 },
+        "G": { count: 0, cards: 0 },
+        "X": { count: 0, cards: 0 }
+    };
+
     for (var i = 0; i < currentCost.length; i++) {
         var strColorCharacter = currentCost.charAt(i);
         if (colorCounts.hasOwnProperty(strColorCharacter)) {
@@ -155,6 +197,295 @@ function deleteRows(tableId) {
 	}
 }
 	
+function __displayDeck(xmlDoc) {
+    const deckList = xmlDoc.getElementsByTagName("Decklist")[0];
+    const deckListName = deckList.getAttribute("Deck");
+    const designGoal = xmlDoc.getElementsByTagName("DesignGoal")[0].textContent;
+    const cards = deckList.getElementsByTagName("Card");
+
+    const cardCounts = {
+        Land: 0,
+        Creature: 0,
+        Instant: 0,
+        Sorcery: 0,
+        Enchantment: 0,
+        Artifact: 0,
+        Planeswalker: 0,
+    };
+
+    const costCounts = {
+        zeroCost: 0,
+        oneCost: 0,
+        twoCost: 0,
+        threeCost: 0,
+        fourCost: 0,
+        fiveCost: 0,
+        sixCost: 0,
+        sevenmoreCost: 0,
+        blueCost: 0,
+        blueCards: 0,
+        redCost: 0,
+        redCards: 0,
+        blackCost: 0,
+        blackCards: 0,
+        whiteCost: 0,
+        whiteCards: 0,
+        greenCost: 0,
+        greenCards: 0,
+        colorlessCost: 0,
+    };
+
+    for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        const currentType = card.getElementsByTagName("Type")[0].textContent;
+        const currentQuantity = parseInt(card.getElementsByTagName("Quantity")[0].textContent, 10);
+        const currentCost = card.getElementsByTagName("Cost")[0].textContent;
+
+        cardCounts[currentType] += currentQuantity;
+
+        if (currentCost !== "NA") {
+            const [intBlueCount, intBlueCards, intRedCount, intRedCards, intBlackCount, intBlackCards, intWhiteCount, intWhiteCards, intGreenCount, intGreenCards, intClearCount, intClearCards] = countColorOccurrences(currentCost);
+
+            costCounts.zeroCost += currentCost === "0" ? currentQuantity : 0;
+            costCounts.oneCost += currentCost === "1" ? currentQuantity : 0;
+            costCounts.twoCost += currentCost === "2" ? currentQuantity : 0;
+            costCounts.threeCost += currentCost === "3" ? currentQuantity : 0;
+            costCounts.fourCost += currentCost === "4" ? currentQuantity : 0;
+            costCounts.fiveCost += currentCost === "5" ? currentQuantity : 0;
+            costCounts.sixCost += currentCost === "6" ? currentQuantity : 0;
+            costCounts.sevenmoreCost += currentCost >= "7" ? currentQuantity : 0;
+            costCounts.blueCost += intBlueCount * currentQuantity;
+            costCounts.blueCards += intBlueCards * currentQuantity;
+            costCounts.redCost += intRedCount * currentQuantity;
+            costCounts.redCards += intRedCards * currentQuantity;
+            costCounts.blackCost += intBlackCount * currentQuantity;
+            costCounts.blackCards += intBlackCards * currentQuantity;
+            costCounts.whiteCost += intWhiteCount * currentQuantity;
+            costCounts.whiteCards += intWhiteCards * currentQuantity;
+            costCounts.greenCost += intGreenCount * currentQuantity;
+            costCounts.greenCards += intGreenCards * currentQuantity;
+
+            const [convertedCost, intColorless] = getConvertedCost(currentCost);
+            costCounts.colorlessCost += intClearCount * currentQuantity + intColorless * currentQuantity;
+        }
+    }
+
+    updateDOMElements({
+        designGoal,
+        deckListName,
+        cardCounts,
+        costCounts,
+    });
+}
+
+
+function updateDOMElements(data) {
+	if (data && data.totalCounts) {
+		document.getElementById("DesignGoal").innerHTML = data.designGoal;
+		document.getElementById("DeckListName").innerHTML = data.deckListName;
+		document.getElementById("deckSize").innerHTML = data.totalCounts.Land + data.totalCounts.Creature + data.totalCounts.Instant +
+			data.totalCounts.Sorcery + data.totalCounts.Enchantment + data.totalCounts.Artifact + data.totalCounts.Planeswalker;
+		document.getElementById("TotConvertedCost").innerHTML = data.costCounts.colorlessCost;
+		document.getElementById("TotLands").innerHTML = data.cardCounts.Land;
+		document.getElementById("TotCreatures").innerHTML = data.cardCounts.Creature;
+		document.getElementById("TotInstants").innerHTML = data.cardCounts.Instant;
+		document.getElementById("TotSorceries").innerHTML = data.cardCounts.Sorcery;
+		document.getElementById("TotEnchantments").innerHTML = data.cardCounts.Enchantment;
+		document.getElementById("TotArtifacts").innerHTML = data.cardCounts.Artifact;
+		document.getElementById("TotPlaneswalkers").innerHTML = data.cardCounts.Planeswalker;
+		document.getElementById("ZeroCost").innerHTML = data.costCounts.zeroCost;
+		document.getElementById("OneCost").innerHTML = data.costCounts.oneCost;
+		document.getElementById("TwoCost").innerHTML = data.costCounts.twoCost;
+		document.getElementById("ThreeCost").innerHTML = data.costCounts.threeCost;
+		document.getElementById("FourCost").innerHTML = data.costCounts.fourCost;
+		document.getElementById("FiveCost").innerHTML = data.costCounts.fiveCost;
+		document.getElementById("SixCost").innerHTML = data.costCounts.sixCost;
+		document.getElementById("SevenmoreCost").innerHTML = data.costCounts.sevenmoreCost;
+		document.getElementById("BlueCost").innerHTML = data.costCounts.blueCost;
+		document.getElementById("BlueCards").innerHTML = data.costCounts.blueCards;
+		document.getElementById("RedCost").innerHTML = data.costCounts.redCost;
+		document.getElementById("RedCards").innerHTML = data.costCounts.redCards;
+		document.getElementById("BlackCost").innerHTML = data.costCounts.blackCost;
+		document.getElementById("BlackCards").innerHTML = data.costCounts.blackCards;
+		document.getElementById("WhiteCost").innerHTML = data.costCounts.whiteCost;
+		document.getElementById("WhiteCards").innerHTML = data.costCounts.whiteCards;
+		document.getElementById("GreenCost").innerHTML = data.costCounts.greenCost;
+		document.getElementById("GreenCards").innerHTML = data.costCounts.greenCards;
+		document.getElementById("ColorlessCost").innerHTML = data.costCounts.colorlessCost;
+	} else {
+        console.error("data.totalCounts is undefined.");
+    }
+}
+
+const deckStatistics = {
+    intBlueCount: 0,
+    intBlueCards: 0,
+    totBlueCards: 0,
+    intRedCount: 0,
+    intRedCards: 0,
+    totRedCards: 0,
+    intBlackCount: 0,
+    intBlackCards: 0,
+    totBlackCards: 0,
+    intWhiteCount: 0,
+    intWhiteCards: 0,
+    totWhiteCards: 0,
+    intGreenCount: 0,
+    intGreenCards: 0,
+    totGreenCards: 0,
+    intClearCount: 0,
+    intClearCards: 0,
+    totClearCards: 0,
+    totConvertedCost: 0,
+    intLandCount: 0,
+    intCreatureCount: 0,
+    intInstantCount: 0,
+    intSorceryCount: 0,
+    intEnchantmentCount: 0,
+    intArtifactCount: 0,
+    intPlaneswalkerCount: 0,
+    deckSize: 0,
+    intzeroCost: 0,
+    intoneCost: 0,
+    inttwoCost: 0,
+    intthreeCost: 0,
+    intfourCost: 0,
+    intfiveCost: 0,
+    intsixCost: 0,
+    intsevenmoreCost: 0,
+    totBlueCount: 0,
+    totRedCount: 0,
+    totBlackCount: 0,
+    totWhiteCount: 0,
+    totGreenCount: 0,
+    totColorlessCount: 0,
+    currentCard: null,
+    currentQuantity: null,
+    currentType: null,
+    currentCost: null,
+};
+
+function readCardData(index, deckList) {
+    deckStatistics.currentCard = deckList.getElementsByTagName("Name")[index].firstChild.data;
+    deckStatistics.currentQuantity = parseInt(deckList.getElementsByTagName("Quantity")[index].firstChild.data);
+    deckStatistics.currentType = deckList.getElementsByTagName("Type")[index].firstChild.data;
+    deckStatistics.currentCost = deckList.getElementsByTagName("Cost")[index].firstChild.data;
+}
+
+function updateCardStatistics(cardType) {
+    switch (cardType) {
+        case "Land":
+            deckStatistics.intLandCount += deckStatistics.currentQuantity;
+            break;
+        case "Creature":
+            deckStatistics.intCreatureCount += deckStatistics.currentQuantity;
+            break;
+        case "Instant":
+            deckStatistics.intInstantCount += deckStatistics.currentQuantity;
+            break;
+        case "Sorcery":
+            deckStatistics.intSorceryCount += deckStatistics.currentQuantity;
+            break;
+        case "Enchantment":
+            deckStatistics.intEnchantmentCount += deckStatistics.currentQuantity;
+            break;
+        case "Artifact":
+            deckStatistics.intArtifactCount += deckStatistics.currentQuantity;
+            break;
+        case "Planeswalker":
+            deckStatistics.intPlaneswalkerCount += deckStatistics.currentQuantity;
+            break;
+    }
+}
+
+function updateColorStatistics(currentCost, currentQuantity) {
+    var strConvertedCost = ''; // Declare strConvertedCost here
+
+    if (currentCost !== "NA") {
+        var arrColorDistribution = countColorOccurrences(currentCost);
+
+        deckStatistics.intBlueCount = arrColorDistribution[0];
+        deckStatistics.intBlueCards = arrColorDistribution[1];
+        deckStatistics.intRedCount = arrColorDistribution[2];
+        deckStatistics.intRedCards = arrColorDistribution[3];
+        deckStatistics.intBlackCount = arrColorDistribution[4];
+        deckStatistics.intBlackCards = arrColorDistribution[5];
+        deckStatistics.intWhiteCount = arrColorDistribution[6];
+        deckStatistics.intWhiteCards = arrColorDistribution[7];
+        deckStatistics.intGreenCount = arrColorDistribution[8];
+        deckStatistics.intGreenCards = arrColorDistribution[9];
+        deckStatistics.intClearCount = arrColorDistribution[10];
+        deckStatistics.intClearCards = arrColorDistribution[11];
+
+        deckStatistics.totBlueCount += deckStatistics.intBlueCount * currentQuantity;
+        deckStatistics.totBlueCards += deckStatistics.intBlueCards * currentQuantity;
+        deckStatistics.totRedCount += deckStatistics.intRedCount * currentQuantity;
+        deckStatistics.totRedCards += deckStatistics.intRedCards * currentQuantity;
+        deckStatistics.totBlackCount += deckStatistics.intBlackCount * currentQuantity;
+        deckStatistics.totBlackCards += deckStatistics.intBlackCards * currentQuantity;
+        deckStatistics.totWhiteCount += deckStatistics.intWhiteCount * currentQuantity;
+        deckStatistics.totWhiteCards += deckStatistics.intWhiteCards * currentQuantity;
+        deckStatistics.totGreenCount += deckStatistics.intGreenCount * currentQuantity;
+        deckStatistics.totGreenCards += deckStatistics.intGreenCards * currentQuantity;
+
+        var arrConvertedCost = getConvertedCost(currentCost);
+        var convertedCost = arrConvertedCost[0];
+        var intColorless = arrConvertedCost[1];
+
+        deckStatistics.totColorlessCount += (deckStatistics.intClearCount * currentQuantity) + (intColorless * currentQuantity);
+
+        switch (convertedCost) {
+            case 0:
+                deckStatistics.intzeroCost += currentQuantity;
+                break;
+            case 1:
+                deckStatistics.intoneCost += currentQuantity;
+                break;
+            case 2:
+                deckStatistics.inttwoCost += currentQuantity;
+                break;
+            case 3:
+                deckStatistics.intthreeCost += currentQuantity;
+                break;
+            case 4:
+                deckStatistics.intfourCost += currentQuantity;
+                break;
+            case 5:
+                deckStatistics.intfiveCost += currentQuantity;
+                break;
+            case 6:
+                deckStatistics.intsixCost += currentQuantity;
+                break;
+            default:
+                deckStatistics.intsevenmoreCost += currentQuantity;
+        }
+
+        strConvertedCost = convertedCost; // Update strConvertedCost here
+    }
+    else {
+        strConvertedCost = "NA"; // Assign "NA" directly
+    }
+
+    // Return or use strConvertedCost as needed
+    return strConvertedCost;
+}
+
+function getTableByCardType(cardType) {
+    switch (cardType) {
+        case "Land":
+            return "tblLandList";
+        case "Creature":
+            return "tblCreatureList";
+        case "Instant":
+        case "Sorcery":
+        case "Enchantment":
+        case "Artifact":
+        case "Planeswalker":
+            return "tblSpellsList";
+        default:
+            return ""; // Handle other cases if necessary
+    }
+}
 
 function displayDeck(xmlDoc) {
 	var deckList = xmlDoc.getElementsByTagName("Decklist")[0];
@@ -162,225 +493,67 @@ function displayDeck(xmlDoc) {
 	var designGoal = xmlDoc.getElementsByTagName("DesignGoal")[0].firstChild.data;
 	var uniqueCards = deckList.getElementsByTagName("Name").length;
 
-	deleteRows("tblCreatureList");
-	deleteRows("tblSpellsList");
-	deleteRows("tblLandList");
-	//initialize tables
-	var tblChosen = "tblCreatureList";
-	initializeCardTable(tblChosen);
-
-	var intBlueCount;
-	var intBlueCards = 0;
-	var totBlueCards = 0;
-	var intRedCount;
-	var intRedCards = 0;
-	var totRedCards = 0;
-	var intBlackCount;
-	var intBlackCards = 0;
-	var totBlackCards = 0;
-	var intWhiteCount;
-	var intWhiteCards = 0;
-	var totWhiteCards = 0;
-	var intGreenCount;
-	var intGreenCards = 0;
-	var totGreenCards = 0;
-	var intClearCount = 0;
-	var intClearCards = 0;
-	var totClearCards = 0;
-	var totConvertedCost = 0;
-	var intLandCount = 0;
-	var intCreatureCount = 0;
-	var intInstantCount = 0;
-	var intSorceryCount = 0;
-	var intEnchantmentCount = 0;
-	var intArtifactCount = 0;
-	var intPlaneswalkerCount = 0;
-	var deckSize = 0;
-	var intzeroCost = 0;
-	var intoneCost = 0;
-	var inttwoCost = 0;
-	var intthreeCost = 0;
-	var intfourCost = 0;
-	var intfiveCost = 0;
-	var intsixCost = 0;
-	var intsevenmoreCost = 0;
-	var totBlueCount = 0;
-	var totRedCount = 0;
-	var totBlackCount = 0;
-	var totWhiteCount = 0;
-	var totGreenCount = 0;
-	var totColorlessCount = 0;
-	var currentCard = null;
-	var currentQunatity = null;
-	var currentType = null;
-	var currentCost = null;
+	initializeDeckTables();
+	initializeCardTable("tblCreatureList");
 
 	for (var i=0; i <(uniqueCards); i++) {
-		currentCard = deckList.getElementsByTagName("Name")[i].firstChild.data;
-		var currentQuantity = deckList.getElementsByTagName("Quantity")[i].firstChild.data;
-		var currentType = deckList.getElementsByTagName("Type")[i].firstChild.data;
-		var currentCost = deckList.getElementsByTagName("Cost")[i].firstChild.data;
-
-		switch (currentType) {
-
-		   case "Land" :
-			intLandCount = intLandCount + parseInt(currentQuantity);
-			break;
-		   case "Creature" :
-			intCreatureCount = intCreatureCount + parseInt(currentQuantity);
-       		   break;
-		   case "Instant" :
-			intInstantCount = intInstantCount + parseInt(currentQuantity);
-		        break;
-		   case "Sorcery" :
-			intSorceryCount = intSorceryCount + parseInt(currentQuantity);
-		        break;
-		   case "Enchantment" :
-			intEnchantmentCount = intEnchantmentCount + parseInt(currentQuantity);
-		        break;
-		   case "Artifact" :
-			intArtifactCount = intArtifactCount + parseInt(currentQuantity);
-		        break;
-		   case "Planeswalker" :
-			intPlaneswalkerCount = intPlaneswalkerCount + parseInt(currentQuantity);
-		        break;
-		   default :
-		     }
-
-		deckSize = deckSize + parseInt(currentQuantity);
-			if (currentCost != "NA") {
-
-				var arrColorDistribution = countColorOccurrences(currentCost);
-				//[intBlueCount,intBlueCards,intRedCount,intRedCards,intBlackCount,intBlackCards,intWhiteCount,intWhiteCards,intGreenCount,intGreenCards,intClearCount,intClearCards] = getColorCosts(currentCost);
-
-					intBlueCount = arrColorDistribution[0];
-					intBlueCards = arrColorDistribution[1];
-					intRedCount = arrColorDistribution[2];
-					intRedCards = arrColorDistribution[3];
-					intBlackCount = arrColorDistribution[4];
-					intBlackCards = arrColorDistribution[5];
-					intWhiteCount = arrColorDistribution[6];
-					intWhiteCards = arrColorDistribution[7];
-					intGreenCount = arrColorDistribution[8];
-					intGreenCards = arrColorDistribution[9];
-					intClearCount = arrColorDistribution[10];
-					intClearCards = arrColorDistribution[11];
-
-					totBlueCount = totBlueCount + intBlueCount*parseInt(currentQuantity);
-					totBlueCards = totBlueCards + intBlueCards*parseInt(currentQuantity);
-					totRedCount = totRedCount + intRedCount*parseInt(currentQuantity);
-					totRedCards = totRedCards + intRedCards*parseInt(currentQuantity);
-					totBlackCount = totBlackCount + intBlackCount*parseInt(currentQuantity);
-					totBlackCards = totBlackCards + intBlackCards*parseInt(currentQuantity);
-					totWhiteCount = totWhiteCount + intWhiteCount*parseInt(currentQuantity);
-					totWhiteCards = totWhiteCards + intWhiteCards*parseInt(currentQuantity);
-					totGreenCount = totGreenCount + intGreenCount*parseInt(currentQuantity);
-					totGreenCards = totGreenCards + intGreenCards*parseInt(currentQuantity);
-
-			var convertedCost; var intColorless;
-			var arrConvertedCost = getConvertedCost(currentCost);
-			var convertedCost = arrConvertedCost[0];
-			intColorless = arrConvertedCost[1];
-			totColorlessCount = parseInt(totColorlessCount) + parseInt(intClearCount*currentQuantity) + parseInt(intColorless)*parseInt(currentQuantity);
-			switch (convertedCost) {
-			   case 0 :
-				intzeroCost = intzeroCost + parseInt(currentQuantity);
-			      break;
-			   case 1 :
-				intoneCost = intoneCost + parseInt(currentQuantity);
-			      break;
-			   case 2 :
-				inttwoCost = inttwoCost + parseInt(currentQuantity);
-			      break;
-			   case 3 :
-				intthreeCost = intthreeCost + parseInt(currentQuantity);
-			      break;
-			   case 4 :
-				intfourCost = intfourCost + parseInt(currentQuantity);
-			      break;
-			   case 5 :
-				intfiveCost = intfiveCost + parseInt(currentQuantity);
-			      break;
-			   case 6 :
-				intsixCost = intsixCost + parseInt(currentQuantity);
-			      break;
-			   default :
-				intsevenmoreCost = intsevenmoreCost + parseInt(currentQuantity);
-			     }
-
-			//var convertedStr = document.createTextNode(convertedCost);
-			var strConvertedCost = convertedCost;
-			totConvertedCost = totConvertedCost + (parseInt(convertedCost)*parseInt(currentQuantity));
-			}
-			else {
-			var strConvertedCost = "NA";
-			}
-
-
-		switch (currentType) {
-		   case "Land" :
-		        var tblChosen = "tblLandList"
-				createCardTable(tblChosen,currentCard,currentQuantity,currentCost,strConvertedCost);
-			break;
-		   case "Creature" :
-				var tblChosen = "tblCreatureList"
-				createCardTable(tblChosen,currentCard,currentQuantity,currentCost,strConvertedCost);
-       		   break;
-		   case "Instant" :
-				var tblChosen = "tblSpellsList"
-				createCardTable(tblChosen,currentCard,currentQuantity,currentCost,strConvertedCost);
-		        break;
-		   case "Sorcery" :
-				var tblChosen = "tblSpellsList"
-				createCardTable(tblChosen,currentCard,currentQuantity,currentCost,strConvertedCost);
-			    break;
-		   case "Enchantment" :
-				var tblChosen = "tblSpellsList"
-				createCardTable(tblChosen,currentCard,currentQuantity,currentCost,strConvertedCost);
-		        break;
-		   case "Artifact" :
-				var tblChosen = "tblSpellsList"
-				createCardTable(tblChosen,currentCard,currentQuantity,currentCost,strConvertedCost);
-		        break;
-		   case "Planeswalker" :
-				var tblChosen = "tblSpellsList"
-				createCardTable(tblChosen,currentCard,currentQuantity,currentCost,strConvertedCost);
-		        break;
-		   default :
-		     }
-
-	document.getElementById("DesignGoal").innerHTML = designGoal;
-	document.getElementById("DeckListName").innerHTML = deckListName;
-	document.getElementById("deckSize").innerHTML = deckSize;
-	document.getElementById("TotConvertedCost").innerHTML = totConvertedCost;
-	document.getElementById("TotLands").innerHTML = intLandCount;
-	document.getElementById("TotCreatures").innerHTML = intCreatureCount;
-	document.getElementById("TotInstants").innerHTML = intInstantCount;
-	document.getElementById("TotSorceries").innerHTML = intSorceryCount;
-	document.getElementById("TotEnchantments").innerHTML = intEnchantmentCount;
-	document.getElementById("TotArtifacts").innerHTML = intArtifactCount;
-	document.getElementById("TotPlaneswalkers").innerHTML = intPlaneswalkerCount;
-	document.getElementById("ZeroCost").innerHTML = intzeroCost;
-	document.getElementById("OneCost").innerHTML = intoneCost;
-	document.getElementById("TwoCost").innerHTML = inttwoCost;
-	document.getElementById("ThreeCost").innerHTML = intthreeCost;
-	document.getElementById("FourCost").innerHTML = intfourCost;
-	document.getElementById("FiveCost").innerHTML = intfiveCost;
-	document.getElementById("SixCost").innerHTML = intsixCost;
-	document.getElementById("SevenmoreCost").innerHTML = intsevenmoreCost;
-	document.getElementById("BlueCost").innerHTML = totBlueCount;
-	document.getElementById("BlueCards").innerHTML = totBlueCards;
-	document.getElementById("RedCost").innerHTML = totRedCount;
-	document.getElementById("RedCards").innerHTML = totRedCards;
-	document.getElementById("BlackCost").innerHTML = totBlackCount;
-	document.getElementById("BlackCards").innerHTML = totBlackCards;
-	document.getElementById("WhiteCost").innerHTML = totWhiteCount;
-	document.getElementById("WhiteCards").innerHTML = totWhiteCards;
-	document.getElementById("GreenCost").innerHTML = totGreenCount;
-	document.getElementById("GreenCards").innerHTML = totGreenCards;
-	document.getElementById("ColorlessCost").innerHTML = totColorlessCount;
-
+		readCardData(i, deckList);
+        const cardType = deckStatistics.currentType;
+        updateCardStatistics(cardType);
+		deckStatistics.deckSize = deckStatistics.deckSize + parseInt(deckStatistics.currentQuantity);
+        const currentCost = deckStatistics.currentCost;
+        const currentQuantity = deckStatistics.currentQuantity;
+		let strConvertedCost = ''; // Declare strConvertedCost here
+		if (deckStatistics.currentCost !== "NA") {
+           strConvertedCost = updateColorStatistics(deckStatistics.currentCost, deckStatistics.currentQuantity);
+        } else {
+			strConvertedCost = "NA";
+        }
+		const tblChosen = getTableByCardType(deckStatistics.currentType);
+		createCardTable(tblChosen, deckStatistics.currentCard, deckStatistics.currentQuantity, deckStatistics.currentCost, strConvertedCost);
 	}
+	updateDisplayElements(deckListName, designGoal);
+}
+
+
+function updateDisplayElements(deckListName, designGoal) {
+    document.getElementById("DesignGoal").innerHTML = designGoal;
+    document.getElementById("DeckListName").innerHTML = deckListName;
+    document.getElementById("deckSize").innerHTML = deckStatistics.deckSize;
+    document.getElementById("TotConvertedCost").innerHTML = deckStatistics.totConvertedCost;
+    document.getElementById("TotLands").innerHTML = deckStatistics.intLandCount;
+    document.getElementById("TotCreatures").innerHTML = deckStatistics.intCreatureCount;
+    document.getElementById("TotInstants").innerHTML = deckStatistics.intInstantCount;
+    document.getElementById("TotSorceries").innerHTML = deckStatistics.intSorceryCount;
+    document.getElementById("TotEnchantments").innerHTML = deckStatistics.intEnchantmentCount;
+    document.getElementById("TotArtifacts").innerHTML = deckStatistics.intArtifactCount;
+    document.getElementById("TotPlaneswalkers").innerHTML = deckStatistics.intPlaneswalkerCount;
+    document.getElementById("ZeroCost").innerHTML = deckStatistics.intzeroCost;
+    document.getElementById("OneCost").innerHTML = deckStatistics.intoneCost;
+    document.getElementById("TwoCost").innerHTML = deckStatistics.inttwoCost;
+    document.getElementById("ThreeCost").innerHTML = deckStatistics.intthreeCost;
+    document.getElementById("FourCost").innerHTML = deckStatistics.intfourCost;
+    document.getElementById("FiveCost").innerHTML = deckStatistics.intfiveCost;
+    document.getElementById("SixCost").innerHTML = deckStatistics.intsixCost;
+    document.getElementById("SevenmoreCost").innerHTML = deckStatistics.intsevenmoreCost;
+    document.getElementById("BlueCost").innerHTML = deckStatistics.totBlueCount;
+    document.getElementById("BlueCards").innerHTML = deckStatistics.totBlueCards;
+    document.getElementById("RedCost").innerHTML = deckStatistics.totRedCount;
+    document.getElementById("RedCards").innerHTML = deckStatistics.totRedCards;
+    document.getElementById("BlackCost").innerHTML = deckStatistics.totBlackCount;
+    document.getElementById("BlackCards").innerHTML = deckStatistics.totBlackCards;
+    document.getElementById("WhiteCost").innerHTML = deckStatistics.totWhiteCount;
+    document.getElementById("WhiteCards").innerHTML = deckStatistics.totWhiteCards;
+    document.getElementById("GreenCost").innerHTML = deckStatistics.totGreenCount;
+    document.getElementById("GreenCards").innerHTML = deckStatistics.totGreenCards;
+    document.getElementById("ColorlessCost").innerHTML = deckStatistics.totColorlessCount;
+}
+
+function initializeDeckTables() {
+    deleteRows("tblCreatureList");
+    deleteRows("tblSpellsList");
+    deleteRows("tblLandList");
+    initializeCardTable("tblCreatureList");
 }
 
 function initializeCardTable(tblChosen) {
