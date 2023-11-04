@@ -1,4 +1,5 @@
 import {
+    cardDraw,
     loadXMLDoc,
     xmlDoc,
     getSelectedItem,
@@ -226,34 +227,6 @@ function _getSelectedItem() {
 }
 
 
-
-function cardDraw(cardNames, cardInfo, cardsToDraw) {
-    const initialDeckSize = cardNames.length; // Store the initial deck size
-    const spells = [];
-    const lands = [];
-    console.log("card To Draw:", cardsToDraw);
-    console.log("initialDeckSize in cardDraw:", initialDeckSize);
-
-    for (let i = 0; i < cardsToDraw; i++) {
-        const randomIndex = Math.floor(Math.random() * (initialDeckSize - i)); // Use initialDeckSize here
-        const drawnCard = cardNames.splice(randomIndex, 1)[0];
-        const drawnType = cardInfo[drawnCard].type.toLowerCase();
-        console.log("drawnCard:", drawnCard);
-        console.log("drawnType:", drawnType);
-
-        if (drawnType === "land") {
-            lands.push(drawnCard);
-        } else {
-            spells.push(drawnCard);
-        }
-    }
-
-    return {
-        spells,
-        lands
-    };
-}
-
 function displayHand(spells, lands) {
     for (let i = 0; i < spells.length; i++) {
         const cardDrawn = spells[i];
@@ -345,7 +318,33 @@ function getSectionFromCardId(cardId) {
     // Return null if the ID format doesn't match expectations
     return null;
 }
+
 function getDestinationSection(toLocation, cardDrawn) {
+    // Default to the provided 'toLocation'
+    let destinationSection = toLocation;
+
+    // Determine the destination section based on card type and 'toLocation'
+    if (toLocation === "hand" || toLocation === "battlefield") {
+        // Lookup the card type from the global 'cardInfo'
+        const card = cardInfo[cardDrawn];
+
+        // Check if the card type exists and proceed accordingly
+        if (card) {
+            // Use a regular expression to check if the card type contains "land"
+            if (/(^|\s)land($|\s)/i.test(card.type)) {
+                destinationSection = toLocation === "hand" ? "lands" : "battlefield-lands";
+            } else {
+                destinationSection = toLocation === "hand" ? "spells" : "battlefield-spells";
+            }
+        } else {
+            console.error(`Card "${cardDrawn}" not found in cardInfo.`);
+        }
+    }
+
+    return destinationSection;
+}
+
+function __getDestinationSection(toLocation, cardDrawn) {
     // Default to the provided 'toLocation'
     let destinationSection = toLocation;
 

@@ -161,55 +161,6 @@ function getConvertedCost(currentCost) {
 }
 
 
-function __countColorOccurrences(currentCost) {
-    const colorCounts = {
-        "U": { count: 0, cards: 0 },
-        "R": { count: 0, cards: 0 },
-        "B": { count: 0, cards: 0 },
-        "W": { count: 0, cards: 0 },
-        "G": { count: 0, cards: 0 },
-        "X": { count: 0, cards: 0 }
-    };
-
-    // Use a regular expression to match color symbols within curly braces
-    const colorCharacters = currentCost.match(/{[URBWG]+}|[URBWG]+/g) || [];
-
-    // Process each color symbol and update counts
-    colorCharacters.forEach(strColorCharacter => {
-        if (strColorCharacter.startsWith("{")) {
-            // Remove curly braces
-            const colorSymbols = strColorCharacter.replace(/[{}]/g, '');
-
-            // Update counts for each symbol
-            colorSymbols.split('').forEach(symbol => {
-                if (colorCounts.hasOwnProperty(symbol)) {
-                    colorCounts[symbol].count += 1;
-                }
-            });
-
-            // Mark it as one card
-            if (colorSymbols.length > 0) {
-                colorCounts[colorSymbols[0]].cards = 1;
-            }
-        } else {
-            // Update counts for each character
-            strColorCharacter.split('').forEach(symbol => {
-                if (colorCounts.hasOwnProperty(symbol)) {
-                    colorCounts[symbol].count += 1;
-                }
-            });
-            // Mark it as one card
-            if (strColorCharacter.length > 0) {
-                colorCounts[strColorCharacter[0]].cards = 1;
-            }
-        }
-    });
-
-    const arrColorDist = Object.values(colorCounts).flatMap(color => [color.count, color.cards]);
-    return arrColorDist;
-}
-
-
 function countColorOccurrences(currentCost) {
     const colorCounts = {
         "U": { count: 0, cards: 0 },
