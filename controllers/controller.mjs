@@ -11,6 +11,7 @@ export function setupRoutes(app) {
     { path: '/playhand', template: 'playhand' },
     { path: '/handsimulation', template: 'handsimulation' },
     { path: '/alldecks', template: 'alldecks' },
+    { path: '/create-deck-form', template: 'create-deck-form' },
   ];
 
   // Set up the routes using a loop
@@ -39,11 +40,6 @@ export function setupRoutes(app) {
       console.error(error);
       res.status(500).send('An error occurred while processing the request.');
     }
-  });
-
-  // New route for displaying the deck creation form
-  app.get('/create-deck-form', (req, res) => {
-    res.render('create-deck-form'); // Render a template for the deck creation form
   });
 
   // New route for processing deck creation
