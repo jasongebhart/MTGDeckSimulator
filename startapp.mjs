@@ -1,5 +1,8 @@
 // Import required modules
 import express from 'express';
+import session from 'express-session';
+
+
 import xmlbuilder from 'xmlbuilder';
 import { setupRoutes } from './controllers/controller.mjs'; // Adjust the import path to match your file structure
 import fs from 'fs';
@@ -11,6 +14,16 @@ const app = express();
 
 // Define a CSP policy that allows loading from localhost and a specific domain for the favicon
 const cspHeader = "default-src 'self'; img-src 'self' http://localhost:3000;";
+app.use(express.urlencoded({ extended: true }));
+
+
+app.use(
+  session({
+    secret: 'b923740a00b7abe1d2aa98936a968627c7a93503de309e1d403d78e39037bbb2', // Replace with your secret key
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 
 // Setup template engine

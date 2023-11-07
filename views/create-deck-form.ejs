@@ -201,33 +201,38 @@ addCardButton.addEventListener("click", async () => {
     <%- include('partials/nav'); -%>
 </div>
 <body>
-  <form method="POST" action="/create-deck">
-    <!-- Deck Name Input -->
+  <form method="POST" action="/create-deck" enctype="multipart/form-data">
+    <fieldset>
+      <legend>Upload XML File (for loading content):</legend>
+      <label for="xmlFile">Choose an XML file:</label>
+      <input type="file" name="XMLFile" accept=".xml" id="xmlFile">
+    </fieldset>
+    
     <label for="deckName">Deck Name:</label>
     <input type="text" name="deckName" required>
-  
-    <!-- Upload XML File Input -->
-    <label for="xmlFile">Upload XML File:</label>
-    <input type="file" name="xmlFile" accept=".xml" id="xmlFile">
-  
-    <!-- Container for Card Information Inputs -->
-    <div id="cardInputsContainer">
-      <!-- Card Information Inputs for the First Card -->
+    
+    <!-- Action Buttons Section -->
+    <div id="actionButtons">
+      <button type="button" id="addCardButton">Add Card</button>
+      <button type="button" id="saveDeckButton">Save Deck</button>
+      <button type="submit">Upload Deck</button>
     </div>
-  
-    <!-- "Add Card" Button -->
-    <button type="button" id="addCardButton">Add Card</button>
-  
-    <!-- "Create Deck" Button -->
-    <button type="submit">Create Deck</button>
-    <!-- "Save Deck" Button -->
-    <button type="button" id="saveDeckButton">Save Deck</button>
+   
   </form>
+
   <input type="text" name="lookupCardName" id="lookupCardName" placeholder="Enter Card Name">
   <input type="text" name="cardNameInput" id="cardNameInput" placeholder="Selected Card">
+
   <div id="suggestionsContainer">
     <h3>Card Suggestions</h3>
     <!-- Suggestions will be displayed here -->
   </div>
+
+  <div id="cardInputsContainer">
+    <!-- Card Information Inputs for the First Card -->
+  </div>
 </body>
+
+
+
 </html>
