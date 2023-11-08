@@ -92,44 +92,35 @@ xmlFileInput.addEventListener("change", async (event) => {
       cardCount = 0; // Reset card count
 
 // Iterate through card elements and create card input fields
+const cardDetailsMap = {}; // Map to store retrieved card details
+
 for (const card of cardElements) {
   const name = card.querySelector("Name").textContent;
   const quantity = card.querySelector("Quantity").textContent;
   const type = card.querySelector("Type").textContent;
   const cost = card.querySelector("Cost").textContent;
+  const rulesText = card.querySelector("RulesText").textContent;
 
-  cardCount++; // Increment the card count
-  createCardInputFields(cardCount, name, quantity, type, cost);
+  // Check if any of the properties need to be updated
+  const needsUpdate = !type || !cost || !rulesText;
 
-  // Check if the XML contains rules text for a card
-  if (card.querySelector("RulesText")) {
-    // The XML contains rules text for this card
-    const rulesText = card.querySelector("RulesText").textContent;
-    // Update the input field for rules text
-    document.querySelector(`input[name='cardRulesText${cardCount}']`).value = rulesText;
-
-    // Update the input fields for type and cost from the API
-    const cardName = name;
-
-    // Fetch card details (type and cost) based on the card name
-    const cardDetails = await getCardDetails(cardName);
-
-    // Update the input fields with the fetched data
-    document.querySelector(`input[name='cardType${cardCount}']`).value = cardDetails.cardType;
-    document.querySelector(`input[name='cardCost${cardCount}']`).value = cardDetails.cardCost;
-  } else {
-    // The XML does not contain rules text, so fetch it from the API
-    const cardName = name;
-
-    // Fetch the rules text and other details from the API using a function like getCardDetails
-    const cardDetails = await getCardDetails(cardName);
-
-    // Update the input fields with the fetched data
-    document.querySelector(`input[name='cardType${cardCount}']`).value = cardDetails.cardType;
-    document.querySelector(`input[name='cardCost${cardCount}']`).value = cardDetails.cardCost;
-    document.querySelector(`input[name='cardRulesText${cardCount}']`).value = cardDetails.rulesText;
+  // Fetch card details only if an update is needed
+  if (needsUpdate) {
+    const cardDetails = await getCardDetails(name);
+    cardDetailsMap[name] = cardDetails;
   }
+
+  // Extract updated values from the cardDetailsMap or use existing values
+  const updatedValues = cardDetailsMap[name] || { type, cost, rulesText };
+
+  // Merge updated values into the card object
+  Object.assign(card, updatedValues);
+  cardCount++; // Increment the card count
+
+  // Use updated values to create input fields
+  createCardInputFields(cardCount, name, quantity, updatedValues.type, updatedValues.cost, updatedValues.rulesText);
 }
+
     };
 
     reader.readAsText(file);

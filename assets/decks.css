@@ -217,6 +217,41 @@
   /* margin-left: 10px; /* Add some spacing between "Library" and the deck size */
 }
 
+.quantity-input {
+    width: 50px; /* Adjust the width to your preference */
+}
+
+.rulestext-input {
+  width: 450px; /* Adjust the width to your preference */
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 400px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* Info Box and Card List */
 .highlighted-box {
   /* Use this class for both info-box and card-list */
