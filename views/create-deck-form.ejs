@@ -41,16 +41,38 @@
       };
 
 
-      // Collect card data from input fields
-      for (let i = 1; i <= cardCount; i++) {
-        deckData.cards.push({
-          name: document.querySelector(`input[name='cardName${i}']`).value,
-          quantity: document.querySelector(`input[name='cardQuantity${i}']`).value,
-          type: document.querySelector(`input[name='cardType${i}']`).value,
-          cost: document.querySelector(`input[name='cardCost${i}']`).value,
-          rulesText: document.querySelector(`input[name='cardRulesText${i}']`).value,
-        });
-      }
+  // Collect card data from input fields
+  for (let i = 1; i <= cardCount; i++) {
+    const nameInput = document.querySelector(`input[name='cardName${i}']`);
+    const quantityValue = document.querySelector(`.quantity-value[data-index="${i}"]`);
+    const typeInput = document.querySelector(`input[name='cardType${i}']`);
+    const costInput = document.querySelector(`input[name='cardCost${i}']`);
+    const rulesTextInput = document.querySelector(`textarea[name='cardRulesText${i}']`);
+
+    // Check for required fields (e.g., name and quantity)
+    if (!nameInput || !quantityValue) {
+      console.error(`Missing required data for card ${i}`);
+      continue; // Skip this card and continue with the next one
+    }
+
+    // Validate and parse quantity
+    const quantity = parseInt(quantityValue.textContent, 10);
+    if (isNaN(quantity)) {
+      console.error(`Invalid quantity for card ${i}`);
+      continue; // Skip this card and continue with the next one
+    }
+
+    // Other validation checks can be added for type, cost, and rulesText
+
+    // Add the valid card data to the deckData.cards array
+    deckData.cards.push({
+      name: nameInput.value,
+      quantity,
+      type: typeInput ? typeInput.value : '',
+      cost: costInput ? costInput.value : '',
+      rulesText: rulesTextInput ? rulesTextInput.value : '',
+    });
+  }
 
       // Convert deckData to XML (you may need to use an XML library)
       const xmlString = convertToXml(deckData); // Implement this function
@@ -95,31 +117,35 @@ xmlFileInput.addEventListener("change", async (event) => {
 const cardDetailsMap = {}; // Map to store retrieved card details
 
 for (const card of cardElements) {
-  const name = card.querySelector("Name").textContent;
-  const quantity = card.querySelector("Quantity").textContent;
-  const type = card.querySelector("Type").textContent;
-  const cost = card.querySelector("Cost").textContent;
-  const rulesText = card.querySelector("RulesText").textContent;
+  const name = card.querySelector("Name")?.textContent || "";
+  const quantity = card.querySelector("Quantity")?.textContent || 0;
+  const cardType  = card.querySelector("Type")?.textContent || "";
+  const cardCost  = card.querySelector("Cost")?.textContent || "";
+  const rulesText = card.querySelector("RulesText")?.textContent || "";
+  const cardImageUrl = card.querySelector("cardImageUrl")?.textContent || "";
 
   // Check if any of the properties need to be updated
-  const needsUpdate = !type || !cost || !rulesText;
+  const needsUpdate = !cardType || !cardCost || !rulesText;
 
   // Fetch card details only if an update is needed
   if (needsUpdate) {
     const cardDetails = await getCardDetails(name);
     cardDetailsMap[name] = cardDetails;
+    console.log(cardDetails);
   }
 
   // Extract updated values from the cardDetailsMap or use existing values
-  const updatedValues = cardDetailsMap[name] || { type, cost, rulesText };
+  const updatedValues = cardDetailsMap[name] || { cardType, cardCost, rulesText, cardImageUrl };
 
   // Merge updated values into the card object
-  Object.assign(card, updatedValues);
-  cardCount++; // Increment the card count
+    Object.assign(card, updatedValues);
+    console.log("card: ", card);
+    cardCount++; // Increment the card count
 
   // Use updated values to create input fields
-  createCardInputFields(cardCount, name, quantity, updatedValues.type, updatedValues.cost, updatedValues.rulesText);
+  createCardInputFields(cardCount, name, quantity, updatedValues.cardType, updatedValues.cardCost, updatedValues.rulesText, updatedValues.cardImageUrl);
 }
+
 
     };
 
@@ -161,12 +187,7 @@ addCardButton.addEventListener("click", async () => {
     const dropdown = document.querySelector("select"); // Assuming there's only one dropdown on the page
     const selectedOption = dropdown.options[dropdown.selectedIndex].value;
 
-    // Check if the selected item is not empty
-    if (selectedOption.trim() !== '') {
-        cardCount++; // Increment the card count
-        createCardInputFields(cardCount, selectedOption, 1, "", ""); // Assuming quantity is set to 1
-    }
-    
+  
     try {
         // Fetch card details (type and cost) based on the selected item
         const cardDetails = await getCardDetails(selectedOption);
@@ -175,6 +196,11 @@ addCardButton.addEventListener("click", async () => {
         console.log("cardCount",cardCount);
         console.log(cardDetails);
         console.log(`input[name='cardType${cardCount}']`);
+            // Check if the selected item is not empty
+        if (selectedOption.trim() !== '') {
+            cardCount++; // Increment the card count
+            createCardInputFields(cardCount, selectedOption, 1, cardDetails.cardType, cardDetails.cardCost, cardDetails.rulesText, cardDetails.cardImageUrl);
+        }
         document.querySelector(`input[name='cardType${cardCount}']`).value = cardDetails.cardType;
         document.querySelector(`input[name='cardCost${cardCount}']`).value = cardDetails.cardCost;
         document.querySelector(`input[name='cardRulesText${cardCount}']`).value = cardDetails.rulesText;
@@ -218,12 +244,17 @@ addCardButton.addEventListener("click", async () => {
     <h3>Card Suggestions</h3>
     <!-- Suggestions will be displayed here -->
   </div>
-
+  <div id="left-sidebar">
+		<div id="left-sidebar-hover-image"></div>
+  </div>
   <div id="cardInputsContainer">
     <!-- Card Information Inputs for the First Card -->
   </div>
+  <div id="middle-content">
+    <div id="middle-content-hover-image"></div>
+  </div>
+  <div id="right-sidebar">
+		<div id="right-sidebar-hover-image"></div>
+  </div>
 </body>
-
-
-
 </html>

@@ -251,7 +251,6 @@ export async function _fetchCardInformation(index, cardName) {
     document.querySelector(`input[name='cardType${index}']`).value = cardData.type;
     document.querySelector(`input[name='cardCost${index}']`).value = cardData.cost;
   }
-  
   export async function getCardDetails(cardName) {
     try {
       // Construct the Scryfall API URL with the card name as the search query
@@ -272,11 +271,19 @@ export async function _fetchCardInformation(index, cardName) {
           if (cardData.card_faces && cardData.card_faces.length > 0) {
             const rulesText = cardData.card_faces.map((face) => face.oracle_text).join('\n');
             const cardCost = cardData.card_faces[0].mana_cost || 'Unknown'; // You might need to handle the case where cost is not available
-            return { rulesText, cardType, cardCost };
+  
+            // Extract the card image URL from the response
+            const cardImageUrl = cardData.image_uris.normal || 'No image available';
+  
+            return { rulesText, cardType, cardCost, cardImageUrl };
           } else {
             const rulesText = cardData.oracle_text || 'No rules text available';
             const cardCost = cardData.mana_cost || 'Unknown'; // You might need to handle the case where cost is not available
-            return { rulesText, cardType, cardCost };
+  
+            // Extract the card image URL from the response
+            const cardImageUrl = cardData.image_uris.normal || 'No image available';
+  
+            return { rulesText, cardType, cardCost, cardImageUrl };
           }
         } else {
           return 'Card not found';
@@ -288,50 +295,8 @@ export async function _fetchCardInformation(index, cardName) {
       return 'Error: ' + error.message;
     }
   }
-  
-  
-  
-  
-  export async function __getCardDetails(cardName) {
-    try {
-      // Construct the Scryfall API URL with the card name as the search query
-      const apiUrl = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cardName)}`;
-  
-      // Make a GET request to the API using the fetch API
-      const response = await fetch(apiUrl);
-  
-      // Check if the request was successful
-      if (response.ok) {
-        const cardData = await response.json();
-  
-        // Check if the card exists
-        if (cardData.object === 'card') {
-          const rulesText = cardData.oracle_text;
-          const cardType = cardData.type_line;
-  
-          // Now, make an additional request to get the card cost information
-          const costApiUrl = `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(cardName)}`;
-          const costResponse = await fetch(costApiUrl);
-  
-          if (costResponse.ok) {
-            const costCardData = await costResponse.json();
-            const cardCost = costCardData.mana_cost || 'Unknown'; // You might need to handle the case where cost is not available
-            console.log("CardType",cardType);
-            return { rulesText, cardType, cardCost };
-          } else {
-            return 'Error fetching card cost';
-          }
-        } else {
-          return 'Card not found';
-        }
-      } else {
-        return 'Request to Scryfall API failed';
-      }
-    } catch (error) {
-      return 'Error: ' + error.message;
-    }
-  }
-  
+
+    
 // Function to display the card name suggestions
 export function displaySuggestions(suggestions) {
     console.log('displaySuggestions function is called'); // Log a message
@@ -363,33 +328,71 @@ export function displaySuggestions(suggestions) {
 }
 
 
-export function createCardInputFields(index, name, quantity, type, cost, rulesText) {
-    // Create the card info container
+export function createCardInputFields(index, name, quantity, type, cost, rulesText, cardImageUrl) {
     const cardInfo = document.createElement('div');
-    cardInfo.className = 'card-info';
-    console.log(rulesText);
+    cardInfo.className = 'card-main';
     // Generate the card input fields HTML
     const cardInputFieldsHTML = `
-      <label for="cardName${index}">Name:</label>
-      <input type="text" name="cardName${index}" value="${name}" required>
-      <label for="cardQuantity${index}">Quantity:</label>
-      <input type="number" name="cardQuantity${index}" class="quantity-input" value="${quantity || 1}" required>
-      <label for="cardType${index}">Type:</label>
-      <input type="text" name="cardType${index}" value="${type}" required>
-      <label for="cardCost${index}">Cost:</label>
-      <input type="text" name="cardCost${index}" value="${cost}" required>
-      <label for="cardRulesText${index}">Rules Text:</label>
-      <input type="text" name="cardRulesText${index}" class="rulestext-input" value="${rulesText}">
-      <button type="button" class="delete-card-button" onclick="deleteCardInDeck(this)">Delete</button>
-      <span class="tooltip" name="tooltip-cardRulesText${index}">ℹ️
-         <span class="tooltiptext">${rulesText}</span>
-        </span>
-    
+      <div>
+      <h2 class="card-title">
+        <div class="custom-number-input">
+        <span class="quantity-value" data-index="${index}">${quantity || 1}</span>
+          <span class="quantity-increase-decrease">
+            <button class="quantity-increase">+</button>
+            <button class="quantity-decrease">-</button>
+          </span>
+          ${name}
+          <span class="delete-icon" aria-label="Delete" onclick="deleteCardInDeck(this)"></span>
+        </div>
+      </h2>
+      </div>
+      <div class="card-info">
+      <img src="${cardImageUrl}" alt="Card Image" name="cardImage${index}" class="card-image"> 
+        <div class="card-info-left">
+          <div class="label-input-group">
+            <label for="cardName${index}">Name:</label>
+            <input type="text" name="cardName${index}" value="${name}" required>
+          </div>
+        <div class="label-input-group">
+          <label for="cardCost${index}">Cost:</label>
+          <input type="text" name="cardCost${index}" value="${cost}" required>
+        </div>
+          <div class="label-input-group">
+            <label for="cardType${index}">Type:</label>
+            <input type="text" name="cardType${index}" value="${type}" required>
+          </div>
+        </div>
+        <div class="card-info-right">
+          <div class="label-input-group">
+            <label for="cardRulesText${index}">Rules Text:</label>
+            <textarea name="cardRulesText${index}" class="rulestext-input" placeholder="Enter card rules text" rows="3">${rulesText}</textarea>
+          </div>
+        </div>
+      </div>
+      <hr class="card-divider">
     `;
   
     // Set the card info container's innerHTML to the generated HTML
     cardInfo.innerHTML = cardInputFieldsHTML;
   
+    const quantityIncreaseButton = cardInfo.querySelector('.quantity-increase');
+    const quantityDecreaseButton = cardInfo.querySelector('.quantity-decrease');
+    const quantityValueElement = cardInfo.querySelector('.quantity-value');
+
+    quantityIncreaseButton.addEventListener('click', () => {
+        // Increment the quantity value
+        quantity = parseInt(quantityValueElement.textContent) + 1;
+        quantityValueElement.textContent = quantity;
+    });
+
+    quantityDecreaseButton.addEventListener('click', () => {
+        // Decrement the quantity value, but ensure it doesn't go below 1
+        quantity = parseInt(quantityValueElement.textContent) - 1;
+        if (quantity < 1) {
+            quantity = 1;
+        }
+        quantityValueElement.textContent = quantity;
+    });
     // Create the tooltiptext element
     const tooltiptextElement = document.createElement('span');
     tooltiptextElement.className = 'tooltiptext';
@@ -397,9 +400,10 @@ export function createCardInputFields(index, name, quantity, type, cost, rulesTe
   
     // Append the tooltiptext element to the tooltip span
     const tooltip = cardInfo.querySelector('.tooltip');
-    tooltip.appendChild(tooltiptextElement);  
+   // tooltip.appendChild(tooltiptextElement);  
     // Append the card info container to the card inputs container
     cardInputsContainer.appendChild(cardInfo);
+    
   }
   
   

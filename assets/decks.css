@@ -218,11 +218,30 @@
 }
 
 .quantity-input {
-    width: 50px; /* Adjust the width to your preference */
+    width: 40px; /* Adjust the width to your preference */
+}
+.custom-number-input {
+  display: flex; /* Make it a flex container */
+  align-items: center; /* Vertically align items in the container */
 }
 
+.custom-number-input .quantity-increase,
+.custom-number-input .quantity-decrease {
+  display: inline-block;
+  width: 40px; /* Adjust the width to make the buttons bigger */
+  height: 40px; /* Adjust the height to make the buttons bigger */
+  font-size: 20px; /* Adjust the font size to make the text larger */
+}
+
+.quantity-value {
+  display: inline-block;
+}
+
+
+
 .rulestext-input {
-  width: 450px; /* Adjust the width to your preference */
+  width: 900px; /* Adjust the width to your preference */
+  resize: both;
 }
 .tooltip {
   position: relative;
@@ -360,7 +379,19 @@
   justify-content: flex-start; /* Align images to the start of the container */
 }
 
-
+.card-image {
+  width: 90px;
+  transition: transform 0.3s;
+  margin: 5px; /* Add margin between images */
+  display: flex;
+  flex-wrap: wrap; /* Wrap the images to a new line when needed */
+  justify-content: flex-start; /* Align images to the start of the container */
+}
+.card-image:hover {
+  transform: translate(5em, 0em) scale(3); /* Adjust the scale value as needed */
+  transition: all 0.3s;
+  padding: 0;
+}
 .image-large {
   width: 90px;
   transition: transform 0.3s;
@@ -483,6 +514,78 @@
   font-size: 20px;
   cursor: pointer;
   color: white;
+}
+.card {
+  background-color: #f5f5f5; /* Light gray background color */
+  padding: 10px; /* Add padding to separate content from border */
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+
+.delete-icon::before {
+  content: "❌"; /* Set the content to the icon */
+  /* Add any styles for the icon (e.g., font size, color) */
+}
+
+.delete-icon:hover::before {
+  /* Apply hover styles to the icon */
+  content: "delete";
+  color: red; /* Change the color to red when hovering */
+  transform: scale(1.2); /* Increase the size when hovering */
+  /* Add any other hover styles you want */
+}
+
+
+
+
+.card-divider {
+  margin: 10px 0; /* Adjust the margin as needed for spacing */
+  border-top: 1px solid #ccc; /* Border style for separation */
+}
+
+.card-main {
+  /*display: flex;
+  align-items: center; /* Center items vertically */
+  margin: 10px 0; /* Add margin around the h2 element */
+}
+
+.card-title .delete-icon {
+  margin-left: 10px; /* Add space between name and delete icon */
+}
+.quantity-increase-decrease {
+  margin: 0 10px; /* Add margin between the increase and decrease buttons and the quantity value */
+}
+
+.card-info {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+}
+
+.card-info-left {
+  margin-top: 10px; /* Adjust as needed to control vertical spacing */
+  margin-right: 20px; /* Adjust as needed to control horizontal spacing */
+}
+
+.card-info-right {
+  margin-top: 10px; /* Adjust as needed to control vertical spacing */
+}
+
+.label-input-group {
+  display: flex;
+  align-items: baseline;
+}
+
+.label-input-group label {
+  /* Adjust label styles for consistent alignment */
+  display: inline-block;
+  width: 100px; /* Adjust the width as needed to align labels properly */
+  text-align: right; /* Align text to the right for labels */
+  margin-right: 10px; /* Add spacing between label and input */
+}
+
+.label-input-group input {
+  /* Adjust input styles for consistent alignment */
+  width: 200px; /* Adjust the width as needed for input fields */
 }
 
 

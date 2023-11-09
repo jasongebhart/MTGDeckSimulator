@@ -10,7 +10,7 @@ export async function startListDeck() {
 // Function to delete a card entry from the web page
 export function deleteCardInDeck(button) {
 	// Find the parent card element and remove it
-	const card = button.closest(".card-info");
+	const card = button.closest(".card-main");
 	if (card) {
 	  card.remove();
 	}
