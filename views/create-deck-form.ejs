@@ -125,13 +125,13 @@ for (const card of cardElements) {
   const cardImageUrl = card.querySelector("cardImageUrl")?.textContent || "";
 
   // Check if any of the properties need to be updated
-  const needsUpdate = !cardType || !cardCost || !rulesText;
+  const needsUpdate = !cardType || !cardCost || !rulesText || !cardImageUrl;
 
   // Fetch card details only if an update is needed
   if (needsUpdate) {
     const cardDetails = await getCardDetails(name);
     cardDetailsMap[name] = cardDetails;
-    console.log(cardDetails);
+    console.log("cardDetails:", cardDetails);
   }
 
   // Extract updated values from the cardDetailsMap or use existing values
@@ -186,19 +186,16 @@ const addCardButton = document.getElementById("addCardButton");
 addCardButton.addEventListener("click", async () => {
     const dropdown = document.querySelector("select"); // Assuming there's only one dropdown on the page
     const selectedOption = dropdown.options[dropdown.selectedIndex].value;
-
-  
     try {
         // Fetch card details (type and cost) based on the selected item
         const cardDetails = await getCardDetails(selectedOption);
 
         // Update the input fields with the fetched data
-        console.log("cardCount",cardCount);
         console.log(cardDetails);
-        console.log(`input[name='cardType${cardCount}']`);
-            // Check if the selected item is not empty
+        // Check if the selected item is not empty
         if (selectedOption.trim() !== '') {
             cardCount++; // Increment the card count
+            console.log("cardCount",cardCount);
             createCardInputFields(cardCount, selectedOption, 1, cardDetails.cardType, cardDetails.cardCost, cardDetails.rulesText, cardDetails.cardImageUrl);
         }
     } catch (error) {

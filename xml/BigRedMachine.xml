@@ -1,184 +1,262 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="BigRedMachine">
-  <DesignGoal>Leverage the mana producing artifacts to cast large creatures and powerful spells. </DesignGoal>
+    <DesignGoal>a</DesignGoal>
     <Card>
         <Name>Goblin Welder</Name>
         <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
+        <Type>Creature — Goblin Artificer</Type>
+        <Cost>{R}</Cost>
+        <RulesText>{T}: Choose target artifact a player controls and target artifact card in that
+            player's graveyard. If both targets are still legal as this ability resolves, that
+            player simultaneously sacrifices the artifact and returns the artifact card to the
+            battlefield.</RulesText>
     </Card>
     <Card>
         <Name>Bottle Gnomes</Name>
         <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3</Cost>
+        <Type>Artifact Creature — Gnome</Type>
+        <Cost>{3}</Cost>
+        <RulesText>Sacrifice Bottle Gnomes: You gain 3 life.</RulesText>
     </Card>
     <Card>
         <Name>Junk Diver</Name>
         <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3</Cost>
+        <Type>Artifact Creature — Bird</Type>
+        <Cost>{3}</Cost>
+        <RulesText>Flying
+            When Junk Diver dies, return another target artifact card from your graveyard to your
+            hand.</RulesText>
     </Card>
     <Card>
         <Name>Ticking Gnomes</Name>
         <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3</Cost>
+        <Type>Artifact Creature — Gnome</Type>
+        <Cost>{3}</Cost>
+        <RulesText>Echo {3} (At the beginning of your upkeep, if this came under your control since
+            the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+            Sacrifice Ticking Gnomes: It deals 1 damage to any target.</RulesText>
     </Card>
     <Card>
         <Name>Rusting Golem</Name>
         <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4</Cost>
+        <Type>Artifact Creature — Golem</Type>
+        <Cost>{4}</Cost>
+        <RulesText>Fading 5 (This creature enters the battlefield with five fade counters on it. At
+            the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice
+            it.)
+            Rusting Golem's power and toughness are each equal to the number of fade counters on it.</RulesText>
     </Card>
     <Card>
         <Name>Karn, Silver Golem</Name>
         <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>5</Cost>
+        <Type>Legendary Artifact Creature — Golem</Type>
+        <Cost>{5}</Cost>
+        <RulesText>Whenever Karn, Silver Golem blocks or becomes blocked, it gets -4/+4 until end of
+            turn.
+            {1}: Target noncreature artifact becomes an artifact creature with power and toughness
+            each equal to its mana value until end of turn.</RulesText>
     </Card>
     <Card>
         <Name>Shard Phoenix</Name>
         <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4R</Cost>
+        <Type>Creature — Phoenix</Type>
+        <Cost>{4}{R}</Cost>
+        <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+            Sacrifice Shard Phoenix: It deals 2 damage to each creature without flying.
+            {R}{R}{R}: Return Shard Phoenix from your graveyard to your hand. Activate only during
+            your upkeep.</RulesText>
     </Card>
     <Card>
         <Name>Covetous Dragon</Name>
         <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>4R</Cost>
+        <Type>Creature — Dragon</Type>
+        <Cost>{4}{R}</Cost>
+        <RulesText>Flying
+            When you control no artifacts, sacrifice Covetous Dragon.</RulesText>
     </Card>
     <Card>
         <Name>Crater Hellion</Name>
         <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4RR</Cost>
+        <Type>Creature — Hellion Beast</Type>
+        <Cost>{4}{R}{R}</Cost>
+        <RulesText>Echo {4}{R}{R} (At the beginning of your upkeep, if this came under your control
+            since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+            When Crater Hellion enters the battlefield, it deals 4 damage to each other creature.</RulesText>
     </Card>
     <Card>
         <Name>Shivan Hellkite</Name>
         <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>5RR</Cost>
+        <Type>Creature — Dragon</Type>
+        <Cost>{5}{R}{R}</Cost>
+        <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+            {1}{R}: Shivan Hellkite deals 1 damage to any target.</RulesText>
     </Card>
     <Card>
         <Name>Lightning Bolt</Name>
         <Quantity>2</Quantity>
         <Type>Instant</Type>
-        <Cost>R</Cost>
+        <Cost>{R}</Cost>
+        <RulesText>Lightning Bolt deals 3 damage to any target.</RulesText>
     </Card>
     <Card>
         <Name>Pyroclasm</Name>
         <Quantity>1</Quantity>
         <Type>Sorcery</Type>
-        <Cost>1R</Cost>
+        <Cost>{1}{R}</Cost>
+        <RulesText>Pyroclasm deals 2 damage to each creature.</RulesText>
     </Card>
     <Card>
         <Name>Incinerate</Name>
         <Quantity>2</Quantity>
         <Type>Instant</Type>
-        <Cost>1R</Cost>
+        <Cost>{1}{R}</Cost>
+        <RulesText>Incinerate deals 3 damage to any target. A creature dealt damage this way can't
+            be regenerated this turn.</RulesText>
     </Card>
     <Card>
         <Name>Disintegrate</Name>
         <Quantity>1</Quantity>
         <Type>Sorcery</Type>
-        <Cost>XR</Cost>
+        <Cost>{X}{R}</Cost>
+        <RulesText>Disintegrate deals X damage to any target. If it's a creature, it can't be
+            regenerated this turn, and if it would die this turn, exile it instead.</RulesText>
     </Card>
     <Card>
         <Name>Obliterate</Name>
         <Quantity>1</Quantity>
         <Type>Sorcery</Type>
-        <Cost>6RR</Cost>
+        <Cost>{6}{R}{R}</Cost>
+        <RulesText>This spell can't be countered.
+            Destroy all artifacts, creatures, and lands. They can't be regenerated.</RulesText>
     </Card>
     <Card>
         <Name>Pyrokinesis</Name>
         <Quantity>1</Quantity>
         <Type>Instant</Type>
-        <Cost>4RR</Cost>
+        <Cost>{4}{R}{R}</Cost>
+        <RulesText>You may exile a red card from your hand rather than pay this spell's mana cost.
+            Pyrokinesis deals 4 damage divided as you choose among any number of target creatures.</RulesText>
     </Card>
     <Card>
         <Name>Jeweled Amulet</Name>
         <Quantity>2</Quantity>
         <Type>Artifact</Type>
-        <Cost>0</Cost>
+        <Cost>{0}</Cost>
+        <RulesText>{1}, {T}: Put a charge counter on Jeweled Amulet. Note the type of mana spent to
+            pay this activation cost. Activate only if there are no charge counters on Jeweled
+            Amulet.
+            {T}, Remove a charge counter from Jeweled Amulet: Add one mana of Jeweled Amulet's last
+            noted type.</RulesText>
     </Card>
     <Card>
         <Name>Temporal Aperture</Name>
         <Quantity>1</Quantity>
         <Type>Artifact</Type>
-        <Cost>2</Cost>
+        <Cost>{2}</Cost>
+        <RulesText>{5}, {T}: Shuffle your library, then reveal the top card. Until end of turn, for
+            as long as that card remains on top of your library, play with the top card of your
+            library revealed and you may play that card without paying its mana cost. (If it has X
+            in its mana cost, X is 0.)</RulesText>
     </Card>
     <Card>
         <Name>Worn Powerstone</Name>
         <Quantity>2</Quantity>
         <Type>Artifact</Type>
-	<Cost>3</Cost>
+        <Cost>{3}</Cost>
+        <RulesText>Worn Powerstone enters the battlefield tapped.
+            {T}: Add {C}{C}.</RulesText>
     </Card>
     <Card>
         <Name>Thran Dynamo</Name>
         <Quantity>2</Quantity>
         <Type>Artifact</Type>
-	<Cost>4</Cost>
+        <Cost>{4}</Cost>
+        <RulesText>{T}: Add {C}{C}{C}.</RulesText>
     </Card>
     <Card>
         <Name>Nevinyrral's Disk</Name>
         <Quantity>1</Quantity>
         <Type>Artifact</Type>
-	<Cost>4</Cost>
+        <Cost>{4}</Cost>
+        <RulesText>Nevinyrral's Disk enters the battlefield tapped.
+            {1}, {T}: Destroy all artifacts, creatures, and enchantments.</RulesText>
     </Card>
     <Card>
         <Name>Mana Web</Name>
         <Quantity>1</Quantity>
         <Type>Artifact</Type>
-        <Cost>3</Cost>
+        <Cost>{3}</Cost>
+        <RulesText>Whenever a land an opponent controls is tapped for mana, tap all lands that
+            player controls that could produce any type of mana that land could produce.</RulesText>
     </Card>
     <Card>
         <Name>Snake Basket</Name>
         <Quantity>1</Quantity>
         <Type>Artifact</Type>
-        <Cost>4</Cost>
+        <Cost>{4}</Cost>
+        <RulesText>{X}, Sacrifice Snake Basket: Create X 1/1 green Snake creature tokens. Activate
+            only as a sorcery.</RulesText>
     </Card>
     <Card>
         <Name>Predator, Flagship</Name>
         <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>5</Cost>
+        <Type>Legendary Artifact</Type>
+        <Cost>{5}</Cost>
+        <RulesText>{2}: Target creature gains flying until end of turn.
+            {5}, {T}: Destroy target creature with flying.</RulesText>
     </Card>
     <Card>
         <Name>Serrated Arrows</Name>
         <Quantity>1</Quantity>
         <Type>Artifact</Type>
-        <Cost>4</Cost>
+        <Cost>{4}</Cost>
+        <RulesText>Serrated Arrows enters the battlefield with three arrowhead counters on it.
+            At the beginning of your upkeep, if there are no arrowhead counters on Serrated Arrows,
+            sacrifice it.
+            {T}, Remove an arrowhead counter from Serrated Arrows: Put a -1/-1 counter on target
+            creature.</RulesText>
     </Card>
     <Card>
         <Name>Rejuvenation Chamber</Name>
         <Quantity>1</Quantity>
         <Type>Artifact</Type>
-        <Cost>3</Cost>
+        <Cost>{3}</Cost>
+        <RulesText>Fading 2 (This artifact enters the battlefield with two fade counters on it. At
+            the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice
+            it.)
+            {T}: You gain 2 life.</RulesText>
     </Card>
     <Card>
         <Name>Mountain</Name>
         <Quantity>13</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
+        <Type>Basic Land — Mountain</Type>
+        <Cost>Unknown</Cost>
+        <RulesText>({T}: Add {R}.)</RulesText>
     </Card>
     <Card>
         <Name>Blasted Landscape</Name>
         <Quantity>3</Quantity>
         <Type>Land</Type>
-	<Cost>NA</Cost>
+        <Cost>Unknown</Cost>
+        <RulesText>{T}: Add {C}.
+            Cycling {2} ({2}, Discard this card: Draw a card.)</RulesText>
     </Card>
     <Card>
         <Name>City of Traitors</Name>
         <Quantity>3</Quantity>
         <Type>Land</Type>
-	<Cost>NA</Cost>
+        <Cost>Unknown</Cost>
+        <RulesText>When you play another land, sacrifice City of Traitors.
+            {T}: Add {C}{C}.</RulesText>
     </Card>
     <Card>
         <Name>Mishra's Factory</Name>
         <Quantity>4</Quantity>
         <Type>Land</Type>
-	<Cost>NA</Cost>
+        <Cost>Unknown</Cost>
+        <RulesText>{T}: Add {C}.
+            {1}: Mishra's Factory becomes a 2/2 Assembly-Worker artifact creature until end of turn.
+            It's still a land.
+            {T}: Target Assembly-Worker creature gets +1/+1 until end of turn.</RulesText>
     </Card>
 </Decklist>
