@@ -2,258 +2,63 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
-</style>
 <title>Build Deck</title>
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
 <link rel="manifest" href="/assets/site.webmanifest">
 <script type="module">
-  import { convertToXml, loadFromXml, deleteCardInDeck } from "./scripts/decks.mjs";
-  import {
-  getCardDetails,
-  fetchCardInformation,
-  displaySuggestions,
-  createCardInputFields,
-} from "./scripts/config.mjs";
+  import { loadEventListeners } from "./scripts/createDeckFormEventListeners.mjs";
 
-
-  document.addEventListener("DOMContentLoaded", () => {
-     const cardInputsContainer = document.getElementById("cardInputsContainer");
-    let cardCount = 0;
-    const suggestionsContainer = document.getElementById("suggestionsContainer");
-
-    // Add an event listener for card name input
-    document.addEventListener("input", (event) => {
-      const input = event.target;
-      if (input.type === "text" && input.name && input.name.startsWith("cardName")) {
-        const match = input.name.match(/\d+/);
-        if (match) {
-          const index = parseInt(match[0], 10);
-          fetchCardInformation(index, input.value);
-        }
-      }
-  });
-
-    // "Save Deck" Button
-    const saveDeckButton = document.getElementById("saveDeckButton");
-    saveDeckButton.addEventListener("click", () => {
-      // Create an object to store the deck data
-      const deckData = {
-        deckName: document.querySelector("input[name='deckName']").value,
-        designGoal: 'a', // Set the value for DesignGoal
-        cards: [],
-      };
-
-
-  // Collect card data from input fields
-  for (let i = 1; i <= cardCount; i++) {
-    const nameInput = document.querySelector(`input[name='cardName${i}']`);
-    const quantityValue = document.querySelector(`.quantity-value[data-index="${i}"]`);
-    const typeInput = document.querySelector(`input[name='cardType${i}']`);
-    const costInput = document.querySelector(`input[name='cardCost${i}']`);
-    const rulesTextInput = document.querySelector(`textarea[name='cardRulesText${i}']`);
-
-    // Check for required fields (e.g., name and quantity)
-    if (!nameInput || !quantityValue) {
-      console.error(`Missing required data for card ${i}`);
-      continue; // Skip this card and continue with the next one
-    }
-
-    // Validate and parse quantity
-    const quantity = parseInt(quantityValue.textContent, 10);
-    if (isNaN(quantity)) {
-      console.error(`Invalid quantity for card ${i}`);
-      continue; // Skip this card and continue with the next one
-    }
-
-    // Other validation checks can be added for type, cost, and rulesText
-
-    // Add the valid card data to the deckData.cards array
-    deckData.cards.push({
-      name: nameInput.value,
-      quantity,
-      type: typeInput ? typeInput.value : '',
-      cost: costInput ? costInput.value : '',
-      rulesText: rulesTextInput ? rulesTextInput.value : '',
-    });
-  }
-
-      // Convert deckData to XML (you may need to use an XML library)
-      const xmlString = convertToXml(deckData); // Implement this function
-      console.log(xmlString); // Log the XML string to the console
-
-      // Create a Blob with the XML data
-      const blob = new Blob([xmlString], { type: "text/xml" });
-
-      // Create a download link
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = `${deckData.deckName}.xml`;
-
-      // Trigger a click event to start the download
-      a.click();
-    });
-
-// "Upload and Load XML File" Event Listener
-const xmlFileInput = document.getElementById("xmlFile");
-xmlFileInput.addEventListener("change", async (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-
-    reader.onload = async (e) => {
-      const xmlText = e.target.result;
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-
-      // Extract and populate the form fields with XML data here
-      const deckName = xmlDoc.querySelector("Decklist").getAttribute("Deck");
-      document.querySelector("input[name='deckName']").value = deckName;
-
-      const cardElements = xmlDoc.querySelectorAll("Card");
-
-      // Clear the cardInputsContainer before populating it
-      cardInputsContainer.innerHTML = '';
-
-      cardCount = 0; // Reset card count
-
-// Iterate through card elements and create card input fields
-const cardDetailsMap = {}; // Map to store retrieved card details
-
-for (const card of cardElements) {
-  const name = card.querySelector("Name")?.textContent || "";
-  const quantity = card.querySelector("Quantity")?.textContent || 0;
-  const cardType  = card.querySelector("Type")?.textContent || "";
-  const cardCost  = card.querySelector("Cost")?.textContent || "";
-  const rulesText = card.querySelector("RulesText")?.textContent || "";
-  const cardImageUrl = card.querySelector("cardImageUrl")?.textContent || "";
-
-  // Check if any of the properties need to be updated
-  const needsUpdate = !cardType || !cardCost || !rulesText || !cardImageUrl;
-
-  // Fetch card details only if an update is needed
-  if (needsUpdate) {
-    const cardDetails = await getCardDetails(name);
-    cardDetailsMap[name] = cardDetails;
-    console.log("cardDetails:", cardDetails);
-  }
-
-  // Extract updated values from the cardDetailsMap or use existing values
-  const updatedValues = cardDetailsMap[name] || { cardType, cardCost, rulesText, cardImageUrl };
-
-  // Merge updated values into the card object
-    Object.assign(card, updatedValues);
-    console.log("card: ", card);
-    cardCount++; // Increment the card count
-
-  // Use updated values to create input fields
-  createCardInputFields(cardCount, name, quantity, updatedValues.cardType, updatedValues.cardCost, updatedValues.rulesText, updatedValues.cardImageUrl);
-}
-
-    };
-
-    reader.readAsText(file);
-  }
-});
-
-    // In your code, create an input field for card name suggestions
-    const cardNameInput = document.getElementById("lookupCardName");
-
-
-  // Add an event listener to the card name input for suggestions
-  cardNameInput.addEventListener("input", async (event) => {
-    const input = event.target;
-    const inputName = input.value.trim();
-
-    if (inputName.length < 3) {
-      // Avoid making API requests for very short inputs
-      return;
-    }
-
-    // Make a request to the Scryfall API for card name suggestions
-    const apiUrl = `https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(inputName)}`;
-    const response = await fetch(apiUrl);
-
-    if (response.ok) {
-      const suggestions = await response.json();
-
-      // Display the suggestions in a dropdown or list
-      displaySuggestions(suggestions, cardCount);
-    }
-  });
-  // ...
-
-// Add an event listener to the "Add Card" button
-const addCardButton = document.getElementById("addCardButton");
-
-addCardButton.addEventListener("click", async () => {
-    const dropdown = document.querySelector("select"); // Assuming there's only one dropdown on the page
-    const selectedOption = dropdown.options[dropdown.selectedIndex].value;
-    try {
-        // Fetch card details (type and cost) based on the selected item
-        const cardDetails = await getCardDetails(selectedOption);
-
-        // Update the input fields with the fetched data
-        console.log(cardDetails);
-        // Check if the selected item is not empty
-        if (selectedOption.trim() !== '') {
-            cardCount++; // Increment the card count
-            console.log("cardCount",cardCount);
-            createCardInputFields(cardCount, selectedOption, 1, cardDetails.cardType, cardDetails.cardCost, cardDetails.rulesText, cardDetails.cardImageUrl);
-        }
-    } catch (error) {
-        // Handle any errors that occur during the fetch or processing
-        console.error("Error fetching card details: " + error.message);
-    }
-});
-
-});
+  loadEventListeners(); // This will execute the event listeners when the document loads
 </script>
 <link rel="stylesheet" href="/assets/decks.css">
 </head>
-<div id="header">
-    <%- include('partials/nav'); -%>
-</div>
 <body>
-  <form method="POST" action="/create-deck" enctype="multipart/form-data">
-    <fieldset>
-      <legend>Upload XML File (for loading content):</legend>
-      <label for="xmlFile">Choose an XML file:</label>
-      <input type="file" name="XMLFile" accept=".xml" id="xmlFile">
-    </fieldset>
-    
-    <label for="deckName">Deck Name:</label>
-    <input type="text" name="deckName" required>
-    
-    <!-- Action Buttons Section -->
-    <div id="actionButtons">
-      <button type="button" id="addCardButton">Add Card</button>
-      <button type="button" id="saveDeckButton">Save Deck</button>
-      <button type="submit">Upload Deck</button>
+    <header>
+      <%- include('partials/nav'); -%>
+  </header>
+  <main>
+    <form method="POST" action="/create-deck" enctype="multipart/form-data">
+      <fieldset>
+        <legend>Upload XML File (for loading content):</legend>
+        <label for="xmlFile">Choose an XML file:</label>
+        <input type="file" name="XMLFile" accept=".xml" id="xmlFile">
+      </fieldset>
+      
+      <label for="deckName">Deck Name:</label>
+      <input type="text" name="deckName" required>
+      
+      <!-- Action Buttons Section -->
+      <div id="actionButtons">
+        <button type="button" id="addCardButton">Add Card</button>
+        <button type="button" id="downloadDeckButton">Download Deck</button>
+        <button type="submit">Publish Deck</button>
+      </div>
+    </form>
+    <div>
+      <input type="text" name="lookupCardName" id="lookupCardName" placeholder="Enter Card Name">
+      <input type="text" name="cardNameInput" id="cardNameInput" placeholder="Selected Card">
     </div>
-   
-  </form>
 
-  <input type="text" name="lookupCardName" id="lookupCardName" placeholder="Enter Card Name">
-  <input type="text" name="cardNameInput" id="cardNameInput" placeholder="Selected Card">
-
-  <div id="suggestionsContainer">
-    <h3>Card Suggestions</h3>
-    <!-- Suggestions will be displayed here -->
-  </div>
-  <div id="left-sidebar">
-		<div id="left-sidebar-hover-image"></div>
-  </div>
-  <div id="cardInputsContainer">
-    <!-- Card Information Inputs for the First Card -->
-  </div>
-  <div id="middle-content">
-    <div id="middle-content-hover-image"></div>
-  </div>
-  <div id="right-sidebar">
-		<div id="right-sidebar-hover-image"></div>
-  </div>
+    <div id="suggestionsContainer">
+      <h3>Card Suggestions</h3>
+      <!-- Suggestions will be displayed here -->
+    </div>
+    <div id="left-sidebar">
+      <div id="left-sidebar-hover-image"></div>
+    </div>
+    <div id="cardInputsContainer">
+    </div>
+    <div id="middle-content">
+      <div id="middle-content-hover-image"></div>
+    </div>
+    <div id="right-sidebar">
+      <div id="right-sidebar-hover-image"></div>
+    </div>
+  </main>
+  <footer>
+      <!-- Your footer content -->
+  </footer>
 </body>
 </html>

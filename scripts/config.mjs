@@ -377,84 +377,81 @@ export async function getCardDetails(cardName) {
   }
 }
 
+  
+  export function createCardInputFields(cardDetailsMap) {
+    for (const name in cardDetailsMap) {
+      let { cardType, cardCost, rulesText, cardImageUrl } = cardDetailsMap[name];
+      let quantity = cardDetailsMap[name].quantity;
 
-export function createCardInputFields(index, name, quantity, type, cost, rulesText, cardImageUrl) {
-    const cardInfo = document.createElement('div');
-    cardInfo.className = 'card-main';
-       
-    // Generate the card input fields HTML
-    const cardInputFieldsHTML = `
-      <div>
-      <h2 class="card-title">
-        <div class="custom-number-input">
-        <span class="quantity-value" data-index="${index}">${quantity || 1}</span>
-          <span class="quantity-increase-decrease">
-            <button class="quantity-increase">+</button>
-            <button class="quantity-decrease">-</button>
-          </span>
-          ${name}
-          <span class="delete-icon" aria-label="Delete" onclick="deleteCardInDeck(this)"></span>
-        </div>
-      </h2>
-      </div>
-      <div class="card-info">
-      <img src="${cardImageUrl}" alt="Card Image" name="cardImage${index}" class="card-image"> 
-        <div class="card-info-left">
-          <div class="label-input-group">
-            <label for="cardName${index}">Name:</label>
-            <input type="text" name="cardName${index}" value="${name}" required>
+      const index = document.querySelectorAll('.card-main').length; // Calculate index
+
+      const cardInfo = document.createElement('div');
+      cardInfo.className = 'card-main';
+         
+      // Generate the card input fields HTML
+      const cardInputFieldsHTML = `
+          <div>
+              <h2 class="card-title">
+                  <div class="custom-number-input">
+                      <span class="quantity-value" data-index="${index}">${quantity || 1}</span>
+                      <span class="quantity-increase-decrease">
+                          <button class="quantity-increase">+</button>
+                          <button class="quantity-decrease">-</button>
+                      </span>
+                      ${name}
+                      <span class="delete-icon" aria-label="Delete" onclick="deleteCardInDeck(this)"></span>
+                  </div>
+              </h2>
           </div>
-        <div class="label-input-group">
-          <label for="cardCost${index}">Cost:</label>
-          <input type="text" name="cardCost${index}" value="${cost}" required>
-        </div>
-          <div class="label-input-group">
-            <label for="cardType${index}">Type:</label>
-            <input type="text" name="cardType${index}" value="${type}" required>
+          <div class="card-info">
+              <img src="${cardImageUrl}" alt="Card Image" name="cardImage${index}" class="card-image"> 
+              <div class="card-info-left">
+                  <div class="label-input-group">
+                      <label for="cardName${index}">Name:</label>
+                      <input type="text" name="cardName${index}" value="${name}" required>
+                  </div>
+                  <div class="label-input-group">
+                      <label for="cardCost${index}">Cost:</label>
+                      <input type="text" name="cardCost${index}" value="${cardCost}" required>
+                  </div>
+                  <div class="label-input-group">
+                      <label for="cardType${index}">Type:</label>
+                      <input type="text" name="cardType${index}" value="${cardType}" required>
+                  </div>
+              </div>
+              <div class="card-info-right">
+                  <div class="label-input-group">
+                      <label for="cardRulesText${index}">Rules Text:</label>
+                      <textarea name="cardRulesText${index}" class="rulestext-input" placeholder="Enter card rules text" rows="3">${rulesText}</textarea>
+                  </div>
+              </div>
           </div>
-        </div>
-        <div class="card-info-right">
-          <div class="label-input-group">
-            <label for="cardRulesText${index}">Rules Text:</label>
-            <textarea name="cardRulesText${index}" class="rulestext-input" placeholder="Enter card rules text" rows="3">${rulesText}</textarea>
-          </div>
-        </div>
-      </div>
-      <hr class="card-divider">
-    `;
+          <hr class="card-divider">
+      `;
   
     // Set the card info container's innerHTML to the generated HTML
     cardInfo.innerHTML = cardInputFieldsHTML;
-  
+
     const quantityIncreaseButton = cardInfo.querySelector('.quantity-increase');
     const quantityDecreaseButton = cardInfo.querySelector('.quantity-decrease');
     const quantityValueElement = cardInfo.querySelector('.quantity-value');
 
     quantityIncreaseButton.addEventListener('click', () => {
-        // Increment the quantity value
-        quantity = parseInt(quantityValueElement.textContent) + 1;
-        quantityValueElement.textContent = quantity;
-    });
+      // Increment the quantity value
+      quantity = parseInt(quantityValueElement.textContent) + 1;
+      quantityValueElement.textContent = quantity;
+  });
 
-    quantityDecreaseButton.addEventListener('click', () => {
-        // Decrement the quantity value, but ensure it doesn't go below 1
-        quantity = parseInt(quantityValueElement.textContent) - 1;
-        if (quantity < 1) {
-            quantity = 1;
-        }
-        quantityValueElement.textContent = quantity;
-    });
-    // Create the tooltiptext element
-    const tooltiptextElement = document.createElement('span');
-    tooltiptextElement.className = 'tooltiptext';
-    tooltiptextElement.textContent = rulesText;
-  
-    // Append the tooltiptext element to the tooltip span
-    const tooltip = cardInfo.querySelector('.tooltip');
-   // tooltip.appendChild(tooltiptextElement);  
+  quantityDecreaseButton.addEventListener('click', () => {
+      // Decrement the quantity value, but ensure it doesn't go below 1
+      quantity = parseInt(quantityValueElement.textContent) - 1;
+      if (quantity < 1) {
+          quantity = 1;
+      }
+      quantityValueElement.textContent = quantity;
+  });
+
     // Append the card info container to the card inputs container
     cardInputsContainer.appendChild(cardInfo);
-    
   }
-  
-  
+}
