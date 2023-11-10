@@ -251,7 +251,7 @@ export async function _fetchCardInformation(index, cardName) {
     document.querySelector(`input[name='cardType${index}']`).value = cardData.type;
     document.querySelector(`input[name='cardCost${index}']`).value = cardData.cost;
   }
-  export async function getCardDetails(cardName) {
+  export async function __getCardDetails(cardName) {
     try {
       // Construct the Scryfall API URL with the card name as the search query
       const apiUrl = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cardName)}`;
@@ -327,10 +327,61 @@ export function displaySuggestions(suggestions) {
     }
 }
 
+export async function getCardDetails(cardName) {
+  try {
+    // Construct the Scryfall API URL with the card name as the search query
+    const apiUrl = `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cardName)}`;
+
+    // Make a GET request to the API using the fetch API
+    const response = await fetch(apiUrl);
+
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error('Request to Scryfall API failed');
+    }
+
+    const cardData = await response.json();
+
+    // Check if the card exists
+    if (cardData.object !== 'card') {
+      throw new Error('Card not found');
+    }
+
+    const cardType = cardData.type_line;
+
+    // Handle double-sided or modal cards with multiple faces
+    if (cardData.card_faces && cardData.card_faces.length > 0) {
+      const rulesText = cardData.card_faces.map((face) => face.oracle_text).join('\n');
+      const cardCost = cardData.card_faces[0].mana_cost || 'Unknown'; // You might need to handle the case where cost is not available
+
+      // Extract the card image URL from the response
+      const cardImageUrl = cardData.image_uris.normal || 'No image available';
+
+      return { rulesText, cardType, cardCost, cardImageUrl };
+    } else {
+      const rulesText = cardData.oracle_text || 'No rules text available';
+      const cardCost = cardData.mana_cost || 'Unknown'; // You might need to handle the case where cost is not available
+
+      // Extract the card image URL from the response
+      const cardImageUrl = cardData.image_uris.normal || 'No image available';
+
+      return { rulesText, cardType, cardCost, cardImageUrl };
+    }
+  } catch (error) {
+    // You can log the error for debugging purposes
+    console.error('Error fetching card details:', error);
+
+    // Instead of returning an error message, you can throw the error
+    // and let the calling code handle it
+    throw error;
+  }
+}
+
 
 export function createCardInputFields(index, name, quantity, type, cost, rulesText, cardImageUrl) {
     const cardInfo = document.createElement('div');
     cardInfo.className = 'card-main';
+       
     // Generate the card input fields HTML
     const cardInputFieldsHTML = `
       <div>

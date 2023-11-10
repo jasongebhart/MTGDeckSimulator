@@ -388,7 +388,7 @@
   justify-content: flex-start; /* Align images to the start of the container */
 }
 .card-image:hover {
-  transform: translate(5em, 0em) scale(3); /* Adjust the scale value as needed */
+  transform: translate(20em, 3em) scale(8); /* Adjust the scale value as needed */
   transition: all 0.3s;
   padding: 0;
 }

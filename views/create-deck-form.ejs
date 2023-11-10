@@ -11,8 +11,14 @@
 <link rel="manifest" href="/assets/site.webmanifest">
 <script type="module">
   import { convertToXml, loadFromXml, deleteCardInDeck } from "./scripts/decks.mjs";
-  import { getCardDetails, fetchCardInformation, displaySuggestions, createCardInputFields  } from "./scripts/config.mjs";
-  
+  import {
+  getCardDetails,
+  fetchCardInformation,
+  displaySuggestions,
+  createCardInputFields,
+} from "./scripts/config.mjs";
+
+
   document.addEventListener("DOMContentLoaded", () => {
      const cardInputsContainer = document.getElementById("cardInputsContainer");
     let cardCount = 0;
@@ -145,7 +151,6 @@ for (const card of cardElements) {
   // Use updated values to create input fields
   createCardInputFields(cardCount, name, quantity, updatedValues.cardType, updatedValues.cardCost, updatedValues.rulesText, updatedValues.cardImageUrl);
 }
-
 
     };
 

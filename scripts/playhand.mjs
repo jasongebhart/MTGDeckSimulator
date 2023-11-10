@@ -64,30 +64,29 @@ export function startLibrarySearch(cardType) {
 
     //deleteSection("librarypopup");
 
-    // Define the card types and their corresponding buttons
-    const cardTypes = {
-        "Spells": ["instant", "sorcery"],
-        "Creatures": ["creature"],
-        "Planeswalkers": ["planeswalker"],
-        "Artifacts": ["artifact"],
-        "Enchantments": ["enchantment"],
-        "Land": ["land"]
-    };
-      
-      const selectedCardTypes = cardTypes[cardType];
-      
-      if (!selectedCardTypes) {
-        console.error("Invalid card type:", cardType);
-        return;
-      }
-      
-      console.log("Looking for card types:", selectedCardTypes.join(", "));
-      
-    const filteredCards = filterCardsByTypesAndNames(cardInfo, selectedCardTypes);
-    console.log("filteredCards:", filteredCards.length);
+// Define the card types and their corresponding buttons
+const cardTypes = {
+    "Spells": ["instant", "sorcery"],
+    "Creatures": ["creature", /^creature — .+/i, /^artifact creature — .+/i],
+    "Planeswalkers": ["planeswalker"],
+    "Artifacts": ["artifact"],
+    "Enchantments": ["enchantment"],
+    "Land": ["land", /^basic land — /i, /^land — /i]
+};
+
+
+const cardConditions = cardTypes[cardType];
+
+if (!cardConditions) {
+    console.error("Invalid card type:", cardType);
+    return;
+}
+    console.log("Looking for card types:", cardConditions.join(", "));
+    const filteredCards = filterCardsByTypesAndNames(cardInfo, cardConditions, cardNames);
+    console.log("filteredCards:", Object.keys(filteredCards).length);
     // Check if any cards of the specified type were found
     if (!filteredCards || Object.keys(filteredCards).length === 0) {
-        console.log("No cards of the type " + selectedCardTypes + "were found");
+        console.log("No cards of the type " + selectedCardTypes + " were found");
         displayNoCardsMessage(document.getElementById("libraryPopup"))
         libraryPopup.style.display = "flex";
         return;
@@ -147,8 +146,35 @@ export function viewEntireLibrary() {
     // Update the deck size
     setDeckSize(cardNames.length);
 }
- 
-function filterCardsByTypesAndNames(cardInfo, cardTypes) {
+function filterCardsByTypesAndNames(cardInfo, cardConditions, cardNames) {
+    const filteredCards = {};
+
+    for (const cardName of cardNames) {
+        if (cardInfo.hasOwnProperty(cardName)) {
+            const card = cardInfo[cardName];
+            console.log(`Checking card type for "${cardName}": ${card.type}`);
+            if (matchesConditions(card.type, cardConditions)) {
+                filteredCards[cardName] = card;
+            }
+        }
+    }
+
+    return filteredCards;
+}
+
+
+function matchesConditions(cardType, conditions) {
+    return conditions.some(condition => {
+        if (condition instanceof RegExp) {
+            return condition.test(cardType);
+        } else {
+            return condition === cardType;
+        }
+    });
+}
+
+
+function __filterCardsByTypesAndNames(cardInfo, cardTypes, cardNames) {
     const filteredCards = {};
 
     for (const cardName of cardNames) {
@@ -162,6 +188,7 @@ function filterCardsByTypesAndNames(cardInfo, cardTypes) {
 
     return filteredCards;
 }
+
 
 function addCardToLibrary(cardName) {
     // Add the card to the library (cardNames)
