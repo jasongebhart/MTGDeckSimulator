@@ -2,126 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-</style>
 <title>Hand Simulation</title>
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
 <link rel="manifest" href="/assets/site.webmanifest">
+<script type="module" src="./scripts/playhand.mjs"></script>
 <script type="module">
-    // Import necessary functions
-    import { startSimulateHandDraw, startDrawOneCard, startLibrarySearch, startLibraryDrawAll, viewEntireLibrary, cardNames, cardInfo } from "./scripts/playhand.mjs";
-
-    // Attach event listeners to buttons when the DOM is ready
-    document.addEventListener("DOMContentLoaded", () => {
-        const DrawACard = document.getElementById("DrawACard");
-        DrawACard.addEventListener("click", () => {
-            console.log("Draw A Card clicked");
-            startDrawOneCard(cardNames, cardInfo);
-        });
-        // JavaScript to open the library popup when a button in the group is clicked
-        const libraryPopup = document.getElementById("libraryPopup");
-
-
-        const ViewLibrary = document.getElementById("ViewLibrary");
-        ViewLibrary.addEventListener("click", () => {
-            // Clear the content by removing all child nodes
-            while (libraryPopup.firstChild) {
-                libraryPopup.removeChild(libraryPopup.firstChild);
-            }
-            // Create the "Close Library" button element
-            const closeLibraryPopupButton = document.createElement("button");
-            closeLibraryPopupButton.id = "closeLibraryPopup";
-            closeLibraryPopupButton.textContent = "Close";
-
-            // Append the button to the libraryPopup
-            libraryPopup.appendChild(closeLibraryPopupButton);
-            console.log("Look at the entire library clicked");
-            viewEntireLibrary();
-        });
-
-
-        // JavaScript to close the library popup
-        document.addEventListener("click", (event) => {
-            if (event.target.id === "closeLibraryPopup") {
-                // Clear the content by removing all child nodes
-                libraryPopup.innerHTML = '';
-                libraryPopup.style.display = "none"; // Hide the popup
-            }
-        });
-
-        // Get all tab buttons and content sections within the left-sidebar
-        const tabButtons = document.querySelectorAll('#left-sidebar .tab-button');
-        const tabContents = document.querySelectorAll('#left-sidebar .tab-content');
-
-        // Add event listeners to the tab buttons
-        tabButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                // Remove the 'active' class from all tab buttons
-                tabButtons.forEach((btn) => {
-                    btn.classList.remove('active');
-                });
-
-                // Hide all tab content sections
-                tabContents.forEach((content) => {
-                    content.style.display = 'none';
-                });
-
-                // Get the data-tab attribute from the clicked button
-                const tabId = button.getAttribute('data-tab');
-
-                // Add the 'active' class to the clicked button
-                button.classList.add('active');
-
-                // Display the corresponding content section
-                console.log("tabId: " + tabId + " clicked");
-                const selectedTab = document.getElementById(tabId);
-                selectedTab.style.display = 'flex';
-            });
-        });
-
-        // Get a reference to the dropdown menu
-        const cardTypeMenu = document.getElementById('cardTypeMenu');
-
-        // Add an event listener to the dropdown menu
-        cardTypeMenu.addEventListener('change', function () {
-            const selectedOption = cardTypeMenu.value;
-
-            // Clear the content by removing all child nodes
-            while (libraryPopup.firstChild) {
-                libraryPopup.removeChild(libraryPopup.firstChild);
-            }
-
-            // Create the "Close Library" button element
-            const closeLibraryPopupButton = document.createElement("button");
-            closeLibraryPopupButton.id = "closeLibraryPopup";
-            closeLibraryPopupButton.textContent = "Close";
-
-            // Append the button to the libraryPopup
-            libraryPopup.appendChild(closeLibraryPopupButton);
-
-            if (selectedOption === "All") {
-                // Call the second function when "All" is selected
-                viewEntireLibrary();
-            } else {
-                // Call startLibrarySearch with the selected card type
-                startLibrarySearch(selectedOption);
-            }
-        });
-
-
-        const DrawHandButton = document.getElementById("DrawHandButton");
-        DrawHandButton.addEventListener("click", () => {
-            startSimulateHandDraw();
-        });
-
-        // Call the main function to set up the initial state
-        startSimulateHandDraw();
-    });
-
+    import { initializeApp } from './scripts/playhand.mjs';
+    initializeApp();
 </script>
-
-
 <link rel="stylesheet" href="/assets/decks.css">
 </head>
 <div id="header">
@@ -131,7 +21,19 @@
 <div id="container">
     <div id="left-sidebar">
         <section id="deck" class="decklist">
-            <%- include('partials/decklist'); -%>
+            <fieldset>
+                <div>
+                  <label for="preDefinedDecks">Pre-Defined Decks</label>
+                  <div class="deckListContainer">
+                    <%- include('partials/decklist'); -%>
+                  </div>
+                </div>
+                <div>
+                  <label for="localDecks">Local Decks</label>
+                  <button id="loadXMLFileButton">Load XML File</button>
+                  <input type="file" name="XMLFile" accept=".xml" id="xmlFile" style="display: none;">
+                </div>
+              </fieldset>
         </section>
        <section id="section_hand">
             <div class="library-controls">

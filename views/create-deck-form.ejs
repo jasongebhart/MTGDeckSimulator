@@ -19,13 +19,24 @@
       <%- include('partials/nav'); -%>
   </header>
   <main>
+    <div>
+    <fieldset>
+      <div>
+        <label for="preDefinedDecks">Pre-Defined Decks</label>
+        <div class="deckListContainer">
+          <%- include('partials/decklist'); -%>
+        </div>
+      </div>
+      <div>
+        <label for="localDecks">Local Decks</label>
+        <div>
+          <button id="loadXMLFileButton">Load XML File</button>
+          <input type="file" name="XMLFile" accept=".xml" id="xmlFile" style="display: none;">
+        </div>
+      </div>
+    </fieldset>
+      </div>
     <form method="POST" action="/create-deck" enctype="multipart/form-data">
-      <fieldset>
-        <legend>Upload XML File (for loading content):</legend>
-        <label for="xmlFile">Choose an XML file:</label>
-        <input type="file" name="XMLFile" accept=".xml" id="xmlFile">
-      </fieldset>
-      
       <label for="deckName">Deck Name:</label>
       <input type="text" name="deckName" required>
       

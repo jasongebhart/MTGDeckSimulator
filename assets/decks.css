@@ -378,6 +378,11 @@
   flex-wrap: wrap; /* Wrap the images to a new line when needed */
   justify-content: flex-start; /* Align images to the start of the container */
 }
+.deckListContainer {
+  display: inline-block;
+  margin-left: 10px; /* Adjust as needed */
+  vertical-align: top; /* Aligns it with the label */
+}
 
 .card-image {
   width: 90px;

@@ -1,12 +1,10 @@
 import {
     cardDraw,
     loadXMLDoc,
-    xmlDoc,
-    getSelectedItem,
-    createCardImage,
-    getCardNames,
-    extractCardInfo,
-    buildCardNamesArray
+    getCardNameXML,
+    readXmlFile,
+    parseXml,
+    createCardImage
 } from './config.mjs';
 
 export let cardNames = [];
@@ -16,40 +14,240 @@ export var allcardTypes = ['Creatures','Lands','Spells','Enchantments','Artifact
 export var basiccardTypes = ['Creatures','Land','Spells'];
 var deckSize;
 
-// Function to start simulating hand draw
-export async function startSimulateHandDraw() {
-    try {
-        const selectedXMLFile = getSelectedItem();
 
-        // Clear sections
-        clearGameSections();
+export function handleViewLibrary() {
+    while (libraryPopup.firstChild) {
+        libraryPopup.removeChild(libraryPopup.firstChild);
+    }
+    const closeLibraryPopupButton = document.createElement("button");
+    closeLibraryPopupButton.id = "closeLibraryPopup";
+    closeLibraryPopupButton.textContent = "Close";
+    libraryPopup.appendChild(closeLibraryPopupButton);
+    console.log("Look at the entire library clicked");
+    viewEntireLibrary();
+}
 
-        // Load XML data
-        await loadXMLDoc(selectedXMLFile); // Await the async function
+export function handleTabButtonClickEvent(button) {
+    // Remove the 'active' class from all tab buttons
+    tabButtons.forEach((btn) => {
+        btn.classList.remove('active');
+    });
 
-        // Retrieve deck information
-        const deckInformation = getCardNames();
+    // Hide all tab content sections
+    tabContents.forEach((content) => {
+        content.style.display = 'none';
+    });
 
-        // Assign deck information to global variables
-        cardNames = deckInformation.cardNames;
-        cardInfo = deckInformation.cardInfo;
+    // Get the data-tab attribute from the clicked button
+    const tabId = button.getAttribute('data-tab');
 
-        //const { cardNames, cardInfo } = deckInformation;
-        console.log("Deck Size:", cardNames.length); // Total number of cards
-        console.log("Populated cardNames:", cardNames); // Array of card names
+    // Add the 'active' class to the clicked button
+    button.classList.add('active');
 
-        // Simulate card draw
-        const cardsToDraw = 7;
-        const handInformation = cardDraw(cardNames, cardInfo, cardsToDraw);
-        const { spells, lands } = handInformation;
+    // Display the corresponding content section
+    console.log("tabId: " + tabId + " clicked");
+    const selectedTab = document.getElementById(tabId);
+    selectedTab.style.display = 'flex';
+}
 
-        // Display hand and update deck size
-        displayHandAndDeck(spells, lands, cardNames);
-    } catch (error) {
-        console.error(error);
-        window.alert('An error occurred while loading XML data.');
+export function handleCloseLibraryPopup(event) {
+    const libraryPopup = document.getElementById("libraryPopup");
+    if (event.target.id === "closeLibraryPopup") {
+        libraryPopup.innerHTML = '';
+        libraryPopup.style.display = "none";
     }
 }
+
+// Function to attach event listeners
+export function attachEventListeners() {
+    // Event listener for the local file button click
+    const loadXMLFileButton = document.getElementById("loadXMLFileButton");
+    const xmlFileInput = document.getElementById("xmlFile");
+
+    loadXMLFileButton.addEventListener("click", () => {
+        xmlFileInput.click(); // Trigger the file input on button click
+    });
+
+    // Event listener for the change in the XML file input
+    xmlFileInput.addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            await startSimulateHandDraw(file); // Initiate simulation with the selected local file
+        }
+    });
+
+    // Event listener for the predefined deck selection
+    const selectDeck = document.querySelector('select[name="selectDeck"]');
+
+    selectDeck.addEventListener('change', async () => {
+        const selectedDeck = selectDeck.value; // Get the selected deck value
+        await startSimulateHandDraw(selectedDeck); // Initiate simulation with the selected predefined deck
+    });
+
+    const DrawACard = document.getElementById("DrawACard");
+    DrawACard.addEventListener("click", () => {
+        startDrawOneCard(cardNames, cardInfo);
+    });
+
+    const libraryPopup = document.getElementById("libraryPopup");
+    openLibraryPopupEventListener();
+
+    document.addEventListener("click", handleCloseLibraryPopup);
+
+    const tabButtons = document.querySelectorAll('#left-sidebar .tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            handleTabButtonClick(button, tabButtons, tabContents);
+        });
+    });
+
+    const cardTypeMenu = document.getElementById('cardTypeMenu');
+    cardTypeMenu.addEventListener('change', (event) => {
+        handleCardTypeMenuChange(event, libraryPopup);
+    });
+
+    const DrawHandButton = document.getElementById("DrawHandButton");
+    DrawHandButton.addEventListener("click", () => {
+        const selectedDeck = selectDeck.value; // Get the selected deck value
+        startSimulateHandDraw(selectedDeck);
+    });
+    const selectedDeck = selectDeck.value; // Get the selected deck value
+    startSimulateHandDraw(selectedDeck); // Initiate simulation with the selected predefined deck
+}
+
+// Function to initialize the app
+export function initializeApp() {
+    attachEventListeners();
+}
+
+export function handleTabButtonClick(button, tabButtons, tabContents) {
+    tabButtons.forEach((btn) => {
+        btn.classList.remove('active');
+    });
+
+    tabContents.forEach((content) => {
+        content.style.display = 'none';
+    });
+
+    const tabId = button.getAttribute('data-tab');
+    button.classList.add('active');
+    const selectedTab = document.getElementById(tabId);
+    selectedTab.style.display = 'flex';
+}
+
+export function handleCardTypeMenuChange(event, libraryPopup) {
+    const cardTypeMenu = event.target;
+    const selectedOption = cardTypeMenu.value;
+
+    while (libraryPopup.firstChild) {
+        libraryPopup.removeChild(libraryPopup.firstChild);
+    }
+
+    const closeLibraryPopupButton = document.createElement("button");
+    closeLibraryPopupButton.id = "closeLibraryPopup";
+    closeLibraryPopupButton.textContent = "Close";
+    libraryPopup.appendChild(closeLibraryPopupButton);
+
+    if (selectedOption === "All") {
+        viewEntireLibrary();
+    } else {
+        startLibrarySearch(selectedOption);
+    }
+}
+
+export function openLibraryPopupEventListener() {
+    const ViewLibrary = document.getElementById("ViewLibrary");
+
+    ViewLibrary.addEventListener("click", () => {
+        // Clear the content by removing all child nodes
+        while (libraryPopup.firstChild) {
+            libraryPopup.removeChild(libraryPopup.firstChild);
+        }
+        // Create the "Close Library" button element
+        const closeLibraryPopupButton = document.createElement("button");
+        closeLibraryPopupButton.id = "closeLibraryPopup";
+        closeLibraryPopupButton.textContent = "Close";
+
+        // Append the button to the libraryPopup
+        libraryPopup.appendChild(closeLibraryPopupButton);
+        console.log("Look at the entire library clicked");
+        viewEntireLibrary();
+    });
+}
+export function handleDrawHand() {
+    startSimulateHandDraw();
+}
+
+export async function startSimulateHandDraw(selectedXMLFile) {
+    try {
+        const deckInformation = await handleXMLLoad(selectedXMLFile);
+        if (deckInformation) {
+            getHandAndDeck(deckInformation);
+        } else {
+            throw new Error('Failed to retrieve deck information.');
+        }
+    } catch (error) {
+        console.error(error);
+        displayError('An error occurred while loading XML data.');
+    }
+}
+
+async function handleXMLLoad(selectedXMLFile) {
+    clearGameSections();
+    let deckInformation;
+
+    if (selectedXMLFile instanceof File) {
+        // For local file selection
+        console.log("local file selected");
+        const parseXML = await processSelectedXMLFile(selectedXMLFile);
+        deckInformation = getCardNameXML(parseXML);
+    } else {
+        // For predefined deck selection
+        const parseXML = await loadXMLDoc(selectedXMLFile);
+        deckInformation = getCardNameXML(parseXML);
+    }
+
+    if (deckInformation) {
+        // Assign to global variables
+        cardNames = deckInformation.cardNames;
+        cardInfo = deckInformation.cardInfo;
+    }
+
+    return deckInformation;
+}
+
+// Function to read the XML file and start the processing
+const processSelectedXMLFile = async (file) => {
+    try {
+        const xmlText = await readXmlFile(file);
+        if (!xmlText) {
+            throw new Error("Failed to read XML file.");
+        }
+        const parsed = parseXml(xmlText);
+          return parsed;
+    } catch (error) {
+        handleProcessingError(error);
+    }
+};
+
+function displayError(message) {
+    // Implement a function to display the error message in the UI, like an alert or status update
+}
+
+function getHandAndDeck(deckInformation) {
+    const cardsToDraw = 7;
+    const handInformation = cardDraw(deckInformation.cardNames, deckInformation.cardInfo, cardsToDraw);
+    const { spells, lands } = handInformation;
+    displayHandAndDeck(spells, lands, deckInformation.cardNames);
+}
+
+function displayHandAndDeckElements(spells, lands, cardNames) {
+    // Display hand and update deck size
+    // Insert logic for updating UI with the hand and deck information
+}
+
 
 // Clear the library section before populating
 export function startLibrarySearch(cardType) {

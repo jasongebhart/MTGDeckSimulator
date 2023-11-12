@@ -48,8 +48,19 @@ export function getSelectedItem() {
     return selectedItem;
 }
 
-export function getCardNames() {
+export function __getCardNames() {
     const deckList = xmlDoc.getElementsByTagName("Decklist")[0];
+    const cardInfo = extractCardInfo(deckList);
+    const cardNames = buildCardNamesArray(cardInfo);
+
+    return {
+        cardNames,
+        cardInfo
+    };
+}
+
+export function getCardNameXML(parseXML) {
+    const deckList = parseXML.getElementsByTagName("Decklist")[0];
     const cardInfo = extractCardInfo(deckList);
     const cardNames = buildCardNamesArray(cardInfo);
 
@@ -67,9 +78,9 @@ export function extractCardInfo(deckList) {
         const quantity = parseInt(card.getElementsByTagName("Quantity")[0].textContent);
         const type = card.getElementsByTagName("Type")[0].textContent.toLowerCase();
 
-        console.log("Name:", name);
-        console.log("Quantity:", quantity);
-        console.log("Type:", type);
+        //console.log("Name:", name);
+       // console.log("Quantity:", quantity);
+        //console.log("Type:", type);
 
         if (!cardInfo[name]) {
             cardInfo[name] = {
@@ -138,8 +149,8 @@ export function cardDraw(cardNames, cardInfo, cardsToDraw) {
         const randomIndex = Math.floor(Math.random() * (initialDeckSize - i)); // Use initialDeckSize here
         const drawnCard = cardNames.splice(randomIndex, 1)[0];
         const drawnType = cardInfo[drawnCard].type.toLowerCase();
-        console.log("drawnCard:", drawnCard);
-        console.log("drawnType:", drawnType);
+        //console.log("drawnCard:", drawnCard);
+        //console.log("drawnType:", drawnType);
 
         if (drawnType.toLowerCase() === "land" || drawnType.toLowerCase().startsWith("basic land")) {
             lands.push(drawnCard);
@@ -455,3 +466,16 @@ export async function getCardDetails(cardName) {
     cardInputsContainer.appendChild(cardInfo);
   }
 }
+
+export const readXmlFile = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => resolve(event.target.result);
+        reader.readAsText(file);
+    });
+};
+
+export const parseXml = (xmlText) => {
+    const parser = new DOMParser();
+    return parser.parseFromString(xmlText, 'text/xml');
+};

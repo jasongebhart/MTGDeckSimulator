@@ -1,7 +1,7 @@
 import { loadXMLDoc, xmlDoc } from './config.mjs';
 
 export async function startListDeck() {
-    const XMLFile = GetSelectedItem();
+    const XMLFile = getSelectedItem();
     console.log('Request was made: ' + XMLFile);
     await loadXMLDoc(XMLFile);
     displayDeck(xmlDoc);
@@ -75,7 +75,7 @@ export async function loadFromXml(xmlFile) {
         }
         const xmlText = await response.text();
         const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        xmlDoc = parser.parseFromString(xmlText, 'text/xml');
 
         // Extract data from the XML document and populate form fields
         const deckName = xmlDoc.querySelector('deckName').textContent;
@@ -104,17 +104,11 @@ export async function loadFromXml(xmlFile) {
 }
 
   
-function GetSelectedItem() {
-    var len = document.formDecks.selectDeck.length;
-	let i = 0
-	let XMLFile = "none"
-	for (i = 0; i < len; i++) {
-	    if (document.formDecks.selectDeck[i].selected) {
-	        XMLFile = document.formDecks.selectDeck[i].value
-	    }
-	}
-	return XMLFile;
+function getSelectedItem() {
+    const selectDeck = document.querySelector('select[name="selectDeck"]');
+    return selectDeck.value;
 }
+
 
 function getConvertedCost(currentCost) {
     // Initialize variables to track numeric and colorless costs

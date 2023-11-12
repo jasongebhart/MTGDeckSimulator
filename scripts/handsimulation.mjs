@@ -4,7 +4,7 @@ import {
     getSelectedItem,
 	createCardImage,
 	cardDraw,
-    getCardNames,
+    getCardNameXML,
     hideLargerCard,
     isCardOfType
 	//displayHandNew
@@ -24,7 +24,7 @@ export async function startHandDraw() {
         const deckData = await loadXMLDoc(selectedXMLFile);
 
         // Build Deck Information Object
-        const deckInformation = getCardNames(deckData);
+        const deckInformation = getCardNameXML(deckData);
 
 		// Assign deck information to global variables
 		// cardNames is an array of card names.
