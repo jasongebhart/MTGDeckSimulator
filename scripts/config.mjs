@@ -466,6 +466,51 @@ export async function getCardDetails(cardName) {
     cardInputsContainer.appendChild(cardInfo);
   }
 }
+export function clearGameSections() {
+    const sectionIdsToClear = ["section_spells", "section_lands", "section_battlefield-lands", "section_battlefield-spells", "section_graveyard", "section_exile"];
+    
+    sectionIdsToClear.forEach(sectionId => {
+        if (document.getElementById(sectionId)) {
+            deleteSection(sectionId);
+        }
+    });
+}
+export async function handleXMLLoad(selectedXMLFile) {
+    clearGameSections();
+    let deckInformation;
+
+    if (selectedXMLFile instanceof File) {
+        // For local file selection
+        console.log("local file selected");
+        const parseXML = await processSelectedXMLFile(selectedXMLFile);
+        deckInformation = getCardNameXML(parseXML);
+    } else {
+        // For predefined deck selection
+        const parseXML = await loadXMLDoc(selectedXMLFile);
+        deckInformation = getCardNameXML(parseXML);
+    }
+    if (deckInformation) {
+        // Assign to global variables
+        //cardNames = deckInformation.cardNames;
+       // cardInfo = deckInformation.cardInfo;
+    }
+
+    return deckInformation;
+}
+
+// Function to read the XML file and start the processing
+export const processSelectedXMLFile = async (file) => {
+    try {
+        const xmlText = await readXmlFile(file);
+        if (!xmlText) {
+            throw new Error("Failed to read XML file.");
+        }
+        const parsed = parseXml(xmlText);
+          return parsed;
+    } catch (error) {
+        handleProcessingError(error);
+    }
+};
 
 export const readXmlFile = (file) => {
     return new Promise((resolve, reject) => {

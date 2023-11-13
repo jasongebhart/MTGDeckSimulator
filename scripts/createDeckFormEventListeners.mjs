@@ -10,33 +10,6 @@ import {
     parseXml
 } from "./config.mjs";
 
-const __handleXMLFileUpload = async (file) => {
-    try {
-        const xmlText = await readXmlFile(file);
-        if (!xmlText) throw new Error("Failed to read XML file.");
-
-        const xmlDoc = parseXml(xmlText);
-        const deckName = xmlDoc.querySelector("Decklist").getAttribute("Deck");
-
-        if (!deckName) throw new Error("No deck name found in the XML file.");
-
-        document.querySelector("input[name='deckName']").value = deckName;
-
-        const cardElements = xmlDoc.querySelectorAll("Card");
-
-        clearCardInputs(); // Clear existing card inputs
-        const cardDetailsMap = await fetchAndUpdateCardDetails(cardElements);
-        
-        if (!cardDetailsMap || Object.keys(cardDetailsMap).length === 0) {
-            throw new Error("Failed to fetch card details.");
-        }
-
-        createCardInputFields(cardDetailsMap);
-    } catch (error) {
-        console.error("Error processing XML file:", error);
-        // Display an error message to the user, e.g., show an alert or update a status message on the UI
-    }
-};
 
 // Function to handle the file selection and initiation of file processing
 const handleFileSelection = () => {
@@ -287,16 +260,6 @@ const fetchAndUpdateCardDetails = async (cardElements) => {
     return cardDetailsMap;
 };
 
-const getCardDataFromXml = (card) => {
-    const name = card.querySelector("Name")?.textContent || "";
-    const quantity = card.querySelector("Quantity")?.textContent || 0;
-    const cardType = card.querySelector("Type")?.textContent || "";
-    const cardCost = card.querySelector("Cost")?.textContent || "";
-    const rulesText = card.querySelector("RulesText")?.textContent || "";
-    const cardImageUrl = card.querySelector("cardImageUrl")?.textContent || "";
-
-    return { name, quantity, cardType, cardCost, rulesText, cardImageUrl };
-};
 
 export function loadEventListeners() {
     let cardCount = 0;

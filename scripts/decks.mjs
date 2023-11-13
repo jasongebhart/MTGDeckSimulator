@@ -1,12 +1,50 @@
-import { loadXMLDoc, xmlDoc } from './config.mjs';
+import {
+    loadXMLDoc,
+    xmlDoc,
+    handleXMLLoad,
+    processSelectedXMLFile,
+    getCardNameXML,
+    readXmlFile,
+    parseXml
+} from './config.mjs';
 
-export async function startListDeck() {
+async function startListDeck(selectedDeck) {
     const XMLFile = getSelectedItem();
     console.log('Request was made: ' + XMLFile);
     await loadXMLDoc(XMLFile);
     displayDeck(xmlDoc);
 }
+// Function to initialize the app
+export function initializeApp() {
+    attachEventListeners();
+}
+// Function to attach event listeners
+export function attachEventListeners() {
+    // Event listener for the local file button click
+    const loadXMLFileButton = document.getElementById("loadXMLFileButton");
+    const xmlFileInput = document.getElementById("xmlFile");
 
+    loadXMLFileButton.addEventListener("click", () => {
+        xmlFileInput.click(); // Trigger the file input on button click
+    });
+
+    // Event listener for the change in the XML file input
+    xmlFileInput.addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const parseXML = await processSelectedXMLFile(file); // Initiate simulation with the selected local file
+            displayDeck(parseXML);
+        }
+    });
+
+    // Event listener for the predefined deck selection
+    const selectDeck = document.querySelector('select[name="selectDeck"]');
+
+    selectDeck.addEventListener('change', async () => {
+        const selectedDeck = selectDeck.value; // Get the selected deck value
+        await startListDeck(selectedDeck); // Initiate simulation with the selected predefined deck
+    });
+}
 // Function to delete a card entry from the web page
 export function deleteCardInDeck(button) {
 	// Find the parent card element and remove it

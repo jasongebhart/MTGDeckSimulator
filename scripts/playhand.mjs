@@ -175,7 +175,7 @@ export function openLibraryPopupEventListener() {
         console.log("Look at the entire library clicked");
         viewEntireLibrary();
     });
-}
+}startSim
 export function handleDrawHand() {
     startSimulateHandDraw();
 }
@@ -369,22 +369,6 @@ function matchesConditions(cardType, conditions) {
             return condition === cardType;
         }
     });
-}
-
-
-function __filterCardsByTypesAndNames(cardInfo, cardTypes, cardNames) {
-    const filteredCards = {};
-
-    for (const cardName of cardNames) {
-        if (cardInfo.hasOwnProperty(cardName)) {
-            const card = cardInfo[cardName];
-            if (cardTypes.includes(card.type)) {
-                filteredCards[cardName] = card;
-            }
-        }
-    }
-
-    return filteredCards;
 }
 
 

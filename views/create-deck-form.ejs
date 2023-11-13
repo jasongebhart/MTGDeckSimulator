@@ -20,22 +20,22 @@
   </header>
   <main>
     <div>
-    <fieldset>
-      <div>
-        <label for="preDefinedDecks">Pre-Defined Decks</label>
-        <div class="deckListContainer">
-          <%- include('partials/decklist'); -%>
-        </div>
-      </div>
-      <div>
-        <label for="localDecks">Local Decks</label>
-        <div>
-          <button id="loadXMLFileButton">Load XML File</button>
-          <input type="file" name="XMLFile" accept=".xml" id="xmlFile" style="display: none;">
-        </div>
-      </div>
-    </fieldset>
-      </div>
+      <section id="deck" class="decklist">
+        <fieldset>
+            <div>
+              <label for="preDefinedDecks">Pre-Defined Decks</label>
+              <div class="deckListContainer">
+                <%- include('partials/decklist'); -%>
+              </div>
+            </div>
+            <div>
+              <label for="localDecks">Local Decks</label>
+              <button id="loadXMLFileButton">Load XML File</button>
+              <input type="file" name="XMLFile" accept=".xml" id="xmlFile" style="display: none;">
+            </div>
+          </fieldset>
+    </section>
+    </div>
     <form method="POST" action="/create-deck" enctype="multipart/form-data">
       <label for="deckName">Deck Name:</label>
       <input type="text" name="deckName" required>
