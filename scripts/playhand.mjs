@@ -175,7 +175,7 @@ export function openLibraryPopupEventListener() {
         console.log("Look at the entire library clicked");
         viewEntireLibrary();
     });
-}startSim
+}
 export function handleDrawHand() {
     startSimulateHandDraw();
 }

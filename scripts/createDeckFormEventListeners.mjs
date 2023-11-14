@@ -35,34 +35,33 @@ const processXMLFile = async (file) => {
     }
 };
 
-// Function to process the XML data and update the UI
-const processXmlData = (xmlDoc) => {
+const extractDeckName = (xmlDoc) => {
     try {
         const deckNameElement = xmlDoc.querySelector("Decklist");
         if (!deckNameElement) {
             throw new Error("No deck information found in the XML file.");
         }
-        
+
         const deckName = deckNameElement.getAttribute("Deck");
         if (!deckName) {
             throw new Error("No deck name found in the XML file.");
         }
 
-        document.querySelector("input[name='deckName']").value = deckName;
+        return deckName;
+    } catch (error) {
+        handleProcessingError(error);
+        // Or you could return or handle the error in a way that suits your application
+    }
+};
 
-        const cardElements = xmlDoc.querySelectorAll("Card");
-        if (!cardElements.length) {
-            throw new Error("No card information found in the XML file.");
-        }
+const processXmlData = (xmlDoc) => {
+    try {
+        const deckName = extractDeckName(xmlDoc);
+        updateDeckNameUI(deckName);
 
-        clearCardInputs();
-        fetchAndUpdateCardDetails(cardElements)
-            .then((cardDetailsMap) => {
-                if (!cardDetailsMap || Object.keys(cardDetailsMap).length === 0) {
-                    throw new Error("Failed to fetch card details.");
-                }
-                createCardInputFields(cardDetailsMap);
-            })
+        const cardElements = getCardElements(xmlDoc);
+
+        processCardDetails(cardElements)
             .catch((error) => {
                 handleProcessingError(error);
             });
@@ -70,6 +69,31 @@ const processXmlData = (xmlDoc) => {
         handleProcessingError(error);
     }
 };
+
+
+const updateDeckNameUI = (deckName) => {
+    document.querySelector("input[name='deckName']").value = deckName;
+};
+
+const getCardElements = (xmlDoc) => {
+    const cardElements = xmlDoc.querySelectorAll("Card");
+    if (!cardElements.length) {
+        throw new Error("No card information found in the XML file.");
+    }
+    return cardElements;
+};
+
+const processCardDetails = (cardElements) => {
+    clearCardInputs();
+    return fetchAndUpdateCardDetails(cardElements)
+        .then((cardDetailsMap) => {
+            if (!cardDetailsMap || Object.keys(cardDetailsMap).length === 0) {
+                throw new Error("Failed to fetch card details.");
+            }
+            createCardInputFields(cardDetailsMap);
+        });
+};
+
 
 // Function to handle errors during processing and display messages
 const handleProcessingError = (error) => {
