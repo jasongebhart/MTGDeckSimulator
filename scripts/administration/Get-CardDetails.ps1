@@ -68,8 +68,10 @@ function Save-CardImage {
 
     try {
         $imageName = Join-Path -Path $DestinationDir -ChildPath "$($CardDetails.CardName).jpg"
-
-        if ($WhatIf) {
+        if (Test-Path $imageName) {
+            Write-Output "Image for $($CardDetails.CardName) already exists in $DestinationDir"
+        }
+        elseif ($WhatIf) {
             Write-Output "WhatIf: Image for $($CardDetails.CardName) would be saved to $imageName"
         }
         else {
@@ -146,12 +148,17 @@ function Save-CardImagesFromXML {
 
 
 # Usage example
-$decks = Get-Childitem -Path .\xml\b*.xml
+# Lookup through all xml files in a folder
+$decks = Get-Childitem -Path .\xml\*.xml
 foreach ($deck in $decks){
     $cards = Read-DecklistXML -filePath $deck.Fullname
     Save-CardImagesFromXML -deck $cards -destinationDir .\assets\magicimages\ -WhatIf
 }
+
+# Same images for one deck (.xml)
 $cards = Read-DecklistXML -filePath .\xml\affinity.xml
 Save-CardImagesFromXML -deck $cards -destinationDir .\assets\magicimages\
 
-$response = Receive-CardImage -CardDetails $CardInfo -destinationDir ".\assets\magicimages\"
+# Retrive an image for a single card
+$CardInfo = Get-CardDetails -cardName 'Birds of Paradise'
+$response = Save-CardImage -CardDetails $CardInfo -destinationDir ".\assets\magicimages\"
