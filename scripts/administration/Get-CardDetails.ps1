@@ -4,7 +4,7 @@ function Get-CardDetails {
     )
 
     try {
-        $response = Get-ScryfallCardDetails -cardName $cardName
+        $response = Get-ScryfallCardDetail -cardName $cardName
         if ($response.object -ne "card") {
             throw "Card not found"
         }
@@ -26,6 +26,7 @@ function Get-CardDetails {
             CardCost = $cardCost;
             CardImageUrl = $cardImageUrl
             CardName = $response.name
+            Scryfall_id = $response.id
         }
     } catch {
         Write-Error "Error fetching card details: $_"
@@ -33,7 +34,7 @@ function Get-CardDetails {
     }
 }
 
-function Get-ScryfallCardDetails {
+function Get-ScryfallCardDetail {
     param (
         [string]$cardName
     )
@@ -60,14 +61,25 @@ function Copy-CardImage {
     return $destinationImagePath
 }
 function Save-CardImage {
+    [cmdletbinding()]
     param (
         [pscustomobject]$CardDetails,
         [string]$DestinationDir,
         [switch]$WhatIf
     )
+    $cardName = $CardDetails.CardName
+
+    if ($cardName -match '//') {
+        Write-Output "$cardName matches '//'."
+        $targetfile = "$($CardDetails.Scryfall_id).jpg"
+        Write-Output "Use filename $targetfile"
+    } else {
+        $targetfile = "$($CardDetails.CardName).jpg"
+        Write-Verbose -Message "The string does not contain '//'. Using `"$targetfile`""
+    }
 
     try {
-        $imageName = Join-Path -Path $DestinationDir -ChildPath "$($CardDetails.CardName).jpg"
+        $imageName = Join-Path -Path $DestinationDir -ChildPath $targetfile
         if (Test-Path $imageName) {
             Write-Output "Image for $($CardDetails.CardName) already exists in $DestinationDir"
         }
@@ -152,7 +164,7 @@ function Save-CardImagesFromXML {
 $decks = Get-Childitem -Path .\xml\*.xml
 foreach ($deck in $decks){
     $cards = Read-DecklistXML -filePath $deck.Fullname
-    Save-CardImagesFromXML -deck $cards -destinationDir .\assets\magicimages\ -WhatIf
+    Save-CardImagesFromXML -deck $cards -destinationDir .\assets\magicimages\ -WhatIf -verbose
 }
 
 # Same images for one deck (.xml)
