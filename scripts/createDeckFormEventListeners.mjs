@@ -83,7 +83,7 @@ const getCardElements = (xmlDoc) => {
     return cardElements;
 };
 
-const processCardDetails = (cardElements) => {
+const processCardDetails = async (cardElements) => {
     clearCardInputs();
     return fetchAndUpdateCardDetails(cardElements)
         .then((cardDetailsMap) => {
@@ -245,42 +245,41 @@ const clearCardInputs = () => {
 
 const fetchAndUpdateCardDetails = async (cardElements) => {
     const cardDetailsMap = {};
-    for (const card of cardElements) {
-        const name = card.querySelector("Name")?.textContent || "";
-        const quantity = card.querySelector("Quantity")?.textContent || 0;
-        const cardType = card.querySelector("Type")?.textContent || "";
-        const cardCost = card.querySelector("Cost")?.textContent || "";
-        const rulesText = card.querySelector("RulesText")?.textContent || "";
-        const cardImageUrl = card.querySelector("cardImageUrl")?.textContent || "";
 
-        if (!cardType || !cardCost || !rulesText || !cardImageUrl) {
-            try {
+    for (const card of cardElements) {
+        try {
+            const name = card.querySelector("Name")?.textContent || "";
+            const quantity = card.querySelector("Quantity")?.textContent || 0;
+            const cardType = card.querySelector("Type")?.textContent || "";
+            const cardCost = card.querySelector("Cost")?.textContent || "";
+            const rulesText = card.querySelector("RulesText")?.textContent || "";
+            const cardImageUrl = card.querySelector("CardImageUrl")?.textContent || "";
+            const scryfall_id = card.querySelector("Scryfall_id")?.textContent || "";
+
+            if (!cardType || !cardCost || !rulesText || !cardImageUrl) {
                 const cardDetails = await getCardDetails(name);
+
                 if (cardDetails) {
                     cardDetailsMap[name] = { ...cardDetails, quantity };
-                    console.log('cardDetailsMap:',cardDetailsMap[name]);
+                    console.log('cardDetailsMap:', cardDetailsMap[name]);
                 } else {
-                    cardDetailsMap[name] = {
-                        quantity,
-                        cardType,
-                        cardCost,
-                        rulesText,
-                        cardImageUrl,
-                    };
+                    throw new Error(`Failed to fetch details for card: ${name}`);
                 }
-            } catch (error) {
-                console.error(`Failed to fetch details for card: ${name}`, error);
+            } else {
+                cardDetailsMap[name] = {
+                    quantity,
+                    cardType,
+                    cardCost,
+                    rulesText,
+                    cardImageUrl,
+                    scryfall_id
+                };
             }
-        } else {
-            cardDetailsMap[name] = {
-                quantity,
-                cardType,
-                cardCost,
-                rulesText,
-                cardImageUrl,
-            };
+        } catch (error) {
+            console.error(`Error processing card: ${error.message}`);
         }
     }
+
     return cardDetailsMap;
 };
 

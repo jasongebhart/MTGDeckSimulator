@@ -389,15 +389,26 @@ export async function getCardDetails(cardName) {
 }
 
   
-  export function createCardInputFields(cardDetailsMap) {
+  export async function createCardInputFields(cardDetailsMap) {
     for (const name in cardDetailsMap) {
-      let { cardType, cardCost, rulesText, cardImageUrl } = cardDetailsMap[name];
-      let quantity = cardDetailsMap[name].quantity;
+        let { cardType, cardCost, rulesText, cardImageUrl } = cardDetailsMap[name];
+        let quantity = cardDetailsMap[name].quantity;
 
-      const index = document.querySelectorAll('.card-main').length; // Calculate index
+        const index = document.querySelectorAll('.card-main').length; // Calculate index
 
-      const cardInfo = document.createElement('div');
-      cardInfo.className = 'card-main';
+        const cardInfo = document.createElement('div');
+        cardInfo.className = 'card-main';
+
+        // Check if the image file exists
+        const imagePath = `assets/magicimages/${name}.jpg`;
+        let imageExists;
+        try {
+            imageExists = await checkImageExistsAsync(imagePath);
+        } catch (error) {
+            console.error('Error checking image existence:', error);
+            imageExists = false; // Set to false in case of an error
+        }
+
          
       // Generate the card input fields HTML
       const cardInputFieldsHTML = `
@@ -415,7 +426,7 @@ export async function getCardDetails(cardName) {
               </h2>
           </div>
           <div class="card-info">
-              <img src="${cardImageUrl}" alt="Card Image" name="cardImage${index}" class="card-image"> 
+              <img src="${imageExists ? imagePath : cardImageUrl}" alt="Card Image" name="cardImage${index}" class="card-image"> 
               <div class="card-info-left">
                   <div class="label-input-group">
                       <label for="cardName${index}">Name:</label>
@@ -466,6 +477,19 @@ export async function getCardDetails(cardName) {
     cardInputsContainer.appendChild(cardInfo);
   }
 }
+
+// Function to check if an image file exists asynchronously
+async function checkImageExistsAsync(imagePath) {
+    try {
+        const response = await fetch(imagePath, { method: 'HEAD' });
+        return response.ok;
+    } catch (error) {
+        console.error('Error checking image existence:', error);
+        return false;
+    }
+}
+
+
 export function clearGameSections() {
     const sectionIdsToClear = ["section_spells", "section_lands", "section_battlefield-lands", "section_battlefield-spells", "section_graveyard", "section_exile"];
     

@@ -164,7 +164,7 @@ function Save-CardImagesFromXML {
 $decks = Get-Childitem -Path .\xml\*.xml
 foreach ($deck in $decks){
     $cards = Read-DecklistXML -filePath $deck.Fullname
-    Save-CardImagesFromXML -deck $cards -destinationDir .\assets\magicimages\ -WhatIf -verbose
+    Save-CardImagesFromXML -deck $cards -destinationDir .\assets\magicimages\ -WhatIf
 }
 
 # Same images for one deck (.xml)

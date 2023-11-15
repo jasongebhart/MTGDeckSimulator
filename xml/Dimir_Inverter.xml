@@ -1,113 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="Dimir Inverter">
- <DesignGoal>Win game by drawing last card</DesignGoal>
-<Card>
-        <Name>Inverter of Truth</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2BB</Cost>
-</Card>
-<Card>
-        <Name>Thassa's Oracle</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>UU</Cost>
-</Card>
-<Card>
-        <Name>Jace, Wielder of Mysteries</Name>
-        <Quantity>3</Quantity>
-        <Type>Planeswalker</Type>
-        <Cost>1UUU</Cost>
-</Card>
-<Card>
-        <Name>Opt</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-</Card>
-<Card>
-        <Name>Thoughtseize</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-</Card>
-<Card>
-        <Name>Dig Through Time</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>6UU</Cost>
-</Card>
-<Card>
-        <Name>Fatal Push</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-</Card>
-<Card>
-        <Name>Censor</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-</Card>
-<Card>
-        <Name>Thought Erasure</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>UB</Cost>
-    </Card>
-<Card>
-        <Name>Drown in the Loch</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>UB</Cost>
-    </Card>
-<Card>
-        <Name>Omen of the Sea</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>6</Quantity>
-        <Type>Land</Type>
-	 <Cost>NA</Cost>
-    </Card> 
-    <Card>
-        <Name>Watery Grave</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	 <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Drowned Catacomb</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	 <Cost>NA</Cost>
-    </Card> 
-    <Card>
-        <Name>Choked Estuary</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	 <Cost>NA</Cost>
-    </Card> 
-    <Card>
-        <Name>Fetid Pools</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	 <Cost>NA</Cost>
-    </Card>  
-    <Card>
-        <Name>Fabled Passage</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	 <Cost>NA</Cost>
-    </Card>         
-</Decklist>
- 
+<Decklist Deck="Dimir Inverter"><DesignGoal>a</DesignGoal><Card><Name>Inverter of Truth</Name><Quantity>4</Quantity><Type>Creature — Eldrazi</Type><Cost>{2}{B}{B}</Cost><RulesText>Devoid (This card has no color.)
+Flying
+When Inverter of Truth enters the battlefield, exile all cards from your library face down, then shuffle all cards from your graveyard into your library.</RulesText></Card><Card><Name>Thassa's Oracle</Name><Quantity>4</Quantity><Type>Creature — Merfolk Wizard</Type><Cost>{U}{U}</Cost><RulesText>When Thassa's Oracle enters the battlefield, look at the top X cards of your library, where X is your devotion to blue. Put up to one of them on top of your library and the rest on the bottom of your library in a random order. If X is greater than or equal to the number of cards in your library, you win the game. (Each {U} in the mana costs of permanents you control counts toward your devotion to blue.)</RulesText></Card><Card><Name>Jace, Wielder of Mysteries</Name><Quantity>3</Quantity><Type>Legendary Planeswalker — Jace</Type><Cost>{1}{U}{U}{U}</Cost><RulesText>If you would draw a card while your library has no cards in it, you win the game instead.
++1: Target player mills two cards. Draw a card.
+−8: Draw seven cards. Then if your library has no cards in it, you win the game.</RulesText></Card><Card><Name>Opt</Name><Quantity>4</Quantity><Type>Instant</Type><Cost>{U}</Cost><RulesText>Scry 1.
+Draw a card.</RulesText></Card><Card><Name>Thoughtseize</Name><Quantity>4</Quantity><Type>Sorcery</Type><Cost>{B}</Cost><RulesText>Target player reveals their hand. You choose a nonland card from it. That player discards that card. You lose 2 life.</RulesText></Card><Card><Name>Dig Through Time</Name><Quantity>4</Quantity><Type>Instant</Type><Cost>{6}{U}{U}</Cost><RulesText>Delve (Each card you exile from your graveyard while casting this spell pays for {1}.)
+Look at the top seven cards of your library. Put two of them into your hand and the rest on the bottom of your library in any order.</RulesText></Card><Card><Name>Fatal Push</Name><Quantity>4</Quantity><Type>Instant</Type><Cost>{B}</Cost><RulesText>Destroy target creature if it has mana value 2 or less.
+Revolt — Destroy that creature if it has mana value 4 or less instead if a permanent you controlled left the battlefield this turn.</RulesText></Card><Card><Name>Censor</Name><Quantity>2</Quantity><Type>Instant</Type><Cost>{1}{U}</Cost><RulesText>Counter target spell unless its controller pays {1}.
+Cycling {U} ({U}, Discard this card: Draw a card.)</RulesText></Card><Card><Name>Thought Erasure</Name><Quantity>2</Quantity><Type>Sorcery</Type><Cost>{U}{B}</Cost><RulesText>Target opponent reveals their hand. You choose a nonland card from it. That player discards that card.
+Surveil 1. (Look at the top card of your library. You may put it into your graveyard.)</RulesText></Card><Card><Name>Drown in the Loch</Name><Quantity>2</Quantity><Type>Instant</Type><Cost>{U}{B}</Cost><RulesText>Choose one —
+• Counter target spell with mana value less than or equal to the number of cards in its controller's graveyard.
+• Destroy target creature with mana value less than or equal to the number of cards in its controller's graveyard.</RulesText></Card><Card><Name>Omen of the Sea</Name><Quantity>2</Quantity><Type>Enchantment</Type><Cost>{1}{U}</Cost><RulesText>Flash
+When Omen of the Sea enters the battlefield, scry 2, then draw a card.
+{2}{U}, Sacrifice Omen of the Sea: Scry 2.</RulesText></Card><Card><Name>Swamp</Name><Quantity>3</Quantity><Type>Basic Land — Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {B}.)</RulesText></Card><Card><Name>Island</Name><Quantity>6</Quantity><Type>Basic Land — Island</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U}.)</RulesText></Card><Card><Name>Watery Grave</Name><Quantity>4</Quantity><Type>Land — Island Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U} or {B}.)
+As Watery Grave enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText></Card><Card><Name>Drowned Catacomb</Name><Quantity>4</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Drowned Catacomb enters the battlefield tapped unless you control an Island or a Swamp.
+{T}: Add {U} or {B}.</RulesText></Card><Card><Name>Choked Estuary</Name><Quantity>2</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>As Choked Estuary enters the battlefield, you may reveal an Island or Swamp card from your hand. If you don't, Choked Estuary enters the battlefield tapped.
+{T}: Add {U} or {B}.</RulesText></Card><Card><Name>Fetid Pools</Name><Quantity>2</Quantity><Type>Land — Island Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U} or {B}.)
+Fetid Pools enters the battlefield tapped.
+Cycling {2} ({2}, Discard this card: Draw a card.)</RulesText></Card><Card><Name>Fabled Passage</Name><Quantity>4</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}, Sacrifice Fabled Passage: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle. Then if you control four or more lands, untap that land.</RulesText></Card></Decklist>
