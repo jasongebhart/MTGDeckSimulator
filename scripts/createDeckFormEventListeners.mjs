@@ -113,35 +113,40 @@ const handleDownload = () => {
 
 // Function to handle adding a card
 const handleAddCard = async () => {
-    const dropdown = document.querySelector("select"); // Assuming there's only one dropdown on the page
-    const selectedOption = dropdown.options[dropdown.selectedIndex].value;
-    let cardDetailsMap = {};
-    try {
-        // Fetch card details (type and cost) based on the selected item
-        const cardDetails = await getCardDetails(selectedOption);
+    const dropdown = document.querySelector("#suggestionsContainer select");
+    if (dropdown) {
+        const selectedOption = dropdown.options[dropdown.selectedIndex].value;
+        console.log("selectedOption", selectedOption);
+        let cardDetailsMap = {};
+        try {
+            // Fetch card details (type and cost) based on the selected item
+            const cardDetails = await getCardDetails(selectedOption);
 
-        // Validate selected item and fetched cardDetails
-        if (selectedOption.trim() && cardDetails) {
-            //cardCount++; // Increment the card count
+            // Validate selected item and fetched cardDetails
+            if (selectedOption.trim() && cardDetails) {
+                //cardCount++; // Increment the card count
 
-            // Create a single entry in the cardDetailsMap for the newly added card
-            const newCardDetails = {
-                cardType: cardDetails.cardType,
-                cardCost: cardDetails.cardCost,
-                rulesText: cardDetails.rulesText,
-                cardImageUrl: cardDetails.cardImageUrl,
-                quantity: 1, // Initial quantity for the newly added card
-            };
+                // Create a single entry in the cardDetailsMap for the newly added card
+                const newCardDetails = {
+                    cardType: cardDetails.cardType,
+                    cardCost: cardDetails.cardCost,
+                    rulesText: cardDetails.rulesText,
+                    cardImageUrl: cardDetails.cardImageUrl,
+                    quantity: 1, // Initial quantity for the newly added card
+                };
 
-            // Update or add the new card details to the map
-            cardDetailsMap[selectedOption] = newCardDetails;
+                // Update or add the new card details to the map
+                cardDetailsMap[selectedOption] = newCardDetails;
 
-            // Call the function to create the card input fields with the updated card details map
-            createCardInputFields(cardDetailsMap);
+                // Call the function to create the card input fields with the updated card details map
+                createCardInputFields(cardDetailsMap);
+            }
+        } catch (error) {
+            // Handle any errors that occur during the fetch or processing
+            console.error("Error fetching card details: " + error.message);
         }
-    } catch (error) {
-        // Handle any errors that occur during the fetch or processing
-        console.error("Error fetching card details: " + error.message);
+    } else {
+        console.error("Dropdown not found within suggestionsContainer");
     }
 };
 
