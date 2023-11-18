@@ -566,6 +566,10 @@
   align-items: flex-start; /* Align items to the top */
 }
 
+.card-info .card-cost {
+  display: none; /* Hide by default */
+}
+
 .card-info-left {
   margin-top: 10px; /* Adjust as needed to control vertical spacing */
   margin-right: 20px; /* Adjust as needed to control horizontal spacing */

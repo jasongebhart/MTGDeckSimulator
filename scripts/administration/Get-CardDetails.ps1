@@ -44,6 +44,104 @@ function Get-ScryfallCardDetail {
     return $response
 }
 
+function DownloadSymbol($name) {
+    $symbol = $symbolsResponse.data | Where-Object { $_.symbol -eq $symbolName }
+
+    if ($symbol) {
+        $imageUrl = $symbol.svg_uri
+        Invoke-RestMethod -Uri $imageUrl -Method Get -OutFile "$symbolName.svg"
+        Write-Host "Downloaded symbol image: $symbolName"
+    } else {
+        Write-Host "Symbol '$symbolName' not found."
+    }
+}
+function Get-ScryfallSymbol {
+    param (
+        [string]$apiUrl = "https://api.scryfall.com/symbology/"
+    )
+    try {
+        $response = Invoke-RestMethod -Uri $apiUrl -Method Get
+        $response
+    }
+    catch {
+        Write-Output -InputObject "Error fetching symbols: $_"
+    }
+}
+
+function Get-SymbolImage {
+
+}
+<#
+.SYNOPSIS
+    Downloads a specific symbol image from the Scryfall API.
+
+.DESCRIPTION
+    Save-SpecificSymbol function downloads a specific symbol image from the Scryfall API based on the provided symbol name.
+
+.PARAMETER name
+    Specifies the name of the symbol to download.
+
+.PARAMETER symbols
+    Specifies the symbols object containing data from the Scryfall API.
+
+.PARAMETER destinationDir
+    Specifies the destination directory where the downloaded symbol image will be saved.
+
+.NOTES
+    File names are based on the provided symbol name with a .svg extension.
+    If the file already exists in the destination directory, it won't be downloaded again.
+    Use the -WhatIf parameter to simulate the download without saving the file.
+#>
+function Save-SpecificSymbol {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$Name,
+
+        [Parameter(Mandatory = $true, Position = 1)]
+        [pscustomobject]$Symbols,
+
+        [Parameter(Mandatory = $true, Position = 2)]
+        [string]$DestinationDir
+    )
+
+    process {
+        $symbol = $Symbols.data | Where-Object { $_.symbol -eq $Name }
+
+        if ($symbol) {
+            $ImageUrl = $Symbol.svg_uri
+            $filename = Split-Path -Path $ImageUrl -Leaf
+            $TargetFile = Join-Path -Path $DestinationDir -ChildPath $filename
+
+            try {
+                if (Test-Path -Path $TargetFile) {
+                    Write-Output "Image for $filename already exists in '$DestinationDir'."
+                } elseif ($PSCmdlet.ShouldProcess($Name, "Download Symbol Image")) {
+                    Invoke-WebRequest -Uri $ImageUrl -Method Get -OutFile $TargetFile -ErrorAction Stop
+                    Write-Output "Downloaded image for $Name to '$TargetFile'."
+                }
+            } catch {
+                Write-Error "Error saving symbol image for $Name : $_"
+            }
+        } else {
+            Write-Host "Symbol $Name not found."
+        }
+    }
+}
+
+function Save-AllSymbols {
+    param (
+        $symbols, 
+        [string]$DestinationDir
+    )
+    foreach ($symbol in $symbols.data) {
+        $name = $symbol.symbol
+        write-output $name
+        Save-SpecificSymbol -Name ($name) -Symbols $symbols -DestinationDir $DestinationDir
+    }
+}
+
+
 function Copy-CardImage {
     param (
         [string]$sourceImagePath,
