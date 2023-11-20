@@ -92,6 +92,14 @@
   width: auto; /* Use 'auto' to fit content width */
 }
 
+.cost-image {
+  width: 15px;
+  padding: 0px;
+}
+.header-image {
+  width: 35px;
+  padding: 4px;
+}
 #section_spells,
 #section_lands {
   flex: 1;

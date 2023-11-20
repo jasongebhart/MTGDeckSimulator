@@ -549,7 +549,7 @@ export const parseXml = (xmlText) => {
     return parser.parseFromString(xmlText, 'text/xml');
 };
 
-const symbolToImageMap = {
+export const symbolToImageMap = {
     "{T}": "T.svg",
     "{Q}": "Q.svg",
     "{E}": "E.svg",
@@ -627,11 +627,5 @@ const symbolToImageMap = {
     "{S}": "S.svg"     
 };
 
-// Sample symbol
-const symbol = '{C}';
-
 // Get the corresponding image name
-const imageName = symbolToImageMap[symbol];
-
-// Use the imageName as needed, for example:
-console.log(`The corresponding image for ${symbol} is ${imageName}`);
+//const imageName = symbolToImageMap[symbol];

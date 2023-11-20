@@ -2,6 +2,7 @@ import {
     loadXMLDoc,
     xmlDoc,
     handleXMLLoad,
+    symbolToImageMap,
     processSelectedXMLFile,
     getCardNameXML,
     readXmlFile,
@@ -473,8 +474,6 @@ function getTableByCardType(cardType) {
 }
 
 
-
-
 function displayDeck(xmlDoc) {
 	var deckList = xmlDoc.getElementsByTagName("Decklist")[0];
 	var deckListName = xmlDoc.getElementsByTagName("Decklist")[0].getAttribute("Deck");
@@ -565,9 +564,9 @@ function initializeCardTable(tblChosen) {
 
     // Create and add cells for headings
     createHeadingCell(row, "Card");
-    createHeadingCell(row, "Quantity");
+    createHeadingCell(row, "#");
     createHeadingCell(row, "Cost");
-    createHeadingCell(row, "Converted Cost");
+    createHeadingCell(row, "Mana Value");
 
     // Add the row to the end of the table body
     tbl.appendChild(row);
@@ -614,7 +613,23 @@ function createCardTable(tblChosen, currentCard, currentQuantity, currentCost, s
     if (currentCost !== "NA") {
         // Create and add cell for currentCost
         cell = document.createElement("td");
-        cell.appendChild(document.createTextNode(currentCost));
+
+        // Split the cost into individual symbols
+        var costSymbols = currentCost.match(/{[^{}]+}/g) || [];
+
+        // Create an image for each cost symbol
+        costSymbols.forEach(function (costSymbol) {
+            if (symbolToImageMap[costSymbol]) {
+                var costImage = document.createElement("img");
+                costImage.src = "/assets/mtgsymbols/" + symbolToImageMap[costSymbol];
+                costImage.alt = costSymbol;
+                costImage.className = "cost-image";
+                cell.appendChild(costImage);
+            } else {
+                cell.appendChild(document.createTextNode(costSymbol));
+            }
+        });
+
         row.appendChild(cell);
 
         // Create and add cell for strConvertedCost
