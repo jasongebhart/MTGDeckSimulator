@@ -300,6 +300,17 @@ function Update-DeckXML {
                 Write-Verbose -Message "Updated RulesText: $($cardDetails.RulesText)"
             }
 
+            <# Add or update RulesText property
+            if (-not $card.PSObject.Properties['RulesText']) {
+                # Add RulesText property
+                $card | Add-Member -NotePropertyName 'RulesText' -NotePropertyValue $cardDetails.RulesText
+                Write-Verbose -Message "$($card.RulesText)"
+            }
+            else {
+                # Update RulesText property
+                $card.PSObject.Properties['RulesText'].Value = $cardDetails.RulesText
+            }
+    #>
             # Save card image if needed
             #Save-CardImage -CardDetails $cardDetails -destinationDir $imageDir
         }
