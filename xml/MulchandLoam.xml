@@ -1,8 +1,184 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="Mulch and Loam"><DesignGoal>a</DesignGoal><Card><Name>Ob Nixilis, the Fallen</Name><Quantity>2</Quantity><Type>Legendary Creature — Demon</Type><Cost>{3}{B}{B}</Cost><RulesText>Landfall — Whenever a land enters the battlefield under your control, you may have target player lose 3 life. If you do, put three +1/+1 counters on Ob Nixilis, the Fallen.</RulesText></Card><Card><Name>Dark Confidant</Name><Quantity>3</Quantity><Type>Creature — Human Wizard</Type><Cost>{1}{B}</Cost><RulesText>At the beginning of your upkeep, reveal the top card of your library and put that card into your hand. You lose life equal to its mana value.</RulesText></Card><Card><Name>Hedron Crab</Name><Quantity>4</Quantity><Type>Creature — Crab</Type><Cost>{U}</Cost><RulesText>Landfall — Whenever a land enters the battlefield under your control, target player mills three cards.</RulesText></Card><Card><Name>Raven's Crime</Name><Quantity>4</Quantity><Type>Sorcery</Type><Cost>{B}</Cost><RulesText>Target player discards a card.
-Retrace (You may cast this card from your graveyard by discarding a land card in addition to paying its other costs.)</RulesText></Card><Card><Name>Leyline of The Void</Name><Quantity>2</Quantity><Type>Enchantment</Type><Cost>{2}{B}{B}</Cost><RulesText>If Leyline of the Void is in your opening hand, you may begin the game with it on the battlefield.
-If a card would be put into an opponent's graveyard from anywhere, exile it instead.</RulesText></Card><Card><Name>Life From the Loam</Name><Quantity>4</Quantity><Type>Sorcery</Type><Cost>{1}{G}</Cost><RulesText>Return up to three target land cards from your graveyard to your hand.
-Dredge 3 (If you would draw a card, you may mill three cards instead. If you do, return this card from your graveyard to your hand.)</RulesText></Card><Card><Name>Exploration</Name><Quantity>4</Quantity><Type>Enchantment</Type><Cost>{G}</Cost><RulesText>You may play an additional land on each of your turns.</RulesText></Card><Card><Name>Zuran Orb</Name><Quantity>1</Quantity><Type>Artifact</Type><Cost>{0}</Cost><RulesText>Sacrifice a land: You gain 2 life.</RulesText></Card><Card><Name>Crucible of Worlds</Name><Quantity>2</Quantity><Type>Artifact</Type><Cost>{3}</Cost><RulesText>You may play lands from your graveyard.</RulesText></Card><Card><Name>Manabond</Name><Quantity>4</Quantity><Type>Enchantment</Type><Cost>{G}</Cost><RulesText>At the beginning of your end step, you may reveal your hand and put all land cards from it onto the battlefield. If you do, discard your hand.</RulesText></Card><Card><Name>Forest</Name><Quantity>3</Quantity><Type>Basic Land — Forest</Type><Cost>Unknown</Cost><RulesText>({T}: Add {G}.)</RulesText></Card><Card><Name>Swamp</Name><Quantity>4</Quantity><Type>Basic Land — Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {B}.)</RulesText></Card><Card><Name>Island</Name><Quantity>3</Quantity><Type>Basic Land — Island</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U}.)</RulesText></Card><Card><Name>Misty Rainforest</Name><Quantity>4</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}, Pay 1 life, Sacrifice Misty Rainforest: Search your library for a Forest or Island card, put it onto the battlefield, then shuffle.</RulesText></Card><Card><Name>Verdant Catacombs</Name><Quantity>3</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}, Pay 1 life, Sacrifice Verdant Catacombs: Search your library for a Swamp or Forest card, put it onto the battlefield, then shuffle.</RulesText></Card><Card><Name>Evolving Wilds</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}, Sacrifice Evolving Wilds: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.</RulesText></Card><Card><Name>Wasteland</Name><Quantity>2</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {C}.
-{T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText></Card><Card><Name>Bayou</Name><Quantity>1</Quantity><Type>Land — Swamp Forest</Type><Cost>Unknown</Cost><RulesText>({T}: Add {B} or {G}.)</RulesText></Card><Card><Name>Maze of Ith</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}: Untap target attacking creature. Prevent all combat damage that would be dealt to and dealt by that creature this turn.</RulesText></Card><Card><Name>Underground Sea</Name><Quantity>1</Quantity><Type>Land — Island Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U} or {B}.)</RulesText></Card><Card><Name>Horizon Canopy</Name><Quantity>4</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}, Pay 1 life: Add {G} or {W}.
-{1}, {T}, Sacrifice Horizon Canopy: Draw a card.</RulesText></Card><Card><Name>Tropical Island</Name><Quantity>1</Quantity><Type>Land — Forest Island</Type><Cost>Unknown</Cost><RulesText>({T}: Add {G} or {U}.)</RulesText></Card><Card><Name>Cabal Pit</Name><Quantity>2</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {B}. Cabal Pit deals 1 damage to you.
-Threshold — {B}, {T}, Sacrifice Cabal Pit: Target creature gets -2/-2 until end of turn. Activate only if seven or more cards are in your graveyard.</RulesText></Card></Decklist>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Mulch and Loam">
+  <DesignGoal>Land Recursion.</DesignGoal>
+  <Card>
+    <Name>Ob Nixilis, the Fallen</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Creature — Demon</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>Landfall — Whenever a land enters the battlefield under your control, you may have target player lose 3 life. If you do, put three +1/+1 counters on Ob Nixilis, the Fallen.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dark Confidant</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Human Wizard</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>At the beginning of your upkeep, reveal the top card of your library and put that card into your hand. You lose life equal to its mana value.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hedron Crab</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Crab</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Landfall — Whenever a land enters the battlefield under your control, target player mills three cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Raven's Crime</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target player discards a card.
+Retrace (You may cast this card from your graveyard by discarding a land card in addition to paying its other costs.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Leyline of The Void</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>If Leyline of the Void is in your opening hand, you may begin the game with it on the battlefield.
+If a card would be put into an opponent's graveyard from anywhere, exile it instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Life From the Loam</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Return up to three target land cards from your graveyard to your hand.
+Dredge 3 (If you would draw a card, you may mill three cards instead. If you do, return this card from your graveyard to your hand.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Exploration</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{G}</Cost>
+    <RulesText>You may play an additional land on each of your turns.</RulesText>
+  </Card>
+  <Card>
+    <Name>Zuran Orb</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{0}</Cost>
+    <RulesText>Sacrifice a land: You gain 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Crucible of Worlds</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{3}</Cost>
+    <RulesText>You may play lands from your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Manabond</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{G}</Cost>
+    <RulesText>At the beginning of your end step, you may reveal your hand and put all land cards from it onto the battlefield. If you do, discard your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>3</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>4</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>3</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Misty Rainforest</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Misty Rainforest: Search your library for a Forest or Island card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Verdant Catacombs</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Verdant Catacombs: Search your library for a Swamp or Forest card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Evolving Wilds</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Sacrifice Evolving Wilds: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wasteland</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bayou</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Swamp Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B} or {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Maze of Ith</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Untap target attacking creature. Prevent all combat damage that would be dealt to and dealt by that creature this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Underground Sea</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Island Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Horizon Canopy</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life: Add {G} or {W}.
+{1}, {T}, Sacrifice Horizon Canopy: Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tropical Island</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Forest Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G} or {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Cabal Pit</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {B}. Cabal Pit deals 1 damage to you.
+Threshold — {B}, {T}, Sacrifice Cabal Pit: Target creature gets -2/-2 until end of turn. Activate only if seven or more cards are in your graveyard.</RulesText>
+  </Card>
+</Decklist>

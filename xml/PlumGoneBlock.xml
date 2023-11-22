@@ -1,118 +1,151 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="PlumGoneBlock">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Faerie Squadron</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Stormscape familiar</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Nightscape familiar</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Rager</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Urborg Drake</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1BU</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Scuta</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3B</Cost>
-    </Card>
-    <Card>
-        <Name>Doomsday Specter</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2BU</Cost>
-    </Card>
-    <Card>
-        <Name>Disrupt</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Evasive Action</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Addle</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Probe</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Repulse</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Recoil</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1BU</Cost>
-    </Card>
-    <Card>
-        <Name>Undermine</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>UUB</Cost>
-    </Card>
-    <Card>
-        <Name>Lobotomy</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2BU</Cost>
-    </Card>
-    <Card>
-        <Name>Spite</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>10</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>9</Quantity>
-	<Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Underground Sea</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Faerie Squadron</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Faerie</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Kicker {3}{U} (You may pay an additional {3}{U} as you cast this spell.)
+If Faerie Squadron was kicked, it enters the battlefield with two +1/+1 counters on it and with flying.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stormscape familiar</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Bird</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Flying
+White spells and black spells you cast cost {1} less to cast.</RulesText>
+  </Card>
+  <Card>
+    <Name>Nightscape familiar</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Blue spells and red spells you cast cost {1} less to cast.
+{1}{B}: Regenerate Nightscape Familiar.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Rager</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Phyrexian Horror</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>When Phyrexian Rager enters the battlefield, you draw a card and you lose 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Urborg Drake</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Drake</Type>
+    <Cost>{1}{U}{B}</Cost>
+    <RulesText>Flying
+Urborg Drake attacks each combat if able.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Scuta</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Phyrexian Zombie</Type>
+    <Cost>{3}{B}</Cost>
+    <RulesText>Kicker—Pay 3 life. (You may pay 3 life in addition to any other costs as you cast this spell.)
+If Phyrexian Scuta was kicked, it enters the battlefield with two +1/+1 counters on it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Doomsday Specter</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Specter</Type>
+    <Cost>{2}{U}{B}</Cost>
+    <RulesText>Flying
+When Doomsday Specter enters the battlefield, return a blue or black creature you control to its owner's hand.
+Whenever Doomsday Specter deals combat damage to a player, look at that player's hand and choose a card from it. The player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Disrupt</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Counter target instant or sorcery spell unless its controller pays {1}.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Evasive Action</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Domain — Counter target spell unless its controller pays {1} for each basic land type among lands you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Addle</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Choose a color. Target player reveals their hand and you choose a card of that color from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Probe</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Kicker {1}{B} (You may pay an additional {1}{B} as you cast this spell.)
+Draw three cards, then discard two cards. If this spell was kicked, target player discards two cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Repulse</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Return target creature to its owner's hand.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Recoil</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}{B}</Cost>
+    <RulesText>Return target permanent to its owner's hand. Then that player discards a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Undermine</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}{U}{B}</Cost>
+    <RulesText>Counter target spell. Its controller loses 3 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lobotomy</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{U}{B}</Cost>
+    <RulesText>Target player reveals their hand, then you choose a card other than a basic land card from it. Search that player's graveyard, hand, and library for all cards with the same name as the chosen card and exile them. Then that player shuffles.</RulesText>
+  </Card>
+  <Card>
+    <Name>Spite</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant // Instant</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>10</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>9</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Underground Sea</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Island Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {B}.)</RulesText>
+  </Card>
 </Decklist>

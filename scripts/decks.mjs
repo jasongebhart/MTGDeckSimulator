@@ -544,17 +544,18 @@ function initializeDeckTables() {
     deleteRows("tblEnchantmentsList");
     deleteRows("tblArtifactsList");
 	deleteRows("tblLandList");
-    initializeCardTable("tblCreatureList");
-	initializeCardTable("tblSpellsList");
-	initializeCardTable("tblPlaneswalkersList");
-	initializeCardTable("tblEnchantmentsList");
-	initializeCardTable("tblArtifactsList");
+    initializeCardTable("tblCreatureList", ["#", "Name", "Cost", "MV"]);
+	initializeCardTable("tblSpellsList", ["#", "Name", "Cost", "MV"]);
+	initializeCardTable("tblPlaneswalkersList", ["#", "Name", "Cost", "MV"]);
+	initializeCardTable("tblEnchantmentsList", ["#", "Name", "Cost", "MV"]);
+	initializeCardTable("tblArtifactsList", ["#", "Name", "Cost", "MV"]);
+    initializeCardTable("tblLandList", ["#", "Name"])
 }
 
-function initializeCardTable(tblChosen) {
+function initializeCardTable(tblChosen, includeColumns) {
     // Get the reference for the body
     var body = document.getElementsByTagName("body")[0];
-    
+
     // Get the existing table or create a new one
     var tbl = document.getElementById(tblChosen) || document.createElement("table");
     tbl.setAttribute("display", "inline-block");
@@ -562,11 +563,24 @@ function initializeCardTable(tblChosen) {
     // Create a table row
     var row = document.createElement("tr");
 
-    // Create and add cells for headings
-    createHeadingCell(row, "Card");
-    createHeadingCell(row, "#");
-    createHeadingCell(row, "Cost");
-    createHeadingCell(row, "Mana Value");
+    // Create and add cells for specified headings with images
+    includeColumns.forEach(column => {
+        switch (column) {
+            case "#":
+                createHeadingCell(row, "#", null, "header-cell");
+                break;
+            case "Name":
+                createHeadingCell(row, "Name", null, "header-cell");
+                break;
+            case "Cost":
+                createHeadingCell(row, "Cost", null, "header-cell");
+                break;
+            case "MV":
+                createHeadingCell(row, "Mana Value", null, "header-cell");
+                break;
+            // Add cases for other columns as needed
+        }
+    });
 
     // Add the row to the end of the table body
     tbl.appendChild(row);
@@ -577,10 +591,68 @@ function initializeCardTable(tblChosen) {
     }
 }
 
+
+
+function __initializeCardTable(tblChosen) {
+    // Get the reference for the body
+    var body = document.getElementsByTagName("body")[0];
+    
+    // Get the existing table or create a new one
+    var tbl = document.getElementById(tblChosen) || document.createElement("table");
+    tbl.setAttribute("display", "inline-block");
+
+    // Create a table row
+    var row = document.createElement("tr");
+
+    // Create and add cells for headings with images
+    createHeadingCell(row, "#", null, "header-cell");
+    createHeadingCell(row, "Name", null, "header-cell");
+    createHeadingCell(row, "Cost", null, "header-cell");
+    //createHeadingCell(row, "Mana Value", "/assets/mtgsymbols/C.svg", "cost-image");
+    createHeadingCell(row, "MV", null, "header-cell" );
+
+
+    // Add the row to the end of the table body
+    tbl.appendChild(row);
+
+    // Append the table to the body if it's newly created
+    if (!tbl.parentElement) {
+        body.appendChild(tbl);
+    }
+}
+
+function createHeadingCell(row, text, imageSrc, imageClass) {
+    var cell = document.createElement("th");
+    //cell.appendChild(document.createTextNode(text));
+
+    if (imageSrc) {
+        // If an image source is provided, create an img element
+        var img = document.createElement("img");
+        img.src = imageSrc;
+        img.alt = text; // Set alt text for accessibility
+
+        // Set a class for the image
+        img.className = imageClass || "default-image-class";
+        
+        cell.appendChild(img);
+    } else {
+        // If no image source, append the text to the cell
+        cell.appendChild(document.createTextNode(text));
+    }
+
+    // Set a class for styling purposes
+    cell.className = "heading-cell";
+
+    // Append the cell to the row
+    row.appendChild(cell);
+}
+
 // Helper function to create a heading cell and append it to a row
-function createHeadingCell(row, text) {
+function __createHeadingCell(row, text) {
     var cell = document.createElement("td");
     cell.appendChild(document.createTextNode(text));
+    // Set a class for styling purposes
+    cell.className = "heading-cell";
     row.appendChild(cell);
 }
 
@@ -596,17 +668,17 @@ function createCardTable(tblChosen, currentCard, currentQuantity, currentCost, s
     // Create a table row
     var row = document.createElement("tr");
     
+    // Create and add cell for quantity
+    cell = document.createElement("td");
+    cell.appendChild(document.createTextNode(currentQuantity));
+    row.appendChild(cell);
+
     // Create and add cell for card name with link
     var cell = document.createElement("td");
     var link = document.createElement('a');
     link.href = "http://www.magiccards.info/autocard/" + currentCard;
     link.appendChild(document.createTextNode(currentCard));
     cell.appendChild(link);
-    row.appendChild(cell);
-
-    // Create and add cell for quantity
-    cell = document.createElement("td");
-    cell.appendChild(document.createTextNode(currentQuantity));
     row.appendChild(cell);
 
     // Check if currentCost is not "NA" before creating cost-related cells
@@ -623,7 +695,7 @@ function createCardTable(tblChosen, currentCard, currentQuantity, currentCost, s
                 var costImage = document.createElement("img");
                 costImage.src = "/assets/mtgsymbols/" + symbolToImageMap[costSymbol];
                 costImage.alt = costSymbol;
-                costImage.className = "cost-image";
+                costImage.className = "cost-image-type";
                 cell.appendChild(costImage);
             } else {
                 cell.appendChild(document.createTextNode(costSymbol));

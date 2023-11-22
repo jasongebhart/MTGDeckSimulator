@@ -1,154 +1,202 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Pernicious">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Plague Spitter</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Sengir Vampire</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Ascendant Evincar</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4BB</Cost>
-    </Card>
-    <Card>
-        <Name>Blastoderm</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Llanowar Dead</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>BG</Cost>
-    </Card>
-    <Card>
-        <Name>Ebony Treefolk</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>1BG</Cost>
-    </Card>
-    <Card>
-        <Name>Spiritmonger</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>3BG</Cost>
-    </Card>
-    <Card>
-        <Name>Pernicious Deed</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>1BG</Cost>
-    </Card>
-    <Card>
-        <Name>Duress</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Unmask</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3B</Cost>
-    </Card>
-    <Card>
-        <Name>Massacre</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2BB</Cost>
-    </Card>
-    <Card>
-        <Name>No Mercy</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2BB</Cost>
-    </Card>
-    <Card>
-        <Name>Contagion</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Rancor</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Nature's Lore</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Rampant Growth</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Tangle</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Harrow</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>2G</Cost>
-    </Card>
-    <Card>
-        <Name>Lure</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Rejuvenate</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>8</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>8</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Verdant Catacombs</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Bayou</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-        <Card>
-        <Name>Lake of The Dead</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Plague Spitter</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Phyrexian Horror</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>At the beginning of your upkeep, Plague Spitter deals 1 damage to each creature and each player.
+When Plague Spitter dies, it deals 1 damage to each creature and each player.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sengir Vampire</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Vampire</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+Whenever a creature dealt damage by Sengir Vampire this turn dies, put a +1/+1 counter on Sengir Vampire.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ascendant Evincar</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Phyrexian Vampire Noble</Type>
+    <Cost>{4}{B}{B}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+Other black creatures get +1/+1.
+Nonblack creatures get -1/-1.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blastoderm</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Beast</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Shroud (This creature can't be the target of spells or abilities.)
+Fading 3 (This creature enters the battlefield with three fade counters on it. At the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Llanowar Dead</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie Elf</Type>
+    <Cost>{B}{G}</Cost>
+    <RulesText>{T}: Add {B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ebony Treefolk</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Treefolk</Type>
+    <Cost>{1}{B}{G}</Cost>
+    <RulesText>{B}{G}: Ebony Treefolk gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Spiritmonger</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Beast</Type>
+    <Cost>{3}{B}{G}</Cost>
+    <RulesText>Whenever Spiritmonger deals damage to a creature, put a +1/+1 counter on Spiritmonger.
+{B}: Regenerate Spiritmonger.
+{G}: Spiritmonger becomes the color of your choice until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pernicious Deed</Name>
+    <Quantity>3</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{B}{G}</Cost>
+    <RulesText>{X}, Sacrifice Pernicious Deed: Destroy each artifact, creature, and enchantment with mana value X or less.</RulesText>
+  </Card>
+  <Card>
+    <Name>Duress</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Unmask</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{B}</Cost>
+    <RulesText>You may exile a black card from your hand rather than pay this spell's mana cost.
+Target player reveals their hand. You choose a nonland card from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Massacre</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>If an opponent controls a Plains and you control a Swamp, you may cast this spell without paying its mana cost.
+All creatures get -2/-2 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>No Mercy</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>Whenever a creature deals damage to you, destroy it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Contagion</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>You may pay 1 life and exile a black card from your hand rather than pay this spell's mana cost.
+Distribute two -2/-1 counters among one or two target creatures.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rancor</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Enchant creature
+Enchanted creature gets +2/+0 and has trample.
+When Rancor is put into a graveyard from the battlefield, return Rancor to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Nature's Lore</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Search your library for a Forest card, put that card onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rampant Growth</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tangle</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Prevent all combat damage that would be dealt this turn.
+Each attacking creature doesn't untap during its controller's next untap step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Harrow</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>As an additional cost to cast this spell, sacrifice a land.
+Search your library for up to two basic land cards, put them onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lure</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Enchant creature
+All creatures able to block enchanted creature do so.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rejuvenate</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>You gain 6 life.
+Cycling {2} ({2}, Discard this card: Draw a card.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>8</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>8</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Verdant Catacombs</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Verdant Catacombs: Search your library for a Swamp or Forest card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bayou</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Swamp Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B} or {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Lake of The Dead</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>If Lake of the Dead would enter the battlefield, sacrifice a Swamp instead. If you do, put Lake of the Dead onto the battlefield. If you don't, put it into its owner's graveyard.
+{T}: Add {B}.
+{T}, Sacrifice a Swamp: Add {B}{B}{B}{B}.</RulesText>
+  </Card>
 </Decklist>

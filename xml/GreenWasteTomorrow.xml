@@ -1,17 +1,177 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="GreenWasteTomorrow"><DesignGoal>a</DesignGoal><Card><Name>Haywire Mite</Name><Quantity>3</Quantity><Type>Artifact Creature — Insect</Type><Cost>{1}</Cost><RulesText>When Haywire Mite dies, you gain 2 life.
-{G}, Sacrifice Haywire Mite: Exile target noncreature artifact or noncreature enchantment.</RulesText></Card><Card><Name>Young Wolf</Name><Quantity>2</Quantity><Type>Creature — Wolf</Type><Cost>{G}</Cost><RulesText>Undying (When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)</RulesText></Card><Card><Name>Twinblade Slasher</Name><Quantity>1</Quantity><Type>Creature — Elf Warrior</Type><Cost>{G}</Cost><RulesText>Wither (This deals damage to creatures in the form of -1/-1 counters.)
-{1}{G}: Twinblade Slasher gets +2/+2 until end of turn. Activate only once each turn.</RulesText></Card><Card><Name>Ulvenwald Tracker</Name><Quantity>1</Quantity><Type>Creature — Human Shaman</Type><Cost>{G}</Cost><RulesText>{1}{G}, {T}: Target creature you control fights another target creature.</RulesText></Card><Card><Name>Noble Hierarch</Name><Quantity>2</Quantity><Type>Creature — Human Druid</Type><Cost>{G}</Cost><RulesText>Exalted (Whenever a creature you control attacks alone, that creature gets +1/+1 until end of turn.)
-{T}: Add {G}, {W}, or {U}.</RulesText></Card><Card><Name>Stonecoil Serpent</Name><Quantity>4</Quantity><Type>Artifact Creature — Snake</Type><Cost>{X}</Cost><RulesText>Reach, trample, protection from multicolored
-Stonecoil Serpent enters the battlefield with X +1/+1 counters on it.</RulesText></Card><Card><Name>Bayou Groff</Name><Quantity>4</Quantity><Type>Creature — Plant Dog</Type><Cost>{1}{G}</Cost><RulesText>As an additional cost to cast this spell, sacrifice a creature or pay {3}.</RulesText></Card><Card><Name>Scavenging Ooze</Name><Quantity>1</Quantity><Type>Creature — Ooze</Type><Cost>{1}{G}</Cost><RulesText>{G}: Exile target card from a graveyard. If it was a creature card, put a +1/+1 counter on Scavenging Ooze and you gain 1 life.</RulesText></Card><Card><Name>Steel Leaf Champion</Name><Quantity>2</Quantity><Type>Creature — Elf Knight</Type><Cost>{G}{G}{G}</Cost><RulesText>Steel Leaf Champion can't be blocked by creatures with power 2 or less.</RulesText></Card><Card><Name>Questing Beast</Name><Quantity>2</Quantity><Type>Legendary Creature — Beast</Type><Cost>{2}{G}{G}</Cost><RulesText>Vigilance, deathtouch, haste
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="GreenWasteTomorrow">
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Haywire Mite</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact Creature — Insect</Type>
+    <Cost>{1}</Cost>
+    <RulesText>When Haywire Mite dies, you gain 2 life.
+{G}, Sacrifice Haywire Mite: Exile target noncreature artifact or noncreature enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Young Wolf</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Wolf</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Undying (When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Twinblade Slasher</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Elf Warrior</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Wither (This deals damage to creatures in the form of -1/-1 counters.)
+{1}{G}: Twinblade Slasher gets +2/+2 until end of turn. Activate only once each turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ulvenwald Tracker</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Shaman</Type>
+    <Cost>{G}</Cost>
+    <RulesText>{1}{G}, {T}: Target creature you control fights another target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Noble Hierarch</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Druid</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Exalted (Whenever a creature you control attacks alone, that creature gets +1/+1 until end of turn.)
+{T}: Add {G}, {W}, or {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stonecoil Serpent</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Creature — Snake</Type>
+    <Cost>{X}</Cost>
+    <RulesText>Reach, trample, protection from multicolored
+Stonecoil Serpent enters the battlefield with X +1/+1 counters on it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bayou Groff</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Plant Dog</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>As an additional cost to cast this spell, sacrifice a creature or pay {3}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Scavenging Ooze</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Ooze</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>{G}: Exile target card from a graveyard. If it was a creature card, put a +1/+1 counter on Scavenging Ooze and you gain 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Steel Leaf Champion</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elf Knight</Type>
+    <Cost>{G}{G}{G}</Cost>
+    <RulesText>Steel Leaf Champion can't be blocked by creatures with power 2 or less.</RulesText>
+  </Card>
+  <Card>
+    <Name>Questing Beast</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Creature — Beast</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Vigilance, deathtouch, haste
 Questing Beast can't be blocked by creatures with power 2 or less.
 Combat damage that would be dealt by creatures you control can't be prevented.
-Whenever Questing Beast deals combat damage to an opponent, it deals that much damage to target planeswalker that player controls.</RulesText></Card><Card><Name>Rancor</Name><Quantity>3</Quantity><Type>Enchantment — Aura</Type><Cost>{G}</Cost><RulesText>Enchant creature
+Whenever Questing Beast deals combat damage to an opponent, it deals that much damage to target planeswalker that player controls.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rancor</Name>
+    <Quantity>3</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Enchant creature
 Enchanted creature gets +2/+0 and has trample.
-When Rancor is put into a graveyard from the battlefield, return Rancor to its owner's hand.</RulesText></Card><Card><Name>Fallow Earth</Name><Quantity>4</Quantity><Type>Sorcery</Type><Cost>{2}{G}</Cost><RulesText>Put target land on top of its owner's library.</RulesText></Card><Card><Name>Shadowspear</Name><Quantity>2</Quantity><Type>Legendary Artifact — Equipment</Type><Cost>{1}</Cost><RulesText>Equipped creature gets +1/+1 and has trample and lifelink.
+When Rancor is put into a graveyard from the battlefield, return Rancor to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fallow Earth</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Put target land on top of its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shadowspear</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Artifact — Equipment</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Equipped creature gets +1/+1 and has trample and lifelink.
 {1}: Permanents your opponents control lose hexproof and indestructible until end of turn.
-Equip {2}</RulesText></Card><Card><Name>Green Sun's Zenith</Name><Quantity>1</Quantity><Type>Sorcery</Type><Cost>{X}{G}</Cost><RulesText>Search your library for a green creature card with mana value X or less, put it onto the battlefield, then shuffle. Shuffle Green Sun's Zenith into its owner's library.</RulesText></Card><Card><Name>Green Sun's Twilight</Name><Quantity>1</Quantity><Type>Sorcery</Type><Cost>{X}{G}</Cost><RulesText>Reveal the top X plus one cards of your library. Choose a creature card and/or a land card from among them. Put those cards into your hand and the rest on the bottom of your library in a random order. If X is 5 or more, instead put the chosen cards onto the battlefield or into your hand and the rest on the bottom of your library in a random order.</RulesText></Card><Card><Name>Winter's Grasp</Name><Quantity>1</Quantity><Type>Sorcery</Type><Cost>{1}{G}{G}</Cost><RulesText>Destroy target land.</RulesText></Card><Card><Name>Skysovereign, Consul Flagship</Name><Quantity>1</Quantity><Type>Legendary Artifact — Vehicle</Type><Cost>{5}</Cost><RulesText>Flying
+Equip {2}</RulesText>
+  </Card>
+  <Card>
+    <Name>Green Sun's Zenith</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{G}</Cost>
+    <RulesText>Search your library for a green creature card with mana value X or less, put it onto the battlefield, then shuffle. Shuffle Green Sun's Zenith into its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Green Sun's Twilight</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{G}</Cost>
+    <RulesText>Reveal the top X plus one cards of your library. Choose a creature card and/or a land card from among them. Put those cards into your hand and the rest on the bottom of your library in a random order. If X is 5 or more, instead put the chosen cards onto the battlefield or into your hand and the rest on the bottom of your library in a random order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Winter's Grasp</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Destroy target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Skysovereign, Consul Flagship</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Artifact — Vehicle</Type>
+    <Cost>{5}</Cost>
+    <RulesText>Flying
 Whenever Skysovereign, Consul Flagship enters the battlefield or attacks, it deals 3 damage to target creature or planeswalker an opponent controls.
-Crew 3 (Tap any number of creatures you control with total power 3 or more: This Vehicle becomes an artifact creature until end of turn.)</RulesText></Card><Card><Name>Invoke the Ancients</Name><Quantity>1</Quantity><Type>Sorcery</Type><Cost>{1}{G}{G}{G}{G}</Cost><RulesText>Create two 4/5 green Spirit creature tokens. For each of them, put your choice of a vigilance counter, a reach counter, or a trample counter on it.</RulesText></Card><Card><Name>Gaea's Cradle</Name><Quantity>1</Quantity><Type>Legendary Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {G} for each creature you control.</RulesText></Card><Card><Name>Khalni Garden</Name><Quantity>4</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Khalni Garden enters the battlefield tapped.
+Crew 3 (Tap any number of creatures you control with total power 3 or more: This Vehicle becomes an artifact creature until end of turn.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Invoke the Ancients</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}{G}{G}{G}</Cost>
+    <RulesText>Create two 4/5 green Spirit creature tokens. For each of them, put your choice of a vigilance counter, a reach counter, or a trample counter on it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Gaea's Cradle</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {G} for each creature you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Khalni Garden</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Khalni Garden enters the battlefield tapped.
 When Khalni Garden enters the battlefield, create a 0/1 green Plant creature token.
-{T}: Add {G}.</RulesText></Card><Card><Name>Maze of Ith</Name><Quantity>2</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}: Untap target attacking creature. Prevent all combat damage that would be dealt to and dealt by that creature this turn.</RulesText></Card><Card><Name>Forest</Name><Quantity>17</Quantity><Type>Basic Land — Forest</Type><Cost>Unknown</Cost><RulesText>({T}: Add {G}.)</RulesText></Card></Decklist>
+{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Maze of Ith</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Untap target attacking creature. Prevent all combat damage that would be dealt to and dealt by that creature this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>17</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+</Decklist>

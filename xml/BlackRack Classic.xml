@@ -1,130 +1,168 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="BlackRack">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Sengir Vampire</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Juggernaut</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Black knight</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>BB</Cost>
-    </Card>
-    <Card>
-        <Name>Dauthi Marauder</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Hypnotic Specter</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Sorceress Queen</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Dark Ritual</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Thoughtseize</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Duress</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Funeral Charm</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>The Rack</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Sword of Fire and Ice</Name>
-        <Quantity>2</Quantity>
-        <Type>Artifact</Type>
-        <Cost>3</Cost>
-    </Card>
-    <Card>
-        <Name>Hymn to tourach</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>BB</Cost>
-    </Card>
-    <Card>
-        <Name>Diabolic Edict</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Drain Life</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Choking Sands</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Ashes to Ashes</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Engineered Plague</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Grafted Skullcap</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>15</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Barren Moor</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Sengir Vampire</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Vampire</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+Whenever a creature dealt damage by Sengir Vampire this turn dies, put a +1/+1 counter on Sengir Vampire.</RulesText>
+  </Card>
+  <Card>
+    <Name>Juggernaut</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact Creature — Juggernaut</Type>
+    <Cost>{4}</Cost>
+    <RulesText>Juggernaut attacks each combat if able.
+Juggernaut can't be blocked by Walls.</RulesText>
+  </Card>
+  <Card>
+    <Name>Black knight</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Human Knight</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>First strike (This creature deals combat damage before creatures without first strike.)
+Protection from white (This creature can't be blocked, targeted, dealt damage, or enchanted by anything white.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Dauthi Marauder</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Dauthi Minion</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>Shadow (This creature can block or be blocked by only creatures with shadow.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Hypnotic Specter</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Specter</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Flying
+Whenever Hypnotic Specter deals damage to an opponent, that player discards a card at random.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sorceress Queen</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Wizard</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>{T}: Target creature other than Sorceress Queen has base power and toughness 0/2 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dark Ritual</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Add {B}{B}{B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thoughtseize</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target player reveals their hand. You choose a nonland card from it. That player discards that card. You lose 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Duress</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Funeral Charm</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Choose one —
+• Target player discards a card.
+• Target creature gets +2/-1 until end of turn.
+• Target creature gains swampwalk until end of turn. (It can't be blocked as long as defending player controls a Swamp.)</RulesText>
+  </Card>
+  <Card>
+    <Name>The Rack</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>As The Rack enters the battlefield, choose an opponent.
+At the beginning of the chosen player's upkeep, The Rack deals X damage to that player, where X is 3 minus the number of cards in their hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sword of Fire and Ice</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact — Equipment</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Equipped creature gets +2/+2 and has protection from red and from blue.
+Whenever equipped creature deals combat damage to a player, Sword of Fire and Ice deals 2 damage to any target and you draw a card.
+Equip {2}</RulesText>
+  </Card>
+  <Card>
+    <Name>Hymn to tourach</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>Target player discards two cards at random.</RulesText>
+  </Card>
+  <Card>
+    <Name>Diabolic Edict</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Target player sacrifices a creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Drain Life</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{1}{B}</Cost>
+    <RulesText>Spend only black mana on X.
+Drain Life deals X damage to any target. You gain life equal to the damage dealt, but not more life than the player's life total before the damage was dealt, the planeswalker's loyalty before the damage was dealt, or the creature's toughness.</RulesText>
+  </Card>
+  <Card>
+    <Name>Choking Sands</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Destroy target non-Swamp land. If that land was nonbasic, Choking Sands deals 2 damage to the land's controller.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ashes to Ashes</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Exile two target nonartifact creatures. Ashes to Ashes deals 5 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Engineered Plague</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>As Engineered Plague enters the battlefield, choose a creature type.
+All creatures of the chosen type get -1/-1.</RulesText>
+  </Card>
+  <Card>
+    <Name>Grafted Skullcap</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{4}</Cost>
+    <RulesText>At the beginning of your draw step, draw an additional card.
+At the beginning of your end step, discard your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>15</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Barren Moor</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Barren Moor enters the battlefield tapped.
+{T}: Add {B}.
+Cycling {B} ({B}, Discard this card: Draw a card.)</RulesText>
+  </Card>
 </Decklist>

@@ -1,130 +1,165 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Stasis">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Rescue</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Arcane Denial</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Stasis</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Energy Field</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Daze</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Tidal Bore</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Propaganda</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Annul</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Delusions of Mediocrity</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Thwart</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>2UU</Cost>
-    </Card>
-    <Card>
-        <Name>Kismet</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>3W</Cost>
-    </Card>
-    <Card>
-        <Name>Gush</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>4U</Cost>
-    </Card>
-    <Card>
-        <Name>Force of Will</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Feldon's Cane</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Ivory Tower</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Meekstone</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Howling Mine</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>16</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Plains</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Tundra</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>City of Brass</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Rescue</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Return target permanent you control to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Arcane Denial</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Counter target spell. Its controller may draw up to two cards at the beginning of the next turn's upkeep.
+You draw a card at the beginning of the next turn's upkeep.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stasis</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Players skip their untap steps.
+At the beginning of your upkeep, sacrifice Stasis unless you pay {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Energy Field</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Prevent all damage that would be dealt to you by sources you don't control.
+When a card is put into your graveyard from anywhere, sacrifice Energy Field.</RulesText>
+  </Card>
+  <Card>
+    <Name>Daze</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>You may return an Island you control to its owner's hand rather than pay this spell's mana cost.
+Counter target spell unless its controller pays {1}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tidal Bore</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>You may return an Island you control to its owner's hand rather than pay this spell's mana cost.
+You may tap or untap target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Propaganda</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Creatures can't attack you unless their controller pays {2} for each creature they control that's attacking you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Annul</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Counter target artifact or enchantment spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Delusions of Mediocrity</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>When Delusions of Mediocrity enters the battlefield, you gain 10 life.
+When Delusions of Mediocrity leaves the battlefield, you lose 10 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thwart</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}{U}</Cost>
+    <RulesText>You may return three Islands you control to their owner's hand rather than pay this spell's mana cost.
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kismet</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{3}{W}</Cost>
+    <RulesText>Artifacts, creatures, and lands your opponents control enter the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Gush</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{4}{U}</Cost>
+    <RulesText>You may return two Islands you control to their owner's hand rather than pay this spell's mana cost.
+Draw two cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Force of Will</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Feldon's Cane</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{T}, Exile Feldon's Cane: Shuffle your graveyard into your library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ivory Tower</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>At the beginning of your upkeep, you gain X life, where X is the number of cards in your hand minus 4.</RulesText>
+  </Card>
+  <Card>
+    <Name>Meekstone</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Creatures with power 3 or greater don't untap during their controllers' untap steps.</RulesText>
+  </Card>
+  <Card>
+    <Name>Howling Mine</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>At the beginning of each player's draw step, if Howling Mine is untapped, that player draws an additional card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>16</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>3</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Tundra</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Plains Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W} or {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>City of Brass</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Whenever City of Brass becomes tapped, it deals 1 damage to you.
+{T}: Add one mana of any color.</RulesText>
+  </Card>
 </Decklist>

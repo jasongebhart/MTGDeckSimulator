@@ -1,138 +1,178 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="GreenWaste Natural Order">
- <DesignGoal>Keep opponent low on land so that most of their spells become useless. 
+  <DesignGoal>Keep opponent low on land so that most of their spells become useless. 
  Need to deal with Aether Vial and Goblin Lackey. Elves replaced Wild Growths to 
  give more resistance to the Goblin Lackey</DesignGoal>
-     <Card>
-        <Name>Noble Hierarch</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-     <Card>
-        <Name>Llanowar Elves</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-     <Card>
-        <Name>Young Wolf</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-     <Card>
-        <Name>Birds of Paradise</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Kitchen Finks</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Eternal Witness</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Oracle of Mul Daya</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Deus of Calamity</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>GGGGG</Cost>
-    </Card>
-    <Card>
-        <Name>Avenger Of Zendikar</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>5GG</Cost>
-    </Card>
-    <Card>
-        <Name>Pelakka Wurm</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4GGG</Cost>
-    </Card>
-    <Card>
-        <Name>Nature's Claim</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Naturalize</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Thermokarst</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Winter's Grasp</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Search for Tomorrow</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2G</Cost>
-    </Card>
-    <Card>
-        <Name>Fallow Earth</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2G</Cost>
-    </Card>
-    <Card>
-        <Name>Mwonvuli Acid-Moss</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Natural Order</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>16</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Khalni Garden</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Rishadan Port</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-	<Card>
-        <Name>Maze of Ith</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <Card>
+    <Name>Noble Hierarch</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Druid</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Exalted (Whenever a creature you control attacks alone, that creature gets +1/+1 until end of turn.)
+{T}: Add {G}, {W}, or {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Llanowar Elves</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elf Druid</Type>
+    <Cost>{G}</Cost>
+    <RulesText>{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Young Wolf</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Wolf</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Undying (When this creature dies, if it had no +1/+1 counters on it, return it to the battlefield under its owner's control with a +1/+1 counter on it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Birds of Paradise</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Bird</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Flying
+{T}: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kitchen Finks</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Ouphe</Type>
+    <Cost>{1}{G/W}{G/W}</Cost>
+    <RulesText>When Kitchen Finks enters the battlefield, you gain 2 life.
+Persist (When this creature dies, if it had no -1/-1 counters on it, return it to the battlefield under its owner's control with a -1/-1 counter on it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Eternal Witness</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Shaman</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>When Eternal Witness enters the battlefield, you may return target card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Oracle of Mul Daya</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elf Shaman</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>You may play an additional land on each of your turns.
+Play with the top card of your library revealed.
+You may play lands from the top of your library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Deus of Calamity</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Spirit Avatar</Type>
+    <Cost>{R/G}{R/G}{R/G}{R/G}{R/G}</Cost>
+    <RulesText>Trample
+Whenever Deus of Calamity deals 6 or more damage to an opponent, destroy target land that player controls.</RulesText>
+  </Card>
+  <Card>
+    <Name>Avenger Of Zendikar</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elemental</Type>
+    <Cost>{5}{G}{G}</Cost>
+    <RulesText>When Avenger of Zendikar enters the battlefield, create a 0/1 green Plant creature token for each land you control.
+Landfall — Whenever a land enters the battlefield under your control, you may put a +1/+1 counter on each Plant creature you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pelakka Wurm</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Wurm</Type>
+    <Cost>{4}{G}{G}{G}</Cost>
+    <RulesText>Trample
+When Pelakka Wurm enters the battlefield, you gain 7 life.
+When Pelakka Wurm dies, draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Nature's Claim</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Destroy target artifact or enchantment. Its controller gains 4 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Naturalize</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Destroy target artifact or enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thermokarst</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Destroy target land. If that land was a snow land, you gain 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Winter's Grasp</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Destroy target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Search for Tomorrow</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Search your library for a basic land card, put it onto the battlefield, then shuffle.
+Suspend 2—{G} (Rather than cast this card from your hand, you may pay {G} and exile it with two time counters on it. At the beginning of your upkeep, remove a time counter. When the last is removed, cast it without paying its mana cost.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Fallow Earth</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Put target land on top of its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mwonvuli Acid-Moss</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Destroy target land. Search your library for a Forest card, put that card onto the battlefield tapped, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Natural Order</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>As an additional cost to cast this spell, sacrifice a green creature.
+Search your library for a green creature card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>16</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Khalni Garden</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Khalni Garden enters the battlefield tapped.
+When Khalni Garden enters the battlefield, create a 0/1 green Plant creature token.
+{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rishadan Port</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}, {T}: Tap target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Maze of Ith</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Untap target attacking creature. Prevent all combat damage that would be dealt to and dealt by that creature this turn.</RulesText>
+  </Card>
 </Decklist>

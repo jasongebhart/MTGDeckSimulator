@@ -1,118 +1,155 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Welder">
   <DesignGoal>Leverage the Welder </DesignGoal>
-    <Card>
-        <Name>Goblin Welder</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Junk Diver</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-	    <Cost>3</Cost>
-    </Card>
-    <Card>
-        <Name>Karn, Silver Golem</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>5</Cost>
-    </Card>
-    <Card>
-        <Name>Covetous Dragon</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4R</Cost>
-    </Card>
-    <Card>
-        <Name>Mage-Ring Responder</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>7</Cost>
-    </Card>
-    <Card>
-        <Name>Platinum Angel</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>7</Cost>
-    </Card>
-    <Card>
-        <Name>Myr Battlesphere</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>7</Cost>
-    </Card>
-    <Card>
-        <Name>Sundering Titan</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>8</Cost>
-    </Card>
-    <Card>
-        <Name>Darksteel Colossus</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>11</Cost>
-    </Card>
-    <Card>
-        <Name>Voltaic Key</Name>
-        <Quantity>3</Quantity>
-        <Type>Artifact</Type>
-	    <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Sensei's Divining Top</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-	    <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Grim Monolith</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-	    <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Codex Shredder</Name>
-        <Quantity>3</Quantity>
-        <Type>Artifact</Type>
-	    <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Crucible of Worlds</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>3</Cost>
-    </Card>
-    <Card>
-        <Name>Thran Dynamo</Name>
-        <Quantity>3</Quantity>
-        <Type>Artifact</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>11</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Darksteel Citadel</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Great Furnace</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Tower</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <Card>
+    <Name>Goblin Welder</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin Artificer</Type>
+    <Cost>{R}</Cost>
+    <RulesText>{T}: Choose target artifact a player controls and target artifact card in that player's graveyard. If both targets are still legal as this ability resolves, that player simultaneously sacrifices the artifact and returns the artifact card to the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Junk Diver</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Creature — Bird</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Flying
+When Junk Diver dies, return another target artifact card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Karn, Silver Golem</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Artifact Creature — Golem</Type>
+    <Cost>{5}</Cost>
+    <RulesText>Whenever Karn, Silver Golem blocks or becomes blocked, it gets -4/+4 until end of turn.
+{1}: Target noncreature artifact becomes an artifact creature with power and toughness each equal to its mana value until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Covetous Dragon</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Dragon</Type>
+    <Cost>{4}{R}</Cost>
+    <RulesText>Flying
+When you control no artifacts, sacrifice Covetous Dragon.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mage-Ring Responder</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{7}</Cost>
+    <RulesText>Mage-Ring Responder doesn't untap during your untap step.
+{7}: Untap Mage-Ring Responder.
+Whenever Mage-Ring Responder attacks, it deals 7 damage to target creature defending player controls.</RulesText>
+  </Card>
+  <Card>
+    <Name>Platinum Angel</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact Creature — Angel</Type>
+    <Cost>{7}</Cost>
+    <RulesText>Flying
+You can't lose the game and your opponents can't win the game.</RulesText>
+  </Card>
+  <Card>
+    <Name>Myr Battlesphere</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Myr Construct</Type>
+    <Cost>{7}</Cost>
+    <RulesText>When Myr Battlesphere enters the battlefield, create four 1/1 colorless Myr artifact creature tokens.
+Whenever Myr Battlesphere attacks, you may tap X untapped Myr you control. If you do, Myr Battlesphere gets +X/+0 until end of turn and deals X damage to the player or planeswalker it's attacking.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sundering Titan</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{8}</Cost>
+    <RulesText>When Sundering Titan enters or leaves the battlefield, choose a land of each basic land type, then destroy those lands.</RulesText>
+  </Card>
+  <Card>
+    <Name>Darksteel Colossus</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{11}</Cost>
+    <RulesText>Trample, indestructible
+If Darksteel Colossus would be put into a graveyard from anywhere, reveal Darksteel Colossus and shuffle it into its owner's library instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Voltaic Key</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{1}, {T}: Untap target artifact.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sensei's Divining Top</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{1}: Look at the top three cards of your library, then put them back in any order.
+{T}: Draw a card, then put Sensei's Divining Top on top of its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Grim Monolith</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Grim Monolith doesn't untap during your untap step.
+{T}: Add {C}{C}{C}.
+{4}: Untap Grim Monolith.</RulesText>
+  </Card>
+  <Card>
+    <Name>Codex Shredder</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{T}: Target player mills a card. (They put the top card of their library into their graveyard.)
+{5}, {T}, Sacrifice Codex Shredder: Return target card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Crucible of Worlds</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{3}</Cost>
+    <RulesText>You may play lands from your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thran Dynamo</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{4}</Cost>
+    <RulesText>{T}: Add {C}{C}{C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>11</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Darksteel Citadel</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Indestructible
+{T}: Add {C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Great Furnace</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {R}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Tower</Name>
+    <Quantity>4</Quantity>
+    <Type>Legendary Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice a creature: Add {B}{B}.</RulesText>
+  </Card>
 </Decklist>

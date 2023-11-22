@@ -1,166 +1,208 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="ZombieRenewal">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Ornithopter</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>0</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Walker</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>0</Cost>
-    </Card>
-    <Card>
-        <Name>Maggot Carrier</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Ghoul</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Lord of the Undead</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Gravedigger</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3B</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Delver</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Academy Rector</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>3W</Cost>
-    </Card>
-    <Card>
-        <Name>Soul Warden</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Monk Idealist</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2W</Cost>
-    </Card>
-    <Card>
-        <Name>Flickering Ward</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Spirit Mirror</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2WW</Cost>
-    </Card>
-    <Card>
-        <Name>Enduring Renewal</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2WW</Cost>
-    </Card>
-    <Card>
-        <Name>Duress</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Recurring Nightmare</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Grave Pact</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1BBB</Cost>
-    </Card>
-    <Card>
-        <Name>Living Death</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Gerrard's Verdict</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>WB</Cost>
-    </Card>
-    <Card>
-        <Name>Vindicate</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>WB</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Altar</Name>
-        <Quantity>2</Quantity>
-        <Type>Artifact</Type>
-        <Cost>3</Cost>
-    </Card>
-    <Card>
-        <Name>Death Grasp</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>XWB</Cost>
-    </Card>
-    <Card>
-        <Name>Plains</Name>
-        <Quantity>7</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>7</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Scrubland</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Tower</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Marsh Flats</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Reflecting Pool</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Ornithopter</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact Creature — Thopter</Type>
+    <Cost>{0}</Cost>
+    <RulesText>Flying</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Walker</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact Creature — Phyrexian Construct</Type>
+    <Cost>{0}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Maggot Carrier</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{B}</Cost>
+    <RulesText>When Maggot Carrier enters the battlefield, each player loses 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Ghoul</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Phyrexian Zombie</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>Sacrifice a creature: Phyrexian Ghoul gets +2/+2 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lord of the Undead</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Other Zombie creatures get +1/+1.
+{1}{B}, {T}: Return target Zombie card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Gravedigger</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{3}{B}</Cost>
+    <RulesText>When Gravedigger enters the battlefield, you may return target creature card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Delver</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Phyrexian Zombie</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>When Phyrexian Delver enters the battlefield, return target creature card from your graveyard to the battlefield. You lose life equal to that card's mana value.</RulesText>
+  </Card>
+  <Card>
+    <Name>Academy Rector</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Human Cleric</Type>
+    <Cost>{3}{W}</Cost>
+    <RulesText>When Academy Rector dies, you may exile it. If you do, search your library for an enchantment card, put that card onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Soul Warden</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Cleric</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Whenever another creature enters the battlefield, you gain 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Monk Idealist</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Monk Cleric</Type>
+    <Cost>{2}{W}</Cost>
+    <RulesText>When Monk Idealist enters the battlefield, return target enchantment card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Flickering Ward</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Enchant creature
+As Flickering Ward enters the battlefield, choose a color.
+Enchanted creature has protection from the chosen color. This effect doesn't remove Flickering Ward.
+{W}: Return Flickering Ward to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Spirit Mirror</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>At the beginning of your upkeep, if there are no Reflection tokens on the battlefield, create a 2/2 white Reflection creature token.
+{0}: Destroy target Reflection.</RulesText>
+  </Card>
+  <Card>
+    <Name>Enduring Renewal</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>Play with your hand revealed.
+If you would draw a card, reveal the top card of your library instead. If it's a creature card, put it into your graveyard. Otherwise, draw a card.
+Whenever a creature is put into your graveyard from the battlefield, return it to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Duress</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Recurring Nightmare</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>Sacrifice a creature, Return Recurring Nightmare to its owner's hand: Return target creature card from your graveyard to the battlefield. Activate only as a sorcery.</RulesText>
+  </Card>
+  <Card>
+    <Name>Grave Pact</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{B}{B}{B}</Cost>
+    <RulesText>Whenever a creature you control dies, each other player sacrifices a creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Living Death</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>Each player exiles all creature cards from their graveyard, then sacrifices all creatures they control, then puts all cards they exiled this way onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Gerrard's Verdict</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{W}{B}</Cost>
+    <RulesText>Target player discards two cards. You gain 3 life for each land card discarded this way.</RulesText>
+  </Card>
+  <Card>
+    <Name>Vindicate</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{W}{B}</Cost>
+    <RulesText>Destroy target permanent.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Altar</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Sacrifice a creature: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Death Grasp</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{W}{B}</Cost>
+    <RulesText>Death Grasp deals X damage to any target. You gain X life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>7</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>7</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Scrubland</Name>
+    <Quantity>3</Quantity>
+    <Type>Land — Plains Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W} or {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Tower</Name>
+    <Quantity>3</Quantity>
+    <Type>Legendary Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice a creature: Add {B}{B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Marsh Flats</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Marsh Flats: Search your library for a Plains or Swamp card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Reflecting Pool</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add one mana of any type that a land you control could produce.</RulesText>
+  </Card>
 </Decklist>

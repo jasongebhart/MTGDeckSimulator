@@ -1,132 +1,174 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="GreenWaste Sakura">
- <DesignGoal>Keep opponent low on land so that most of their spells become useless. 
+  <DesignGoal>Keep opponent low on land so that most of their spells become useless. 
  Need to deal with Aether Vial and Goblin Lackey. Elves replaced Wild Growths to 
  give more resistance to the Goblin Lackey</DesignGoal>
-     <Card>
-        <Name>Sakura-Tribe Elder</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Yavimaya Elder</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Argothian Wurm</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Blastoderm</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Acidic Slime</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3GG</Cost>
-    </Card>
-    <Card>
-        <Name>Avenger Of Zendikar</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>5GG</Cost>
-    </Card>
-    <Card>
-        <Name>Pelakka Wurm</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4GGG</Cost>
-    </Card>
-    <Card>
-        <Name>Cursed Scroll</Name>
-        <Quantity>2</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Nature's Lore</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Thermokarst</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Winter's Grasp</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Fallow Earth</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2G</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Processor</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Predator, Flagship</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>5</Cost>
-    </Card>
-    <Card>
-        <Name>Plow Under</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3GG</Cost>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>15</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Khalni Garden</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Rishadan Port</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-	<Card>
-        <Name>Mishra's Factory</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-	<Card>
-        <Name>Desert</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-	<Card>
-        <Name>Maze of Ith</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <Card>
+    <Name>Sakura-Tribe Elder</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Snake Shaman</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Sacrifice Sakura-Tribe Elder: Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Yavimaya Elder</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Druid</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>When Yavimaya Elder dies, you may search your library for up to two basic land cards, reveal them, put them into your hand, then shuffle.
+{2}, Sacrifice Yavimaya Elder: Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Argothian Wurm</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Wurm</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>Trample
+When Argothian Wurm enters the battlefield, any player may sacrifice a land. If a player does, put Argothian Wurm on top of its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blastoderm</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Beast</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Shroud (This creature can't be the target of spells or abilities.)
+Fading 3 (This creature enters the battlefield with three fade counters on it. At the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Acidic Slime</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Ooze</Type>
+    <Cost>{3}{G}{G}</Cost>
+    <RulesText>Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)
+When Acidic Slime enters the battlefield, destroy target artifact, enchantment, or land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Avenger Of Zendikar</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elemental</Type>
+    <Cost>{5}{G}{G}</Cost>
+    <RulesText>When Avenger of Zendikar enters the battlefield, create a 0/1 green Plant creature token for each land you control.
+Landfall — Whenever a land enters the battlefield under your control, you may put a +1/+1 counter on each Plant creature you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pelakka Wurm</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Wurm</Type>
+    <Cost>{4}{G}{G}{G}</Cost>
+    <RulesText>Trample
+When Pelakka Wurm enters the battlefield, you gain 7 life.
+When Pelakka Wurm dies, draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Cursed Scroll</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{3}, {T}: Choose a card name, then reveal a card at random from your hand. If that card has the chosen name, Cursed Scroll deals 2 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Nature's Lore</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Search your library for a Forest card, put that card onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thermokarst</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Destroy target land. If that land was a snow land, you gain 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Winter's Grasp</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Destroy target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fallow Earth</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Put target land on top of its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Processor</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{4}</Cost>
+    <RulesText>As Phyrexian Processor enters the battlefield, pay any amount of life.
+{4}, {T}: Create an X/X black Phyrexian Minion creature token, where X is the life paid as Phyrexian Processor entered the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Predator, Flagship</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Artifact</Type>
+    <Cost>{5}</Cost>
+    <RulesText>{2}: Target creature gains flying until end of turn.
+{5}, {T}: Destroy target creature with flying.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plow Under</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{G}{G}</Cost>
+    <RulesText>Put two target lands on top of their owners' libraries.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>15</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Khalni Garden</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Khalni Garden enters the battlefield tapped.
+When Khalni Garden enters the battlefield, create a 0/1 green Plant creature token.
+{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rishadan Port</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}, {T}: Tap target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mishra's Factory</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}: Mishra's Factory becomes a 2/2 Assembly-Worker artifact creature until end of turn. It's still a land.
+{T}: Target Assembly-Worker creature gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Desert</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Desert</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}: Desert deals 1 damage to target attacking creature. Activate only during the end of combat step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Maze of Ith</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Untap target attacking creature. Prevent all combat damage that would be dealt to and dealt by that creature this turn.</RulesText>
+  </Card>
 </Decklist>

@@ -1,148 +1,194 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="JunkDiver">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Flood</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Disrupt</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Snap</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Daze</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Counterspell</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>UU</Cost>
-    </Card>
-    <Card>
-        <Name>Propaganda</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Tinker</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Fact or Fiction</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Treachery</Name>
-        <Quantity>3</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Palinchron</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>5UU</Cost>
-    </Card>
-    <Card>
-        <Name>Mahamoti Djinn</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>4UU</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Walker</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>0</Cost>
-    </Card>
-    <Card>
-        <Name>Cursed Totem</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Tsabo's Web</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Junk Diver</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>3</Cost>
-    </Card>
-    <Card>
-        <Name>Nevinyrral's Disk</Name>
-        <Quantity>2</Quantity>
-        <Type>Artifact</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Monkey Cage</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>5</Cost>
-    </Card>
-    <Card>
-        <Name>Karn, Silver Golem</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>5</Cost>
-    </Card>
-    <Card>
-        <Name>Urza's Armor</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>6</Cost>
-    </Card>
-    <Card>
-        <Name>Teeka's Dragon</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>9</Cost>
-    </Card>
-    <Card>
-        <Name>Faerie Conclave</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Rath's Edge</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>City Of Traitors</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>17</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Flood</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{U}</Cost>
+    <RulesText>{U}{U}: Tap target creature without flying.</RulesText>
+  </Card>
+  <Card>
+    <Name>Disrupt</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Counter target instant or sorcery spell unless its controller pays {1}.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Snap</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Return target creature to its owner's hand. Untap up to two lands.</RulesText>
+  </Card>
+  <Card>
+    <Name>Daze</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>You may return an Island you control to its owner's hand rather than pay this spell's mana cost.
+Counter target spell unless its controller pays {1}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Counterspell</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}{U}</Cost>
+    <RulesText>Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Propaganda</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Creatures can't attack you unless their controller pays {2} for each creature they control that's attacking you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tinker</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>As an additional cost to cast this spell, sacrifice an artifact.
+Search your library for an artifact card, put that card onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fact or Fiction</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>Reveal the top five cards of your library. An opponent separates those cards into two piles. Put one pile into your hand and the other into your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Treachery</Name>
+    <Quantity>3</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>Enchant creature
+When Treachery enters the battlefield, untap up to five lands.
+You control enchanted creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Palinchron</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Illusion</Type>
+    <Cost>{5}{U}{U}</Cost>
+    <RulesText>Flying
+When Palinchron enters the battlefield, untap up to seven lands.
+{2}{U}{U}: Return Palinchron to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mahamoti Djinn</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Djinn</Type>
+    <Cost>{4}{U}{U}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Walker</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Phyrexian Construct</Type>
+    <Cost>{0}</Cost>
+    <RulesText>
+    </RulesText>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Cursed Totem</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Activated abilities of creatures can't be activated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tsabo's Web</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>When Tsabo's Web enters the battlefield, draw a card.
+Each land with an activated ability that isn't a mana ability doesn't untap during its controller's untap step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Junk Diver</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Creature — Bird</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Flying
+When Junk Diver dies, return another target artifact card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Nevinyrral's Disk</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{4}</Cost>
+    <RulesText>Nevinyrral's Disk enters the battlefield tapped.
+{1}, {T}: Destroy all artifacts, creatures, and enchantments.</RulesText>
+  </Card>
+  <Card>
+    <Name>Monkey Cage</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{5}</Cost>
+    <RulesText>When a creature enters the battlefield, sacrifice Monkey Cage and create X 2/2 green Monkey creature tokens, where X is that creature's mana value.</RulesText>
+  </Card>
+  <Card>
+    <Name>Karn, Silver Golem</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Artifact Creature — Golem</Type>
+    <Cost>{5}</Cost>
+    <RulesText>Whenever Karn, Silver Golem blocks or becomes blocked, it gets -4/+4 until end of turn.
+{1}: Target noncreature artifact becomes an artifact creature with power and toughness each equal to its mana value until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Urza's Armor</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{6}</Cost>
+    <RulesText>If a source would deal damage to you, prevent 1 of that damage.</RulesText>
+  </Card>
+  <Card>
+    <Name>Teeka's Dragon</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Dragon</Type>
+    <Cost>{9}</Cost>
+    <RulesText>Flying; trample; rampage 4 (Whenever this creature becomes blocked, it gets +4/+4 until end of turn for each creature blocking it beyond the first.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Faerie Conclave</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Faerie Conclave enters the battlefield tapped.
+{T}: Add {U}.
+{1}{U}: Faerie Conclave becomes a 2/1 blue Faerie creature with flying until end of turn. It's still a land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rath's Edge</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{4}, {T}, Sacrifice a land: Rath's Edge deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>City Of Traitors</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>When you play another land, sacrifice City of Traitors.
+{T}: Add {C}{C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>17</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
 </Decklist>

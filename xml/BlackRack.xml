@@ -1,9 +1,173 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="BlackRack"><DesignGoal>a</DesignGoal><Card><Name>Vicious Conquistador</Name><Quantity>1</Quantity><Type>Creature — Vampire Soldier</Type><Cost>{B}</Cost><RulesText>Whenever Vicious Conquistador attacks, each opponent loses 1 life.</RulesText></Card><Card><Name>Fume Spitter</Name><Quantity>3</Quantity><Type>Creature — Phyrexian Horror</Type><Cost>{B}</Cost><RulesText>Sacrifice Fume Spitter: Put a -1/-1 counter on target creature.</RulesText></Card><Card><Name>Wight of Precinct Six</Name><Quantity>1</Quantity><Type>Creature — Zombie</Type><Cost>{1}{B}</Cost><RulesText>Wight of Precinct Six gets +1/+1 for each creature card in your opponents' graveyards.</RulesText></Card><Card><Name>Black Knight</Name><Quantity>2</Quantity><Type>Creature — Human Knight</Type><Cost>{B}{B}</Cost><RulesText>First strike (This creature deals combat damage before creatures without first strike.)
-Protection from white (This creature can't be blocked, targeted, dealt damage, or enchanted by anything white.)</RulesText></Card><Card><Name>Ruin Raider</Name><Quantity>2</Quantity><Type>Creature — Orc Pirate</Type><Cost>{2}{B}</Cost><RulesText>Raid — At the beginning of your end step, if you attacked this turn, reveal the top card of your library and put that card into your hand. You lose life equal to the card's mana value.</RulesText></Card><Card><Name>Phyrexian Rager</Name><Quantity>1</Quantity><Type>Creature — Phyrexian Horror</Type><Cost>{2}{B}</Cost><RulesText>When Phyrexian Rager enters the battlefield, you draw a card and you lose 1 life.</RulesText></Card><Card><Name>Hypnotic Specter</Name><Quantity>2</Quantity><Type>Creature — Specter</Type><Cost>{1}{B}{B}</Cost><RulesText>Flying
-Whenever Hypnotic Specter deals damage to an opponent, that player discards a card at random.</RulesText></Card><Card><Name>Dread Shade</Name><Quantity>2</Quantity><Type>Creature — Shade</Type><Cost>{B}{B}{B}</Cost><RulesText>{B}: Dread Shade gets +1/+1 until end of turn.</RulesText></Card><Card><Name>Gurmag Angler</Name><Quantity>4</Quantity><Type>Creature — Zombie Fish</Type><Cost>{6}{B}</Cost><RulesText>Delve (Each card you exile from your graveyard while casting this spell pays for {1}.)</RulesText></Card><Card><Name>Dark Ritual</Name><Quantity>4</Quantity><Type>Instant</Type><Cost>{B}</Cost><RulesText>Add {B}{B}{B}.</RulesText></Card><Card><Name>Duress</Name><Quantity>1</Quantity><Type>Sorcery</Type><Cost>{B}</Cost><RulesText>Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card.</RulesText></Card><Card><Name>Funeral Charm</Name><Quantity>1</Quantity><Type>Instant</Type><Cost>{B}</Cost><RulesText>Choose one —
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="BlackRack">
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Vicious Conquistador</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Vampire Soldier</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Whenever Vicious Conquistador attacks, each opponent loses 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fume Spitter</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Phyrexian Horror</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Sacrifice Fume Spitter: Put a -1/-1 counter on target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wight of Precinct Six</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Wight of Precinct Six gets +1/+1 for each creature card in your opponents' graveyards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Black Knight</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Knight</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>First strike (This creature deals combat damage before creatures without first strike.)
+Protection from white (This creature can't be blocked, targeted, dealt damage, or enchanted by anything white.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Ruin Raider</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Orc Pirate</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>Raid — At the beginning of your end step, if you attacked this turn, reveal the top card of your library and put that card into your hand. You lose life equal to the card's mana value.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Rager</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Phyrexian Horror</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>When Phyrexian Rager enters the battlefield, you draw a card and you lose 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hypnotic Specter</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Specter</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Flying
+Whenever Hypnotic Specter deals damage to an opponent, that player discards a card at random.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dread Shade</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Shade</Type>
+    <Cost>{B}{B}{B}</Cost>
+    <RulesText>{B}: Dread Shade gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Gurmag Angler</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Zombie Fish</Type>
+    <Cost>{6}{B}</Cost>
+    <RulesText>Delve (Each card you exile from your graveyard while casting this spell pays for {1}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Dark Ritual</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Add {B}{B}{B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Duress</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Funeral Charm</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Choose one —
 • Target player discards a card.
 • Target creature gets +2/-1 until end of turn.
-• Target creature gains swampwalk until end of turn. (It can't be blocked as long as defending player controls a Swamp.)</RulesText></Card><Card><Name>The Rack</Name><Quantity>3</Quantity><Type>Artifact</Type><Cost>{1}</Cost><RulesText>As The Rack enters the battlefield, choose an opponent.
-At the beginning of the chosen player's upkeep, The Rack deals X damage to that player, where X is 3 minus the number of cards in their hand.</RulesText></Card><Card><Name>Hymn to tourach</Name><Quantity>4</Quantity><Type>Sorcery</Type><Cost>{B}{B}</Cost><RulesText>Target player discards two cards at random.</RulesText></Card><Card><Name>Diabolic Edict</Name><Quantity>1</Quantity><Type>Instant</Type><Cost>{1}{B}</Cost><RulesText>Target player sacrifices a creature.</RulesText></Card><Card><Name>Terror</Name><Quantity>1</Quantity><Type>Instant</Type><Cost>{1}{B}</Cost><RulesText>Destroy target nonartifact, nonblack creature. It can't be regenerated.</RulesText></Card><Card><Name>Doom Blade</Name><Quantity>1</Quantity><Type>Instant</Type><Cost>{1}{B}</Cost><RulesText>Destroy target nonblack creature.</RulesText></Card><Card><Name>Drain Life</Name><Quantity>1</Quantity><Type>Sorcery</Type><Cost>{X}{1}{B}</Cost><RulesText>Spend only black mana on X.
-Drain Life deals X damage to any target. You gain life equal to the damage dealt, but not more life than the player's life total before the damage was dealt, the planeswalker's loyalty before the damage was dealt, or the creature's toughness.</RulesText></Card><Card><Name>Bitterblossom</Name><Quantity>1</Quantity><Type>Tribal Enchantment — Faerie</Type><Cost>{1}{B}</Cost><RulesText>At the beginning of your upkeep, you lose 1 life and create a 1/1 black Faerie Rogue creature token with flying.</RulesText></Card><Card><Name>Ashes to Ashes</Name><Quantity>1</Quantity><Type>Sorcery</Type><Cost>{1}{B}{B}</Cost><RulesText>Exile two target nonartifact creatures. Ashes to Ashes deals 5 damage to you.</RulesText></Card><Card><Name>Phyrexian Arena</Name><Quantity>1</Quantity><Type>Enchantment</Type><Cost>{1}{B}{B}</Cost><RulesText>At the beginning of your upkeep, you draw a card and you lose 1 life.</RulesText></Card><Card><Name>No Mercy</Name><Quantity>1</Quantity><Type>Enchantment</Type><Cost>{2}{B}{B}</Cost><RulesText>Whenever a creature deals damage to you, destroy it.</RulesText></Card><Card><Name>Swamp</Name><Quantity>21</Quantity><Type>Basic Land — Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {B}.)</RulesText></Card></Decklist>
+• Target creature gains swampwalk until end of turn. (It can't be blocked as long as defending player controls a Swamp.)</RulesText>
+  </Card>
+  <Card>
+    <Name>The Rack</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>As The Rack enters the battlefield, choose an opponent.
+At the beginning of the chosen player's upkeep, The Rack deals X damage to that player, where X is 3 minus the number of cards in their hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hymn to tourach</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>Target player discards two cards at random.</RulesText>
+  </Card>
+  <Card>
+    <Name>Diabolic Edict</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Target player sacrifices a creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Terror</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Destroy target nonartifact, nonblack creature. It can't be regenerated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Doom Blade</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Destroy target nonblack creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Drain Life</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{1}{B}</Cost>
+    <RulesText>Spend only black mana on X.
+Drain Life deals X damage to any target. You gain life equal to the damage dealt, but not more life than the player's life total before the damage was dealt, the planeswalker's loyalty before the damage was dealt, or the creature's toughness.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bitterblossom</Name>
+    <Quantity>1</Quantity>
+    <Type>Tribal Enchantment — Faerie</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>At the beginning of your upkeep, you lose 1 life and create a 1/1 black Faerie Rogue creature token with flying.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ashes to Ashes</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Exile two target nonartifact creatures. Ashes to Ashes deals 5 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Arena</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>At the beginning of your upkeep, you draw a card and you lose 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>No Mercy</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>Whenever a creature deals damage to you, destroy it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>21</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+</Decklist>

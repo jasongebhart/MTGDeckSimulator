@@ -92,9 +92,29 @@
   width: auto; /* Use 'auto' to fit content width */
 }
 
+.heading-cell {
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+}
+
+.heading-cell:last-child:after {
+  content: "\A"; /* Add a line break after the last heading cell's content */
+  white-space: pre; /* Preserve white space */
+}
+
+.total-type {
+  padding-left: 10px;
+}
 .cost-image {
   width: 15px;
   padding: 0px;
+  margin: 0px 11px 0 11px;
+  vertical-align: middle; /* Align the image vertically with the text */
+}
+.cost-image-type {
+  width: 15px;
+  padding: 0px;
+  margin-right: 0px; /* Adjust the margin to add space between image and text */
+  vertical-align: middle; /* Align the image vertically with the text */
 }
 .header-image {
   width: 35px;
@@ -176,6 +196,7 @@
 #left-sidebar h3 {
   font-size: 20px; /* Adjust the font size as needed */
   margin-bottom: 10px; /* Add spacing below the heading */
+  margin-top: 10px; /* Add spacing below the heading */
 }
 
 #left-sidebar section,
@@ -274,6 +295,9 @@
   transition: opacity 0.3s;
 }
 
+.CostDistribution {
+  text-align: center;
+}
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
@@ -285,18 +309,24 @@
   display: inline-block;
   vertical-align: top;
   border: 0;
-  padding: 0 2em;
-  background-color: var(--highlight-bg, #e3e2db); /* CSS variable for background color */
+  padding: 2em 2em;
+  background-color: var(--highlight-bg,#eaeae5); /* CSS variable for background color */
 }
 
+.style1 {
+  /* Use this class for both info-box and card-list */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 /* Info Box and Card List */
 .sidebar-box {
   /* Use this class for both info-box and card-list */
   display: inline-block;
   vertical-align: top;
   border: 0;
-  padding: 0 2em;
-  background-color: var(--highlight-bg, #d2d2c9); /* CSS variable for background color */
+  padding: 4px;
+  margin-top: 5px;
+  background-color: var(--highlight-bg, #eaeae5); /* CSS variable for background color */
 }
 /* Body Styles */
 .body-text {

@@ -1,13 +1,150 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="BlackDread"><DesignGoal>a</DesignGoal><Card><Name>Kitesail Freebooter</Name><Quantity>2</Quantity><Type>Creature — Human Pirate</Type><Cost>{1}{B}</Cost><RulesText>Flying
-When Kitesail Freebooter enters the battlefield, target opponent reveals their hand. You choose a noncreature, nonland card from it. Exile that card until Kitesail Freebooter leaves the battlefield.</RulesText></Card><Card><Name>Barrier of Bones</Name><Quantity>0</Quantity><Type>Creature — Skeleton Wall</Type><Cost>{B}</Cost><RulesText>Defender
-When Barrier of Bones enters the battlefield, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)</RulesText></Card><Card><Name>Stitcher's Supplier</Name><Quantity>4</Quantity><Type>Creature — Zombie</Type><Cost>{B}</Cost><RulesText>When Stitcher's Supplier enters the battlefield or dies, mill three cards.</RulesText></Card><Card><Name>Seekers' Squire</Name><Quantity>4</Quantity><Type>Creature — Human Scout</Type><Cost>{1}{B}</Cost><RulesText>When Seekers' Squire enters the battlefield, it explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on this creature, then put the card back or put it into your graveyard.)</RulesText></Card><Card><Name>Mire Triton</Name><Quantity>1</Quantity><Type>Creature — Zombie Merfolk</Type><Cost>{1}{B}</Cost><RulesText>Deathtouch
-When Mire Triton enters the battlefield, mill two cards and you gain 2 life.</RulesText></Card><Card><Name>Orzhov Enforcer</Name><Quantity>1</Quantity><Type>Creature — Human Rogue</Type><Cost>{1}{B}</Cost><RulesText>Deathtouch
-Afterlife 1 (When this creature dies, create a 1/1 white and black Spirit creature token with flying.)</RulesText></Card><Card><Name>Dusk Legion Zealot</Name><Quantity>4</Quantity><Type>Creature — Vampire Soldier</Type><Cost>{1}{B}</Cost><RulesText>When Dusk Legion Zealot enters the battlefield, you draw a card and you lose 1 life.</RulesText></Card><Card><Name>Priest of Forgotten Gods</Name><Quantity>2</Quantity><Type>Creature — Human Cleric</Type><Cost>{1}{B}</Cost><RulesText>{T}, Sacrifice two other creatures: Any number of target players each lose 2 life and sacrifice a creature. You add {B}{B} and draw a card.</RulesText></Card><Card><Name>Plaguecrafter</Name><Quantity>4</Quantity><Type>Creature — Human Shaman</Type><Cost>{2}{B}</Cost><RulesText>When Plaguecrafter enters the battlefield, each player sacrifices a creature or planeswalker. Each player who can't discards a card.</RulesText></Card><Card><Name>Isareth the Awakener</Name><Quantity>1</Quantity><Type>Legendary Creature — Human Wizard</Type><Cost>{1}{B}{B}</Cost><RulesText>Deathtouch
-Whenever Isareth the Awakener attacks, you may pay {X}. When you do, return target creature card with mana value X from your graveyard to the battlefield with a corpse counter on it. If that creature would leave the battlefield, exile it instead of putting it anywhere else.</RulesText></Card><Card><Name>Dread Shade</Name><Quantity>2</Quantity><Type>Creature — Shade</Type><Cost>{B}{B}{B}</Cost><RulesText>{B}: Dread Shade gets +1/+1 until end of turn.</RulesText></Card><Card><Name>Windgrace Acolyte</Name><Quantity>3</Quantity><Type>Creature — Cat Warrior</Type><Cost>{4}{B}</Cost><RulesText>Flying
-When Windgrace Acolyte enters the battlefield, mill three cards and you gain 3 life.</RulesText></Card><Card><Name>Lotleth Giant</Name><Quantity>2</Quantity><Type>Creature — Zombie Giant</Type><Cost>{6}{B}</Cost><RulesText>Undergrowth — When Lotleth Giant enters the battlefield, it deals 1 damage to target opponent for each creature card in your graveyard.</RulesText></Card><Card><Name>Necrotic Wound</Name><Quantity>3</Quantity><Type>Instant</Type><Cost>{B}</Cost><RulesText>Undergrowth — Target creature gets -X/-X until end of turn, where X is the number of creature cards in your graveyard. If that creature would die this turn, exile it instead.</RulesText></Card><Card><Name>Walk the Plank</Name><Quantity>2</Quantity><Type>Sorcery</Type><Cost>{B}{B}</Cost><RulesText>Destroy target non-Merfolk creature.</RulesText></Card><Card><Name>Cast Down</Name><Quantity>1</Quantity><Type>Instant</Type><Cost>{1}{B}</Cost><RulesText>Destroy target nonlegendary creature.</RulesText></Card><Card><Name>The Eldest Reborn</Name><Quantity>1</Quantity><Type>Enchantment — Saga</Type><Cost>{4}{B}</Cost><RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="BlackDread">
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Kitesail Freebooter</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Pirate</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Flying
+When Kitesail Freebooter enters the battlefield, target opponent reveals their hand. You choose a noncreature, nonland card from it. Exile that card until Kitesail Freebooter leaves the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Barrier of Bones</Name>
+    <Quantity>0</Quantity>
+    <Type>Creature — Skeleton Wall</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Defender
+When Barrier of Bones enters the battlefield, surveil 1. (Look at the top card of your library. You may put that card into your graveyard.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Stitcher's Supplier</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{B}</Cost>
+    <RulesText>When Stitcher's Supplier enters the battlefield or dies, mill three cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Seekers' Squire</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Scout</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>When Seekers' Squire enters the battlefield, it explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on this creature, then put the card back or put it into your graveyard.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Mire Triton</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie Merfolk</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Deathtouch
+When Mire Triton enters the battlefield, mill two cards and you gain 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Orzhov Enforcer</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Rogue</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Deathtouch
+Afterlife 1 (When this creature dies, create a 1/1 white and black Spirit creature token with flying.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Dusk Legion Zealot</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Vampire Soldier</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>When Dusk Legion Zealot enters the battlefield, you draw a card and you lose 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Priest of Forgotten Gods</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Cleric</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>{T}, Sacrifice two other creatures: Any number of target players each lose 2 life and sacrifice a creature. You add {B}{B} and draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plaguecrafter</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Shaman</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>When Plaguecrafter enters the battlefield, each player sacrifices a creature or planeswalker. Each player who can't discards a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Isareth the Awakener</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Human Wizard</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Deathtouch
+Whenever Isareth the Awakener attacks, you may pay {X}. When you do, return target creature card with mana value X from your graveyard to the battlefield with a corpse counter on it. If that creature would leave the battlefield, exile it instead of putting it anywhere else.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dread Shade</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Shade</Type>
+    <Cost>{B}{B}{B}</Cost>
+    <RulesText>{B}: Dread Shade gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Windgrace Acolyte</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Cat Warrior</Type>
+    <Cost>{4}{B}</Cost>
+    <RulesText>Flying
+When Windgrace Acolyte enters the battlefield, mill three cards and you gain 3 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lotleth Giant</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Zombie Giant</Type>
+    <Cost>{6}{B}</Cost>
+    <RulesText>Undergrowth — When Lotleth Giant enters the battlefield, it deals 1 damage to target opponent for each creature card in your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Necrotic Wound</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Undergrowth — Target creature gets -X/-X until end of turn, where X is the number of creature cards in your graveyard. If that creature would die this turn, exile it instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Walk the Plank</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>Destroy target non-Merfolk creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Cast Down</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Destroy target nonlegendary creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>The Eldest Reborn</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Saga</Type>
+    <Cost>{4}{B}</Cost>
+    <RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
 I — Each opponent sacrifices a creature or planeswalker.
 II — Each opponent discards a card.
-III — Put target creature or planeswalker card from a graveyard onto the battlefield under your control.</RulesText></Card><Card><Name>Memorial to Folly</Name><Quantity>4</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Memorial to Folly enters the battlefield tapped.
+III — Put target creature or planeswalker card from a graveyard onto the battlefield under your control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Memorial to Folly</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Memorial to Folly enters the battlefield tapped.
 {T}: Add {B}.
-{2}{B}, {T}, Sacrifice Memorial to Folly: Return target creature card from your graveyard to your hand.</RulesText></Card><Card><Name>Swamp</Name><Quantity>19</Quantity><Type>Basic Land — Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {B}.)</RulesText></Card></Decklist>
+{2}{B}, {T}, Sacrifice Memorial to Folly: Return target creature card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>19</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+</Decklist>

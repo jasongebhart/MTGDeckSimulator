@@ -1,100 +1,130 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Goblins">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Gempalm Incinerator</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Lackey</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Matron</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Piledriver</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Ringleader</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>3R</Cost>
-    </Card>
-	    <Card>
-        <Name>Goblin Warchief</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1RR</Cost>
-    </Card>
-	    <Card>
-        <Name>Mogg Fanatic</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Siege-Gang Commander</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>3RR</Cost>
-    </Card>
-    <Card>
-        <Name>Tin Street Hooligan</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Aether Vial</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Taiga</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Wasteland</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Wooded Foothills</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-   <Card>
-        <Name>Bloodstained Mire</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>5</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Rishadan Port</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Gempalm Incinerator</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Cycling {1}{R} ({1}{R}, Discard this card: Draw a card.)
+When you cycle Gempalm Incinerator, you may have it deal X damage to target creature, where X is the number of Goblins on the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Lackey</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Whenever Goblin Lackey deals damage to a player, you may put a Goblin permanent card from your hand onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Matron</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>When Goblin Matron enters the battlefield, you may search your library for a Goblin card, reveal that card, put it into your hand, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Piledriver</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin Warrior</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Protection from blue (This creature can't be blocked, targeted, dealt damage, or enchanted by anything blue.)
+Whenever Goblin Piledriver attacks, it gets +2/+0 until end of turn for each other attacking Goblin.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Ringleader</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>Haste (This creature can attack and {T} as soon as it comes under your control.)
+When Goblin Ringleader enters the battlefield, reveal the top four cards of your library. Put all Goblin cards revealed this way into your hand and the rest on the bottom of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Warchief</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin Warrior</Type>
+    <Cost>{1}{R}{R}</Cost>
+    <RulesText>Goblin spells you cast cost {1} less to cast.
+Goblins you control have haste.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mogg Fanatic</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Sacrifice Mogg Fanatic: It deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Siege-Gang Commander</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{3}{R}{R}</Cost>
+    <RulesText>When Siege-Gang Commander enters the battlefield, create three 1/1 red Goblin creature tokens.
+{1}{R}, Sacrifice a Goblin: Siege-Gang Commander deals 2 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tin Street Hooligan</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Goblin Rogue</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>When Tin Street Hooligan enters the battlefield, if {G} was spent to cast it, destroy target artifact.</RulesText>
+  </Card>
+  <Card>
+    <Name>Aether Vial</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>At the beginning of your upkeep, you may put a charge counter on Aether Vial.
+{T}: You may put a creature card with mana value equal to the number of charge counters on Aether Vial from your hand onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Taiga</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Mountain Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R} or {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Wasteland</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wooded Foothills</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Wooded Foothills: Search your library for a Mountain or Forest card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bloodstained Mire</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Bloodstained Mire: Search your library for a Swamp or Mountain card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>5</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Rishadan Port</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}, {T}: Tap target land.</RulesText>
+  </Card>
 </Decklist>

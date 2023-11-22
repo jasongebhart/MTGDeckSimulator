@@ -1,106 +1,132 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Belcher">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Elvish Spirit Guide</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2G</Cost>
-    </Card>
-    <Card>
-        <Name>Simian Spirit Guide</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Street Wraith</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Tinder Wall</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Burning Wish</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Chrome Mox</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>0</Cost>
-    </Card>
-    <Card>
-        <Name>Dark Ritual</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Desperate Ritual</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Empty the Warrens</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3R</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Charbelcher</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Land Grant</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Lion's Eye Diamond</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>0</Cost>
-    </Card>
-    <Card>
-        <Name>Lotus Petal</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>0</Cost>
-    </Card>
-    <Card>
-        <Name>Rite of Flame</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Seething Song</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Bayou</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Taiga</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Elvish Spirit Guide</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Elf Spirit</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Exile Elvish Spirit Guide from your hand: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Simian Spirit Guide</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Ape Spirit</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Exile Simian Spirit Guide from your hand: Add {R}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Street Wraith</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Wraith</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>Swampwalk (This creature can't be blocked as long as defending player controls a Swamp.)
+Cycling—Pay 2 life. (Pay 2 life, Discard this card: Draw a card.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Tinder Wall</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Plant Wall</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Defender (This creature can't attack.)
+Sacrifice Tinder Wall: Add {R}{R}.
+{R}, Sacrifice Tinder Wall: It deals 2 damage to target creature it's blocking.</RulesText>
+  </Card>
+  <Card>
+    <Name>Burning Wish</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>You may reveal a sorcery card you own from outside the game and put it into your hand. Exile Burning Wish.</RulesText>
+  </Card>
+  <Card>
+    <Name>Chrome Mox</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{0}</Cost>
+    <RulesText>Imprint — When Chrome Mox enters the battlefield, you may exile a nonartifact, nonland card from your hand.
+{T}: Add one mana of any of the exiled card's colors.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dark Ritual</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Add {B}{B}{B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Desperate Ritual</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant — Arcane</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Add {R}{R}{R}.
+Splice onto Arcane {1}{R} (As you cast an Arcane spell, you may reveal this card from your hand and pay its splice cost. If you do, add this card's effects to that spell.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Empty the Warrens</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>Create two 1/1 red Goblin creature tokens.
+Storm (When you cast this spell, copy it for each spell cast before it this turn.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Charbelcher</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{4}</Cost>
+    <RulesText>{3}, {T}: Reveal cards from the top of your library until you reveal a land card. Goblin Charbelcher deals damage equal to the number of nonland cards revealed this way to any target. If the revealed land card was a Mountain, Goblin Charbelcher deals double that damage instead. Put the revealed cards on the bottom of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Land Grant</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>If you have no land cards in hand, you may reveal your hand rather than pay this spell's mana cost.
+Search your library for a Forest card, reveal that card, put it into your hand, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lion's Eye Diamond</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{0}</Cost>
+    <RulesText>Discard your hand, Sacrifice Lion's Eye Diamond: Add three mana of any one color. Activate only as an instant.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lotus Petal</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{0}</Cost>
+    <RulesText>{T}, Sacrifice Lotus Petal: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rite of Flame</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Add {R}{R}, then add {R} for each card named Rite of Flame in each graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Seething Song</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Add {R}{R}{R}{R}{R}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bayou</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Swamp Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B} or {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Taiga</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Mountain Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R} or {G}.)</RulesText>
+  </Card>
 </Decklist>

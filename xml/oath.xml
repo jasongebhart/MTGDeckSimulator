@@ -1,178 +1,238 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Oath">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Morphling</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Shard Phoenix</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4R</Cost>
-    </Card>
-    <Card>
-        <Name>Spike Feeder</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Abundance</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Aura of Silence</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1WW</Cost>
-    </Card>
-    <Card>
-        <Name>Brainstorm</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Counterspell</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>UU</Cost>
-    </Card>
-    <Card>
-        <Name>Disrupt</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Enlightened Tutor</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Forbid</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1UU</Cost>
-    </Card>
-    <Card>
-        <Name>Force of Will</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Null Rod</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Gaea's Blessing</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Poweder Keg</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Ivory Mask</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchanment</Type>
-        <Cost>2WW</Cost>
-    </Card>
-    <Card>
-        <Name>Oath of Druids</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Impulse</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Swords to Plowshares</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Sylvan Library</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Trade Routes</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Tundra</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Tropical Island</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Treetop Village</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Savannah</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Flood Plain</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Reflecting Pool</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Faerie Conclave</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Volcanic Island</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Wasteland</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Morphling</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Shapeshifter</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>{U}: Untap Morphling.
+{U}: Morphling gains flying until end of turn.
+{U}: Morphling gains shroud until end of turn. (It can't be the target of spells or abilities.)
+{1}: Morphling gets +1/-1 until end of turn.
+{1}: Morphling gets -1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shard Phoenix</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Phoenix</Type>
+    <Cost>{4}{R}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+Sacrifice Shard Phoenix: It deals 2 damage to each creature without flying.
+{R}{R}{R}: Return Shard Phoenix from your graveyard to your hand. Activate only during your upkeep.</RulesText>
+  </Card>
+  <Card>
+    <Name>Spike Feeder</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Spike</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Spike Feeder enters the battlefield with two +1/+1 counters on it.
+{2}, Remove a +1/+1 counter from Spike Feeder: Put a +1/+1 counter on target creature.
+Remove a +1/+1 counter from Spike Feeder: You gain 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Abundance</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>If you would draw a card, you may instead choose land or nonland and reveal cards from the top of your library until you reveal a card of the chosen kind. Put that card into your hand and put all other cards revealed this way on the bottom of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Aura of Silence</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{W}{W}</Cost>
+    <RulesText>Artifact and enchantment spells your opponents cast cost {2} more to cast.
+Sacrifice Aura of Silence: Destroy target artifact or enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Brainstorm</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Draw three cards, then put two cards from your hand on top of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Counterspell</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}{U}</Cost>
+    <RulesText>Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Disrupt</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Counter target instant or sorcery spell unless its controller pays {1}.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Enlightened Tutor</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Search your library for an artifact or enchantment card, reveal it, then shuffle and put that card on top.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forbid</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}{U}</Cost>
+    <RulesText>Buyback—Discard two cards. (You may discard two cards in addition to any other costs as you cast this spell. If you do, put this card into your hand as it resolves.)
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Force of Will</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Null Rod</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Activated abilities of artifacts can't be activated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Gaea's Blessing</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Target player shuffles up to three target cards from their graveyard into their library.
+Draw a card.
+When Gaea's Blessing is put into your graveyard from your library, shuffle your graveyard into your library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Poweder Keg</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>At the beginning of your upkeep, you may put a fuse counter on Powder Keg.
+{T}, Sacrifice Powder Keg: Destroy each artifact and creature with mana value equal to the number of fuse counters on Powder Keg.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ivory Mask</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>You have shroud. (You can't be the target of spells or abilities.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Oath of Druids</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>At the beginning of each player's upkeep, that player chooses target player who controls more creatures than they do and is their opponent. The first player may reveal cards from the top of their library until they reveal a creature card. If the first player does, that player puts that card onto the battlefield and all other cards revealed this way into their graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Impulse</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Look at the top four cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swords to Plowshares</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Exile target creature. Its controller gains life equal to its power.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sylvan Library</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>At the beginning of your draw step, you may draw two additional cards. If you do, choose two cards in your hand drawn this turn. For each of those cards, pay 4 life or put the card on top of your library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Trade Routes</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>{1}: Return target land you control to its owner's hand.
+{1}, Discard a land card: Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tundra</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Plains Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W} or {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Tropical Island</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Forest Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G} or {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Treetop Village</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Treetop Village enters the battlefield tapped.
+{T}: Add {G}.
+{1}{G}: Treetop Village becomes a 3/3 green Ape creature with trample until end of turn. It's still a land. (It can deal excess combat damage to the player or planeswalker it's attacking.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Savannah</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Forest Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G} or {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Flood Plain</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Flood Plain enters the battlefield tapped.
+{T}, Sacrifice Flood Plain: Search your library for a Plains or Island card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Reflecting Pool</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add one mana of any type that a land you control could produce.</RulesText>
+  </Card>
+  <Card>
+    <Name>Faerie Conclave</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Faerie Conclave enters the battlefield tapped.
+{T}: Add {U}.
+{1}{U}: Faerie Conclave becomes a 2/1 blue Faerie creature with flying until end of turn. It's still a land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Volcanic Island</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Island Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Wasteland</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText>
+  </Card>
 </Decklist>

@@ -1,148 +1,184 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Outpost">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Mother of Runes</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Savannah Lions</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Serra Zealot</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Soltari Foot Soldier</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Cho-Arrim Alchemist</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Soul Warden</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Soltari Monk</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>WW</Cost>
-    </Card>
-    <Card>
-        <Name>White Knight</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>WW</Cost>
-    </Card>
-    <Card>
-        <Name>Paladin en-Vec</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1WW</Cost>
-    </Card>
-    <Card>
-        <Name>Soltari Visionary</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1WW</Cost>
-    </Card>
-    <Card>
-        <Name>Preacher</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>1WW</Cost>
-    </Card>
-    <Card>
-        <Name>Blinking Spirit</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3W</Cost>
-    </Card>
-    <Card>
-        <Name>Swords to Plowshares</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Disenchant</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1W</Cost>
-    </Card>
-    <Card>
-        <Name>Crusade</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>WW</Cost>
-    </Card>
-    <Card>
-        <Name>Glorious Anthem</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1WW</Cost>
-    </Card>
-    <Card>
-        <Name>Spirit Mirror</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2WW</Cost>
-    </Card>
-    <Card>
-        <Name>Lashknife Barrier</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2W</Cost>
-    </Card>
-    <Card>
-        <Name>Orim's Prayer</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1WW</Cost>
-    </Card>
-    <Card>
-        <Name>Exile</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>2W</Cost>
-    </Card>
-    <Card>
-        <Name>Crackdown</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2W</Cost>
-    </Card>
-    <Card>
-        <Name>Empyrial Armor</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1WW</Cost>
-    </Card>
-    <Card>
-        <Name>Plains</Name>
-        <Quantity>20</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Kjeldoran Outpost</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Mother of Runes</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Cleric</Type>
+    <Cost>{W}</Cost>
+    <RulesText>{T}: Target creature you control gains protection from the color of your choice until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Savannah Lions</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Cat</Type>
+    <Cost>{W}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Serra Zealot</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Soldier</Type>
+    <Cost>{W}</Cost>
+    <RulesText>First strike</RulesText>
+  </Card>
+  <Card>
+    <Name>Soltari Foot Soldier</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Soltari Soldier</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Shadow (This creature can block or be blocked by only creatures with shadow.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Cho-Arrim Alchemist</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Spellshaper</Type>
+    <Cost>{W}</Cost>
+    <RulesText>{1}{W}{W}, {T}, Discard a card: The next time a source of your choice would deal damage to you this turn, prevent that damage. You gain life equal to the damage prevented this way.</RulesText>
+  </Card>
+  <Card>
+    <Name>Soul Warden</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Human Cleric</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Whenever another creature enters the battlefield, you gain 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Soltari Monk</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Soltari Monk Cleric</Type>
+    <Cost>{W}{W}</Cost>
+    <RulesText>Protection from black
+Shadow (This creature can block or be blocked by only creatures with shadow.)</RulesText>
+  </Card>
+  <Card>
+    <Name>White Knight</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Knight</Type>
+    <Cost>{W}{W}</Cost>
+    <RulesText>First strike (This creature deals combat damage before creatures without first strike.)
+Protection from black (This creature can't be blocked, targeted, dealt damage, or enchanted by anything black.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Paladin en-Vec</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Knight</Type>
+    <Cost>{1}{W}{W}</Cost>
+    <RulesText>First strike, protection from black and from red (This creature deals combat damage before creatures without first strike. It can't be blocked, targeted, dealt damage, or enchanted by anything black or red.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Soltari Visionary</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Soltari Cleric</Type>
+    <Cost>{1}{W}{W}</Cost>
+    <RulesText>Shadow (This creature can block or be blocked by only creatures with shadow.)
+Whenever Soltari Visionary deals damage to a player, destroy target enchantment that player controls.</RulesText>
+  </Card>
+  <Card>
+    <Name>Preacher</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Cleric</Type>
+    <Cost>{1}{W}{W}</Cost>
+    <RulesText>You may choose not to untap Preacher during your untap step.
+{T}: For as long as Preacher remains tapped, gain control of target creature of an opponent's choice they control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blinking Spirit</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Spirit</Type>
+    <Cost>{3}{W}</Cost>
+    <RulesText>{0}: Return Blinking Spirit to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swords to Plowshares</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Exile target creature. Its controller gains life equal to its power.</RulesText>
+  </Card>
+  <Card>
+    <Name>Disenchant</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{W}</Cost>
+    <RulesText>Destroy target artifact or enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Crusade</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{W}{W}</Cost>
+    <RulesText>White creatures get +1/+1.</RulesText>
+  </Card>
+  <Card>
+    <Name>Glorious Anthem</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{W}{W}</Cost>
+    <RulesText>Creatures you control get +1/+1.</RulesText>
+  </Card>
+  <Card>
+    <Name>Spirit Mirror</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>At the beginning of your upkeep, if there are no Reflection tokens on the battlefield, create a 2/2 white Reflection creature token.
+{0}: Destroy target Reflection.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lashknife Barrier</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{W}</Cost>
+    <RulesText>When Lashknife Barrier enters the battlefield, draw a card.
+If a source would deal damage to a creature you control, it deals that much damage minus 1 to that creature instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Orim's Prayer</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{W}{W}</Cost>
+    <RulesText>Whenever one or more creatures attack you, you gain 1 life for each attacking creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Exile</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{W}</Cost>
+    <RulesText>Exile target nonwhite attacking creature. You gain life equal to its toughness.</RulesText>
+  </Card>
+  <Card>
+    <Name>Crackdown</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{W}</Cost>
+    <RulesText>Nonwhite creatures with power 3 or greater don't untap during their controllers' untap steps.</RulesText>
+  </Card>
+  <Card>
+    <Name>Empyrial Armor</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{1}{W}{W}</Cost>
+    <RulesText>Enchant creature
+Enchanted creature gets +1/+1 for each card in your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>20</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Kjeldoran Outpost</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>If Kjeldoran Outpost would enter the battlefield, sacrifice a Plains instead. If you do, put Kjeldoran Outpost onto the battlefield. If you don't, put it into its owner's graveyard.
+{T}: Add {W}.
+{1}{W}, {T}: Create a 1/1 white Soldier creature token.</RulesText>
+  </Card>
 </Decklist>

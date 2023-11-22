@@ -1,10 +1,10 @@
 function Get-CardDetails {
     param (
-        [string]$cardName
+        [string]$CardName
     )
 
     try {
-        $response = Get-ScryfallCardDetail -cardName $cardName
+        $response = Get-ScryfallCardDetail -cardName $CardName
         if ($response.object -ne "card") {
             throw "Card not found"
         }
@@ -30,16 +30,15 @@ function Get-CardDetails {
         }
     } catch {
         Write-Error "Error fetching card details: $_"
-        throw $_
     }
 }
 
 function Get-ScryfallCardDetail {
     param (
-        [string]$cardName
+        [string]$CardName
     )
 
-    $apiUrl = "https://api.scryfall.com/cards/named?fuzzy=$($cardName -replace ' ', '%20')"
+    $apiUrl = "https://api.scryfall.com/cards/named?fuzzy=$($CardName -replace ' ', '%20')"
     $response = Invoke-RestMethod -Uri $apiUrl -Method Get
     return $response
 }
@@ -50,9 +49,9 @@ function DownloadSymbol($name) {
     if ($symbol) {
         $imageUrl = $symbol.svg_uri
         Invoke-RestMethod -Uri $imageUrl -Method Get -OutFile "$symbolName.svg"
-        Write-Host "Downloaded symbol image: $symbolName"
+        Write-Verbose -Message "Downloaded symbol image: $symbolName"
     } else {
-        Write-Host "Symbol '$symbolName' not found."
+        Write-Verbose -Message "Symbol '$symbolName' not found."
     }
 }
 function Get-ScryfallSymbol {
@@ -64,7 +63,7 @@ function Get-ScryfallSymbol {
         $response
     }
     catch {
-        Write-Output -InputObject "Error fetching symbols: $_"
+        Write-Verbose -Message "Error fetching symbols: $_"
     }
 }
 
@@ -115,16 +114,16 @@ function Save-SpecificSymbol {
 
             try {
                 if (Test-Path -Path $TargetFile) {
-                    Write-Output "Image for $filename already exists in '$DestinationDir'."
+                    Write-Verbose -Message "Image for $filename already exists in '$DestinationDir'."
                 } elseif ($PSCmdlet.ShouldProcess($Name, "Download Symbol Image")) {
                     Invoke-WebRequest -Uri $ImageUrl -Method Get -OutFile $TargetFile -ErrorAction Stop
-                    Write-Output "Downloaded image for $Name to '$TargetFile'."
+                    Write-Verbose -Message "Downloaded image for $Name to '$TargetFile'."
                 }
             } catch {
                 Write-Error "Error saving symbol image for $Name : $_"
             }
         } else {
-            Write-Host "Symbol $Name not found."
+            Write-Verbose -Message "Symbol $Name not found."
         }
     }
 }
@@ -165,12 +164,12 @@ function Save-CardImage {
         [string]$DestinationDir,
         [switch]$WhatIf
     )
-    $cardName = $CardDetails.CardName
+    $CardName = $CardDetails.CardName
 
-    if ($cardName -match '//') {
-        Write-Output "$cardName matches '//'."
+    if ($CardName -match '//') {
+        Write-Verbose -Message  "$CardName matches '//'."
         $targetfile = "$($CardDetails.Scryfall_id).jpg"
-        Write-Output "Use filename $targetfile"
+        Write-Verbose -Message  "Use filename $targetfile"
     } else {
         $targetfile = "$($CardDetails.CardName).jpg"
         Write-Verbose -Message "The string does not contain '//'. Using `"$targetfile`""
@@ -179,19 +178,18 @@ function Save-CardImage {
     try {
         $imageName = Join-Path -Path $DestinationDir -ChildPath $targetfile
         if (Test-Path $imageName) {
-            Write-Output "Image for $($CardDetails.CardName) already exists in $DestinationDir"
+            Write-Verbose -Message  "Image for $($CardDetails.CardName) already exists in $DestinationDir"
         }
         elseif ($WhatIf) {
-            Write-Output "WhatIf: Image for $($CardDetails.CardName) would be saved to $imageName"
+            Write-Verbose -Message  "WhatIf: Image for $($CardDetails.CardName) would be saved to $imageName"
         }
         else {
             $response = Invoke-WebRequest -Uri $CardDetails.CardImageUrl -OutFile $imageName -ErrorAction Stop
-            Write-Output "Downloaded image for $($CardDetails.CardName) to $imageName"
+            Write-Verbose -Message  "Downloaded image for $($CardDetails.CardName) to $imageName"
         }
     }
     catch {
         Write-Error "Error saving card image: $_"
-         # Don't throw the error, just log it and continue to the next card
     }
 }
 
@@ -232,7 +230,6 @@ function Read-DecklistXML {
     }
     catch {
         Write-Error "Error reading XML file: $_"
-        throw $_
     }
 }
 function Save-CardImagesFromXML {
@@ -252,10 +249,87 @@ function Save-CardImagesFromXML {
     }
     catch {
         Write-Error "Error downloading card images: $_"
-        throw $_
     }
 }
 
+# Function to get card details and update XML
+function Update-DeckXML {
+    param (
+        [parameter(Mandatory = $true)]
+        [ValidateScript({
+            Test-Path $_ -PathType Leaf
+        })]
+        [string]$deckFilePath,
+        [parameter(Mandatory = $true)]
+        [ValidateScript({
+            Test-Path $_ -PathType Container
+        })]
+        [string]$destinationDir,
+        [parameter(Mandatory = $false)]
+        [ValidateScript({
+            Test-Path $_ -PathType Container
+        })]
+        [string]$imageDir = ".\assets\magicimages\"
+    )
+
+    try {
+        # Read deck XML file
+        $deckXml = [xml](Get-Content -Path $deckFilePath)
+
+        # Extract deck information
+        $deck = $deckXml.Decklist
+
+        # Iterate through each card in the deck
+        foreach ($card in $deck.Card) {
+            # Get card details
+            $cardDetails = Get-CardDetails -cardName $card.Name
+
+            # Update card information
+            $card.Type = $cardDetails.CardType
+            $card.Cost = $cardDetails.CardCost
+            if (-not $card.RulesText) {
+                # Add RulesText property
+                $rulesTextElement = $deckXml.CreateElement('RulesText')
+                $rulesTextElement.InnerText = $cardDetails.RulesText
+                $card.AppendChild($rulesTextElement) | Out-Null
+                Write-Verbose -Message "Added RulesText: $($cardDetails.RulesText)"
+            }
+            else {
+                # Update RulesText property
+                $card.RulesText = $cardDetails.RulesText
+                Write-Verbose -Message "Updated RulesText: $($cardDetails.RulesText)"
+            }
+
+            <# Add or update RulesText property
+            if (-not $card.PSObject.Properties['RulesText']) {
+                # Add RulesText property
+                $card | Add-Member -NotePropertyName 'RulesText' -NotePropertyValue $cardDetails.RulesText
+                Write-Verbose -Message "$($card.RulesText)"
+            }
+            else {
+                # Update RulesText property
+                $card.PSObject.Properties['RulesText'].Value = $cardDetails.RulesText
+            }
+    #>
+            # Save card image if needed
+            #Save-CardImage -CardDetails $cardDetails -destinationDir $imageDir
+        }
+
+        # Save the updated XML
+        $deckXml.Save($deckFilePath)
+
+        Write-Output "Deck XML updated successfully."
+    }
+    catch {
+        Write-Error "Error updating deck XML: $_"
+    }
+}
+
+# Usage example
+$deckFilePath = ".\xml\affinity.xml"
+$destinationXMLDir = ".\xml\"
+
+Update-DeckXML -deckFilePath $deckFilePath -destinationDir $destinationXMLDir
 
 # Usage example
 # Lookup through all xml files in a folder
@@ -263,6 +337,14 @@ $decks = Get-Childitem -Path .\xml\*.xml
 foreach ($deck in $decks){
     $cards = Read-DecklistXML -filePath $deck.Fullname
     Save-CardImagesFromXML -deck $cards -destinationDir .\assets\magicimages\ -WhatIf
+}
+
+# Lookup through all xml files in a folder and update the xml content
+$ExcludedFiles = "_template.xml", "mulligan.xml"
+$decks = Get-Childitem -Path .\xml\*.xml -Exclude $ExcludedFiles
+foreach ($deck in $decks){
+    Write-Output "Update-DeckXML -deckFilePath $($deck.Fullname) -destinationDir $destinationXMLDir -verbose"
+    Update-DeckXML -deckFilePath $deck.Fullname -destinationDir $destinationXMLDir -verbose
 }
 
 # Same images for one deck (.xml)

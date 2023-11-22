@@ -1,172 +1,226 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="BlackDread">
- <DesignGoal>Leverage Stitcher</DesignGoal>
-     <Card>
-        <Name>Llanowar Elves</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Glowspore Shaman</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>GB</Cost>
-    </Card>
-    <Card>
-        <Name>Stitcher's Supplier</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>B</Cost>
-    </Card>
-     <Card>
-        <Name>Diregraf Ghoul</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Plaguecrafter</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Golgari Raiders</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Poison-tip Archer</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2BG</Cost>
-    </Card>
-    <Card>
-        <Name>Ravenous Chupacabra</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2BB</Cost>
-    </Card>
-    <Card>
-        <Name>Golgari Findbroker</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>BBGG</Cost>
-    </Card> 
-    <Card>
-        <Name>Underrealm Lich</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3GB</Cost>
-    </Card>  
-    <Card>
-        <Name>Karn, Scion of Urza</Name>
-        <Quantity>1</Quantity>
-        <Type>Planeswalker</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Dead Weight</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Walk the Plank</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>BB</Cost>
-    </Card>
-    <Card>
-        <Name>Murder</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1BB</Cost>
-    </Card>
-        <Card>
-        <Name>Status // Statue</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Find-Finality</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>4BG</Cost>
-    </Card>
-    <Card>
-        <Name>Vraska's Contempt</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>2BB</Cost>
-    </Card>
-    <Card>
-        <Name>Cast Down</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1B</Cost>
-    </Card>
-     <Card>
-        <Name>Crucible of Worlds</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>3</Cost>
-    </Card>
-    <Card>
-        <Name>Liliana, Untouched by Death</Name>
-        <Quantity>1</Quantity>
-        <Type>Planeswalker</Type>
-        <Cost>2BB</Cost>
-    </Card> 
-        <Card>
-        <Name>Vraska, Relic Seeker</Name>
-        <Quantity>1</Quantity>
-        <Type>Planeswalker</Type>
-        <Cost>4BG</Cost>
-    </Card> 
-    <Card>
-        <Name>Memorial to Folly</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>11</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Overgrown Tomb</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Woodland Cemetery</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-        <Card>
-        <Name>Golgari Guildgate</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Foul Orchard</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
+  <DesignGoal>Leverage Stitcher</DesignGoal>
+  <Card>
+    <Name>Llanowar Elves</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Elf Druid</Type>
+    <Cost>{G}</Cost>
+    <RulesText>{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Glowspore Shaman</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Elf Shaman</Type>
+    <Cost>{B}{G}</Cost>
+    <RulesText>When Glowspore Shaman enters the battlefield, mill three cards. You may put a land card from your graveyard on top of your library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stitcher's Supplier</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{B}</Cost>
+    <RulesText>When Stitcher's Supplier enters the battlefield or dies, mill three cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Diregraf Ghoul</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Diregraf Ghoul enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plaguecrafter</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Shaman</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>When Plaguecrafter enters the battlefield, each player sacrifices a creature or planeswalker. Each player who can't discards a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Golgari Raiders</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Elf Warrior</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>Haste
+Undergrowth — Golgari Raiders enters the battlefield with a +1/+1 counter on it for each creature card in your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Poison-tip Archer</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Elf Archer</Type>
+    <Cost>{2}{B}{G}</Cost>
+    <RulesText>Reach (This creature can block creatures with flying.)
+Deathtouch (Any amount of damage this deals to a creature is enough to destroy it.)
+Whenever another creature dies, each opponent loses 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ravenous Chupacabra</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Beast Horror</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>When Ravenous Chupacabra enters the battlefield, destroy target creature an opponent controls.</RulesText>
+  </Card>
+  <Card>
+    <Name>Golgari Findbroker</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elf Shaman</Type>
+    <Cost>{B}{B}{G}{G}</Cost>
+    <RulesText>When Golgari Findbroker enters the battlefield, return target permanent card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Underrealm Lich</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie Elf Shaman</Type>
+    <Cost>{3}{B}{G}</Cost>
+    <RulesText>If you would draw a card, instead look at the top three cards of your library, then put one into your hand and the rest into your graveyard.
+Pay 4 life: Underrealm Lich gains indestructible until end of turn. Tap it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Karn, Scion of Urza</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Planeswalker — Karn</Type>
+    <Cost>{4}</Cost>
+    <RulesText>+1: Reveal the top two cards of your library. An opponent chooses one of them. Put that card into your hand and exile the other with a silver counter on it.
+−1: Put a card you own with a silver counter on it from exile into your hand.
+−2: Create a 0/0 colorless Construct artifact creature token with "This creature gets +1/+1 for each artifact you control."</RulesText>
+  </Card>
+  <Card>
+    <Name>Dead Weight</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Enchant creature
+Enchanted creature gets -2/-2.</RulesText>
+  </Card>
+  <Card>
+    <Name>Walk the Plank</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>Destroy target non-Merfolk creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Murder</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Destroy target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Status // Statue</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant // Instant</Type>
+    <Cost>{B/G}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Find-Finality</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery // Sorcery</Type>
+    <Cost>{B/G}{B/G}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Vraska's Contempt</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>Exile target creature or planeswalker. You gain 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Cast Down</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Destroy target nonlegendary creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Crucible of Worlds</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{3}</Cost>
+    <RulesText>You may play lands from your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Liliana, Untouched by Death</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Planeswalker — Liliana</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>+1: Mill three cards. If at least one Zombie card is milled this way, each opponent loses 2 life and you gain 2 life.
+−2: Target creature gets -X/-X until end of turn, where X is the number of Zombies you control.
+−3: You may cast Zombie spells from your graveyard this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Vraska, Relic Seeker</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Planeswalker — Vraska</Type>
+    <Cost>{4}{B}{G}</Cost>
+    <RulesText>+2: Create a 2/2 black Pirate creature token with menace.
+−3: Destroy target artifact, creature, or enchantment. Create a Treasure token. (It's an artifact with "{T}, Sacrifice this artifact: Add one mana of any color.")
+−10: Target player's life total becomes 1.</RulesText>
+  </Card>
+  <Card>
+    <Name>Memorial to Folly</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Memorial to Folly enters the battlefield tapped.
+{T}: Add {B}.
+{2}{B}, {T}, Sacrifice Memorial to Folly: Return target creature card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>4</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>11</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Overgrown Tomb</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Swamp Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B} or {G}.)
+As Overgrown Tomb enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Woodland Cemetery</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Woodland Cemetery enters the battlefield tapped unless you control a Swamp or a Forest.
+{T}: Add {B} or {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Golgari Guildgate</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Gate</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Golgari Guildgate enters the battlefield tapped.
+{T}: Add {B} or {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Foul Orchard</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Foul Orchard enters the battlefield tapped.
+{T}: Add {B} or {G}.</RulesText>
+  </Card>
 </Decklist>

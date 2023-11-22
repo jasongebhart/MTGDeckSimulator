@@ -39,47 +39,50 @@
   </section>
   </div>
   <div>
+    <h2 class="style1" id="DeckListName">Deck Name</h2>
+    <p>
+      Deck Size: <span class="deckSize" id="deckSize"></span><br>
+      Mana Value: <span class="TotConvertedCost" id="TotConvertedCost"></span>
+    </p>   
     <h2>Design Goal</h2>
     <p id="DesignGoal"></p>
   <div class="sidebar-box">
+    <h3 class="style1">Card Types</h3>
     <table border="0" class="sidebar-box" id="tblSingleDeck">
-     <tr><th colspan="2" class="style1" id="DeckListName">Deck Name</th></tr>
-      <tr><td>Deck Size</td><td class="deckSize" id="deckSize"></td></tr>
-     <tr><td>Converted Cost</td><td class="TotConvertedCost" id="TotConvertedCost"></td></tr>
-     <tr><td><img src="/assets/mtgsymbols/land.svg" alt="Lands" class="cost-image">Lands</td><td class="TotLands" id="TotLands"></td></tr>
-     <tr><td><img src="/assets/mtgsymbols/creature.svg" alt="Creatures" class="cost-image">Creatures</td><td class="TotCreatures" id="TotCreatures"></td></tr>
-     <tr><td><img src="/assets/mtgsymbols/instant.svg" alt="Instant" class="cost-image">Instants</td><td class="TotInstants" id="TotInstants"></td></tr>
-     <tr><td><img src="/assets/mtgsymbols/sorcery.svg" alt="Soreries" class="cost-image">Sorceries</td><td class="TotSorceries" id="TotSorceries"></td></tr>
-     <tr><td><img src="/assets/mtgsymbols/enchantment.svg" alt="Enchantments" class="cost-image">Enchantments</td><td class="TotEnchantments" id="TotEnchantments"></td></tr>
-     <tr><td><img src="/assets/mtgsymbols/artifact.svg" alt="Artifacts" class="cost-image">Artifacts</td><td class="TotArtifacts" id="TotArtifacts"></td></tr>
-     <tr><td><img src="/assets/mtgsymbols/planeswalk2.svg" alt="Planeswalkers" class="cost-image">Planeswalkers</td><td class="TotPlaneswalkers" id="TotPlaneswalkers"></td></tr>
+     <tr><td><img src="/assets/mtgsymbols/land.svg" alt="Land" class="cost-image">Land</td><td class="total-type" id="TotLands"></td></tr>
+     <tr><td><img src="/assets/mtgsymbols/creature.svg" alt="Creature" class="cost-image">Creature</td><td class="total-type" id="TotCreatures"></td></tr>
+     <tr><td><img src="/assets/mtgsymbols/instant.svg" alt="Instant" class="cost-image">Instant</td><td class="total-type" id="TotInstants"></td></tr>
+     <tr><td><img src="/assets/mtgsymbols/sorcery.svg" alt="Sorery" class="cost-image">Sorcery</td><td class="total-type" id="TotSorceries"></td></tr>
+     <tr><td><img src="/assets/mtgsymbols/enchantment.svg" alt="Enchantment" class="cost-image">Enchantment</td><td class="total-type" id="TotEnchantments"></td></tr>
+     <tr><td><img src="/assets/mtgsymbols/artifact.svg" alt="Artifact" class="cost-image">Artifact</td><td class="total-type" id="TotArtifacts"></td></tr>
+     <tr><td><img src="/assets/mtgsymbols/planeswalk2.svg" alt="Planeswalker" class="cost-image">Planeswalker</td><td class="total-type" id="TotPlaneswalkers"></td></tr>
     </table>
   </div>
   <p></p>
   <div class="sidebar-box">
-    <table class="sidebar-box" id="tblCostDist">
-      <tr>
-      <th colspan="8" class="style1">Cost Distribution</th></tr>
-      <tr><td><img src="/assets/mtgsymbols/0.svg" alt="Zero" class="cost-image"></td><td class="ZeroCost" id="ZeroCost"></td></tr>
-      <tr><td><img src="/assets/mtgsymbols/1.svg" alt="One" class="cost-image"></td><td class="OneCost" id="OneCost"></td></tr>
-      <tr><td><img src="/assets/mtgsymbols/2.svg" alt="Two" class="cost-image"></td><td class="TwoCost" id="TwoCost"></td></tr>
-      <tr><td><img src="/assets/mtgsymbols/3.svg" alt="Three" class="cost-image"></td><td class="ThreeCost" id="ThreeCost"></td></tr>
-      <tr><td><img src="/assets/mtgsymbols/4.svg" alt="Four" class="cost-image"></td><td class="FourCost" id="FourCost"></td></tr>
-      <tr><td><img src="/assets/mtgsymbols/5.svg" alt="Five" class="cost-image"></td><td class="FiveCost" id="FiveCost"></td></tr>
-      <tr><td><img src="/assets/mtgsymbols/6.svg" alt="Six" class="cost-image"></td><td class="SixCost" id="SixCost"></td></tr>
-      <tr><td><img src="/assets/mtgsymbols/7.svg" alt="Seven" class="cost-image"></td><td class="SevenmoreCost" id="SevenmoreCost"></td></tr>
+    <h3 class="style1">Cost<br>Distribution</h3>
+    <table id="tblCostDist">
+      <tr><th>Mana<br>Value</th><th>Total<br>Cards</th></tr>
+      <tr><td><img src="/assets/mtgsymbols/0.svg" alt="Zero" class="cost-image"></td><td class="CostDistribution" id="ZeroCost"></td></tr>
+      <tr><td><img src="/assets/mtgsymbols/1.svg" alt="One" class="cost-image"></td><td class="CostDistribution" id="OneCost"></td></tr>
+      <tr><td><img src="/assets/mtgsymbols/2.svg" alt="Two" class="cost-image"></td><td class="CostDistribution" id="TwoCost"></td></tr>
+      <tr><td><img src="/assets/mtgsymbols/3.svg" alt="Three" class="cost-image"></td><td class="CostDistribution" id="ThreeCost"></td></tr>
+      <tr><td><img src="/assets/mtgsymbols/4.svg" alt="Four" class="cost-image"></td><td class="CostDistribution" id="FourCost"></td></tr>
+      <tr><td><img src="/assets/mtgsymbols/5.svg" alt="Five" class="cost-image"></td><td class="CostDistribution" id="FiveCost"></td></tr>
+      <tr><td><img src="/assets/mtgsymbols/6.svg" alt="Six" class="cost-image"></td><td class="CostDistribution" id="SixCost"></td></tr>
+      <tr><td><img src="/assets/mtgsymbols/7.svg" alt="Seven" class="cost-image"></td><td class="CostDistribution" id="SevenmoreCost"></td></tr>
     </table>
     </div>
     <div class="sidebar-box">
+      <h3 class="style1">Color<br>Distribution</h3>
       <table id="tblColorDist">
-        <tr><th colspan="3" class="style1">Color Distribution</th></tr>
-        <tr><th colspan="1"></th><th colspan="1">Symbols</th><th colspan="1">Cards</th></tr>
-        <tr><td><img src="/assets/mtgsymbols/U.svg" alt="Blue" class="cost-image"></td><td id="BlueCost"></td><td id="BlueCards"></td></tr>
-        <tr><td><img src="/assets/mtgsymbols/R.svg" alt="Red" class="cost-image"></td><td id="RedCost"></td><td id="RedCards"></td></tr>
-        <tr><td><img src="/assets/mtgsymbols/B.svg" alt="Black" class="cost-image"></td><td id="BlackCost"></td><td id="BlackCards"></td></tr>
-        <tr><td><img src="/assets/mtgsymbols/W.svg" alt="White" class="cost-image"></td><td id="WhiteCost"></td><td id="WhiteCards"></td></tr>
-        <tr><td><img src="/assets/mtgsymbols/G.svg" alt="Green" class="cost-image"></td><td id="GreenCost"></td><td id="GreenCards"></td></tr>
-        <tr><td><img src="/assets/mtgsymbols/C.svg" alt="Colorless" class="cost-image"></td><td id="ColorlessCost"></td><td id="ColorlessCards"></td></tr>
+        <tr><th colspan="1"></th><th colspan="1">Total<br>Symbols</th><th colspan="1">Total<br>Cards</th></tr>
+        <tr><td><img src="/assets/mtgsymbols/U.svg" alt="Blue" class="cost-image"></td><td class="CostDistribution" id="BlueCost"></td><td class="CostDistribution" id="BlueCards"></td></tr>
+        <tr><td><img src="/assets/mtgsymbols/R.svg" alt="Red" class="cost-image"></td><td class="CostDistribution" id="RedCost"></td><td class="CostDistribution" id="RedCards"></td></tr>
+        <tr><td><img src="/assets/mtgsymbols/B.svg" alt="Black" class="cost-image"></td><td class="CostDistribution" id="BlackCost"></td><td class="CostDistribution" id="BlackCards"></td></tr>
+        <tr><td><img src="/assets/mtgsymbols/W.svg" alt="White" class="cost-image"></td><td class="CostDistribution" id="WhiteCost"></td><td class="CostDistribution" id="WhiteCards"></td></tr>
+        <tr><td><img src="/assets/mtgsymbols/G.svg" alt="Green" class="cost-image"></td><td class="CostDistribution" id="GreenCost"></td><td class="CostDistribution" id="GreenCards"></td></tr>
+        <tr><td><img src="/assets/mtgsymbols/C.svg" alt="Colorless" class="cost-image"></td><td class="CostDistribution" id="ColorlessCost"></td><td class="CostDistribution" id="ColorlessCards"></td></tr>
       </table>
       </div>
     </div>
@@ -88,33 +91,83 @@
 <div class="highlighted-box">
 	<table class="highlighted-box" id="tblCreatureList">
 		<thead>
-<tr><th colspan="4"><img src="/assets/mtgsymbols/creature.svg" alt="Creatures" class="header-image">Creatures</th></tr><tr>
+      <tr>
+        <th colspan="4">
+            <figure>
+                <img src="/assets/mtgsymbols/creature.svg" alt="Creature" class="header-image">
+                <figcaption>Creature</figcaption>
+            </figure>
+        </th>
+    </tr>   
 		</tbody>
 	</table>
 	<table class="highlighted-box" id="tblSpellsList">
-		<thead><tr><th colspan="4"><img src="/assets/mtgsymbols/instant.svg" alt="Instants" class="header-image">Instants & <img src="/assets/mtgsymbols/sorcery.svg" alt="Sorceries" class="header-image">Sorceries</th></tr><tr><th>Card</th><th>Quantity</th><th>Cost</th><th>Converted Cost</th></tr>
+		<thead>
+      <tr>
+        <th colspan="4">
+          <div class="header-container">
+            <div class="header-images">
+                <img src="/assets/mtgsymbols/instant.svg" alt="Instant" class="header-image">
+                <img src="/assets/mtgsymbols/sorcery.svg" alt="Sorcery" class="header-image">
+            </div>
+            <div class="header-text">
+                <p>Instant & Sorcery</p>
+            </div>
+        </div>
+        </th>
+      </tr>
 		</thead>
 		</tbody>
 	</table>
   <table class="highlighted-box" id="tblLandList">
 		<thead>
-<tr><th colspan="4"><img src="/assets/mtgsymbols/land.svg" alt="Lands" class="header-image">Lands</th></tr>
-	 		<tr><th>Card</th><th>Quantity</th></tr>
+      <tr>
+        <th colspan="4">
+            <figure>
+                <img src="/assets/mtgsymbols/land.svg" alt="Land" class="header-image">
+                <figcaption>Land</figcaption>
+            </figure>
+        </th>
+    </tr>
 	</thead>
 		</tbody>
 	</table>
   <table class="highlighted-box" id="tblArtifactsList">
-		<thead><tr><th colspan="4"><img src="/assets/mtgsymbols/artifact.svg" alt="Artifacts" class="header-image">Artifacts</th></tr><tr><th>Card</th><th>Quantity</th><th>Cost</th><th>Converted Cost</th></tr>
+		<thead>
+      <tr>
+        <th colspan="4">
+            <figure>
+                <img src="/assets/mtgsymbols/artifact.svg" alt="Artifact" class="header-image">
+                <figcaption>Artifact</figcaption>
+            </figure>
+        </th>
+    </tr>
 		</thead>
 		</tbody>
 	</table>
   <table class="highlighted-box" id="tblEnchantmentsList">
-		<thead><tr><th colspan="4"><img src="/assets/mtgsymbols/enchantment.svg" alt="Enchantments" class="header-image">Enchantments</th></tr><tr><th>Card</th><th>Quantity</th><th>Cost</th><th>Converted Cost</th></tr>
+		<thead>
+      <tr>
+        <th colspan="4">
+            <figure>
+                <img src="/assets/mtgsymbols/enchantment.svg" alt="Enchantment" class="header-image">
+                <figcaption>Enchantment</figcaption>
+            </figure>
+        </th>
+    </tr>
 		</thead>
 		</tbody>
 	</table>
   <table class="highlighted-box" id="tblPlaneswalkersList">
-		<thead><tr><th colspan="4"><img src="/assets/mtgsymbols/planeswalk2.svg" alt="Planeswalkers" class="header-image">Planeswalkers</th></tr><tr><th>Card</th><th>Quantity</th><th>Cost</th><th>Converted Cost</th></tr>
+		<thead>
+      <tr>
+        <th colspan="4">
+            <figure>
+                <img src="/assets/mtgsymbols/planeswalk2.svg" alt="Planeswalker" class="header-image">
+                <figcaption>Planeswalker</figcaption>
+            </figure>
+        </th>
+    </tr>
 		</thead>
 		</tbody>
 	</table>

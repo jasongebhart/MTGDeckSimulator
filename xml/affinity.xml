@@ -1,112 +1,149 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Affinity">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Arcbound Ravager</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Arcbound Worker</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Disciple of the Vault</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Frogmite</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Meddling Mage</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>WU</Cost>
-    </Card>
-    <Card>
-        <Name>Myr Enforcer</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>7</Cost>
-    </Card>
-    <Card>
-        <Name>Somber Hoverguard</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>5U</Cost>
-    </Card>
-    <Card>
-        <Name>AEther Vial</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-	<Card>
-        <Name>Cranial Plating</Name>
-        <Quantity>3</Quantity>
-        <Type>Artifact</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Chromatic Sphere</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Thoughtcast</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>4U</Cost>
-    </Card>
-    <Card>
-        <Name>Ancient Den</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>City of Brass</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Darksteel Citadel</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-	<Card>
-        <Name>Glimmervoid</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Seat of the Synod</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Blinkmoth Nexus</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Vault of Whispers</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Arcbound Ravager</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Creature — Beast</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Sacrifice an artifact: Put a +1/+1 counter on Arcbound Ravager.
+Modular 1 (This creature enters the battlefield with a +1/+1 counter on it. When it dies, you may put its +1/+1 counters on target artifact creature.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Arcbound Worker</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Creature — Construct</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Modular 1 (This creature enters the battlefield with a +1/+1 counter on it. When it dies, you may put its +1/+1 counters on target artifact creature.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Disciple of the Vault</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Cleric</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Whenever an artifact is put into a graveyard from the battlefield, you may have target opponent lose 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Frogmite</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Creature — Frog</Type>
+    <Cost>{4}</Cost>
+    <RulesText>Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Meddling Mage</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Wizard</Type>
+    <Cost>{W}{U}</Cost>
+    <RulesText>As Meddling Mage enters the battlefield, choose a nonland card name.
+Spells with the chosen name can't be cast.</RulesText>
+  </Card>
+  <Card>
+    <Name>Myr Enforcer</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact Creature — Myr</Type>
+    <Cost>{7}</Cost>
+    <RulesText>Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Somber Hoverguard</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Drone</Type>
+    <Cost>{5}{U}</Cost>
+    <RulesText>Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)
+Flying</RulesText>
+  </Card>
+  <Card>
+    <Name>AEther Vial</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>At the beginning of your upkeep, you may put a charge counter on Aether Vial.
+{T}: You may put a creature card with mana value equal to the number of charge counters on Aether Vial from your hand onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Cranial Plating</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact — Equipment</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Equipped creature gets +1/+0 for each artifact you control.
+{B}{B}: Attach Cranial Plating to target creature you control.
+Equip {1}</RulesText>
+  </Card>
+  <Card>
+    <Name>Chromatic Sphere</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{1}, {T}, Sacrifice Chromatic Sphere: Add one mana of any color. Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thoughtcast</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{4}{U}</Cost>
+    <RulesText>Affinity for artifacts (This spell costs {1} less to cast for each artifact you control.)
+Draw two cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ancient Den</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {W}.</RulesText>
+  </Card>
+  <Card>
+    <Name>City of Brass</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Whenever City of Brass becomes tapped, it deals 1 damage to you.
+{T}: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Darksteel Citadel</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Indestructible
+{T}: Add {C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Glimmervoid</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>At the beginning of the end step, if you control no artifacts, sacrifice Glimmervoid.
+{T}: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Seat of the Synod</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blinkmoth Nexus</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}: Blinkmoth Nexus becomes a 1/1 Blinkmoth artifact creature with flying until end of turn. It's still a land.
+{1}, {T}: Target Blinkmoth creature gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Vault of Whispers</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {B}.</RulesText>
+  </Card>
 </Decklist>

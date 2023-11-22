@@ -1,196 +1,251 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Napoleon">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Armageddon</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3W</Cost>
-    </Card>
-    <Card>
-        <Name>Disenchant</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1W</Cost>
-    </Card>
-    <Card>
-        <Name>Disintegrate</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>XR</Cost>
-    </Card>
-    <Card>
-     	<Name>Dragon Whelp</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2RR</Cost>
-    </Card>
-    <Card>
-        <Name>Aura Blast</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1W</Cost>
-    </Card>
-    <Card>
-        <Name>Exploration</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Fires of yavimaya</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1GR</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Legionnaire</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>WR</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Trenches</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1WR</Cost>
-    </Card>
-    <Card>
-        <Name>Kird Ape</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Kavu titan</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Lightning bolt</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Meekstone</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Mirri's guile</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Pyroclasm</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Raging kavu</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>1RG</Cost>
-    </Card>
-    <Card>
-        <Name>Rancor</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Rith's Charm</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>WGR</Cost>
-    </Card>
-    <Card>
-        <Name>Rith, the Awakener</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3WGR</Cost>
-    </Card>
-    <Card>
-        <Name>Serra angel</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>3WW</Cost>
-    </Card>
-    <Card>
-        <Name>Swords to plowshares</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Thornscape Battlemage</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2G</Cost>
-    </Card>
-    <Card>
-        <Name>Winter Orb</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Wrath of God</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2WW</Cost>
-    </Card>
-    <Card>
-        <Name>Savannah</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Undiscovered paradise</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Taiga</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Rith's Grove</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Plateau</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>7</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Plains</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Armageddon</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{W}</Cost>
+    <RulesText>Destroy all lands.</RulesText>
+  </Card>
+  <Card>
+    <Name>Disenchant</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{W}</Cost>
+    <RulesText>Destroy target artifact or enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Disintegrate</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{R}</Cost>
+    <RulesText>Disintegrate deals X damage to any target. If it's a creature, it can't be regenerated this turn, and if it would die this turn, exile it instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dragon Whelp</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Dragon</Type>
+    <Cost>{2}{R}{R}</Cost>
+    <RulesText>Flying
+{R}: Dragon Whelp gets +1/+0 until end of turn. If this ability has been activated four or more times this turn, sacrifice Dragon Whelp at the beginning of the next end step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Aura Blast</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{W}</Cost>
+    <RulesText>Destroy target enchantment.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Exploration</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{G}</Cost>
+    <RulesText>You may play an additional land on each of your turns.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fires of yavimaya</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{R}{G}</Cost>
+    <RulesText>Creatures you control have haste.
+Sacrifice Fires of Yavimaya: Target creature gets +2/+2 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Legionnaire</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Goblin Soldier</Type>
+    <Cost>{R}{W}</Cost>
+    <RulesText>{R}, Sacrifice Goblin Legionnaire: It deals 2 damage to any target.
+{W}, Sacrifice Goblin Legionnaire: Prevent the next 2 damage that would be dealt to any target this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Trenches</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{R}{W}</Cost>
+    <RulesText>{2}, Sacrifice a land: Create two 1/1 red and white Goblin Soldier creature tokens.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kird Ape</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Ape</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Kird Ape gets +1/+2 as long as you control a Forest.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kavu titan</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Kavu</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Kicker {2}{G} (You may pay an additional {2}{G} as you cast this spell.)
+If Kavu Titan was kicked, it enters the battlefield with three +1/+1 counters on it and with trample.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning bolt</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Lightning Bolt deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Meekstone</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Creatures with power 3 or greater don't untap during their controllers' untap steps.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mirri's guile</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{G}</Cost>
+    <RulesText>At the beginning of your upkeep, you may look at the top three cards of your library, then put them back in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pyroclasm</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Pyroclasm deals 2 damage to each creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Raging kavu</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Kavu</Type>
+    <Cost>{1}{R}{G}</Cost>
+    <RulesText>Flash
+Haste</RulesText>
+  </Card>
+  <Card>
+    <Name>Rancor</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Enchant creature
+Enchanted creature gets +2/+0 and has trample.
+When Rancor is put into a graveyard from the battlefield, return Rancor to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rith's Charm</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}{G}{W}</Cost>
+    <RulesText>Choose one —
+• Destroy target nonbasic land.
+• Create three 1/1 green Saproling creature tokens.
+• Prevent all damage a source of your choice would deal this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rith, the Awakener</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Dragon</Type>
+    <Cost>{3}{R}{G}{W}</Cost>
+    <RulesText>Flying
+Whenever Rith, the Awakener deals combat damage to a player, you may pay {2}{G}. If you do, choose a color, then create a 1/1 green Saproling creature token for each permanent of that color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Serra angel</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Angel</Type>
+    <Cost>{3}{W}{W}</Cost>
+    <RulesText>Flying, vigilance</RulesText>
+  </Card>
+  <Card>
+    <Name>Swords to plowshares</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Exile target creature. Its controller gains life equal to its power.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thornscape Battlemage</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elf Wizard</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Kicker {R} and/or {W} (You may pay an additional {R} and/or {W} as you cast this spell.)
+When Thornscape Battlemage enters the battlefield, if it was kicked with its {R} kicker, it deals 2 damage to any target.
+When Thornscape Battlemage enters the battlefield, if it was kicked with its {W} kicker, destroy target artifact.</RulesText>
+  </Card>
+  <Card>
+    <Name>Winter Orb</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>As long as Winter Orb is untapped, players can't untap more than one land during their untap steps.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wrath of God</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>Destroy all creatures. They can't be regenerated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Savannah</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Forest Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G} or {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Undiscovered paradise</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add one mana of any color. During your next untap step, as you untap your permanents, return Undiscovered Paradise to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Taiga</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Mountain Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R} or {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Rith's Grove</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Lair</Type>
+    <Cost>
+    </Cost>
+    <RulesText>When Rith's Grove enters the battlefield, sacrifice it unless you return a non-Lair land you control to its owner's hand.
+{T}: Add {R}, {G}, or {W}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plateau</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Mountain Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R} or {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>3</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>7</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>2</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
 </Decklist>

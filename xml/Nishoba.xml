@@ -1,202 +1,256 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Nishoba">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Llanowar Elves</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Birds of Paradise</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Fyndhorn Elves</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Kavu Titan</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Utopia Tree</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Thornscape Familiar</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>River Boa</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Albino Troll</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Monk Realist</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1W</Cost>
-    </Card>
-    <Card>
-        <Name>Lone Wolf</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2G</Cost>
-    </Card>
-    <Card>
-        <Name>Blastoderm</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Charging Troll</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2GW</Cost>
-    </Card>
-    <Card>
-        <Name>Oracle of Mul Daya</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Serra Angel</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3WW</Cost>
-    </Card>
-    <Card>
-        <Name>Baneslayer Angel</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3WW</Cost>
-    </Card>
-    <Card>
-        <Name>Sabertooth Nishoba</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>4GW</Cost>
-    </Card>
-    <Card>
-        <Name>Rancor</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Mulch</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Swords To Plowshares</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Disenchant</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1W</Cost>
-    </Card>
-    <Card>
-        <Name>Pariah</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2W</Cost>
-    </Card>
-    <Card>
-        <Name>Armadillo Cloak</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1GW</Cost>
-    </Card>
-    <Card>
-        <Name>Kismet</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>3W</Cost>
-    </Card>
-    <Card>
-        <Name>Might of Oaks</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Armageddon</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3W</Cost>
-    </Card>
-    <Card>
-        <Name>Wrath of God</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2WW</Cost>
-    </Card>
-    <Card>
-        <Name>Rout</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3WW</Cost>
-    </Card>
-	<Card>
-        <Name>Cursed Scroll</Name>
-        <Quantity>2</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>8</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Plains</Name>
-        <Quantity>8</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Savannah</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Windswept Heath</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Treetop Village</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Llanowar Elves</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elf Druid</Type>
+    <Cost>{G}</Cost>
+    <RulesText>{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Birds of Paradise</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Bird</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Flying
+{T}: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fyndhorn Elves</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Elf Druid</Type>
+    <Cost>{G}</Cost>
+    <RulesText>{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kavu Titan</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Kavu</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Kicker {2}{G} (You may pay an additional {2}{G} as you cast this spell.)
+If Kavu Titan was kicked, it enters the battlefield with three +1/+1 counters on it and with trample.</RulesText>
+  </Card>
+  <Card>
+    <Name>Utopia Tree</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Plant</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>{T}: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thornscape Familiar</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Insect</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Red spells and white spells you cast cost {1} less to cast.</RulesText>
+  </Card>
+  <Card>
+    <Name>River Boa</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Snake</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Islandwalk (This creature can't be blocked as long as defending player controls an Island.)
+{G}: Regenerate River Boa.</RulesText>
+  </Card>
+  <Card>
+    <Name>Albino Troll</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Troll</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Echo {1}{G} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+{1}{G}: Regenerate Albino Troll.</RulesText>
+  </Card>
+  <Card>
+    <Name>Monk Realist</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Monk Cleric</Type>
+    <Cost>{1}{W}</Cost>
+    <RulesText>When Monk Realist enters the battlefield, destroy target enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lone Wolf</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Wolf</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>You may have Lone Wolf assign its combat damage as though it weren't blocked.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blastoderm</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Beast</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Shroud (This creature can't be the target of spells or abilities.)
+Fading 3 (This creature enters the battlefield with three fade counters on it. At the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Charging Troll</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Troll</Type>
+    <Cost>{2}{G}{W}</Cost>
+    <RulesText>Vigilance
+{G}: Regenerate Charging Troll.</RulesText>
+  </Card>
+  <Card>
+    <Name>Oracle of Mul Daya</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Elf Shaman</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>You may play an additional land on each of your turns.
+Play with the top card of your library revealed.
+You may play lands from the top of your library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Serra Angel</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Angel</Type>
+    <Cost>{3}{W}{W}</Cost>
+    <RulesText>Flying, vigilance</RulesText>
+  </Card>
+  <Card>
+    <Name>Baneslayer Angel</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Angel</Type>
+    <Cost>{3}{W}{W}</Cost>
+    <RulesText>Flying, first strike, lifelink, protection from Demons and from Dragons</RulesText>
+  </Card>
+  <Card>
+    <Name>Sabertooth Nishoba</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Cat Beast Warrior</Type>
+    <Cost>{4}{G}{W}</Cost>
+    <RulesText>Trample, protection from blue and from red</RulesText>
+  </Card>
+  <Card>
+    <Name>Rancor</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Enchant creature
+Enchanted creature gets +2/+0 and has trample.
+When Rancor is put into a graveyard from the battlefield, return Rancor to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mulch</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Reveal the top four cards of your library. Put all land cards revealed this way into your hand and the rest into your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swords To Plowshares</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Exile target creature. Its controller gains life equal to its power.</RulesText>
+  </Card>
+  <Card>
+    <Name>Disenchant</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{W}</Cost>
+    <RulesText>Destroy target artifact or enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pariah</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{2}{W}</Cost>
+    <RulesText>Enchant creature
+All damage that would be dealt to you is dealt to enchanted creature instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Armadillo Cloak</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{1}{G}{W}</Cost>
+    <RulesText>Enchant creature
+Enchanted creature gets +2/+2 and has trample.
+Whenever enchanted creature deals damage, you gain that much life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kismet</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{3}{W}</Cost>
+    <RulesText>Artifacts, creatures, and lands your opponents control enter the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Might of Oaks</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>Target creature gets +7/+7 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Armageddon</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{W}</Cost>
+    <RulesText>Destroy all lands.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wrath of God</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>Destroy all creatures. They can't be regenerated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rout</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{W}{W}</Cost>
+    <RulesText>You may cast Rout as though it had flash if you pay {2} more to cast it. (You may cast it any time you could cast an instant.)
+Destroy all creatures. They can't be regenerated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Cursed Scroll</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{3}, {T}: Choose a card name, then reveal a card at random from your hand. If that card has the chosen name, Cursed Scroll deals 2 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>8</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>8</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Savannah</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Forest Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G} or {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Windswept Heath</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Windswept Heath: Search your library for a Forest or Plains card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Treetop Village</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Treetop Village enters the battlefield tapped.
+{T}: Add {G}.
+{1}{G}: Treetop Village becomes a 3/3 green Ape creature with trample until end of turn. It's still a land. (It can deal excess combat damage to the player or planeswalker it's attacking.)</RulesText>
+  </Card>
 </Decklist>

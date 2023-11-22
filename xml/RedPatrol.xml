@@ -1,130 +1,170 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="RedPatrol">
- <DesignGoal>a</DesignGoal>
-     <Card>
-        <Name>Goblin Lackey</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Akki Blizzard-Herder</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Mogg War Marshal</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Tuktuk the Explorer</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Sharpshooter</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Ball Lightning</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>RRR</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Ringleader</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3R</Cost>
-    </Card>
-    <Card>
-        <Name>Lightning Dragon</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2RR</Cost>
-    </Card>
-    <Card>
-        <Name>Siege-Gang Commander</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3RR</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Grenade</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Lightning Bolt</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Aether Vial</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Meekstone</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Winter Orb</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Earthquake</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>XR</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Bombardment</Name>
-        <Quantity>3</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Boggart Shenanigans</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>18</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Rishadan Port</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>City of Traitors</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Wasteland</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Goblin Lackey</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Whenever Goblin Lackey deals damage to a player, you may put a Goblin permanent card from your hand onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Akki Blizzard-Herder</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin Shaman</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>When Akki Blizzard-Herder dies, each player sacrifices a land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mogg War Marshal</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Goblin Warrior</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Echo {1}{R} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+When Mogg War Marshal enters the battlefield or dies, create a 1/1 red Goblin creature token.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tuktuk the Explorer</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Creature — Goblin</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Haste
+When Tuktuk the Explorer dies, create Tuktuk the Returned, a legendary 5/5 colorless Goblin Golem artifact creature token.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Sharpshooter</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Goblin Sharpshooter doesn't untap during your untap step.
+Whenever a creature dies, untap Goblin Sharpshooter.
+{T}: Goblin Sharpshooter deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ball Lightning</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elemental</Type>
+    <Cost>{R}{R}{R}</Cost>
+    <RulesText>Trample (This creature can deal excess combat damage to the player or planeswalker it's attacking.)
+Haste (This creature can attack and {T} as soon as it comes under your control.)
+At the beginning of the end step, sacrifice Ball Lightning.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Ringleader</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>Haste (This creature can attack and {T} as soon as it comes under your control.)
+When Goblin Ringleader enters the battlefield, reveal the top four cards of your library. Put all Goblin cards revealed this way into your hand and the rest on the bottom of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning Dragon</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Dragon</Type>
+    <Cost>{2}{R}{R}</Cost>
+    <RulesText>Flying
+Echo {2}{R}{R} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+{R}: Lightning Dragon gets +1/+0 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Siege-Gang Commander</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{3}{R}{R}</Cost>
+    <RulesText>When Siege-Gang Commander enters the battlefield, create three 1/1 red Goblin creature tokens.
+{1}{R}, Sacrifice a Goblin: Siege-Gang Commander deals 2 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Grenade</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{R}</Cost>
+    <RulesText>As an additional cost to cast this spell, sacrifice a Goblin.
+Goblin Grenade deals 5 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning Bolt</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Lightning Bolt deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Aether Vial</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>At the beginning of your upkeep, you may put a charge counter on Aether Vial.
+{T}: You may put a creature card with mana value equal to the number of charge counters on Aether Vial from your hand onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Meekstone</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Creatures with power 3 or greater don't untap during their controllers' untap steps.</RulesText>
+  </Card>
+  <Card>
+    <Name>Winter Orb</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>As long as Winter Orb is untapped, players can't untap more than one land during their untap steps.</RulesText>
+  </Card>
+  <Card>
+    <Name>Earthquake</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{R}</Cost>
+    <RulesText>Earthquake deals X damage to each creature without flying and each player.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Bombardment</Name>
+    <Quantity>3</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Sacrifice a creature: Goblin Bombardment deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Boggart Shenanigans</Name>
+    <Quantity>1</Quantity>
+    <Type>Tribal Enchantment — Goblin</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Whenever another Goblin you control is put into a graveyard from the battlefield, you may have Boggart Shenanigans deal 1 damage to target player or planeswalker.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>18</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Rishadan Port</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}, {T}: Tap target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>City of Traitors</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>When you play another land, sacrifice City of Traitors.
+{T}: Add {C}{C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wasteland</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText>
+  </Card>
 </Decklist>

@@ -1,142 +1,194 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Cloudpost Welder">
   <DesignGoal>Leverage Cloudpost lands </DesignGoal>
-    <Card>
-        <Name>Goblin Welder</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
-    </Card>   
-     <Card>
-        <Name>Lens Of Clarity</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-	<Cost>1</Cost>
-    </Card>  
-     <Card>
-        <Name>Ichor WellSpring</Name>
-        <Quantity>3</Quantity>
-        <Type>Artifact</Type>
-	<Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Solemn Simulacrum</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Wurmcoil Engine</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>6</Cost>
-    </Card>
-    <Card>
-        <Name>Kuldotha Phoenix</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2RRR</Cost>
-    </Card>
-    <Card>
-        <Name>BatterSkull</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>5</Cost>
-    </Card>
-    <Card>
-        <Name>Sundering Titan</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>8</Cost>
-    </Card>
-    <Card>
-        <Name>Ulamog, the Infinite Gyre</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>11</Cost>
-    </Card>
-    <Card>
-        <Name>Blightsteel Colossus</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>11</Cost>
-    </Card>
-    <Card>
-        <Name>Kozilek, Butcher of Truth</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>10</Cost>
-    </Card>
-    <Card>
-        <Name>Shriekhorn</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-	<Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Tormenting Voice</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-	<Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Faithless Looting</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-	<Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Grim Monolith</Name>
-        <Quantity>3</Quantity>
-        <Type>Artifact</Type>
-	<Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Sneak Attack</Name>
-        <Quantity>2</Quantity>
-        <Type>Artifact</Type>
-        <Cost>3R</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>11</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Cloudpost</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Glimmerpost</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>City of Traitors</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Ancient Tomb</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Buried Ruin</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Karakas</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <Card>
+    <Name>Goblin Welder</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin Artificer</Type>
+    <Cost>{R}</Cost>
+    <RulesText>{T}: Choose target artifact a player controls and target artifact card in that player's graveyard. If both targets are still legal as this ability resolves, that player simultaneously sacrifices the artifact and returns the artifact card to the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lens Of Clarity</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>You may look at the top card of your library and at face-down creatures you don't control any time.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ichor WellSpring</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>When Ichor Wellspring enters the battlefield or is put into a graveyard from the battlefield, draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Solemn Simulacrum</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{4}</Cost>
+    <RulesText>When Solemn Simulacrum enters the battlefield, you may search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.
+When Solemn Simulacrum dies, you may draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wurmcoil Engine</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Phyrexian Wurm</Type>
+    <Cost>{6}</Cost>
+    <RulesText>Deathtouch, lifelink
+When Wurmcoil Engine dies, create a 3/3 colorless Phyrexian Wurm artifact creature token with deathtouch and a 3/3 colorless Phyrexian Wurm artifact creature token with lifelink.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kuldotha Phoenix</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Phoenix</Type>
+    <Cost>{2}{R}{R}{R}</Cost>
+    <RulesText>Flying, haste
+Metalcraft — {4}: Return Kuldotha Phoenix from your graveyard to the battlefield. Activate only during your upkeep and only if you control three or more artifacts.</RulesText>
+  </Card>
+  <Card>
+    <Name>BatterSkull</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact — Equipment</Type>
+    <Cost>{5}</Cost>
+    <RulesText>Living weapon (When this Equipment enters the battlefield, create a 0/0 black Phyrexian Germ creature token, then attach this to it.)
+Equipped creature gets +4/+4 and has vigilance and lifelink.
+{3}: Return Batterskull to its owner's hand.
+Equip {5}</RulesText>
+  </Card>
+  <Card>
+    <Name>Sundering Titan</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{8}</Cost>
+    <RulesText>When Sundering Titan enters or leaves the battlefield, choose a land of each basic land type, then destroy those lands.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ulamog, the Infinite Gyre</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Creature — Eldrazi</Type>
+    <Cost>{11}</Cost>
+    <RulesText>When you cast this spell, destroy target permanent.
+Indestructible
+Annihilator 4 (Whenever this creature attacks, defending player sacrifices four permanents.)
+When Ulamog, the Infinite Gyre is put into a graveyard from anywhere, its owner shuffles their graveyard into their library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blightsteel Colossus</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Phyrexian Golem</Type>
+    <Cost>{12}</Cost>
+    <RulesText>Trample, infect, indestructible
+If Blightsteel Colossus would be put into a graveyard from anywhere, reveal Blightsteel Colossus and shuffle it into its owner's library instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kozilek, Butcher of Truth</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Eldrazi</Type>
+    <Cost>{10}</Cost>
+    <RulesText>When you cast this spell, draw four cards.
+Annihilator 4 (Whenever this creature attacks, defending player sacrifices four permanents.)
+When Kozilek, Butcher of Truth is put into a graveyard from anywhere, its owner shuffles their graveyard into their library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shriekhorn</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Shriekhorn enters the battlefield with three charge counters on it.
+{T}, Remove a charge counter from Shriekhorn: Target player mills two cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tormenting Voice</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>As an additional cost to cast this spell, discard a card.
+Draw two cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Faithless Looting</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Draw two cards, then discard two cards.
+Flashback {2}{R} (You may cast this card from your graveyard for its flashback cost. Then exile it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Grim Monolith</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Grim Monolith doesn't untap during your untap step.
+{T}: Add {C}{C}{C}.
+{4}: Untap Grim Monolith.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sneak Attack</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>{R}: You may put a creature card from your hand onto the battlefield. That creature gains haste. Sacrifice the creature at the beginning of the next end step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>11</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Cloudpost</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Locus</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Cloudpost enters the battlefield tapped.
+{T}: Add {C} for each Locus on the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Glimmerpost</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Locus</Type>
+    <Cost>
+    </Cost>
+    <RulesText>When Glimmerpost enters the battlefield, you gain 1 life for each Locus on the battlefield.
+{T}: Add {C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>City of Traitors</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>When you play another land, sacrifice City of Traitors.
+{T}: Add {C}{C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ancient Tomb</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}{C}. Ancient Tomb deals 2 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Buried Ruin</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{2}, {T}, Sacrifice Buried Ruin: Return target artifact card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Karakas</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {W}.
+{T}: Return target legendary creature to its owner's hand.</RulesText>
+  </Card>
 </Decklist>

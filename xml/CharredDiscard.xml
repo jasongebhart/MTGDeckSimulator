@@ -1,190 +1,249 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="CharredDiscard">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Mogg Fanatic</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Thunderscape Familiar</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Suq'Ata Lancer</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Ghitu Slinger</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Keldon Champion</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2RR</Cost>
-    </Card>
-    <Card>
-        <Name>Avalanche Riders</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-	<Cost>3R</Cost>	
-    </Card>
-    <Card>
-        <Name>Shard Phoenix</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>4R</Cost>
-    </Card>
-    <Card>
-        <Name>Soldevi Adnate</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Skulking Ghost</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Black Knight</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>BB</Cost>
-    </Card>
-    <Card>
-        <Name>Dauthi Marauder</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Abyssal Specter</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2BB</Cost>
-    </Card>
-    <Card>
-        <Name>Sengir Vampire</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Blazing Specter</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2BR</Cost>
-    </Card>
-    <Card>
-        <Name>Duress</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Funeral Charm</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-	    <Card>
-        <Name>Lightning Bolt</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Diabolic Edict</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Addle</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Stupor</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Yawgmoth's Agenda</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Terminate</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>BR</Cost>
-    </Card>
-    <Card>
-        <Name>Guerrilla Tactics</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Ghitu Fire</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>XR</Cost>
-    </Card>
-    <Card>
-        <Name>Kaervek's Torch</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>XR</Cost>
-    </Card>
-    <Card>
-        <Name>Pyrokinesis</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>4RR</Cost>
-    </Card>
-    <Card>
-        <Name>Fireblast</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>4RR</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>9</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>8</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Bloodstained Mire</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Badlands</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Mogg Fanatic</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Sacrifice Mogg Fanatic: It deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thunderscape Familiar</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Kavu</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>First strike
+Black spells and green spells you cast cost {1} less to cast.</RulesText>
+  </Card>
+  <Card>
+    <Name>Suq'Ata Lancer</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Knight</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Haste
+Flanking (Whenever a creature without flanking blocks this creature, the blocking creature gets -1/-1 until end of turn.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Ghitu Slinger</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Nomad</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Echo {2}{R} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+When Ghitu Slinger enters the battlefield, it deals 2 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Keldon Champion</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Barbarian</Type>
+    <Cost>{2}{R}{R}</Cost>
+    <RulesText>Haste
+Echo {2}{R}{R} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+When Keldon Champion enters the battlefield, it deals 3 damage to target player or planeswalker.</RulesText>
+  </Card>
+  <Card>
+    <Name>Avalanche Riders</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Nomad</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>Haste
+Echo {3}{R} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+When Avalanche Riders enters the battlefield, destroy target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shard Phoenix</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Phoenix</Type>
+    <Cost>{4}{R}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+Sacrifice Shard Phoenix: It deals 2 damage to each creature without flying.
+{R}{R}{R}: Return Shard Phoenix from your graveyard to your hand. Activate only during your upkeep.</RulesText>
+  </Card>
+  <Card>
+    <Name>Soldevi Adnate</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Cleric</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>{T}, Sacrifice a black or artifact creature: Add an amount of {B} equal to the sacrificed creature's mana value.</RulesText>
+  </Card>
+  <Card>
+    <Name>Skulking Ghost</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Spirit</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Flying
+When Skulking Ghost becomes the target of a spell or ability, sacrifice it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Black Knight</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Knight</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>First strike (This creature deals combat damage before creatures without first strike.)
+Protection from white (This creature can't be blocked, targeted, dealt damage, or enchanted by anything white.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Dauthi Marauder</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Dauthi Minion</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>Shadow (This creature can block or be blocked by only creatures with shadow.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Abyssal Specter</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Specter</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>Flying
+Whenever Abyssal Specter deals damage to a player, that player discards a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sengir Vampire</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Vampire</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+Whenever a creature dealt damage by Sengir Vampire this turn dies, put a +1/+1 counter on Sengir Vampire.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blazing Specter</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Specter</Type>
+    <Cost>{2}{B}{R}</Cost>
+    <RulesText>Flying, haste
+Whenever Blazing Specter deals combat damage to a player, that player discards a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Duress</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Funeral Charm</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Choose one —
+• Target player discards a card.
+• Target creature gets +2/-1 until end of turn.
+• Target creature gains swampwalk until end of turn. (It can't be blocked as long as defending player controls a Swamp.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning Bolt</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Lightning Bolt deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Diabolic Edict</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Target player sacrifices a creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Addle</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Choose a color. Target player reveals their hand and you choose a card of that color from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stupor</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>Target opponent discards a card at random, then discards a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Yawgmoth's Agenda</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>You can't cast more than one spell each turn.
+You may play lands and cast spells from your graveyard.
+If a card would be put into your graveyard from anywhere, exile it instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Terminate</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}{R}</Cost>
+    <RulesText>Destroy target creature. It can't be regenerated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Guerrilla Tactics</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Guerrilla Tactics deals 2 damage to any target.
+When a spell or ability an opponent controls causes you to discard Guerrilla Tactics, Guerrilla Tactics deals 4 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ghitu Fire</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{R}</Cost>
+    <RulesText>You may cast Ghitu Fire as though it had flash if you pay {2} more to cast it. (You may cast it any time you could cast an instant.)
+Ghitu Fire deals X damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kaervek's Torch</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{R}</Cost>
+    <RulesText>As long as Kaervek's Torch is on the stack, spells that target it cost {2} more to cast.
+Kaervek's Torch deals X damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pyrokinesis</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{4}{R}{R}</Cost>
+    <RulesText>You may exile a red card from your hand rather than pay this spell's mana cost.
+Pyrokinesis deals 4 damage divided as you choose among any number of target creatures.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fireblast</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{4}{R}{R}</Cost>
+    <RulesText>You may sacrifice two Mountains rather than pay this spell's mana cost.
+Fireblast deals 4 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>9</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>8</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Bloodstained Mire</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Bloodstained Mire: Search your library for a Swamp or Mountain card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Badlands</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Swamp Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B} or {R}.)</RulesText>
+  </Card>
 </Decklist>

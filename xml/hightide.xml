@@ -1,100 +1,124 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="HighTide">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Palinchron</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>5UU</Cost>
-    </Card>
-    <Card>
-        <Name>Arcane Denial</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Brainstorm</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Counterspell</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>UU</Cost>
-    </Card>
-    <Card>
-        <Name>Force of Will</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Frantic Search</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>High Tide</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Impulse</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Merchant Scroll</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Mystical Tutor</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Stroke of Genius</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>X2U</Cost>
-    </Card>
-    <Card>
-        <Name>Time Spiral</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>4UU</Cost>
-    </Card>
-    <Card>
-        <Name>Turnabout</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>2UU</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>16</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Thawing Glaciers</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Volcanic Island</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Palinchron</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Illusion</Type>
+    <Cost>{5}{U}{U}</Cost>
+    <RulesText>Flying
+When Palinchron enters the battlefield, untap up to seven lands.
+{2}{U}{U}: Return Palinchron to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Arcane Denial</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Counter target spell. Its controller may draw up to two cards at the beginning of the next turn's upkeep.
+You draw a card at the beginning of the next turn's upkeep.</RulesText>
+  </Card>
+  <Card>
+    <Name>Brainstorm</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Draw three cards, then put two cards from your hand on top of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Counterspell</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}{U}</Cost>
+    <RulesText>Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Force of Will</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Frantic Search</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Draw two cards, then discard two cards. Untap up to three lands.</RulesText>
+  </Card>
+  <Card>
+    <Name>High Tide</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Until end of turn, whenever a player taps an Island for mana, that player adds an additional {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Impulse</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Look at the top four cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Merchant Scroll</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Search your library for a blue instant card, reveal that card, put it into your hand, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mystical Tutor</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Search your library for an instant or sorcery card, reveal it, then shuffle and put that card on top.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stroke of Genius</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{X}{2}{U}</Cost>
+    <RulesText>Target player draws X cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Time Spiral</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{4}{U}{U}</Cost>
+    <RulesText>Exile Time Spiral. Each player shuffles their hand and graveyard into their library, then draws seven cards. You untap up to six lands.</RulesText>
+  </Card>
+  <Card>
+    <Name>Turnabout</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}{U}</Cost>
+    <RulesText>Choose artifact, creature, or land. Tap all untapped permanents of the chosen type target player controls, or untap all tapped permanents of that type that player controls.</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>16</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Thawing Glaciers</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Thawing Glaciers enters the battlefield tapped.
+{1}, {T}: Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle. Return Thawing Glaciers to its owner's hand at the beginning of the next cleanup step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Volcanic Island</Name>
+    <Quantity>3</Quantity>
+    <Type>Land — Island Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {R}.)</RulesText>
+  </Card>
 </Decklist>

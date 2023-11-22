@@ -1,136 +1,174 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="GreenWaste">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Vine Trellis</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Wall of Roots</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Elvish Archers</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Rofellos, Llanowar Emissary</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>GG</Cost>
-    </Card>
-    <Card>
-        <Name>Albino Troll</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Mirri, Cat Warrior</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Argothian Wurm</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Citanul Centaurs</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Blastoderm</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Crumble</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Wild Growth</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Thermokarst</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Winter's Grasp</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Fallow Earth</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2G</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Processor</Name>
-        <Quantity>2</Quantity>
-        <Type>Artifact</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Creeping Mold</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Nevinyrral's Disk</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>4</Cost>
-    </Card>
-    <Card>
-        <Name>Predator, Flagship</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>5</Cost>
-    </Card>
-    <Card>
-        <Name>Plow Under</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3GG</Cost>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>17</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Wasteland</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Treetop Village</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Vine Trellis</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Plant Wall</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Defender (This creature can't attack.)
+{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wall of Roots</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Plant Wall</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Defender
+Put a -0/-1 counter on Wall of Roots: Add {G}. Activate only once each turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Elvish Archers</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Elf Archer</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>First strike</RulesText>
+  </Card>
+  <Card>
+    <Name>Rofellos, Llanowar Emissary</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Elf Druid</Type>
+    <Cost>{G}{G}</Cost>
+    <RulesText>{T}: Add {G} for each Forest you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Albino Troll</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Troll</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Echo {1}{G} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+{1}{G}: Regenerate Albino Troll.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mirri, Cat Warrior</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Cat Warrior</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>First strike, forestwalk, vigilance (This creature deals combat damage before creatures without first strike, it can't be blocked as long as defending player controls a Forest, and attacking doesn't cause this creature to tap.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Argothian Wurm</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Wurm</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>Trample
+When Argothian Wurm enters the battlefield, any player may sacrifice a land. If a player does, put Argothian Wurm on top of its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Citanul Centaurs</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Centaur</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>Shroud (This creature can't be the target of spells or abilities.)
+Echo {3}{G} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Blastoderm</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Beast</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Shroud (This creature can't be the target of spells or abilities.)
+Fading 3 (This creature enters the battlefield with three fade counters on it. At the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Crumble</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Destroy target artifact. It can't be regenerated. That artifact's controller gains life equal to its mana value.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wild Growth</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Enchant land
+Whenever enchanted land is tapped for mana, its controller adds an additional {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thermokarst</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Destroy target land. If that land was a snow land, you gain 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Winter's Grasp</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>Destroy target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fallow Earth</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Put target land on top of its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Processor</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{4}</Cost>
+    <RulesText>As Phyrexian Processor enters the battlefield, pay any amount of life.
+{4}, {T}: Create an X/X black Phyrexian Minion creature token, where X is the life paid as Phyrexian Processor entered the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Creeping Mold</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Destroy target artifact, enchantment, or land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Nevinyrral's Disk</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{4}</Cost>
+    <RulesText>Nevinyrral's Disk enters the battlefield tapped.
+{1}, {T}: Destroy all artifacts, creatures, and enchantments.</RulesText>
+  </Card>
+  <Card>
+    <Name>Predator, Flagship</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Artifact</Type>
+    <Cost>{5}</Cost>
+    <RulesText>{2}: Target creature gains flying until end of turn.
+{5}, {T}: Destroy target creature with flying.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plow Under</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{G}{G}</Cost>
+    <RulesText>Put two target lands on top of their owners' libraries.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>17</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Wasteland</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Treetop Village</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Treetop Village enters the battlefield tapped.
+{T}: Add {G}.
+{1}{G}: Treetop Village becomes a 3/3 green Ape creature with trample until end of turn. It's still a land. (It can deal excess combat damage to the player or planeswalker it's attacking.)</RulesText>
+  </Card>
 </Decklist>

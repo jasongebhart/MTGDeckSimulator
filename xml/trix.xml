@@ -1,106 +1,139 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Trix">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Brainstorm</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Contagion</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>3BB</Cost>
-    </Card>
-    <Card>
-        <Name>Dark Ritual</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Demonic Consultation</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Donate</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Duress</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Force of Will</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Hoodwink</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Illusions of Grandeur</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Mana Vault</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Necropotence</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>BBB</Cost>
-    </Card>
-    <Card>
-        <Name>Vampiric Tutor</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>6</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Gemstone Mine</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Underground Sea</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Underground River</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-		<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Brainstorm</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Draw three cards, then put two cards from your hand on top of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Contagion</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{B}{B}</Cost>
+    <RulesText>You may pay 1 life and exile a black card from your hand rather than pay this spell's mana cost.
+Distribute two -2/-1 counters among one or two target creatures.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dark Ritual</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Add {B}{B}{B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Demonic Consultation</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Choose a card name. Exile the top six cards of your library, then reveal cards from the top of your library until you reveal a card with the chosen name. Put that card into your hand and exile all other cards revealed this way.</RulesText>
+  </Card>
+  <Card>
+    <Name>Donate</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Target player gains control of target permanent you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Duress</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target opponent reveals their hand. You choose a noncreature, nonland card from it. That player discards that card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Force of Will</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hoodwink</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Return target artifact, enchantment, or land to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Illusions of Grandeur</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>Cumulative upkeep {2} (At the beginning of your upkeep, put an age counter on this permanent, then sacrifice it unless you pay its upkeep cost for each age counter on it.)
+When Illusions of Grandeur enters the battlefield, you gain 20 life.
+When Illusions of Grandeur leaves the battlefield, you lose 20 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mana Vault</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Mana Vault doesn't untap during your untap step.
+At the beginning of your upkeep, you may pay {4}. If you do, untap Mana Vault.
+At the beginning of your draw step, if Mana Vault is tapped, it deals 1 damage to you.
+{T}: Add {C}{C}{C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Necropotence</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{B}{B}{B}</Cost>
+    <RulesText>Skip your draw step.
+Whenever you discard a card, exile that card from your graveyard.
+Pay 1 life: Exile the top card of your library face down. Put that card into your hand at the beginning of your next end step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Vampiric Tutor</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Search your library for a card, then shuffle and put that card on top. You lose 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>6</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Gemstone Mine</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Gemstone Mine enters the battlefield with three mining counters on it.
+{T}, Remove a mining counter from Gemstone Mine: Add one mana of any color. If there are no mining counters on Gemstone Mine, sacrifice it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Underground Sea</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Island Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Underground River</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}: Add {U} or {B}. Underground River deals 1 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>3</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
 </Decklist>

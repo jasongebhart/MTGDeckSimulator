@@ -1,160 +1,208 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="FireandIce">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Mogg Fanatic</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Gilded Drake</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Razorfin Hunter</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>UR</Cost>
-    </Card>
-    <Card>
-        <Name>Man-o'-War</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Whirlpool Warrior</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Flametongue Kavu</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3R</Cost>
-    </Card>
-    <Card>
-        <Name>Avalanche Riders</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3R</Cost>
-    </Card>
-    <Card>
-        <Name>Morphling</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Lightning Bolt</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Disrupt</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Fire or Ice</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Pyroclasm</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Incinerate</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Jilt</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Rushing River</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Flameshot</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3R</Cost>
-    </Card>
-    <Card>
-        <Name>Aftershock</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2RR</Cost>
-    </Card>
-    <Card>
-        <Name>Suffocating Blast</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>1UUR</Cost>
-    </Card>
-    <Card>
-        <Name>Prophetic Bolt</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>3UR</Cost>
-    </Card>
-    <Card>
-        <Name>Bribery</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>10</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>8</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Gemstone Mine</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Hammerheim</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Undiscovered Paradise</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Volcanic Island</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Mogg Fanatic</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Goblin</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Sacrifice Mogg Fanatic: It deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Gilded Drake</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Drake</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Flying
+When Gilded Drake enters the battlefield, exchange control of Gilded Drake and up to one target creature an opponent controls. If you don't or can't make an exchange, sacrifice Gilded Drake. This ability still resolves if its target becomes illegal.</RulesText>
+  </Card>
+  <Card>
+    <Name>Razorfin Hunter</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Merfolk Goblin</Type>
+    <Cost>{U}{R}</Cost>
+    <RulesText>{T}: Razorfin Hunter deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Man-o'-War</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Jellyfish</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>When Man-o'-War enters the battlefield, return target creature to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Whirlpool Warrior</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Merfolk Warrior</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>When Whirlpool Warrior enters the battlefield, shuffle the cards from your hand into your library, then draw that many cards.
+{R}, Sacrifice Whirlpool Warrior: Each player shuffles the cards from their hand into their library, then draws that many cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Flametongue Kavu</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Kavu</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>When Flametongue Kavu enters the battlefield, it deals 4 damage to target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Avalanche Riders</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Nomad</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>Haste
+Echo {3}{R} (At the beginning of your upkeep, if this came under your control since the beginning of your last upkeep, sacrifice it unless you pay its echo cost.)
+When Avalanche Riders enters the battlefield, destroy target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Morphling</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Shapeshifter</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>{U}: Untap Morphling.
+{U}: Morphling gains flying until end of turn.
+{U}: Morphling gains shroud until end of turn. (It can't be the target of spells or abilities.)
+{1}: Morphling gets +1/-1 until end of turn.
+{1}: Morphling gets -1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning Bolt</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Lightning Bolt deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Disrupt</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Counter target instant or sorcery spell unless its controller pays {1}.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fire or Ice</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact — Equipment</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Equipped creature gets +2/+2 and has protection from red and from blue.
+Whenever equipped creature deals combat damage to a player, Sword of Fire and Ice deals 2 damage to any target and you draw a card.
+Equip {2}</RulesText>
+  </Card>
+  <Card>
+    <Name>Pyroclasm</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Pyroclasm deals 2 damage to each creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Incinerate</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Incinerate deals 3 damage to any target. A creature dealt damage this way can't be regenerated this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Jilt</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Kicker {1}{R} (You may pay an additional {1}{R} as you cast this spell.)
+Return target creature to its owner's hand. If this spell was kicked, it deals 2 damage to another target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rushing River</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Kicker—Sacrifice a land. (You may sacrifice a land in addition to any other costs as you cast this spell.)
+Return target nonland permanent to its owner's hand. If this spell was kicked, return another target nonland permanent to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Flameshot</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>You may discard a Mountain card rather than pay this spell's mana cost.
+Flameshot deals 3 damage divided as you choose among one, two, or three target creatures.</RulesText>
+  </Card>
+  <Card>
+    <Name>Aftershock</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{R}{R}</Cost>
+    <RulesText>Destroy target artifact, creature, or land. Aftershock deals 3 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Suffocating Blast</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}{U}{R}</Cost>
+    <RulesText>Counter target spell and Suffocating Blast deals 3 damage to target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Prophetic Bolt</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{R}</Cost>
+    <RulesText>Prophetic Bolt deals 4 damage to any target. Look at the top four cards of your library. Put one of those cards into your hand and the rest on the bottom of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bribery</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>Search target opponent's library for a creature card and put that card onto the battlefield under your control. Then that player shuffles.</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>10</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>8</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Gemstone Mine</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Gemstone Mine enters the battlefield with three mining counters on it.
+{T}, Remove a mining counter from Gemstone Mine: Add one mana of any color. If there are no mining counters on Gemstone Mine, sacrifice it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hammerheim</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {R}.
+{T}: Target creature loses all landwalk abilities until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Undiscovered Paradise</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add one mana of any color. During your next untap step, as you untap your permanents, return Undiscovered Paradise to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Volcanic Island</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Island Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {R}.)</RulesText>
+  </Card>
 </Decklist>

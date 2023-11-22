@@ -1,112 +1,150 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Dredge">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Cephalid Sage</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Flame-Kin Zealot</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1RRW</Cost>
-    </Card>
-    <Card>
-        <Name>Golgari Grave-Troll</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>4G</Cost>
-    </Card>
-    <Card>
-        <Name>Golgari Thug</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Ichorid</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>3B</Cost>
-    </Card>
-    <Card>
-        <Name>Narcomoeba</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Putrid Imp</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Stinkweed Imp</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Breakthrough</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>XU</Cost>
-    </Card>
-    <Card>
-        <Name>Cabal Therapy</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Deep Analysis</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Bridge from Below</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>BBB</Cost>
-    </Card>
-    <Card>
-        <Name>Dread Return</Name>
-        <Quantity>3</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2BB</Cost>
-    </Card>
-    <Card>
-        <Name>Lion's Eye Diamond</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>0</Cost>
-    </Card>
-    <Card>
-        <Name>Cephalid Coliseum</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Underground River</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Underground Sea</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Watery Grave</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Cephalid Sage</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Cephalid</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>Threshold — As long as seven or more cards are in your graveyard, Cephalid Sage has "When Cephalid Sage enters the battlefield, draw three cards, then discard two cards."</RulesText>
+  </Card>
+  <Card>
+    <Name>Flame-Kin Zealot</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Elemental Berserker</Type>
+    <Cost>{1}{R}{R}{W}</Cost>
+    <RulesText>When Flame-Kin Zealot enters the battlefield, creatures you control get +1/+1 and gain haste until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Golgari Grave-Troll</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Troll Skeleton</Type>
+    <Cost>{4}{G}</Cost>
+    <RulesText>Golgari Grave-Troll enters the battlefield with a +1/+1 counter on it for each creature card in your graveyard.
+{1}, Remove a +1/+1 counter from Golgari Grave-Troll: Regenerate Golgari Grave-Troll.
+Dredge 6 (If you would draw a card, you may mill six cards instead. If you do, return this card from your graveyard to your hand.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Golgari Thug</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Human Warrior</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>When Golgari Thug dies, put target creature card from your graveyard on top of your library.
+Dredge 4 (If you would draw a card, you may mill four cards instead. If you do, return this card from your graveyard to your hand.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Ichorid</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Horror</Type>
+    <Cost>{3}{B}</Cost>
+    <RulesText>Haste
+At the beginning of the end step, sacrifice Ichorid.
+At the beginning of your upkeep, if Ichorid is in your graveyard, you may exile a black creature card other than Ichorid from your graveyard. If you do, return Ichorid to the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Narcomoeba</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Illusion</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Flying
+When Narcomoeba is put into your graveyard from your library, you may put it onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Putrid Imp</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Zombie Imp</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Discard a card: Putrid Imp gains flying until end of turn.
+Threshold — As long as seven or more cards are in your graveyard, Putrid Imp gets +1/+1 and can't block.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stinkweed Imp</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Imp</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>Flying
+Whenever Stinkweed Imp deals combat damage to a creature, destroy that creature.
+Dredge 5 (If you would draw a card, you may mill five cards instead. If you do, return this card from your graveyard to your hand.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Breakthrough</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{U}</Cost>
+    <RulesText>Draw four cards, then choose X cards in your hand and discard the rest.</RulesText>
+  </Card>
+  <Card>
+    <Name>Cabal Therapy</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Choose a nonland card name. Target player reveals their hand and discards all cards with that name.
+Flashback—Sacrifice a creature. (You may cast this card from your graveyard for its flashback cost. Then exile it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Deep Analysis</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>Target player draws two cards.
+Flashback—{1}{U}, Pay 3 life. (You may cast this card from your graveyard for its flashback cost. Then exile it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Bridge from Below</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{B}{B}{B}</Cost>
+    <RulesText>Whenever a nontoken creature is put into your graveyard from the battlefield, if Bridge from Below is in your graveyard, create a 2/2 black Zombie creature token.
+When a creature is put into an opponent's graveyard from the battlefield, if Bridge from Below is in your graveyard, exile Bridge from Below.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dread Return</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>Return target creature card from your graveyard to the battlefield.
+Flashback—Sacrifice three creatures. (You may cast this card from your graveyard for its flashback cost. Then exile it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Lion's Eye Diamond</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{0}</Cost>
+    <RulesText>Discard your hand, Sacrifice Lion's Eye Diamond: Add three mana of any one color. Activate only as an instant.</RulesText>
+  </Card>
+  <Card>
+    <Name>Cephalid Coliseum</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {U}. Cephalid Coliseum deals 1 damage to you.
+Threshold — {U}, {T}, Sacrifice Cephalid Coliseum: Target player draws three cards, then discards three cards. Activate only if seven or more cards are in your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Underground River</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}: Add {U} or {B}. Underground River deals 1 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Underground Sea</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Island Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Watery Grave</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Island Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {B}.)
+As Watery Grave enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
 </Decklist>

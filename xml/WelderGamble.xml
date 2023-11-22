@@ -1,18 +1,181 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="WelderGamble"><DesignGoal>a</DesignGoal><Card><Name>Goblin Welder</Name><Quantity>4</Quantity><Type>Creature — Goblin Artificer</Type><Cost>{R}</Cost><RulesText>{T}: Choose target artifact a player controls and target artifact card in that player's graveyard. If both targets are still legal as this ability resolves, that player simultaneously sacrifices the artifact and returns the artifact card to the battlefield.</RulesText></Card><Card><Name>Anger</Name><Quantity>2</Quantity><Type>Creature — Incarnation</Type><Cost>{3}{R}</Cost><RulesText>Haste
-As long as Anger is in your graveyard and you control a Mountain, creatures you control have haste.</RulesText></Card><Card><Name>Copper Gnomes</Name><Quantity>3</Quantity><Type>Artifact Creature — Gnome</Type><Cost>{2}</Cost><RulesText>{4}, Sacrifice Copper Gnomes: You may put an artifact card from your hand onto the battlefield.</RulesText></Card><Card><Name>Combustible Gearhulk</Name><Quantity>2</Quantity><Type>Artifact Creature — Construct</Type><Cost>{4}{R}{R}</Cost><RulesText>First strike
-When Combustible Gearhulk enters the battlefield, target opponent may have you draw three cards. If the player doesn't, you mill three cards, then Combustible Gearhulk deals damage to that player equal to the total mana value of those cards.</RulesText></Card><Card><Name>Sundering Titan</Name><Quantity>3</Quantity><Type>Artifact Creature — Golem</Type><Cost>{8}</Cost><RulesText>When Sundering Titan enters or leaves the battlefield, choose a land of each basic land type, then destroy those lands.</RulesText></Card><Card><Name>Platinum Emperion</Name><Quantity>1</Quantity><Type>Artifact Creature — Golem</Type><Cost>{8}</Cost><RulesText>Your life total can't change. (You can't gain or lose life. You can't pay any amount of life except 0.)</RulesText></Card><Card><Name>Inkwell Leviathan</Name><Quantity>3</Quantity><Type>Artifact Creature — Leviathan</Type><Cost>{7}{U}{U}</Cost><RulesText>Trample
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="WelderGamble">
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Goblin Welder</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin Artificer</Type>
+    <Cost>{R}</Cost>
+    <RulesText>{T}: Choose target artifact a player controls and target artifact card in that player's graveyard. If both targets are still legal as this ability resolves, that player simultaneously sacrifices the artifact and returns the artifact card to the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Anger</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Incarnation</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>Haste
+As long as Anger is in your graveyard and you control a Mountain, creatures you control have haste.</RulesText>
+  </Card>
+  <Card>
+    <Name>Copper Gnomes</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact Creature — Gnome</Type>
+    <Cost>{2}</Cost>
+    <RulesText>{4}, Sacrifice Copper Gnomes: You may put an artifact card from your hand onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Combustible Gearhulk</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact Creature — Construct</Type>
+    <Cost>{4}{R}{R}</Cost>
+    <RulesText>First strike
+When Combustible Gearhulk enters the battlefield, target opponent may have you draw three cards. If the player doesn't, you mill three cards, then Combustible Gearhulk deals damage to that player equal to the total mana value of those cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sundering Titan</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{8}</Cost>
+    <RulesText>When Sundering Titan enters or leaves the battlefield, choose a land of each basic land type, then destroy those lands.</RulesText>
+  </Card>
+  <Card>
+    <Name>Platinum Emperion</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{8}</Cost>
+    <RulesText>Your life total can't change. (You can't gain or lose life. You can't pay any amount of life except 0.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Inkwell Leviathan</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact Creature — Leviathan</Type>
+    <Cost>{7}{U}{U}</Cost>
+    <RulesText>Trample
 Islandwalk (This creature can't be blocked as long as defending player controls an Island.)
-Shroud (This creature can't be the target of spells or abilities.)</RulesText></Card><Card><Name>Darksteel Colossus</Name><Quantity>1</Quantity><Type>Artifact Creature — Golem</Type><Cost>{11}</Cost><RulesText>Trample, indestructible
-If Darksteel Colossus would be put into a graveyard from anywhere, reveal Darksteel Colossus and shuffle it into its owner's library instead.</RulesText></Card><Card><Name>Shriekhorn</Name><Quantity>3</Quantity><Type>Artifact</Type><Cost>{1}</Cost><RulesText>Shriekhorn enters the battlefield with three charge counters on it.
-{T}, Remove a charge counter from Shriekhorn: Target player mills two cards.</RulesText></Card><Card><Name>Jeweled Amulet</Name><Quantity>2</Quantity><Type>Artifact</Type><Cost>{0}</Cost><RulesText>{1}, {T}: Put a charge counter on Jeweled Amulet. Note the type of mana spent to pay this activation cost. Activate only if there are no charge counters on Jeweled Amulet.
-{T}, Remove a charge counter from Jeweled Amulet: Add one mana of Jeweled Amulet's last noted type.</RulesText></Card><Card><Name>Madcap Experiment</Name><Quantity>2</Quantity><Type>Sorcery</Type><Cost>{3}{R}</Cost><RulesText>Reveal cards from the top of your library until you reveal an artifact card. Put that card onto the battlefield and the rest on the bottom of your library in a random order. Madcap Experiment deals damage to you equal to the number of cards revealed this way.</RulesText></Card><Card><Name>Scroll Rack</Name><Quantity>3</Quantity><Type>Artifact</Type><Cost>{2}</Cost><RulesText>{1}, {T}: Exile any number of cards from your hand face down. Put that many cards from the top of your library into your hand. Then look at the exiled cards and put them on top of your library in any order.</RulesText></Card><Card><Name>Shield Sphere</Name><Quantity>1</Quantity><Type>Artifact Creature — Wall</Type><Cost>{0}</Cost><RulesText>Defender
-Whenever Shield Sphere blocks, put a -0/-1 counter on it.</RulesText></Card><Card><Name>Faithless Looting</Name><Quantity>4</Quantity><Type>Sorcery</Type><Cost>{R}</Cost><RulesText>Draw two cards, then discard two cards.
-Flashback {2}{R} (You may cast this card from your graveyard for its flashback cost. Then exile it.)</RulesText></Card><Card><Name>Trash for Treasure</Name><Quantity>2</Quantity><Type>Sorcery</Type><Cost>{2}{R}</Cost><RulesText>As an additional cost to cast this spell, sacrifice an artifact.
-Return target artifact card from your graveyard to the battlefield.</RulesText></Card><Card><Name>Mountain</Name><Quantity>12</Quantity><Type>Basic Land — Mountain</Type><Cost>Unknown</Cost><RulesText>({T}: Add {R}.)</RulesText></Card><Card><Name>Great Furnace</Name><Quantity>4</Quantity><Type>Artifact Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {R}.</RulesText></Card><Card><Name>Pendelhaven</Name><Quantity>1</Quantity><Type>Legendary Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {G}.
-{T}: Target 1/1 creature gets +1/+2 until end of turn.</RulesText></Card><Card><Name>Field of Ruin</Name><Quantity>3</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {C}.
-{2}, {T}, Sacrifice Field of Ruin: Destroy target nonbasic land an opponent controls. Each player searches their library for a basic land card, puts it onto the battlefield, then shuffles.</RulesText></Card><Card><Name>Darksteel Citadel</Name><Quantity>0</Quantity><Type>Artifact Land</Type><Cost>Unknown</Cost><RulesText>Indestructible
-{T}: Add {C}.</RulesText></Card><Card><Name>Mishra's Factory</Name><Quantity>4</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {C}.
+Shroud (This creature can't be the target of spells or abilities.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Darksteel Colossus</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{11}</Cost>
+    <RulesText>Trample, indestructible
+If Darksteel Colossus would be put into a graveyard from anywhere, reveal Darksteel Colossus and shuffle it into its owner's library instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shriekhorn</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Shriekhorn enters the battlefield with three charge counters on it.
+{T}, Remove a charge counter from Shriekhorn: Target player mills two cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Jeweled Amulet</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{0}</Cost>
+    <RulesText>{1}, {T}: Put a charge counter on Jeweled Amulet. Note the type of mana spent to pay this activation cost. Activate only if there are no charge counters on Jeweled Amulet.
+{T}, Remove a charge counter from Jeweled Amulet: Add one mana of Jeweled Amulet's last noted type.</RulesText>
+  </Card>
+  <Card>
+    <Name>Madcap Experiment</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>Reveal cards from the top of your library until you reveal an artifact card. Put that card onto the battlefield and the rest on the bottom of your library in a random order. Madcap Experiment deals damage to you equal to the number of cards revealed this way.</RulesText>
+  </Card>
+  <Card>
+    <Name>Scroll Rack</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>{1}, {T}: Exile any number of cards from your hand face down. Put that many cards from the top of your library into your hand. Then look at the exiled cards and put them on top of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shield Sphere</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Wall</Type>
+    <Cost>{0}</Cost>
+    <RulesText>Defender
+Whenever Shield Sphere blocks, put a -0/-1 counter on it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Faithless Looting</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Draw two cards, then discard two cards.
+Flashback {2}{R} (You may cast this card from your graveyard for its flashback cost. Then exile it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Trash for Treasure</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>As an additional cost to cast this spell, sacrifice an artifact.
+Return target artifact card from your graveyard to the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>12</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Great Furnace</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {R}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pendelhaven</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {G}.
+{T}: Target 1/1 creature gets +1/+2 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Field of Ruin</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{2}, {T}, Sacrifice Field of Ruin: Destroy target nonbasic land an opponent controls. Each player searches their library for a basic land card, puts it onto the battlefield, then shuffles.</RulesText>
+  </Card>
+  <Card>
+    <Name>Darksteel Citadel</Name>
+    <Quantity>0</Quantity>
+    <Type>Artifact Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Indestructible
+{T}: Add {C}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mishra's Factory</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
 {1}: Mishra's Factory becomes a 2/2 Assembly-Worker artifact creature until end of turn. It's still a land.
-{T}: Target Assembly-Worker creature gets +1/+1 until end of turn.</RulesText></Card><Card><Name>Inkmoth Nexus</Name><Quantity>0</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {C}.
-{1}: Inkmoth Nexus becomes a 1/1 Phyrexian Blinkmoth artifact creature with flying and infect until end of turn. It's still a land. (It deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)</RulesText></Card></Decklist>
+{T}: Target Assembly-Worker creature gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Inkmoth Nexus</Name>
+    <Quantity>0</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}: Inkmoth Nexus becomes a 1/1 Phyrexian Blinkmoth artifact creature with flying and infect until end of turn. It's still a land. (It deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)</RulesText>
+  </Card>
+</Decklist>

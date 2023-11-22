@@ -1,132 +1,126 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="BloodBraidEnchantress">
-    <DesignGoal>Combine Enchantress Strategyh with Bloodbraid Elf</DesignGoal>
-    <Card>
-        <Name>Argothian Enchantress</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature — Human Druid</Type>
-        <Cost>{1}{G}</Cost>
-        <RulesText>Shroud (This creature can't be the target of spells or abilities.)
-            Whenever you cast an enchantment spell, draw a card.</RulesText>
-    </Card>
-    <Card>
-        <Name>Thunderscape Familiar</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature — Kavu</Type>
-        <Cost>{1}{R}</Cost>
-        <RulesText>First strike
-            Black spells and green spells you cast cost {1} less to cast.</RulesText>
-    </Card>
-    <Card>
-        <Name>Bloodbraid Elf</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature — Elf Berserker</Type>
-        <Cost>{2}{R}{G}</Cost>
-        <RulesText>Haste
-            Cascade (When you cast this spell, exile cards from the top of your library until you
-            exile a nonland card that costs less. You may cast it without paying its mana cost. Put
-            the exiled cards on the bottom of your library in a random order.)</RulesText>
-    </Card>
-    <Card>
-        <Name>Ground Seal</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{1}{G}</Cost>
-        <RulesText>When Ground Seal enters the battlefield, draw a card.
-            Cards in graveyards can't be the targets of spells or abilities.</RulesText>
-    </Card>
-    <Card>
-        <Name>Exploration</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{G}</Cost>
-        <RulesText>You may play an additional land on each of your turns.</RulesText>
-    </Card>
-    <Card>
-        <Name>Life From the Loam</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>{1}{G}</Cost>
-        <RulesText>Return up to three target land cards from your graveyard to your hand.
-            Dredge 3 (If you would draw a card, you may mill three cards instead. If you do, return
-            this card from your graveyard to your hand.)</RulesText>
-    </Card>
-    <Card>
-        <Name>Phyrexian Altar</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>{3}</Cost>
-        <RulesText>Sacrifice a creature: Add one mana of any color.</RulesText>
-    </Card>
-    <Card>
-        <Name>Words of War</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{2}{R}</Cost>
-        <RulesText>{1}: The next time you would draw a card this turn, Words of War deals 2 damage
-            to any target instead.</RulesText>
-    </Card>
-    <Card>
-        <Name>Goblin Bombardment</Name>
-        <Quantity>3</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{1}{R}</Cost>
-        <RulesText>Sacrifice a creature: Goblin Bombardment deals 1 damage to any target.</RulesText>
-    </Card>
-    <Card>
-        <Name>Saproling Burst</Name>
-        <Quantity>3</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{4}{G}</Cost>
-        <RulesText>Fading 7 (This enchantment enters the battlefield with seven fade counters on it.
-            At the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice
-            it.)
-            Remove a fade counter from Saproling Burst: Create a green Saproling creature token. It
-            has "This creature's power and toughness are each equal to the number of fade counters
-            on Saproling Burst."
-            When Saproling Burst leaves the battlefield, destroy all tokens created with Saproling
-            Burst. They can't be regenerated.</RulesText>
-    </Card>
-    <Card>
-        <Name>Fecundity</Name>
-        <Quantity>3</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{2}{G}</Cost>
-        <RulesText>Whenever a creature dies, that creature's controller may draw a card.</RulesText>
-    </Card>
-    <Card>
-        <Name>Enchantress's Presence</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{2}{G}</Cost>
-        <RulesText>Whenever you cast an enchantment spell, draw a card.</RulesText>
-    </Card>
-    <Card>
-        <Name>Seismic Assault</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{R}{R}{R}</Cost>
-        <RulesText>Discard a land card: Seismic Assault deals 2 damage to any target.</RulesText>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>10</Quantity>
-        <Type>Basic Land — Forest</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>({T}: Add {G}.)</RulesText>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>9</Quantity>
-        <Type>Basic Land — Mountain</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>({T}: Add {R}.)</RulesText>
-    </Card>
-    <Card>
-        <Name>Taiga</Name>
-        <Quantity>4</Quantity>
-        <Type>Land — Mountain Forest</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>({T}: Add {R} or {G}.)</RulesText>
-    </Card>
+  <DesignGoal>Combine Enchantress Strategyh with Bloodbraid Elf</DesignGoal>
+  <Card>
+    <Name>Argothian Enchantress</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Druid</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Shroud (This creature can't be the target of spells or abilities.)
+Whenever you cast an enchantment spell, draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thunderscape Familiar</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Kavu</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>First strike
+Black spells and green spells you cast cost {1} less to cast.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bloodbraid Elf</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Elf Berserker</Type>
+    <Cost>{2}{R}{G}</Cost>
+    <RulesText>Haste
+Cascade (When you cast this spell, exile cards from the top of your library until you exile a nonland card that costs less. You may cast it without paying its mana cost. Put the exiled cards on the bottom of your library in a random order.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Ground Seal</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>When Ground Seal enters the battlefield, draw a card.
+Cards in graveyards can't be the targets of spells or abilities.</RulesText>
+  </Card>
+  <Card>
+    <Name>Exploration</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{G}</Cost>
+    <RulesText>You may play an additional land on each of your turns.</RulesText>
+  </Card>
+  <Card>
+    <Name>Life From the Loam</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Return up to three target land cards from your graveyard to your hand.
+Dredge 3 (If you would draw a card, you may mill three cards instead. If you do, return this card from your graveyard to your hand.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Altar</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Sacrifice a creature: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Words of War</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>{1}: The next time you would draw a card this turn, Words of War deals 2 damage to any target instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Bombardment</Name>
+    <Quantity>3</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Sacrifice a creature: Goblin Bombardment deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Saproling Burst</Name>
+    <Quantity>3</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{4}{G}</Cost>
+    <RulesText>Fading 7 (This enchantment enters the battlefield with seven fade counters on it. At the beginning of your upkeep, remove a fade counter from it. If you can't, sacrifice it.)
+Remove a fade counter from Saproling Burst: Create a green Saproling creature token. It has "This creature's power and toughness are each equal to the number of fade counters on Saproling Burst."
+When Saproling Burst leaves the battlefield, destroy all tokens created with Saproling Burst. They can't be regenerated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fecundity</Name>
+    <Quantity>3</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Whenever a creature dies, that creature's controller may draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Enchantress's Presence</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Whenever you cast an enchantment spell, draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Seismic Assault</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{R}{R}{R}</Cost>
+    <RulesText>Discard a land card: Seismic Assault deals 2 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>10</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>9</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Taiga</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Mountain Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R} or {G}.)</RulesText>
+  </Card>
 </Decklist>

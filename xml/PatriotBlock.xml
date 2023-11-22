@@ -1,130 +1,174 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="PatriotBlock">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Stormscape Apprentice</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Legionnaire</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>RW</Cost>
-    </Card>
-    <Card>
-        <Name>Emblazoned Golem</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>2</Cost>
-    </Card>
-    <Card>
-        <Name>Rakavolver</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Voice of All</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2WW</Cost>
-    </Card>
-    <Card>
-        <Name>Lightning Angel</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>1WRU</Cost>
-    </Card>
-    <Card>
-        <Name>Chromatic Sphere</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Orim's Chant</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Aura Blast</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1W</Cost>
-    </Card>
-    <Card>
-        <Name>Fire or Ice</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Jilt</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Lashknife Barrier</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2W</Cost>
-    </Card>
-    <Card>
-        <Name>Goblin Trenches</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1RW</Cost>
-    </Card>
-    <Card>
-        <Name>Order Chaos</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>3W</Cost>
-    </Card>
-    <Card>
-        <Name>Rout</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>3WW</Cost>
-    </Card>
-    <Card>
-        <Name>Prophetic Bolt</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>3RU</Cost>
-    </Card>
-    <Card>
-        <Name>Battlefield Forge</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Shivan Reef</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>5</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Plains</Name>
-        <Quantity>7</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>7</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Stormscape Apprentice</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Wizard</Type>
+    <Cost>{U}</Cost>
+    <RulesText>{W}, {T}: Tap target creature.
+{B}, {T}: Target player loses 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Legionnaire</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Goblin Soldier</Type>
+    <Cost>{R}{W}</Cost>
+    <RulesText>{R}, Sacrifice Goblin Legionnaire: It deals 2 damage to any target.
+{W}, Sacrifice Goblin Legionnaire: Prevent the next 2 damage that would be dealt to any target this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Emblazoned Golem</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact Creature — Golem</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Kicker {X} (You may pay an additional {X} as you cast this spell.)
+Spend only colored mana on X. No more than one mana of each color may be spent this way.
+If Emblazoned Golem was kicked, it enters the battlefield with X +1/+1 counters on it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rakavolver</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Volver</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Kicker {1}{W} and/or {U} (You may pay an additional {1}{W} and/or {U} as you cast this spell.)
+If Rakavolver was kicked with its {1}{W} kicker, it enters the battlefield with two +1/+1 counters on it and with "Whenever Rakavolver deals damage, you gain that much life."
+If Rakavolver was kicked with its {U} kicker, it enters the battlefield with a +1/+1 counter on it and with flying.</RulesText>
+  </Card>
+  <Card>
+    <Name>Voice of All</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Angel</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>Flying
+As Voice of All enters the battlefield, choose a color.
+Voice of All has protection from the chosen color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning Angel</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Angel</Type>
+    <Cost>{1}{U}{R}{W}</Cost>
+    <RulesText>Flying, vigilance, haste</RulesText>
+  </Card>
+  <Card>
+    <Name>Chromatic Sphere</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{1}, {T}, Sacrifice Chromatic Sphere: Add one mana of any color. Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Orim's Chant</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Kicker {W} (You may pay an additional {W} as you cast this spell.)
+Target player can't cast spells this turn. If this spell was kicked, creatures can't attack this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Aura Blast</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{W}</Cost>
+    <RulesText>Destroy target enchantment.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fire or Ice</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact — Equipment</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Equipped creature gets +2/+2 and has protection from red and from blue.
+Whenever equipped creature deals combat damage to a player, Sword of Fire and Ice deals 2 damage to any target and you draw a card.
+Equip {2}</RulesText>
+  </Card>
+  <Card>
+    <Name>Jilt</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Kicker {1}{R} (You may pay an additional {1}{R} as you cast this spell.)
+Return target creature to its owner's hand. If this spell was kicked, it deals 2 damage to another target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lashknife Barrier</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{W}</Cost>
+    <RulesText>When Lashknife Barrier enters the battlefield, draw a card.
+If a source would deal damage to a creature you control, it deals that much damage minus 1 to that creature instead.</RulesText>
+  </Card>
+  <Card>
+    <Name>Goblin Trenches</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{R}{W}</Cost>
+    <RulesText>{2}, Sacrifice a land: Create two 1/1 red and white Goblin Soldier creature tokens.</RulesText>
+  </Card>
+  <Card>
+    <Name>Order Chaos</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant // Instant</Type>
+    <Cost>{3}{W}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Rout</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{W}{W}</Cost>
+    <RulesText>You may cast Rout as though it had flash if you pay {2} more to cast it. (You may cast it any time you could cast an instant.)
+Destroy all creatures. They can't be regenerated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Prophetic Bolt</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{R}</Cost>
+    <RulesText>Prophetic Bolt deals 4 damage to any target. Look at the top four cards of your library. Put one of those cards into your hand and the rest on the bottom of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Battlefield Forge</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}: Add {R} or {W}. Battlefield Forge deals 1 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shivan Reef</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}: Add {U} or {R}. Shivan Reef deals 1 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>5</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>7</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>7</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
 </Decklist>

@@ -1,33 +1,248 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="CreepingChill"><DesignGoal>a</DesignGoal><Card><Name>stitcher's supplier</Name><Quantity>4</Quantity><Type>Creature — Zombie</Type><Cost>{B}</Cost><RulesText>When Stitcher's Supplier enters the battlefield or dies, mill three cards.</RulesText></Card><Card><Name>thassa's oracle</Name><Quantity>1</Quantity><Type>Creature — Merfolk Wizard</Type><Cost>{U}{U}</Cost><RulesText>When Thassa's Oracle enters the battlefield, look at the top X cards of your library, where X is your devotion to blue. Put up to one of them on top of your library and the rest on the bottom of your library in a random order. If X is greater than or equal to the number of cards in your library, you win the game. (Each {U} in the mana costs of permanents you control counts toward your devotion to blue.)</RulesText></Card><Card><Name>order of midnight</Name><Quantity>3</Quantity><Type>Creature — Human Knight // Sorcery — Adventure</Type><Cost>{1}{B}</Cost><RulesText>Flying
-Order of Midnight can't block.
-Return target creature card from your graveyard to your hand. (Then exile this card. You may cast the creature later from exile.)</RulesText></Card><Card><Name>glowspore shaman</Name><Quantity>2</Quantity><Type>Creature — Elf Shaman</Type><Cost>{B}{G}</Cost><RulesText>When Glowspore Shaman enters the battlefield, mill three cards. You may put a land card from your graveyard on top of your library.</RulesText></Card><Card><Name>uro titan of nature's wrath</Name><Quantity>1</Quantity><Type>Legendary Creature — Elder Giant</Type><Cost>{1}{G}{U}</Cost><RulesText>When Uro enters the battlefield, sacrifice it unless it escaped.
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="CreepingChill">
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>stitcher's supplier</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{B}</Cost>
+    <RulesText>When Stitcher's Supplier enters the battlefield or dies, mill three cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>thassa's oracle</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Merfolk Wizard</Type>
+    <Cost>{U}{U}</Cost>
+    <RulesText>When Thassa's Oracle enters the battlefield, look at the top X cards of your library, where X is your devotion to blue. Put up to one of them on top of your library and the rest on the bottom of your library in a random order. If X is greater than or equal to the number of cards in your library, you win the game. (Each {U} in the mana costs of permanents you control counts toward your devotion to blue.)</RulesText>
+  </Card>
+  <Card>
+    <Name>order of midnight</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Human Knight // Sorcery — Adventure</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>glowspore shaman</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Elf Shaman</Type>
+    <Cost>{B}{G}</Cost>
+    <RulesText>When Glowspore Shaman enters the battlefield, mill three cards. You may put a land card from your graveyard on top of your library.</RulesText>
+  </Card>
+  <Card>
+    <Name>uro titan of nature's wrath</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Elder Giant</Type>
+    <Cost>{1}{G}{U}</Cost>
+    <RulesText>When Uro enters the battlefield, sacrifice it unless it escaped.
 Whenever Uro enters the battlefield or attacks, you gain 3 life and draw a card, then you may put a land card from your hand onto the battlefield.
-Escape—{G}{G}{U}{U}, Exile five other cards from your graveyard. (You may cast this card from your graveyard for its escape cost.)</RulesText></Card><Card><Name>mire triton</Name><Quantity>2</Quantity><Type>Creature — Zombie Merfolk</Type><Cost>{1}{B}</Cost><RulesText>Deathtouch
-When Mire Triton enters the battlefield, mill two cards and you gain 2 life.</RulesText></Card><Card><Name>liliana's reaver</Name><Quantity>1</Quantity><Type>Creature — Zombie</Type><Cost>{2}{B}{B}</Cost><RulesText>Deathtouch
-Whenever Liliana's Reaver deals combat damage to a player, that player discards a card and you create a tapped 2/2 black Zombie creature token.</RulesText></Card><Card><Name>diregraf ghoul</Name><Quantity>1</Quantity><Type>Creature — Zombie</Type><Cost>{B}</Cost><RulesText>Diregraf Ghoul enters the battlefield tapped.</RulesText></Card><Card><Name>murderous rider</Name><Quantity>4</Quantity><Type>Creature — Zombie Knight // Instant — Adventure</Type><Cost>{1}{B}{B}</Cost><RulesText>Lifelink
-When Murderous Rider dies, put it on the bottom of its owner's library.
-Destroy target creature or planeswalker. You lose 2 life. (Then exile this card. You may cast the creature later from exile.)</RulesText></Card><Card><Name>merfolk secretkeeper</Name><Quantity>4</Quantity><Type>Creature — Merfolk Wizard // Sorcery — Adventure</Type><Cost>{U}</Cost><RulesText>Target player mills four cards. (Then exile this card. You may cast the creature later from exile.)</RulesText></Card><Card><Name>narcomoeba</Name><Quantity>4</Quantity><Type>Creature — Illusion</Type><Cost>{1}{U}</Cost><RulesText>Flying
-When Narcomoeba is put into your graveyard from your library, you may put it onto the battlefield.</RulesText></Card><Card><Name>doom blade</Name><Quantity>2</Quantity><Type>Instant</Type><Cost>{1}{B}</Cost><RulesText>Destroy target nonblack creature.</RulesText></Card><Card><Name>tamiyo collector of tales</Name><Quantity>1</Quantity><Type>Legendary Planeswalker — Tamiyo</Type><Cost>{2}{G}{U}</Cost><RulesText>Spells and abilities your opponents control can't cause you to discard cards or sacrifice permanents.
+Escape—{G}{G}{U}{U}, Exile five other cards from your graveyard. (You may cast this card from your graveyard for its escape cost.)</RulesText>
+  </Card>
+  <Card>
+    <Name>mire triton</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Zombie Merfolk</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Deathtouch
+When Mire Triton enters the battlefield, mill two cards and you gain 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>liliana's reaver</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>Deathtouch
+Whenever Liliana's Reaver deals combat damage to a player, that player discards a card and you create a tapped 2/2 black Zombie creature token.</RulesText>
+  </Card>
+  <Card>
+    <Name>diregraf ghoul</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Zombie</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Diregraf Ghoul enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>murderous rider</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Zombie Knight // Instant — Adventure</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>merfolk secretkeeper</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Merfolk Wizard // Sorcery — Adventure</Type>
+    <Cost>{U}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>narcomoeba</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Illusion</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Flying
+When Narcomoeba is put into your graveyard from your library, you may put it onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>doom blade</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Destroy target nonblack creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>tamiyo collector of tales</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Planeswalker — Tamiyo</Type>
+    <Cost>{2}{G}{U}</Cost>
+    <RulesText>Spells and abilities your opponents control can't cause you to discard cards or sacrifice permanents.
 +1: Choose a nonland card name, then reveal the top four cards of your library. Put all cards with the chosen name from among them into your hand and the rest into your graveyard.
-−3: Return target card from your graveyard to your hand.</RulesText></Card><Card><Name>tymaret calls the death</Name><Quantity>1</Quantity><Type>Enchantment — Saga</Type><Cost>{2}{B}</Cost><RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
+−3: Return target card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>tymaret calls the death</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Saga</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
 I, II — Mill three cards. Then you may exile a creature or enchantment card from your graveyard. If you do, create a 2/2 black Zombie creature token.
-III — You gain X life and scry X, where X is the number of Zombies you control.</RulesText></Card><Card><Name>the binding of the titans</Name><Quantity>1</Quantity><Type>Enchantment — Saga</Type><Cost>{1}{G}</Cost><RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
+III — You gain X life and scry X, where X is the number of Zombies you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>the binding of the titans</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Saga</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
 I — Each player mills three cards.
 II — Exile up to two target cards from graveyards. For each creature card exiled this way, you gain 1 life.
-III — Return target creature or land card from your graveyard to your hand.</RulesText></Card><Card><Name>lucky clover</Name><Quantity>2</Quantity><Type>Artifact</Type><Cost>{2}</Cost><RulesText>Whenever you cast an Adventure instant or sorcery spell, copy it. You may choose new targets for the copy.</RulesText></Card><Card><Name>creeping chill</Name><Quantity>4</Quantity><Type>Sorcery</Type><Cost>{3}{B}</Cost><RulesText>Creeping Chill deals 3 damage to each opponent and you gain 3 life.
-When Creeping Chill is put into your graveyard from your library, you may exile it. If you do, Creeping Chill deals 3 damage to each opponent and you gain 3 life.</RulesText></Card><Card><Name>liliana, untouched by death</Name><Quantity>1</Quantity><Type>Legendary Planeswalker — Liliana</Type><Cost>{2}{B}{B}</Cost><RulesText>+1: Mill three cards. If at least one Zombie card is milled this way, each opponent loses 2 life and you gain 2 life.
+III — Return target creature or land card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>lucky clover</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Whenever you cast an Adventure instant or sorcery spell, copy it. You may choose new targets for the copy.</RulesText>
+  </Card>
+  <Card>
+    <Name>creeping chill</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{B}</Cost>
+    <RulesText>Creeping Chill deals 3 damage to each opponent and you gain 3 life.
+When Creeping Chill is put into your graveyard from your library, you may exile it. If you do, Creeping Chill deals 3 damage to each opponent and you gain 3 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>liliana, untouched by death</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Planeswalker — Liliana</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>+1: Mill three cards. If at least one Zombie card is milled this way, each opponent loses 2 life and you gain 2 life.
 −2: Target creature gets -X/-X until end of turn, where X is the number of Zombies you control.
-−3: You may cast Zombie spells from your graveyard this turn.</RulesText></Card><Card><Name>breeding pool</Name><Quantity>3</Quantity><Type>Land — Forest Island</Type><Cost>Unknown</Cost><RulesText>({T}: Add {G} or {U}.)
-As Breeding Pool enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText></Card><Card><Name>temple of malady</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Temple of Malady enters the battlefield tapped.
+−3: You may cast Zombie spells from your graveyard this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>breeding pool</Name>
+    <Quantity>3</Quantity>
+    <Type>Land — Forest Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G} or {U}.)
+As Breeding Pool enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>temple of malady</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Temple of Malady enters the battlefield tapped.
 When Temple of Malady enters the battlefield, scry 1.
-{T}: Add {B} or {G}.</RulesText></Card><Card><Name>overgrown tomb</Name><Quantity>2</Quantity><Type>Land — Swamp Forest</Type><Cost>Unknown</Cost><RulesText>({T}: Add {B} or {G}.)
-As Overgrown Tomb enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText></Card><Card><Name>temple of mystery</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Temple of Mystery enters the battlefield tapped.
+{T}: Add {B} or {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>overgrown tomb</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Swamp Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B} or {G}.)
+As Overgrown Tomb enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>temple of mystery</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Temple of Mystery enters the battlefield tapped.
 When Temple of Mystery enters the battlefield, scry 1.
-{T}: Add {G} or {U}.</RulesText></Card><Card><Name>temple of diceit</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Temple of Deceit enters the battlefield tapped.
+{T}: Add {G} or {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>temple of diceit</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Temple of Deceit enters the battlefield tapped.
 When Temple of Deceit enters the battlefield, scry 1.
-{T}: Add {U} or {B}.</RulesText></Card><Card><Name>watery grave</Name><Quantity>1</Quantity><Type>Land — Island Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U} or {B}.)
-As Watery Grave enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText></Card><Card><Name>drowned catacombs</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Drowned Catacomb enters the battlefield tapped unless you control an Island or a Swamp.
-{T}: Add {U} or {B}.</RulesText></Card><Card><Name>hinterland harbor</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Hinterland Harbor enters the battlefield tapped unless you control a Forest or an Island.
-{T}: Add {G} or {U}.</RulesText></Card><Card><Name>woodland cemetery</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Woodland Cemetery enters the battlefield tapped unless you control a Swamp or a Forest.
-{T}: Add {B} or {G}.</RulesText></Card><Card><Name>swamp</Name><Quantity>6</Quantity><Type>Basic Land — Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {B}.)</RulesText></Card><Card><Name>island</Name><Quantity>2</Quantity><Type>Basic Land — Island</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U}.)</RulesText></Card></Decklist>
+{T}: Add {U} or {B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>watery grave</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Island Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {B}.)
+As Watery Grave enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>drowned catacombs</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Drowned Catacomb enters the battlefield tapped unless you control an Island or a Swamp.
+{T}: Add {U} or {B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>hinterland harbor</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Hinterland Harbor enters the battlefield tapped unless you control a Forest or an Island.
+{T}: Add {G} or {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>woodland cemetery</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Woodland Cemetery enters the battlefield tapped unless you control a Swamp or a Forest.
+{T}: Add {B} or {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>swamp</Name>
+    <Quantity>6</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>island</Name>
+    <Quantity>2</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+</Decklist>

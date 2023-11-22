@@ -1,2 +1,279 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="Mantis Rider Pioneer"><DesignGoal>a</DesignGoal><Card><Name>Thraben Inspector</Name><Quantity>1</Quantity><Type>Creature — Human Soldier</Type><Cost>{W}</Cost><RulesText>When Thraben Inspector enters the battlefield, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this artifact: Draw a card.")</RulesText></Card><Card><Name>Venerable Knight</Name><Quantity>4</Quantity><Type>Creature — Human Knight</Type><Cost>{W}</Cost><RulesText>When Venerable Knight dies, put a +1/+1 counter on target Knight you control.</RulesText></Card><Card><Name>Usher of the Fallen</Name><Quantity>1</Quantity><Type>Creature — Spirit Warrior</Type><Cost>{W}</Cost><RulesText>Boast — {1}{W}: Create a 1/1 white Human Warrior creature token. (Activate only if this creature attacked this turn and only once each turn.)</RulesText></Card><Card><Name>Faerie Guidemother</Name><Quantity>1</Quantity><Type>Creature — Faerie // Sorcery — Adventure</Type><Cost>{W} // {1}{W}</Cost><RulesText>undefined</RulesText></Card><Card><Name>Monastery Swiftspear</Name><Quantity>3</Quantity><Type>Creature — Human Monk</Type><Cost>{R}</Cost><RulesText>HasteProwess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)</RulesText></Card><Card><Name>Skly Terror</Name><Quantity>1</Quantity><Type>undefined</Type><Cost>undefined</Cost><RulesText>undefined</RulesText></Card><Card><Name>Ajani's Pridemate</Name><Quantity>1</Quantity><Type>Creature — Cat Soldier</Type><Cost>{1}{W}</Cost><RulesText>Whenever you gain life, put a +1/+1 counter on Ajani's Pridemate.</RulesText></Card><Card><Name>Bomat Courier</Name><Quantity>1</Quantity><Type>Artifact Creature — Construct</Type><Cost>{1}</Cost><RulesText>HasteWhenever Bomat Courier attacks, exile the top card of your library face down. (You can't look at it.){R}, Discard your hand, Sacrifice Bomat Courier: Put all cards exiled with Bomat Courier into their owners' hands.</RulesText></Card><Card><Name>Chamber Sentry</Name><Quantity>1</Quantity><Type>Artifact Creature — Construct</Type><Cost>{X}</Cost><RulesText>Chamber Sentry enters the battlefield with a +1/+1 counter on it for each color of mana spent to cast it.{X}, {T}, Remove X +1/+1 counters from Chamber Sentry: It deals X damage to any target.{W}{U}{B}{R}{G}: Return Chamber Sentry from your graveyard to your hand.</RulesText></Card><Card><Name>Mantis Rider</Name><Quantity>4</Quantity><Type>Creature — Human Monk</Type><Cost>{U}{R}{W}</Cost><RulesText>Flying, vigilance, haste</RulesText></Card><Card><Name>Glorybringer</Name><Quantity>1</Quantity><Type>Creature — Dragon</Type><Cost>{3}{R}{R}</Cost><RulesText>Flying, hasteYou may exert Glorybringer as it attacks. When you do, it deals 4 damage to target non-Dragon creature an opponent controls. (An exerted creature won't untap during your next untap step.)</RulesText></Card><Card><Name>Halvar, God Of Battle</Name><Quantity>1</Quantity><Type>Legendary Creature — God // Legendary Artifact — Equipment</Type><Cost>Unknown</Cost><RulesText>undefined</RulesText></Card><Card><Name>Adult Gold Dragon</Name><Quantity>1</Quantity><Type>Creature — Dragon</Type><Cost>{3}{R}{W}</Cost><RulesText>Flying, lifelink, haste</RulesText></Card><Card><Name>Legion's Landing</Name><Quantity>1</Quantity><Type>Legendary Enchantment // Legendary Land</Type><Cost>Unknown</Cost><RulesText>undefined</RulesText></Card><Card><Name>Defiant Strike</Name><Quantity>3</Quantity><Type>Instant</Type><Cost>{W}</Cost><RulesText>Target creature gets +1/+0 until end of turn.Draw a card.</RulesText></Card><Card><Name>Shock</Name><Quantity>3</Quantity><Type>Instant</Type><Cost>{R}</Cost><RulesText>Shock deals 2 damage to any target.</RulesText></Card><Card><Name>Samut's Sprint</Name><Quantity>1</Quantity><Type>Instant</Type><Cost>{R}</Cost><RulesText>Target creature gets +2/+1 and gains haste until end of turn. Scry 1.</RulesText></Card><Card><Name>Lightning Strike</Name><Quantity>2</Quantity><Type>Instant</Type><Cost>{1}{R}</Cost><RulesText>Lightning Strike deals 3 damage to any target.</RulesText></Card><Card><Name>Skewer the Critics</Name><Quantity>2</Quantity><Type>Sorcery</Type><Cost>{2}{R}</Cost><RulesText>Spectacle {R} (You may cast this spell for its spectacle cost rather than its mana cost if an opponent lost life this turn.)Skewer the Critics deals 3 damage to any target.</RulesText></Card><Card><Name>Maul of The Skyclaves</Name><Quantity>1</Quantity><Type>Artifact — Equipment</Type><Cost>{2}{W}</Cost><RulesText>When Maul of the Skyclaves enters the battlefield, attach it to target creature you control.Equipped creature gets +2/+2 and has flying and first strike.Equip {2}{W}{W}</RulesText></Card><Card><Name>Kaya's Onslaught</Name><Quantity>1</Quantity><Type>Instant</Type><Cost>{2}{W}</Cost><RulesText>Target creature gets +1/+1 and gains double strike until end of turn.Foretell {W} (During your turn, you may pay {2} and exile this card from your hand face down. Cast it on a later turn for its foretell cost.)</RulesText></Card><Card><Name>Warleader's Helix</Name><Quantity>1</Quantity><Type>Instant</Type><Cost>{2}{R}{W}</Cost><RulesText>Warleader's Helix deals 4 damage to any target and you gain 4 life.</RulesText></Card><Card><Name>Showdown of the Skalds</Name><Quantity>1</Quantity><Type>Enchantment — Saga</Type><Cost>{2}{R}{W}</Cost><RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)I — Exile the top four cards of your library. Until the end of your next turn, you may play those cards.II, III — Whenever you cast a spell this turn, put a +1/+1 counter on target creature you control.</RulesText></Card><Card><Name>The Akroan War</Name><Quantity>1</Quantity><Type>Enchantment — Saga</Type><Cost>{3}{R}</Cost><RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)I — Gain control of target creature for as long as The Akroan War remains on the battlefield.II — Until your next turn, creatures your opponents control attack each combat if able.III — Each tapped creature deals damage to itself equal to its power.</RulesText></Card><Card><Name>Castle Ardenvale</Name><Quantity>2</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Castle Ardenvale enters the battlefield tapped unless you control a Plains.{T}: Add {W}.{2}{W}{W}, {T}: Create a 1/1 white Human creature token.</RulesText></Card><Card><Name>Plains</Name><Quantity>5</Quantity><Type>Basic Land — Plains</Type><Cost>Unknown</Cost><RulesText>({T}: Add {W}.)</RulesText></Card><Card><Name>Mystic Monastery</Name><Quantity>3</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Mystic Monastery enters the battlefield tapped.{T}: Add {U}, {R}, or {W}.</RulesText></Card><Card><Name>Mountain</Name><Quantity>3</Quantity><Type>Basic Land — Mountain</Type><Cost>Unknown</Cost><RulesText>({T}: Add {R}.)</RulesText></Card><Card><Name>Island</Name><Quantity>4</Quantity><Type>Basic Land — Island</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U}.)</RulesText></Card><Card><Name>Needleverge Pathway</Name><Quantity>4</Quantity><Type>Land // Land</Type><Cost>Unknown</Cost><RulesText>undefined</RulesText></Card><Card><Name>Sacred Foundry</Name><Quantity>1</Quantity><Type>Land — Mountain Plains</Type><Cost>Unknown</Cost><RulesText>({T}: Add {R} or {W}.)As Sacred Foundry enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText></Card><Card><Name>Mutavault</Name><Quantity>1</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}: Add {C}.{1}: Mutavault becomes a 2/2 creature with all creature types until end of turn. It's still a land.</RulesText></Card><Card><Name>Steam Vents</Name><Quantity>0</Quantity><Type>Land — Island Mountain</Type><Cost>Unknown</Cost><RulesText>({T}: Add {U} or {R}.)As Steam Vents enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText></Card><Card><Name>Hallowed Fountain</Name><Quantity>2</Quantity><Type>Land — Plains Island</Type><Cost>Unknown</Cost><RulesText>({T}: Add {W} or {U}.)As Hallowed Fountain enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText></Card></Decklist>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Mantis Rider Pioneer">
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Thraben Inspector</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Soldier</Type>
+    <Cost>{W}</Cost>
+    <RulesText>When Thraben Inspector enters the battlefield, investigate. (Create a Clue token. It's an artifact with "{2}, Sacrifice this artifact: Draw a card.")</RulesText>
+  </Card>
+  <Card>
+    <Name>Venerable Knight</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Knight</Type>
+    <Cost>{W}</Cost>
+    <RulesText>When Venerable Knight dies, put a +1/+1 counter on target Knight you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Usher of the Fallen</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Spirit Warrior</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Boast — {1}{W}: Create a 1/1 white Human Warrior creature token. (Activate only if this creature attacked this turn and only once each turn.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Faerie Guidemother</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Faerie // Sorcery — Adventure</Type>
+    <Cost>{W}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Monastery Swiftspear</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Human Monk</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Haste
+Prowess (Whenever you cast a noncreature spell, this creature gets +1/+1 until end of turn.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Skly Terror</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Dinosaur</Type>
+    <Cost>{R}{W}</Cost>
+    <RulesText>Flying, menace</RulesText>
+  </Card>
+  <Card>
+    <Name>Ajani's Pridemate</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Cat Soldier</Type>
+    <Cost>{1}{W}</Cost>
+    <RulesText>Whenever you gain life, put a +1/+1 counter on Ajani's Pridemate.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bomat Courier</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Construct</Type>
+    <Cost>{1}</Cost>
+    <RulesText>Haste
+Whenever Bomat Courier attacks, exile the top card of your library face down. (You can't look at it.)
+{R}, Discard your hand, Sacrifice Bomat Courier: Put all cards exiled with Bomat Courier into their owners' hands.</RulesText>
+  </Card>
+  <Card>
+    <Name>Chamber Sentry</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact Creature — Construct</Type>
+    <Cost>{X}</Cost>
+    <RulesText>Chamber Sentry enters the battlefield with a +1/+1 counter on it for each color of mana spent to cast it.
+{X}, {T}, Remove X +1/+1 counters from Chamber Sentry: It deals X damage to any target.
+{W}{U}{B}{R}{G}: Return Chamber Sentry from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mantis Rider</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Monk</Type>
+    <Cost>{U}{R}{W}</Cost>
+    <RulesText>Flying, vigilance, haste</RulesText>
+  </Card>
+  <Card>
+    <Name>Glorybringer</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Dragon</Type>
+    <Cost>{3}{R}{R}</Cost>
+    <RulesText>Flying, haste
+You may exert Glorybringer as it attacks. When you do, it deals 4 damage to target non-Dragon creature an opponent controls. (An exerted creature won't untap during your next untap step.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Halvar, God Of Battle</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — God // Legendary Artifact — Equipment</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Adult Gold Dragon</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Dragon</Type>
+    <Cost>{3}{R}{W}</Cost>
+    <RulesText>Flying, lifelink, haste</RulesText>
+  </Card>
+  <Card>
+    <Name>Legion's Landing</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Enchantment // Legendary Land</Type>
+    <Cost>{W}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Defiant Strike</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Target creature gets +1/+0 until end of turn.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shock</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Shock deals 2 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Samut's Sprint</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Target creature gets +2/+1 and gains haste until end of turn. Scry 1.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning Strike</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Lightning Strike deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Skewer the Critics</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Spectacle {R} (You may cast this spell for its spectacle cost rather than its mana cost if an opponent lost life this turn.)
+Skewer the Critics deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Maul of The Skyclaves</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact — Equipment</Type>
+    <Cost>{2}{W}</Cost>
+    <RulesText>When Maul of the Skyclaves enters the battlefield, attach it to target creature you control.
+Equipped creature gets +2/+2 and has flying and first strike.
+Equip {2}{W}{W}</RulesText>
+  </Card>
+  <Card>
+    <Name>Kaya's Onslaught</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{W}</Cost>
+    <RulesText>Target creature gets +1/+1 and gains double strike until end of turn.
+Foretell {W} (During your turn, you may pay {2} and exile this card from your hand face down. Cast it on a later turn for its foretell cost.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Warleader's Helix</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{R}{W}</Cost>
+    <RulesText>Warleader's Helix deals 4 damage to any target and you gain 4 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Showdown of the Skalds</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Saga</Type>
+    <Cost>{2}{R}{W}</Cost>
+    <RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
+I — Exile the top four cards of your library. Until the end of your next turn, you may play those cards.
+II, III — Whenever you cast a spell this turn, put a +1/+1 counter on target creature you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>The Akroan War</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Saga</Type>
+    <Cost>{3}{R}</Cost>
+    <RulesText>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
+I — Gain control of target creature for as long as The Akroan War remains on the battlefield.
+II — Until your next turn, creatures your opponents control attack each combat if able.
+III — Each tapped creature deals damage to itself equal to its power.</RulesText>
+  </Card>
+  <Card>
+    <Name>Castle Ardenvale</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Castle Ardenvale enters the battlefield tapped unless you control a Plains.
+{T}: Add {W}.
+{2}{W}{W}, {T}: Create a 1/1 white Human creature token.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>5</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Mystic Monastery</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Mystic Monastery enters the battlefield tapped.
+{T}: Add {U}, {R}, or {W}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>3</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>4</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Needleverge Pathway</Name>
+    <Quantity>4</Quantity>
+    <Type>Land // Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Sacred Foundry</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Mountain Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R} or {W}.)
+As Sacred Foundry enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mutavault</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}: Mutavault becomes a 2/2 creature with all creature types until end of turn. It's still a land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Steam Vents</Name>
+    <Quantity>0</Quantity>
+    <Type>Land — Island Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {R}.)
+As Steam Vents enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hallowed Fountain</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Plains Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W} or {U}.)
+As Hallowed Fountain enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+</Decklist>

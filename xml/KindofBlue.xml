@@ -1,184 +1,236 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="KindofBlue">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Sage of Epityr</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Whirlpool Rider</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Rayne, Academy Chancellor</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Man-O'-War</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Temporal Adept</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>1UU</Cost>
-    </Card>
-    <Card>
-        <Name>Somnophore</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>2UU</Cost>
-    </Card>
-    <Card>
-        <Name>Palinchron</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>5UU</Cost>
-    </Card>
-    <Card>
-        <Name>Sleight of Mind</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>High Tide</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Tidal Bore</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Counterspell</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>UU</Cost>
-    </Card>
-    <Card>
-        <Name>Misstep</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Stasis</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Energy Field</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Tolarian Winds</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Overburden</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Twitch</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Exclude</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Rushing River</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Repulse</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Theft of Dreams</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2U</Cost>
-    </Card>
-    <Card>
-        <Name>Fact or Fiction</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Clone</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Control Magic</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2UU</Cost>
-    </Card>
-    <Card>
-        <Name>Treachery</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Force of Will</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Mishra's Factory</Name>
-        <Quantity>2</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Rishadan Port</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Desert</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>22</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Sage of Epityr</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Wizard</Type>
+    <Cost>{U}</Cost>
+    <RulesText>When Sage of Epityr enters the battlefield, look at the top four cards of your library, then put them back in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Whirlpool Rider</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Merfolk</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>When Whirlpool Rider enters the battlefield, shuffle the cards from your hand into your library, then draw that many cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rayne, Academy Chancellor</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Human Wizard</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Whenever you or a permanent you control becomes the target of a spell or ability an opponent controls, you may draw a card. You may draw an additional card if Rayne, Academy Chancellor is enchanted.</RulesText>
+  </Card>
+  <Card>
+    <Name>Man-O'-War</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Jellyfish</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>When Man-o'-War enters the battlefield, return target creature to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Temporal Adept</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Wizard</Type>
+    <Cost>{1}{U}{U}</Cost>
+    <RulesText>{U}{U}{U}, {T}: Return target permanent to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Somnophore</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Illusion</Type>
+    <Cost>{2}{U}{U}</Cost>
+    <RulesText>Flying
+Whenever Somnophore deals damage to a player, tap target creature that player controls. That creature doesn't untap during its controller's untap step for as long as Somnophore remains on the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Palinchron</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Illusion</Type>
+    <Cost>{5}{U}{U}</Cost>
+    <RulesText>Flying
+When Palinchron enters the battlefield, untap up to seven lands.
+{2}{U}{U}: Return Palinchron to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sleight of Mind</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Change the text of target spell or permanent by replacing all instances of one color word with another. (For example, you may change "target black spell" to "target blue spell." This effect lasts indefinitely.)</RulesText>
+  </Card>
+  <Card>
+    <Name>High Tide</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Until end of turn, whenever a player taps an Island for mana, that player adds an additional {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tidal Bore</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>You may return an Island you control to its owner's hand rather than pay this spell's mana cost.
+You may tap or untap target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Counterspell</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}{U}</Cost>
+    <RulesText>Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Misstep</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Creatures target player controls don't untap during that player's next untap step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stasis</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Players skip their untap steps.
+At the beginning of your upkeep, sacrifice Stasis unless you pay {U}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Energy Field</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Prevent all damage that would be dealt to you by sources you don't control.
+When a card is put into your graveyard from anywhere, sacrifice Energy Field.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tolarian Winds</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Discard all the cards in your hand, then draw that many cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Overburden</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>Whenever a player puts a nontoken creature onto the battlefield, that player returns a land they control to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Twitch</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>You may tap or untap target artifact, creature, or land.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Exclude</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Counter target creature spell.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rushing River</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Kicker—Sacrifice a land. (You may sacrifice a land in addition to any other costs as you cast this spell.)
+Return target nonland permanent to its owner's hand. If this spell was kicked, return another target nonland permanent to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Repulse</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Return target creature to its owner's hand.
+Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Theft of Dreams</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{U}</Cost>
+    <RulesText>Draw a card for each tapped creature target opponent controls.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fact or Fiction</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>Reveal the top five cards of your library. An opponent separates those cards into two piles. Put one pile into your hand and the other into your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Clone</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Shapeshifter</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>You may have Clone enter the battlefield as a copy of any creature on the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Control Magic</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{2}{U}{U}</Cost>
+    <RulesText>Enchant creature
+You control enchanted creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Treachery</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>Enchant creature
+When Treachery enters the battlefield, untap up to five lands.
+You control enchanted creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Force of Will</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mishra's Factory</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}: Mishra's Factory becomes a 2/2 Assembly-Worker artifact creature until end of turn. It's still a land.
+{T}: Target Assembly-Worker creature gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Rishadan Port</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}, {T}: Tap target land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Desert</Name>
+    <Quantity>1</Quantity>
+    <Type>Land — Desert</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}: Desert deals 1 damage to target attacking creature. Activate only during the end of combat step.</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>22</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
 </Decklist>

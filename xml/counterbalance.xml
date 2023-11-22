@@ -1,172 +1,166 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="CounterBalance">
-    <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Eternal Dragon</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature — Dragon Spirit</Type>
-        <Cost>{5}{W}{W}</Cost>
-        <RulesText>Flying
-            {3}{W}{W}: Return Eternal Dragon from your graveyard to your hand. Activate only during
-            your upkeep.
-            Plainscycling {2} ({2}, Discard this card: Search your library for a Plains card, reveal
-            it, put it into your hand, then shuffle.)</RulesText>
-    </Card>
-    <Card>
-        <Name>Brainstorm</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>{U}</Cost>
-        <RulesText>Draw three cards, then put two cards from your hand on top of your library in any
-            order.</RulesText>
-    </Card>
-    <Card>
-        <Name>Counterbalance</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{U}{U}</Cost>
-        <RulesText>Whenever an opponent casts a spell, you may reveal the top card of your library.
-            If you do, counter that spell if it has the same mana value as the revealed card.</RulesText>
-    </Card>
-    <Card>
-        <Name>Counterspell</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>{U}{U}</Cost>
-        <RulesText>Counter target spell.</RulesText>
-    </Card>
-    <Card>
-        <Name>Crucible of Worlds</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>{3}</Cost>
-        <RulesText>You may play lands from your graveyard.</RulesText>
-    </Card>
-    <Card>
-        <Name>Engineered Explosives</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-        <Cost>{X}</Cost>
-        <RulesText>Sunburst (This enters the battlefield with a charge counter on it for each color
-            of mana spent to cast it.)
-            {2}, Sacrifice Engineered Explosives: Destroy each nonland permanent with mana value
-            equal to the number of charge counters on Engineered Explosives.</RulesText>
-    </Card>
-    <Card>
-        <Name>Enlightened Tutor</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>{W}</Cost>
-        <RulesText>Search your library for an artifact or enchantment card, reveal it, then shuffle
-            and put that card on top.</RulesText>
-    </Card>
-    <Card>
-        <Name>Force of Will</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>{3}{U}{U}</Cost>
-        <RulesText>You may pay 1 life and exile a blue card from your hand rather than pay this
-            spell's mana cost.
-            Counter target spell.</RulesText>
-    </Card>
-    <Card>
-        <Name>Moat</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{2}{W}{W}</Cost>
-        <RulesText>Creatures without flying can't attack.</RulesText>
-    </Card>
-    <Card>
-        <Name>Seal of Cleansing</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{1}{W}</Cost>
-        <RulesText>Sacrifice Seal of Cleansing: Destroy target artifact or enchantment.</RulesText>
-    </Card>
-    <Card>
-        <Name>Sensei's Divining Top</Name>
-        <Quantity>4</Quantity>
-        <Type>Artifact</Type>
-        <Cost>{1}</Cost>
-        <RulesText>{1}: Look at the top three cards of your library, then put them back in any
-            order.
-            {T}: Draw a card, then put Sensei's Divining Top on top of its owner's library.</RulesText>
-    </Card>
-    <Card>
-        <Name>Standstill</Name>
-        <Quantity>2</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>{1}{U}</Cost>
-        <RulesText>When a player casts a spell, sacrifice Standstill. If you do, each of that
-            player's opponents draws three cards.</RulesText>
-    </Card>
-    <Card>
-        <Name>Swords to Plowshares</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>{W}</Cost>
-        <RulesText>Exile target creature. Its controller gains life equal to its power.</RulesText>
-    </Card>
-    <Card>
-        <Name>Wrath of God</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>{2}{W}{W}</Cost>
-        <RulesText>Destroy all creatures. They can't be regenerated.</RulesText>
-    </Card>
-    <Card>
-        <Name>Flooded Strand</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>{T}, Pay 1 life, Sacrifice Flooded Strand: Search your library for a Plains or
-            Island card, put it onto the battlefield, then shuffle.</RulesText>
-    </Card>
-    <Card>
-        <Name>Mishra's Factory</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>{T}: Add {C}.
-            {1}: Mishra's Factory becomes a 2/2 Assembly-Worker artifact creature until end of turn.
-            It's still a land.
-            {T}: Target Assembly-Worker creature gets +1/+1 until end of turn.</RulesText>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>5</Quantity>
-        <Type>Basic Land — Island</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>({T}: Add {U}.)</RulesText>
-    </Card>
-    <Card>
-        <Name>Polluted Delta</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>{T}, Pay 1 life, Sacrifice Polluted Delta: Search your library for an Island or
-            Swamp card, put it onto the battlefield, then shuffle.</RulesText>
-    </Card>
-    <Card>
-        <Name>Wasteland</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>{T}: Add {C}.
-            {T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText>
-    </Card>
-    <Card>
-        <Name>Tundra</Name>
-        <Quantity>4</Quantity>
-        <Type>Land — Plains Island</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>({T}: Add {W} or {U}.)</RulesText>
-    </Card>
-    <Card>
-        <Name>Plains</Name>
-        <Quantity>2</Quantity>
-        <Type>Basic Land — Plains</Type>
-        <Cost>Unknown</Cost>
-        <RulesText>({T}: Add {W}.)</RulesText>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Eternal Dragon</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Dragon Spirit</Type>
+    <Cost>{5}{W}{W}</Cost>
+    <RulesText>Flying
+{3}{W}{W}: Return Eternal Dragon from your graveyard to your hand. Activate only during your upkeep.
+Plainscycling {2} ({2}, Discard this card: Search your library for a Plains card, reveal it, put it into your hand, then shuffle.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Brainstorm</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Draw three cards, then put two cards from your hand on top of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Counterbalance</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{U}{U}</Cost>
+    <RulesText>Whenever an opponent casts a spell, you may reveal the top card of your library. If you do, counter that spell if it has the same mana value as the revealed card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Counterspell</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}{U}</Cost>
+    <RulesText>Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Crucible of Worlds</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{3}</Cost>
+    <RulesText>You may play lands from your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Engineered Explosives</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{X}</Cost>
+    <RulesText>Sunburst (This enters the battlefield with a charge counter on it for each color of mana spent to cast it.)
+{2}, Sacrifice Engineered Explosives: Destroy each nonland permanent with mana value equal to the number of charge counters on Engineered Explosives.</RulesText>
+  </Card>
+  <Card>
+    <Name>Enlightened Tutor</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Search your library for an artifact or enchantment card, reveal it, then shuffle and put that card on top.</RulesText>
+  </Card>
+  <Card>
+    <Name>Force of Will</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Moat</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>Creatures without flying can't attack.</RulesText>
+  </Card>
+  <Card>
+    <Name>Seal of Cleansing</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{W}</Cost>
+    <RulesText>Sacrifice Seal of Cleansing: Destroy target artifact or enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sensei's Divining Top</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>{1}: Look at the top three cards of your library, then put them back in any order.
+{T}: Draw a card, then put Sensei's Divining Top on top of its owner's library.</RulesText>
+  </Card>
+  <Card>
+    <Name>Standstill</Name>
+    <Quantity>2</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>When a player casts a spell, sacrifice Standstill. If you do, each of that player's opponents draws three cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Swords to Plowshares</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Exile target creature. Its controller gains life equal to its power.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wrath of God</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{2}{W}{W}</Cost>
+    <RulesText>Destroy all creatures. They can't be regenerated.</RulesText>
+  </Card>
+  <Card>
+    <Name>Flooded Strand</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Flooded Strand: Search your library for a Plains or Island card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mishra's Factory</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}: Mishra's Factory becomes a 2/2 Assembly-Worker artifact creature until end of turn. It's still a land.
+{T}: Target Assembly-Worker creature gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>5</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Polluted Delta</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Polluted Delta: Search your library for an Island or Swamp card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wasteland</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tundra</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Plains Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W} or {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>2</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
 </Decklist>

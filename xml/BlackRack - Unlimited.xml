@@ -1,142 +1,188 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="BlackRack">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Sludge Crawler</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Deathrite Shaman	</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Endless One</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-        <Cost>x</Cost>
-    </Card>
-    <Card>
-        <Name>Hangarback Walker</Name>
-        <Quantity>4</Quantity>
-        <Type>Creature</Type>
-        <Cost>XX</Cost>
-    </Card>
-    <Card>
-        <Name>Black Knight</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>BB</Cost>
-    </Card>
-    <Card>
-        <Name>Drana, Liberator of Malakir</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Hypnotic Specter</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Kalitas, Traitor of Ghet</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-        <Cost>2BB</Cost>
-    </Card>
-    <Card>
-        <Name>Dark Ritual</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Thoughtseize</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>Funeral Charm</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>B</Cost>
-    </Card>
-    <Card>
-        <Name>The Rack</Name>
-        <Quantity>3</Quantity>
-        <Type>Artifact</Type>
-        <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Hymn to tourach</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>BB</Cost>
-    </Card>
-    <Card>
-        <Name>Diabolic Edict</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>1B</Cost>
-    </Card>
-    <Card>
-        <Name>Drain Life</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>2B</Cost>
-    </Card>
-    <Card>
-        <Name>Liliana of The Veil</Name>
-        <Quantity>1</Quantity>
-        <Type>Planeswalker</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Ashes to Ashes</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Phyrexian Arena</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1BB</Cost>
-    </Card>
-    <Card>
-        <Name>Sword of Fire and Ice</Name>
-        <Quantity>2</Quantity>
-        <Type>Artifact</Type>
-        <Cost>3</Cost>
-    </Card>
-    <Card>
-        <Name>No Mercy</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>2BB</Cost>
-    </Card>
-    <Card>
-        <Name>Murderous Cut</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-        <Cost>4B</Cost>
-    </Card>
-    <Card>
-        <Name>Bayou</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Swamp</Name>
-        <Quantity>17</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Sludge Crawler</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Eldrazi Drone</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Devoid (This card has no color.)
+Ingest (Whenever this creature deals combat damage to a player, that player exiles the top card of their library.)
+{2}: Sludge Crawler gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Deathrite Shaman	</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Elf Shaman</Type>
+    <Cost>{B/G}</Cost>
+    <RulesText>{T}: Exile target land card from a graveyard. Add one mana of any color.
+{B}, {T}: Exile target instant or sorcery card from a graveyard. Each opponent loses 2 life.
+{G}, {T}: Exile target creature card from a graveyard. You gain 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Endless One</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Eldrazi</Type>
+    <Cost>{X}</Cost>
+    <RulesText>Endless One enters the battlefield with X +1/+1 counters on it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hangarback Walker</Name>
+    <Quantity>4</Quantity>
+    <Type>Artifact Creature — Construct</Type>
+    <Cost>{X}{X}</Cost>
+    <RulesText>Hangarback Walker enters the battlefield with X +1/+1 counters on it.
+When Hangarback Walker dies, create a 1/1 colorless Thopter artifact creature token with flying for each +1/+1 counter on Hangarback Walker.
+{1}, {T}: Put a +1/+1 counter on Hangarback Walker.</RulesText>
+  </Card>
+  <Card>
+    <Name>Black Knight</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Knight</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>First strike (This creature deals combat damage before creatures without first strike.)
+Protection from white (This creature can't be blocked, targeted, dealt damage, or enchanted by anything white.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Drana, Liberator of Malakir</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Creature — Vampire Ally</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Flying, first strike
+Whenever Drana, Liberator of Malakir deals combat damage to a player, put a +1/+1 counter on each attacking creature you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hypnotic Specter</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Specter</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Flying
+Whenever Hypnotic Specter deals damage to an opponent, that player discards a card at random.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kalitas, Traitor of Ghet</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Creature — Vampire Warrior</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>Lifelink
+If a nontoken creature an opponent controls would die, instead exile that card and create a 2/2 black Zombie creature token.
+{2}{B}, Sacrifice another Vampire or Zombie: Put two +1/+1 counters on Kalitas, Traitor of Ghet.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dark Ritual</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Add {B}{B}{B}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thoughtseize</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target player reveals their hand. You choose a nonland card from it. That player discards that card. You lose 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Funeral Charm</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Choose one —
+• Target player discards a card.
+• Target creature gets +2/-1 until end of turn.
+• Target creature gains swampwalk until end of turn. (It can't be blocked as long as defending player controls a Swamp.)</RulesText>
+  </Card>
+  <Card>
+    <Name>The Rack</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>As The Rack enters the battlefield, choose an opponent.
+At the beginning of the chosen player's upkeep, The Rack deals X damage to that player, where X is 3 minus the number of cards in their hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Hymn to tourach</Name>
+    <Quantity>4</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}{B}</Cost>
+    <RulesText>Target player discards two cards at random.</RulesText>
+  </Card>
+  <Card>
+    <Name>Diabolic Edict</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Target player sacrifices a creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Drain Life</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{1}{B}</Cost>
+    <RulesText>Spend only black mana on X.
+Drain Life deals X damage to any target. You gain life equal to the damage dealt, but not more life than the player's life total before the damage was dealt, the planeswalker's loyalty before the damage was dealt, or the creature's toughness.</RulesText>
+  </Card>
+  <Card>
+    <Name>Liliana of The Veil</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Planeswalker — Liliana</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>+1: Each player discards a card.
+−2: Target player sacrifices a creature.
+−6: Separate all permanents target player controls into two piles. That player sacrifices all permanents in the pile of their choice.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ashes to Ashes</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>Exile two target nonartifact creatures. Ashes to Ashes deals 5 damage to you.</RulesText>
+  </Card>
+  <Card>
+    <Name>Phyrexian Arena</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{B}{B}</Cost>
+    <RulesText>At the beginning of your upkeep, you draw a card and you lose 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Sword of Fire and Ice</Name>
+    <Quantity>2</Quantity>
+    <Type>Artifact — Equipment</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Equipped creature gets +2/+2 and has protection from red and from blue.
+Whenever equipped creature deals combat damage to a player, Sword of Fire and Ice deals 2 damage to any target and you draw a card.
+Equip {2}</RulesText>
+  </Card>
+  <Card>
+    <Name>No Mercy</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{B}{B}</Cost>
+    <RulesText>Whenever a creature deals damage to you, destroy it.</RulesText>
+  </Card>
+  <Card>
+    <Name>Murderous Cut</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{4}{B}</Cost>
+    <RulesText>Delve (Each card you exile from your graveyard while casting this spell pays for {1}.)
+Destroy target creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bayou</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Swamp Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B} or {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>17</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
 </Decklist>

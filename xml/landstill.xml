@@ -1,112 +1,147 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="LandStill">
- <DesignGoal>a</DesignGoal>
-    <Card>
-        <Name>Exalted Angel</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-        <Cost>4WW</Cost>
-    </Card>
-     <Card>
-        <Name>Brainstorm</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Counterspell</Name>
-        <Quantity>4</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>UU</Cost>
-    </Card>
-    <Card>
-        <Name>Decree of Justice</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-        <Cost>XX2WW</Cost>
-    </Card>
-    <Card>
-        <Name>Engineered Explosives</Name>
-        <Quantity>3</Quantity>
-        <Type>Artifact</Type>
-        <Cost>X</Cost>
-    </Card>
-    <Card>
-        <Name>Fact or Fiction</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-        <Cost>3U</Cost>
-    </Card>
-    <Card>
-        <Name>Fire // Ice</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Force of Will</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>3UU</Cost>
-    </Card>
-    <Card>
-        <Name>Standstill</Name>
-        <Quantity>4</Quantity>
-        <Type>Enchantment</Type>
-        <Cost>1U</Cost>
-    </Card>
-    <Card>
-        <Name>Stifle</Name>
-        <Quantity>3</Quantity>
-        <Type>Instant</Type>
-        <Cost>U</Cost>
-    </Card>
-    <Card>
-        <Name>Swords to Plowshares</Name>
-        <Quantity>4</Quantity>
-        <Type>Instant</Type>
-        <Cost>W</Cost>
-    </Card>
-    <Card>
-        <Name>Flooded Strand</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Island</Name>
-        <Quantity>3</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Mishra's Factory</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Plains</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Tundra</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Volcanic Island</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Wasteland</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Exalted Angel</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Angel</Type>
+    <Cost>{4}{W}{W}</Cost>
+    <RulesText>Flying
+Whenever Exalted Angel deals damage, you gain that much life.
+Morph {2}{W}{W} (You may cast this card face down as a 2/2 creature for {3}. Turn it face up any time for its morph cost.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Brainstorm</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Draw three cards, then put two cards from your hand on top of your library in any order.</RulesText>
+  </Card>
+  <Card>
+    <Name>Counterspell</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}{U}</Cost>
+    <RulesText>Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Decree of Justice</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{X}{X}{2}{W}{W}</Cost>
+    <RulesText>Create X 4/4 white Angel creature tokens with flying.
+Cycling {2}{W} ({2}{W}, Discard this card: Draw a card.)
+When you cycle Decree of Justice, you may pay {X}. If you do, create X 1/1 white Soldier creature tokens.</RulesText>
+  </Card>
+  <Card>
+    <Name>Engineered Explosives</Name>
+    <Quantity>3</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{X}</Cost>
+    <RulesText>Sunburst (This enters the battlefield with a charge counter on it for each color of mana spent to cast it.)
+{2}, Sacrifice Engineered Explosives: Destroy each nonland permanent with mana value equal to the number of charge counters on Engineered Explosives.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fact or Fiction</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}</Cost>
+    <RulesText>Reveal the top five cards of your library. An opponent separates those cards into two piles. Put one pile into your hand and the other into your graveyard.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fire // Ice</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant // Instant</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>
+    </RulesText>
+  </Card>
+  <Card>
+    <Name>Force of Will</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{3}{U}{U}</Cost>
+    <RulesText>You may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.
+Counter target spell.</RulesText>
+  </Card>
+  <Card>
+    <Name>Standstill</Name>
+    <Quantity>4</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{U}</Cost>
+    <RulesText>When a player casts a spell, sacrifice Standstill. If you do, each of that player's opponents draws three cards.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stifle</Name>
+    <Quantity>3</Quantity>
+    <Type>Instant</Type>
+    <Cost>{U}</Cost>
+    <RulesText>Counter target activated or triggered ability. (Mana abilities can't be targeted.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Swords to Plowshares</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{W}</Cost>
+    <RulesText>Exile target creature. Its controller gains life equal to its power.</RulesText>
+  </Card>
+  <Card>
+    <Name>Flooded Strand</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Flooded Strand: Search your library for a Plains or Island card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Island</Name>
+    <Quantity>3</Quantity>
+    <Type>Basic Land — Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Mishra's Factory</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{1}: Mishra's Factory becomes a 2/2 Assembly-Worker artifact creature until end of turn. It's still a land.
+{T}: Target Assembly-Worker creature gets +1/+1 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Plains</Name>
+    <Quantity>1</Quantity>
+    <Type>Basic Land — Plains</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Tundra</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Plains Island</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {W} or {U}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Volcanic Island</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Island Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {U} or {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Wasteland</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {C}.
+{T}, Sacrifice Wasteland: Destroy target nonbasic land.</RulesText>
+  </Card>
 </Decklist>

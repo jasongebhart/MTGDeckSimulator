@@ -1,184 +1,237 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="Lumberjack">
- <DesignGoal>a</DesignGoal>
-     <Card>
-        <Name>Birds of Paradise</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-	    <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Tinder Wall</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-	    <Cost>G</Cost>
-    </Card>
-    <Card>
-        <Name>Vine Trellis</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-	    <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Wall of Roots</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-	    <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Tin Street Hooligan</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-	    <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Eternal Witness</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-	<Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Cunning Sparkmage</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-	    <Cost>2R</Cost>
-    </Card>
-    <Card>
-        <Name>Kitchen Finks</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-		<Cost>1GG</Cost>
-    </Card>
-    <Card>
-        <Name>Stampeding Wildebeests</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-	    <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Bloodbraid Elf</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-	    <Cost>2RG</Cost>
-    </Card>
-    <Card>
-        <Name>Vengevine</Name>
-        <Quantity>3</Quantity>
-        <Type>Creature</Type>
-	    <Cost>2GG</Cost>
-    </Card>
-    <Card>
-        <Name>Shard Phoenix</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-	    <Cost>4R</Cost>
-    </Card>
-    <Card>
-        <Name>Shivan Wurm</Name>
-        <Quantity>1</Quantity>
-        <Type>Creature</Type>
-	    <Cost>3RG</Cost>
-    </Card>
-    <Card>
-        <Name>Shivan Dragon</Name>
-        <Quantity>2</Quantity>
-        <Type>Creature</Type>
-	    <Cost>4RR</Cost>
-    </Card>
-   <Card>
-        <Name>Aether Vial</Name>
-        <Quantity>1</Quantity>
-        <Type>Artifact</Type>
-	    <Cost>1</Cost>
-    </Card>
-    <Card>
-        <Name>Naturalize</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-	    <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Incinerate</Name>
-        <Quantity>2</Quantity>
-        <Type>Instant</Type>
-	    <Cost>1R</Cost>
-    </Card>
-    <Card>
-        <Name>Lightning Bolt</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-	    <Cost>R</Cost>
-    </Card>
-    <Card>
-        <Name>Saproling Cluster</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-	    <Cost>1G</Cost>
-    </Card>
-    <Card>
-        <Name>Flamebreak</Name>
-        <Quantity>1</Quantity>
-        <Type>Sorcery</Type>
-	<Cost>RRR</Cost>
-    </Card>
-    <Card>
-        <Name>Pattern of Rebirth</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-	    <Cost>3G</Cost>
-    </Card>
-    <Card>
-        <Name>Kyren Negotiations</Name>
-        <Quantity>1</Quantity>
-        <Type>Enchantment</Type>
-	<Cost>2RR</Cost>
-    </Card>
-    <Card>
-        <Name>Frenzied Tilling</Name>
-        <Quantity>2</Quantity>
-        <Type>Sorcery</Type>
-	<Cost>3RG</Cost>
-    </Card>
-    <Card>
-        <Name>Fireblast</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-	<Cost>4RR</Cost>
-    </Card>
-    <Card>
-        <Name>Pyrokinesis</Name>
-        <Quantity>1</Quantity>
-        <Type>Instant</Type>
-	<Cost>4RR</Cost>
-    </Card>
-    <Card>
-        <Name>Mountain</Name>
-        <Quantity>7</Quantity>
-        <Type>Land</Type>
-	<Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Forest</Name>
-        <Quantity>6</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Gaea's Cradle</Name>
-        <Quantity>1</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Wooded Foothills</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-	    <Cost>NA</Cost>
-    </Card>
-    <Card>
-        <Name>Taiga</Name>
-        <Quantity>4</Quantity>
-        <Type>Land</Type>
-    	<Cost>NA</Cost>
-    </Card>
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Birds of Paradise</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Bird</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Flying
+{T}: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tinder Wall</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Plant Wall</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Defender (This creature can't attack.)
+Sacrifice Tinder Wall: Add {R}{R}.
+{R}, Sacrifice Tinder Wall: It deals 2 damage to target creature it's blocking.</RulesText>
+  </Card>
+  <Card>
+    <Name>Vine Trellis</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Plant Wall</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Defender (This creature can't attack.)
+{T}: Add {G}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wall of Roots</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Plant Wall</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Defender
+Put a -0/-1 counter on Wall of Roots: Add {G}. Activate only once each turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tin Street Hooligan</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Goblin Rogue</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>When Tin Street Hooligan enters the battlefield, if {G} was spent to cast it, destroy target artifact.</RulesText>
+  </Card>
+  <Card>
+    <Name>Eternal Witness</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Shaman</Type>
+    <Cost>{1}{G}{G}</Cost>
+    <RulesText>When Eternal Witness enters the battlefield, you may return target card from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Cunning Sparkmage</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Shaman</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Haste
+{T}: Cunning Sparkmage deals 1 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kitchen Finks</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Ouphe</Type>
+    <Cost>{1}{G/W}{G/W}</Cost>
+    <RulesText>When Kitchen Finks enters the battlefield, you gain 2 life.
+Persist (When this creature dies, if it had no -1/-1 counters on it, return it to the battlefield under its owner's control with a -1/-1 counter on it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Stampeding Wildebeests</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Antelope Beast</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Trample (This creature can deal excess combat damage to the player or planeswalker it's attacking.)
+At the beginning of your upkeep, return a green creature you control to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bloodbraid Elf</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Elf Berserker</Type>
+    <Cost>{2}{R}{G}</Cost>
+    <RulesText>Haste
+Cascade (When you cast this spell, exile cards from the top of your library until you exile a nonland card that costs less. You may cast it without paying its mana cost. Put the exiled cards on the bottom of your library in a random order.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Vengevine</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Elemental</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Haste
+Whenever you cast a spell, if it's the second creature spell you cast this turn, you may return Vengevine from your graveyard to the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shard Phoenix</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Phoenix</Type>
+    <Cost>{4}{R}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+Sacrifice Shard Phoenix: It deals 2 damage to each creature without flying.
+{R}{R}{R}: Return Shard Phoenix from your graveyard to your hand. Activate only during your upkeep.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shivan Wurm</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Wurm</Type>
+    <Cost>{3}{R}{G}</Cost>
+    <RulesText>Trample
+When Shivan Wurm enters the battlefield, return a red or green creature you control to its owner's hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Shivan Dragon</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Dragon</Type>
+    <Cost>{4}{R}{R}</Cost>
+    <RulesText>Flying (This creature can't be blocked except by creatures with flying or reach.)
+{R}: Shivan Dragon gets +1/+0 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Aether Vial</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{1}</Cost>
+    <RulesText>At the beginning of your upkeep, you may put a charge counter on Aether Vial.
+{T}: You may put a creature card with mana value equal to the number of charge counters on Aether Vial from your hand onto the battlefield.</RulesText>
+  </Card>
+  <Card>
+    <Name>Naturalize</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Destroy target artifact or enchantment.</RulesText>
+  </Card>
+  <Card>
+    <Name>Incinerate</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Incinerate deals 3 damage to any target. A creature dealt damage this way can't be regenerated this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning Bolt</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Lightning Bolt deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Saproling Cluster</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>{1}, Discard a card: Create a 1/1 green Saproling creature token. Any player may activate this ability.</RulesText>
+  </Card>
+  <Card>
+    <Name>Flamebreak</Name>
+    <Quantity>1</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{R}{R}{R}</Cost>
+    <RulesText>Flamebreak deals 3 damage to each creature without flying and each player. Creatures dealt damage this way can't be regenerated this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pattern of Rebirth</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment — Aura</Type>
+    <Cost>{3}{G}</Cost>
+    <RulesText>Enchant creature
+When enchanted creature dies, that creature's controller may search their library for a creature card, put that card onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kyren Negotiations</Name>
+    <Quantity>1</Quantity>
+    <Type>Enchantment</Type>
+    <Cost>{2}{R}{R}</Cost>
+    <RulesText>Tap an untapped creature you control: Kyren Negotiations deals 1 damage to target player or planeswalker.</RulesText>
+  </Card>
+  <Card>
+    <Name>Frenzied Tilling</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{3}{R}{G}</Cost>
+    <RulesText>Destroy target land. Search your library for a basic land card, put that card onto the battlefield tapped, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fireblast</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{4}{R}{R}</Cost>
+    <RulesText>You may sacrifice two Mountains rather than pay this spell's mana cost.
+Fireblast deals 4 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Pyrokinesis</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{4}{R}{R}</Cost>
+    <RulesText>You may exile a red card from your hand rather than pay this spell's mana cost.
+Pyrokinesis deals 4 damage divided as you choose among any number of target creatures.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>7</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>6</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Gaea's Cradle</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}: Add {G} for each creature you control.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wooded Foothills</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Wooded Foothills: Search your library for a Mountain or Forest card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Taiga</Name>
+    <Quantity>4</Quantity>
+    <Type>Land — Mountain Forest</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R} or {G}.)</RulesText>
+  </Card>
 </Decklist>

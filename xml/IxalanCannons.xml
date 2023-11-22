@@ -1,14 +1,153 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="Ixalan Cannons"><DesignGoal>a</DesignGoal><Card><Name>Rigging Runner</Name><Quantity>4</Quantity><Type>Creature — Goblin Pirate</Type><Cost>{R}</Cost><RulesText>First strike
-Raid — Rigging Runner enters the battlefield with a +1/+1 counter on it if you attacked this turn.</RulesText></Card><Card><Name>Vicious Conquistador</Name><Quantity>2</Quantity><Type>Creature — Vampire Soldier</Type><Cost>{B}</Cost><RulesText>Whenever Vicious Conquistador attacks, each opponent loses 1 life.</RulesText></Card><Card><Name>Deadeye Tracker</Name><Quantity>4</Quantity><Type>Creature — Human Pirate</Type><Cost>{B}</Cost><RulesText>{1}{B}, {T}: Exile two target cards from an opponent's graveyard. Deadeye Tracker explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on this creature, then put the card back or put it into your graveyard.)</RulesText></Card><Card><Name>Fathom Fleet Captain</Name><Quantity>1</Quantity><Type>Creature — Human Pirate</Type><Cost>{1}{B}</Cost><RulesText>Menace
-Whenever Fathom Fleet Captain attacks, if you control another nontoken Pirate, you may pay {2}. If you do, create a 2/2 black Pirate creature token with menace.</RulesText></Card><Card><Name>Dire Fleet Captain</Name><Quantity>4</Quantity><Type>Creature — Orc Pirate</Type><Cost>{B}{R}</Cost><RulesText>Whenever Dire Fleet Captain attacks, it gets +1/+1 until end of turn for each other attacking Pirate.</RulesText></Card><Card><Name>Fathom Fleet Firebrand</Name><Quantity>1</Quantity><Type>Creature — Human Pirate</Type><Cost>{1}{R}</Cost><RulesText>{1}{R}: Fathom Fleet Firebrand gets +1/+0 until end of turn.</RulesText></Card><Card><Name>Seekers' Squire</Name><Quantity>0</Quantity><Type>Creature — Human Scout</Type><Cost>{1}{B}</Cost><RulesText>When Seekers' Squire enters the battlefield, it explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on this creature, then put the card back or put it into your graveyard.)</RulesText></Card><Card><Name>Ruin Raider</Name><Quantity>3</Quantity><Type>Creature — Orc Pirate</Type><Cost>{2}{B}</Cost><RulesText>Raid — At the beginning of your end step, if you attacked this turn, reveal the top card of your library and put that card into your hand. You lose life equal to the card's mana value.</RulesText></Card><Card><Name>Captain Lannery Storm</Name><Quantity>2</Quantity><Type>Legendary Creature — Human Pirate</Type><Cost>{2}{R}</Cost><RulesText>Haste
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="Ixalan Cannons">
+  <DesignGoal>a</DesignGoal>
+  <Card>
+    <Name>Rigging Runner</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Goblin Pirate</Type>
+    <Cost>{R}</Cost>
+    <RulesText>First strike
+Raid — Rigging Runner enters the battlefield with a +1/+1 counter on it if you attacked this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Vicious Conquistador</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Vampire Soldier</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Whenever Vicious Conquistador attacks, each opponent loses 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Deadeye Tracker</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Human Pirate</Type>
+    <Cost>{B}</Cost>
+    <RulesText>{1}{B}, {T}: Exile two target cards from an opponent's graveyard. Deadeye Tracker explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on this creature, then put the card back or put it into your graveyard.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Fathom Fleet Captain</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Pirate</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>Menace
+Whenever Fathom Fleet Captain attacks, if you control another nontoken Pirate, you may pay {2}. If you do, create a 2/2 black Pirate creature token with menace.</RulesText>
+  </Card>
+  <Card>
+    <Name>Dire Fleet Captain</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Orc Pirate</Type>
+    <Cost>{B}{R}</Cost>
+    <RulesText>Whenever Dire Fleet Captain attacks, it gets +1/+1 until end of turn for each other attacking Pirate.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fathom Fleet Firebrand</Name>
+    <Quantity>1</Quantity>
+    <Type>Creature — Human Pirate</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>{1}{R}: Fathom Fleet Firebrand gets +1/+0 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Seekers' Squire</Name>
+    <Quantity>0</Quantity>
+    <Type>Creature — Human Scout</Type>
+    <Cost>{1}{B}</Cost>
+    <RulesText>When Seekers' Squire enters the battlefield, it explores. (Reveal the top card of your library. Put that card into your hand if it's a land. Otherwise, put a +1/+1 counter on this creature, then put the card back or put it into your graveyard.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Ruin Raider</Name>
+    <Quantity>3</Quantity>
+    <Type>Creature — Orc Pirate</Type>
+    <Cost>{2}{B}</Cost>
+    <RulesText>Raid — At the beginning of your end step, if you attacked this turn, reveal the top card of your library and put that card into your hand. You lose life equal to the card's mana value.</RulesText>
+  </Card>
+  <Card>
+    <Name>Captain Lannery Storm</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Creature — Human Pirate</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Haste
 Whenever Captain Lannery Storm attacks, create a Treasure token. (It's an artifact with "{T}, Sacrifice this artifact: Add one mana of any color.")
-Whenever you sacrifice a Treasure, Captain Lannery Storm gets +1/+0 until end of turn.</RulesText></Card><Card><Name>Fiery Cannonade</Name><Quantity>2</Quantity><Type>Instant</Type><Cost>{2}{R}</Cost><RulesText>Fiery Cannonade deals 2 damage to each non-Pirate creature.</RulesText></Card><Card><Name>March of the Drowned</Name><Quantity>2</Quantity><Type>Sorcery</Type><Cost>{B}</Cost><RulesText>Choose one —
+Whenever you sacrifice a Treasure, Captain Lannery Storm gets +1/+0 until end of turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fiery Cannonade</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{2}{R}</Cost>
+    <RulesText>Fiery Cannonade deals 2 damage to each non-Pirate creature.</RulesText>
+  </Card>
+  <Card>
+    <Name>March of the Drowned</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Choose one —
 • Return target creature card from your graveyard to your hand.
-• Return two target Pirate cards from your graveyard to your hand.</RulesText></Card><Card><Name>Lightning Strike</Name><Quantity>4</Quantity><Type>Instant</Type><Cost>{1}{R}</Cost><RulesText>Lightning Strike deals 3 damage to any target.</RulesText></Card><Card><Name>Repeating Barrage</Name><Quantity>2</Quantity><Type>Sorcery</Type><Cost>{1}{R}{R}</Cost><RulesText>Repeating Barrage deals 3 damage to any target.
-Raid — {3}{R}{R}: Return Repeating Barrage from your graveyard to your hand. Activate only if you attacked this turn.</RulesText></Card><Card><Name>Elaborate Firecannon</Name><Quantity>1</Quantity><Type>Artifact</Type><Cost>{2}</Cost><RulesText>Elaborate Firecannon doesn't untap during your untap step.
+• Return two target Pirate cards from your graveyard to your hand.</RulesText>
+  </Card>
+  <Card>
+    <Name>Lightning Strike</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{R}</Cost>
+    <RulesText>Lightning Strike deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Repeating Barrage</Name>
+    <Quantity>2</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{1}{R}{R}</Cost>
+    <RulesText>Repeating Barrage deals 3 damage to any target.
+Raid — {3}{R}{R}: Return Repeating Barrage from your graveyard to your hand. Activate only if you attacked this turn.</RulesText>
+  </Card>
+  <Card>
+    <Name>Elaborate Firecannon</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact</Type>
+    <Cost>{2}</Cost>
+    <RulesText>Elaborate Firecannon doesn't untap during your untap step.
 {4}, {T}: Elaborate Firecannon deals 2 damage to any target.
-At the beginning of your upkeep, you may discard a card. If you do, untap Elaborate Firecannon.</RulesText></Card><Card><Name>Fell Flagship</Name><Quantity>1</Quantity><Type>Artifact — Vehicle</Type><Cost>{3}</Cost><RulesText>Pirates you control get +1/+0.
+At the beginning of your upkeep, you may discard a card. If you do, untap Elaborate Firecannon.</RulesText>
+  </Card>
+  <Card>
+    <Name>Fell Flagship</Name>
+    <Quantity>1</Quantity>
+    <Type>Artifact — Vehicle</Type>
+    <Cost>{3}</Cost>
+    <RulesText>Pirates you control get +1/+0.
 Whenever Fell Flagship deals combat damage to a player, that player discards a card.
-Crew 3 (Tap any number of creatures you control with total power 3 or more: This Vehicle becomes an artifact creature until end of turn.)</RulesText></Card><Card><Name>Swamp</Name><Quantity>11</Quantity><Type>Basic Land — Swamp</Type><Cost>Unknown</Cost><RulesText>({T}: Add {B}.)</RulesText></Card><Card><Name>Dragonskull Summit</Name><Quantity>3</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>Dragonskull Summit enters the battlefield tapped unless you control a Swamp or a Mountain.
-{T}: Add {B} or {R}.</RulesText></Card><Card><Name>Mountain</Name><Quantity>9</Quantity><Type>Basic Land — Mountain</Type><Cost>Unknown</Cost><RulesText>({T}: Add {R}.)</RulesText></Card><Card><Name>Evolving Wilds</Name><Quantity>2</Quantity><Type>Land</Type><Cost>Unknown</Cost><RulesText>{T}, Sacrifice Evolving Wilds: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.</RulesText></Card></Decklist>
+Crew 3 (Tap any number of creatures you control with total power 3 or more: This Vehicle becomes an artifact creature until end of turn.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>11</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Dragonskull Summit</Name>
+    <Quantity>3</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>Dragonskull Summit enters the battlefield tapped unless you control a Swamp or a Mountain.
+{T}: Add {B} or {R}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>9</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost>
+    </Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Evolving Wilds</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost>
+    </Cost>
+    <RulesText>{T}, Sacrifice Evolving Wilds: Search your library for a basic land card, put it onto the battlefield tapped, then shuffle.</RulesText>
+  </Card>
+</Decklist>
