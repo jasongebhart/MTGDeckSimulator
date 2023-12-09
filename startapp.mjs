@@ -1,6 +1,6 @@
 // Import required modules
 import express from 'express';
-import session from 'express-session';
+//import session from 'express-session';
 
 
 import xmlbuilder from 'xmlbuilder';
@@ -18,14 +18,16 @@ const app = express();
 const cspHeader = "default-src 'self'; img-src 'self' http://localhost:3000;";
 app.use(express.urlencoded({ extended: true }));
 
-
+// This code can be used with a new secret key once a process has been defined to handle the secret key
+/*
 app.use(
   session({
-    secret: 'b923740a00b7abe1d2aa98936a968627c7a93503de309e1d403d78e39037bbb2', // Replace with your secret key
+    secret: 'b923740a00b7abe1d2aa98936a968627c7a93503de309e1d403d78e39037bbb2', // Replace with a new secret key
     resave: false,
     saveUninitialized: true,
   })
 );
+*/
 
 
 // Setup template engine
