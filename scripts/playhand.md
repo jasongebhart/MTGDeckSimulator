@@ -21,7 +21,6 @@ Here's a breakdown of what each property in the returned object represents:
 
 By returning an object with these properties, the `getDeckInformationFromXML()` function allows the caller to access all of this relevant information as a single entity. This makes it convenient to pass around and use these values together, rather than returning them individually or managing them separately.
 
-Here's an example of how you might use the returned object in your code:
 
 ```javascript
 const deckInformation = getDeckInformationFromXML();
@@ -61,4 +60,3 @@ Here's a breakdown of what each step does:
 
 8. The code excerpt is cut off at `quantities.push(quantity);`, so it's unclear what happens after that.
 
-Overall, this code is likely part of a process that parses an XML structure containing information about cards (such as their names, quantities, and types) and collects that information into arrays for further processing or display. The `console.log(name)` statements are likely used to help you track the extraction process and understand what data is being retrieved from the XML structure.
