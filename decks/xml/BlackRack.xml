@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Decklist Deck="BlackRack">
- <DesignGoal>a</DesignGoal>
+    <DesignGoal>a</DesignGoal>
     <Card>
         <Name>Vicious Conquistador</Name>
         <Quantity>1</Quantity>
@@ -137,6 +137,6 @@
         <Name>Swamp</Name>
         <Quantity>21</Quantity>
         <Type>Land</Type>
-	<Cost>NA</Cost>
+        <Cost>NA</Cost>
     </Card>
 </Decklist>
