@@ -14,17 +14,30 @@ import { loadXMLDoc, xmlDoc } from './scripts/config.mjs';
 // Create an instance of Express
 const app = express();
 
-// Define a CSP policy that allows loading from localhost and a specific domain for the favicon
-const cspHeader = "default-src 'self'; img-src 'self' http://localhost:3000;";
+// Secure CSP policy
+const cspHeader = "default-src 'self'; img-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';";
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', cspHeader);
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
+
 app.use(express.urlencoded({ extended: true }));
 
-// This code can be used with a new secret key once a process has been defined to handle the secret key
+// Session configuration - use environment variable for secret
 /*
 app.use(
   session({
-    secret: 'b923740a00b7abe1d2aa98936a968627c7a93503de309e1d403d78e39037bbb2', // Replace with a new secret key
+    secret: process.env.SESSION_SECRET || 'development-only-secret-change-in-production',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
   })
 );
 */

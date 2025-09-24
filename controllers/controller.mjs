@@ -3,6 +3,39 @@
 import { loadXMLDoc, xmlDoc } from '../scripts/config.mjs'; // Import the loadXMLDoc function
 import multer from 'multer';
 
+// Security validation functions
+function isValidXML(xmlText) {
+  try {
+    // Basic XML structure validation
+    if (!xmlText.trim().startsWith('<?xml') && !xmlText.trim().startsWith('<')) {
+      return false;
+    }
+
+    // Basic validation - check for proper XML tags
+    const hasOpeningTag = xmlText.includes('<');
+    const hasClosingTag = xmlText.includes('>');
+
+    return hasOpeningTag && hasClosingTag;
+  } catch (error) {
+    return false;
+  }
+}
+
+function containsXXEPatterns(xmlText) {
+  const xxePatterns = [
+    /<!ENTITY/i,                    // Entity declarations
+    /<!DOCTYPE.*\[/i,              // DOCTYPE with internal subset
+    /SYSTEM\s+["\']file:/i,        // External file references
+    /SYSTEM\s+["\']http/i,         // External HTTP references
+    /SYSTEM\s+["\']ftp/i,          // External FTP references
+    /PUBLIC\s+.*SYSTEM/i,          // Public external references
+    /&#x[0-9a-fA-F]+;/,           // Hex character references (potential bypass)
+    /&#[0-9]+;/                    // Decimal character references (potential bypass)
+  ];
+
+  return xxePatterns.some(pattern => pattern.test(xmlText));
+}
+
 // Function to set up routes for the Express app
 export function setupRoutes(app) {
   // Define routes and their handlers using an array of route objects
@@ -45,13 +78,20 @@ export function setupRoutes(app) {
   });
 
   app.post('/login', (req, res) => {
-    const { username, password } = req.body; // Replace with your authentication logic
-  
-    if (username === 'testuser' && password === 'testpassword') {
-      req.session.user = username; // Store user data in the session
-      res.redirect('/dashboard'); // Redirect to the dashboard or another page
+    const { username, password } = req.body;
+
+    // Use environment variables for credentials in production
+    const validUsername = process.env.APP_USERNAME || 'admin';
+    const validPassword = process.env.APP_PASSWORD || 'change-me-in-production';
+
+    // In production, use proper password hashing (bcrypt)
+    if (username === validUsername && password === validPassword) {
+      req.session.user = username;
+      res.redirect('/dashboard');
     } else {
-      res.redirect('/login'); // Redirect back to login in case of authentication failure
+      // Add rate limiting and logging for failed attempts in production
+      console.log(`Failed login attempt for username: ${username} from IP: ${req.ip}`);
+      res.redirect('/login?error=invalid');
     }
   });
 
@@ -80,16 +120,36 @@ export function setupRoutes(app) {
   });
   
   
-  // New route for processing deck creation
-  app.post('/create-deck', upload.single('XMLFile'), async (req, res) => {
+  // Authentication middleware
+  const requireAuth = (req, res, next) => {
+    if (!req.session || !req.session.user) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
+    next();
+  };
+
+  // New route for processing deck creation - now requires authentication
+  app.post('/create-deck', requireAuth, upload.single('XMLFile'), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).send('No file uploaded.');
       }
-  
+
       // Access the uploaded file's content (in this case, as a buffer)
       const XMLFileBuffer = req.file.buffer;
-  
+      const xmlText = XMLFileBuffer.toString('utf8');
+
+      // Validate XML content for security
+      if (!isValidXML(xmlText)) {
+        return res.status(400).send('Invalid XML format.');
+      }
+
+      // Check for XXE attack patterns
+      if (containsXXEPatterns(xmlText)) {
+        console.log(`Potential XXE attack detected from IP: ${req.ip}`);
+        return res.status(400).send('XML contains forbidden content.');
+      }
+
       // Process the uploaded file content (XMLFileBuffer) as needed
       console.log('Original file name:', req.file.originalname);
       console.log('File size:', req.file.size, 'bytes');

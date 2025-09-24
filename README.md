@@ -36,14 +36,20 @@ A Node.js web application for simulating Magic The Gathering gameplay and deck t
    npm install
    ```
 
-3. Start the application:
+3. Configure environment variables:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your secure credentials and settings
+   ```
+
+4. Start the application:
    ```bash
    npm start
    # or
    node startapp.mjs
    ```
 
-4. Open your browser and navigate to:
+5. Open your browser and navigate to:
    ```
    http://localhost:3000
    ```
@@ -136,6 +142,34 @@ The application uses the following Node.js packages:
   "xmlbuilder": "^15.1.1"
 }
 ```
+
+## Security
+
+This application includes several security enhancements:
+
+- **Content Security Policy (CSP)**: Prevents XSS attacks
+- **Security Headers**: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection
+- **XXE Protection**: XML processing includes validation against XXE attacks
+- **Environment-based Configuration**: Credentials stored in environment variables
+- **Authentication**: File upload endpoints require authentication
+- **Input Validation**: File type restrictions and size limits
+
+### Security Configuration
+
+1. Set secure environment variables in `.env`:
+   ```bash
+   APP_USERNAME=your-secure-username
+   APP_PASSWORD=your-secure-password
+   SESSION_SECRET=your-32-character-random-string
+   NODE_ENV=production
+   ```
+
+2. For production deployment:
+   - Use strong credentials
+   - Generate a cryptographically secure session secret
+   - Enable HTTPS
+   - Consider implementing rate limiting
+   - Use a proper authentication system instead of hardcoded credentials
 
 ## Game Features
 
