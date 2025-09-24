@@ -6,7 +6,7 @@ import express from 'express';
 import xmlbuilder from 'xmlbuilder';
 import { setupRoutes } from './controllers/controller.mjs'; // Adjust the import path to match your file structure
 import fs from 'fs';
-import parser from 'xml2json';
+import { XMLParser } from 'fast-xml-parser';
 import { loadXMLDoc, xmlDoc } from './scripts/config.mjs';
 
 
