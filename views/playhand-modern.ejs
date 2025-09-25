@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTG Hand Simulator - Modern UI</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/assets/site.webmanifest">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/assets/modern-ui.css">
+
+    <!-- Scripts -->
+    <script type="module" src="./scripts/playhand-modern.mjs" defer></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Modern Header -->
+        <header class="app-header">
+            <nav class="nav-modern">
+                <a href="/" class="nav-brand">
+                    <span>🃏</span>
+                    MTG Simulator
+                </a>
+
+                <ul class="nav-tabs">
+                    <li class="nav-tab">
+                        <a href="/decks-modern" class="nav-tab-link">Decks</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="/playhand-modern" class="nav-tab-link active">Play Hand</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="/handsimulation" class="nav-tab-link">Hand Simulation</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="/alldecks" class="nav-tab-link">All Decks</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="/create-deck-form" class="nav-tab-link">Create Deck</a>
+                    </li>
+                </ul>
+
+                <div class="nav-controls">
+                    <button id="themeToggle" class="btn btn-secondary btn-sm">🌓</button>
+                    <button id="mobileMenuToggle" class="btn btn-secondary btn-sm d-none">☰</button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+            <!-- Deck Selection -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Select Deck</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="preDefinedDecks" class="form-label">Pre-Defined Decks</label>
+                        <select id="preDefinedDecks" class="form-input form-select">
+                            <option value="">Choose a deck...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label class="form-label">Local Decks</label>
+                        <div class="d-flex gap-2">
+                            <button id="loadXMLFileButton" class="btn btn-primary btn-sm">
+                                📁 Upload XML
+                            </button>
+                            <input type="file" id="xmlFile" accept=".xml" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hand Controls -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Hand Controls</h3>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-column gap-2">
+                        <button id="drawHandButton" class="btn btn-primary">
+                            🎲 Draw Hand (7 cards)
+                        </button>
+                        <button id="drawCardButton" class="btn btn-secondary">
+                            📄 Draw Card
+                        </button>
+                        <button id="mulligan" class="btn btn-secondary">
+                            🔄 Mulligan
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library Controls -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Library</h3>
+                    <div class="card-subtitle">
+                        <span id="deckSize">0 cards remaining</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <select id="cardTypeFilter" class="form-input form-select">
+                            <option value="">Search Library</option>
+                            <option value="All">All Cards</option>
+                            <option value="Creatures">Creatures</option>
+                            <option value="Spells">Instants & Sorceries</option>
+                            <option value="Artifacts">Artifacts</option>
+                            <option value="Enchantments">Enchantments</option>
+                            <option value="Planeswalkers">Planeswalkers</option>
+                            <option value="Land">Lands</option>
+                        </select>
+                    </div>
+                    <button id="viewLibraryButton" class="btn btn-secondary btn-sm">
+                        👁️ View Library
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Loading State -->
+            <div id="loadingState" class="card loading" style="display: none;">
+                <div class="card-body text-center">
+                    <div class="spinner mb-2"></div>
+                    <div>Loading deck...</div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="card">
+                <div class="card-body text-center">
+                    <div class="text-muted mb-4">
+                        <span style="font-size: 3rem;">🎮</span>
+                    </div>
+                    <h2 class="mb-2">MTG Hand Simulator</h2>
+                    <p class="text-muted mb-4">
+                        Select a deck from the sidebar to start simulating hands and playing cards.
+                    </p>
+                    <button onclick="document.getElementById('preDefinedDecks').focus()"
+                            class="btn btn-primary">
+                        Choose Deck to Start
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Content -->
+            <div id="gameContent" style="display: none;">
+                <!-- Current Hand -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="card-title">Your Hand</h2>
+                            <div class="card-subtitle">
+                                <span id="handCount">0 cards</span> •
+                                <span id="mulliganCount">0 mulligans</span>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button id="sortHandButton" class="btn btn-secondary btn-sm">🔄 Sort Hand</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="handContainer" class="d-flex gap-2 flex-wrap" style="min-height: 120px;">
+                            <!-- Hand cards will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Areas Grid -->
+                <div class="card-grid mb-4" style="grid-template-columns: 1fr 1fr;">
+                    <!-- Battlefield -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">⚔️ Battlefield</h3>
+                            <div class="card-subtitle">
+                                Permanents in play
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <h4 class="text-sm font-weight-bold mb-2">🏔️ Lands</h4>
+                                <div id="battlefieldLands" class="d-flex gap-2 flex-wrap" style="min-height: 60px; padding: var(--space-2); background-color: var(--bg-tertiary); border-radius: var(--border-radius);">
+                                    <!-- Battlefield lands will appear here -->
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h4 class="text-sm font-weight-bold mb-2">⚔️ Creatures</h4>
+                                <div id="battlefieldCreatures" class="d-flex gap-2 flex-wrap" style="min-height: 60px; padding: var(--space-2); background-color: var(--bg-tertiary); border-radius: var(--border-radius);">
+                                    <!-- Battlefield creatures will appear here -->
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-weight-bold mb-2">✨ Other Permanents</h4>
+                                <div id="battlefieldOthers" class="d-flex gap-2 flex-wrap" style="min-height: 60px; padding: var(--space-2); background-color: var(--bg-tertiary); border-radius: var(--border-radius);">
+                                    <!-- Other permanents will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zones -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm zone-tab active" data-zone="graveyard">
+                                    🪦 Graveyard (<span id="graveyardCount">0</span>)
+                                </button>
+                                <button class="btn btn-sm zone-tab" data-zone="exile">
+                                    🚫 Exile (<span id="exileCount">0</span>)
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="graveyardZone" class="zone-content" style="min-height: 200px; padding: var(--space-2); background-color: var(--bg-tertiary); border-radius: var(--border-radius);">
+                                <!-- Graveyard cards will appear here -->
+                            </div>
+                            <div id="exileZone" class="zone-content" style="display: none; min-height: 200px; padding: var(--space-2); background-color: var(--bg-tertiary); border-radius: var(--border-radius);">
+                                <!-- Exile cards will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Stats -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">📊 Game Statistics</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex gap-4 flex-wrap">
+                            <div class="text-center">
+                                <div class="text-2xl font-weight-bold" style="color: var(--primary);" id="cardsDrawn">0</div>
+                                <div class="text-muted text-sm">Cards Drawn</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-weight-bold" style="color: var(--success);" id="landsPlayed">0</div>
+                                <div class="text-muted text-sm">Lands Played</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-weight-bold" style="color: var(--warning);" id="spellsCast">0</div>
+                                <div class="text-muted text-sm">Spells Cast</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-weight-bold" style="color: var(--error);" id="turnNumber">1</div>
+                                <div class="text-muted text-sm">Turn</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay" onclick="document.body.classList.remove('mobile-sidebar-open')"></div>
+    <nav class="mobile-nav-bottom">
+        <div class="mobile-nav-tabs">
+            <a href="/decks-modern" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🃏</span>
+                <span>Decks</span>
+            </a>
+            <a href="/playhand-modern" class="mobile-nav-tab active">
+                <span class="mobile-nav-icon">🎮</span>
+                <span>Play</span>
+            </a>
+            <a href="/handsimulation" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎲</span>
+                <span>Simulate</span>
+            </a>
+            <a href="/alldecks" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">📚</span>
+                <span>Library</span>
+            </a>
+            <a href="/create-deck-form" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">➕</span>
+                <span>Create</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Library Modal -->
+    <div id="libraryModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Library Contents</h3>
+                <button id="closeLibraryModal" class="btn btn-secondary btn-sm">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="libraryContents" class="d-flex flex-column gap-2" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Library cards will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button id="fabButton" class="fab" title="Quick Actions">
+        ⚡
+    </button>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+</body>
+</html>

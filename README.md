@@ -1,6 +1,9 @@
 # MTG Deck Simulator
 
-A Node.js web application for simulating Magic The Gathering gameplay and deck testing. MTG Deck Simulator provides an interactive interface for managing MTG decks, testing card interactions, and analyzing deck performance through realistic game simulations.
+A Node.js web application for simulating Magic The Gathering gameplay and deck
+testing. MTG Deck Simulator provides an interactive interface for managing MTG
+decks, testing card interactions, and analyzing deck performance through
+realistic game simulations.
 
 ![MTG Version](https://img.shields.io/badge/version-1.0.2-blue.svg)
 ![Node Version](https://img.shields.io/badge/node-18.17.1-green.svg)
@@ -8,8 +11,10 @@ A Node.js web application for simulating Magic The Gathering gameplay and deck t
 
 ## Features
 
-- **Interactive Deck Management**: Create, load, and modify MTG deck configurations
-- **Game Simulation Engine**: Realistic MTG gameplay simulation with card interactions
+- **Interactive Deck Management**: Create, load, and modify MTG deck
+  configurations
+- **Game Simulation Engine**: Realistic MTG gameplay simulation with card
+  interactions
 - **Deck Testing Tools**: Analyze deck performance and card synergies
 - **Web Interface**: User-friendly EJS-templated web interface
 - **Session Management**: Track user progress and deck modifications
@@ -26,23 +31,27 @@ A Node.js web application for simulating Magic The Gathering gameplay and deck t
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone <repository-url>
    cd MTGDeckSimulator
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
 
 3. Configure environment variables:
+
    ```bash
    cp .env.example .env
    # Edit .env with your secure credentials and settings
    ```
 
 4. Start the application:
+
    ```bash
    npm start
    # or
@@ -59,6 +68,7 @@ A Node.js web application for simulating Magic The Gathering gameplay and deck t
 ### Running the Simulator
 
 1. **Start the Server**:
+
    ```bash
    npm start
    ```
@@ -148,15 +158,18 @@ The application uses the following Node.js packages:
 This application includes several security enhancements:
 
 - **Content Security Policy (CSP)**: Prevents XSS attacks
-- **Security Headers**: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection
+- **Security Headers**: X-Frame-Options, X-Content-Type-Options,
+  X-XSS-Protection
 - **XXE Protection**: XML processing includes validation against XXE attacks
-- **Environment-based Configuration**: Credentials stored in environment variables
+- **Environment-based Configuration**: Credentials stored in environment
+  variables
 - **Authentication**: File upload endpoints require authentication
 - **Input Validation**: File type restrictions and size limits
 
 ### Security Configuration
 
 1. Set secure environment variables in `.env`:
+
    ```bash
    APP_USERNAME=your-secure-username
    APP_PASSWORD=your-secure-password
@@ -173,7 +186,8 @@ This application includes several security enhancements:
 
 ## Game Features
 
-- **Card Interaction Simulation**: Realistic Magic The Gathering rule enforcement
+- **Card Interaction Simulation**: Realistic Magic The Gathering rule
+  enforcement
 - **Deck Performance Analysis**: Statistical analysis of deck efficiency
 - **Mulligan Simulation**: Opening hand analysis and decision making
 - **Turn-by-Turn Simulation**: Detailed game state progression
@@ -222,10 +236,13 @@ npm start
 
 ### Common Issues
 
-1. **Node Version**: Ensure you're using Node.js 18.17.1 as specified in package.json
+1. **Node Version**: Ensure you're using Node.js 18.17.1 as specified in
+   package.json
 2. **Dependencies**: Run `npm install` if experiencing module errors
-3. **Port Conflicts**: The default port is 3000; modify in startapp.mjs if needed
-4. **Deck Loading**: Verify deck files are in the correct format in the `decks/` directory
+3. **Port Conflicts**: The default port is 3000; modify in startapp.mjs if
+   needed
+4. **Deck Loading**: Verify deck files are in the correct format in the `decks/`
+   directory
 
 ## License
 
@@ -237,4 +254,5 @@ Jason Gebhart
 
 ---
 
-**Note**: This simulator is for educational and testing purposes. It is not affiliated with Wizards of the Coast or Magic: The Gathering.
+**Note**: This simulator is for educational and testing purposes. It is not
+affiliated with Wizards of the Coast or Magic: The Gathering.

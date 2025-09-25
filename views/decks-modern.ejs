@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTG Deck Simulator - Modern UI</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/assets/site.webmanifest">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/assets/modern-ui.css">
+
+    <!-- Scripts -->
+    <script type="module" src="./scripts/modern-ui.mjs" defer></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Modern Header -->
+        <header class="app-header">
+            <nav class="nav-modern">
+                <a href="/" class="nav-brand">
+                    <span>🃏</span>
+                    MTG Simulator
+                </a>
+
+                <ul class="nav-tabs">
+                    <li class="nav-tab">
+                        <a href="/decks-modern" class="nav-tab-link active">Decks</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="/playhand-modern" class="nav-tab-link">Play Hand</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="/handsimulation" class="nav-tab-link">Hand Simulation</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="/alldecks" class="nav-tab-link">All Decks</a>
+                    </li>
+                    <li class="nav-tab">
+                        <a href="/create-deck-form" class="nav-tab-link">Create Deck</a>
+                    </li>
+                </ul>
+
+                <div class="nav-controls">
+                    <button id="themeToggle" class="btn btn-secondary btn-sm">🌓</button>
+                    <button id="mobileMenuToggle" class="btn btn-secondary btn-sm d-none">☰</button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+            <!-- Deck Selection -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Select Deck</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="preDefinedDecks" class="form-label">Pre-Defined Decks</label>
+                        <select id="preDefinedDecks" class="form-input form-select">
+                            <option value="">Choose a deck...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label class="form-label">Local Decks</label>
+                        <div class="d-flex gap-2">
+                            <button id="loadXMLFileButton" class="btn btn-primary btn-sm">
+                                📁 Upload XML
+                            </button>
+                            <input type="file" id="xmlFile" accept=".xml" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deck Info -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 id="deckName" class="card-title">Select a Deck</h3>
+                    <div id="deckStats" class="card-subtitle">
+                        Choose a deck to see statistics
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="deckMetadata" class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Deck Size:</span>
+                            <span id="deckSize" class="font-weight-bold">-</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Avg. Mana Value:</span>
+                            <span id="avgManaCost" class="font-weight-bold">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Mana Curve Chart Placeholder -->
+                    <div id="manaCurve" class="mb-4">
+                        <h4 class="text-muted text-center">Mana Curve</h4>
+                        <div id="manaCurveChart" class="bg-tertiary" style="height: 120px; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
+                            <span class="text-muted">Load a deck to see mana curve</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Quick Links</h3>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-column gap-2">
+                        <a href="https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/banned-restricted"
+                           target="_blank" class="btn btn-secondary btn-sm">
+                            📋 Banned List
+                        </a>
+                        <a href="https://scryfall.com/" target="_blank" class="btn btn-secondary btn-sm">
+                            🔍 Card Search
+                        </a>
+                        <a href="/api/v1/decks" target="_blank" class="btn btn-secondary btn-sm">
+                            🔧 API Docs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Loading State -->
+            <div id="loadingState" class="card loading" style="display: none;">
+                <div class="card-body text-center">
+                    <div class="spinner mb-2"></div>
+                    <div>Loading deck data...</div>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="card" style="display: none; border-color: var(--error);">
+                <div class="card-body text-center">
+                    <div class="text-danger mb-2">⚠️ Error</div>
+                    <div id="errorMessage" class="text-muted">Something went wrong</div>
+                    <button id="retryButton" class="btn btn-primary btn-sm mt-4">Retry</button>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="card">
+                <div class="card-body text-center">
+                    <div class="text-muted mb-4">
+                        <span style="font-size: 3rem;">🃏</span>
+                    </div>
+                    <h2 class="mb-2">Welcome to MTG Deck Simulator</h2>
+                    <p class="text-muted mb-4">
+                        Select a pre-defined deck or upload your own XML deck file to get started.
+                    </p>
+                    <div class="d-flex gap-4 justify-content-center">
+                        <button onclick="document.getElementById('preDefinedDecks').focus()"
+                                class="btn btn-primary">
+                            Choose Pre-defined Deck
+                        </button>
+                        <button onclick="document.getElementById('loadXMLFileButton').click()"
+                                class="btn btn-secondary">
+                            Upload Deck File
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deck Content -->
+            <div id="deckContent" style="display: none;">
+                <!-- Card Types Overview -->
+                <div class="card mb-6">
+                    <div class="card-header">
+                        <h2 class="card-title">Card Types Overview</h2>
+                        <div class="card-subtitle">Distribution of card types in your deck</div>
+                    </div>
+                    <div class="card-body">
+                        <div id="cardTypesGrid" class="d-flex gap-4 flex-wrap">
+                            <!-- Card type cards will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Card List -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="card-title">Card List</h2>
+                            <div class="card-subtitle">All cards in your deck</div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button id="sortByName" class="btn btn-secondary btn-sm">Sort by Name</button>
+                            <button id="sortByCost" class="btn btn-secondary btn-sm">Sort by Cost</button>
+                            <button id="sortByType" class="btn btn-secondary btn-sm">Sort by Type</button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="cardList">
+                            <!-- Card list items will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay" onclick="document.body.classList.remove('mobile-sidebar-open')"></div>
+    <nav class="mobile-nav-bottom">
+        <div class="mobile-nav-tabs">
+            <a href="/decks-modern" class="mobile-nav-tab active">
+                <span class="mobile-nav-icon">🃏</span>
+                <span>Decks</span>
+            </a>
+            <a href="/playhand-modern" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎮</span>
+                <span>Play</span>
+            </a>
+            <a href="/handsimulation" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎲</span>
+                <span>Simulate</span>
+            </a>
+            <a href="/alldecks" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">📚</span>
+                <span>Library</span>
+            </a>
+            <a href="/create-deck-form" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">➕</span>
+                <span>Create</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Floating Action Button -->
+    <button id="fabButton" class="fab" title="Upload Deck">
+        📁
+    </button>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+</body>
+</html>

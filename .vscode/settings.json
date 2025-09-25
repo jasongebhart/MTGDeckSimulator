@@ -1,8 +1,5 @@
 {
-    "appService.zipIgnorePattern": [
-        "node_modules{,/**}",
-        ".vscode{,/**}"
-    ],
-    "appService.defaultWebAppToDeploy": "/subscriptions/efe68323-d80c-4002-902b-17e74ed3ff93/resourceGroups/vivika_geb/providers/Microsoft.Web/sites/MTGSimulator",
-    "appService.deploySubpath": "."
+  "appService.zipIgnorePattern": ["node_modules{,/**}", ".vscode{,/**}"],
+  "appService.defaultWebAppToDeploy": "/subscriptions/efe68323-d80c-4002-902b-17e74ed3ff93/resourceGroups/vivika_geb/providers/Microsoft.Web/sites/MTGSimulator",
+  "appService.deploySubpath": "."
 }
