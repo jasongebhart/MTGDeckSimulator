@@ -292,10 +292,6 @@ function getHandAndDeck(deckInformation) {
   displayHandAndDeck(spells, lands, deckInformation.cardNames);
 }
 
-function displayHandAndDeckElements(_spells, _lands, _cardNames) {
-  // Display hand and update deck size
-  // Insert logic for updating UI with the hand and deck information
-}
 
 // Clear the library section before populating
 export function startLibrarySearch(cardType) {
@@ -465,25 +461,6 @@ function setDeckSize(deckSize) {
   document.getElementById('deckSize').innerHTML = `(${deckSize})`;
 }
 
-function _getSelectedItem() {
-  // Get the number of options in the select element
-  const len = document.formDecks.selectDeck.length;
-
-  // Initialize variables
-  let i = 0;
-  let XMLFile = 'none';
-
-  // Loop through the options to find the selected one
-  for (i = 0; i < len; i++) {
-    if (document.formDecks.selectDeck[i].selected) {
-      // Set XMLFile to the value of the selected option
-      XMLFile = document.formDecks.selectDeck[i].value;
-    }
-  }
-
-  // Return the selected XML file (or "none" if nothing is selected)
-  return XMLFile;
-}
 
 function displayHand(spells, lands) {
   for (let i = 0; i < spells.length; i++) {
@@ -802,41 +779,6 @@ function showLargerCard(cardName) {
   Sidebar.appendChild(modal);
 }
 
-function showLargerCardPopup(cardName) {
-  // Create a modal with the larger card image
-  const largerCardImage = createCardImage(cardName);
-  const modal = document.createElement('div');
-  modal.classList.add('modal');
-
-  // Add a close button to the modal (optional)
-  const closeButton = document.createElement('button');
-  closeButton.textContent = 'Close';
-  closeButton.classList.add('close-button'); // Add a CSS class for styling
-
-  // Add a click event listener to close the modal on button click
-  closeButton.addEventListener('click', () => {
-    hideLargerCard();
-  });
-
-  modal.appendChild(closeButton);
-  modal.appendChild(largerCardImage);
-
-  // Append the modal to the body
-  document.body.appendChild(modal);
-
-  // Center the modal on the screen (you may need to adjust the CSS for positioning)
-  modal.style.position = 'fixed';
-  modal.style.left = '50%';
-  modal.style.top = '50%';
-  modal.style.transform = 'translate(-50%, -50%)';
-  modal.style.zIndex = '1000';
-  modal.style.backgroundColor = 'white';
-  modal.style.padding = '20px';
-  modal.style.border = '1px solid #ccc';
-  modal.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.5)';
-
-  // You can add more styling and adjust the position as needed
-}
 
 // Function to hide the larger card image
 function hideLargerCard() {

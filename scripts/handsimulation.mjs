@@ -1,6 +1,5 @@
 import {
   loadXMLDoc,
-  xmlDoc,
   getSelectedItem,
   createCardImage,
   cardDraw,
@@ -92,10 +91,6 @@ function countCardsByType(cardInfo, targetType) {
   return total;
 }
 
-function getDeckName() {
-  const deckListName = xmlDoc.getElementsByTagName('Decklist')[0].getAttribute('Deck');
-  return deckListName;
-}
 
 function createTotalsContainer(lands, spells) {
   const totalsContainer = document.createElement('div');
@@ -541,7 +536,7 @@ function calculateHandStatistics(handCards, cardInfo) {
   return stats;
 }
 
-function evaluateHandQuality(stats, totalLandsInDeck) {
+function evaluateHandQuality(stats, _totalLandsInDeck) {
   let score = 0;
   const issues = [];
   const strengths = [];
@@ -622,7 +617,7 @@ function evaluateHandQuality(stats, totalLandsInDeck) {
   };
 }
 
-function updateHandAnalysisUI(handQuality, handStats) {
+function updateHandAnalysisUI(handQuality, _handStats) {
   // Update hand quality indicator
   const qualityIndicator = document.getElementById('hand-quality-indicator');
   if (qualityIndicator) {
@@ -813,37 +808,3 @@ function getCardColors(cardName) {
   return cardData ? cardData.colors : [];
 }
 
-function parseManaCost(costString) {
-  if (!costString) return null;
-
-  // Handle already numeric costs
-  if (!isNaN(costString)) {
-    return parseInt(costString);
-  }
-
-  // Parse MTG mana cost format like {3}{R}{R} or {1}{W}{U}
-  let totalCost = 0;
-
-  // Remove all braces and extract individual mana symbols
-  const cleanCost = costString.replace(/[{}]/g, '');
-
-  // Split into individual characters/symbols
-  for (let i = 0; i < cleanCost.length; i++) {
-    const symbol = cleanCost[i];
-
-    // Handle numeric mana costs
-    if (!isNaN(symbol) && symbol !== '') {
-      totalCost += parseInt(symbol);
-    }
-    // Handle colored mana (W, U, B, R, G) and colorless symbols
-    else if (['W', 'U', 'B', 'R', 'G', 'C'].includes(symbol.toUpperCase())) {
-      totalCost += 1;
-    }
-    // Handle hybrid and other special symbols (count as 1 for now)
-    else if (symbol === 'X' || symbol === 'Y' || symbol === 'Z') {
-      totalCost += 0; // Variable costs count as 0
-    }
-  }
-
-  return totalCost;
-}
