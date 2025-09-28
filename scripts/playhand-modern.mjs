@@ -105,6 +105,14 @@ class ModernHandSimulator {
         this.updateLayoutMode();
       }
     });
+
+    // Initialize enhanced UI features
+    this.soundsEnabled = localStorage.getItem('mtg-sounds-enabled') !== 'false';
+
+    // Initialize enhanced UI after a short delay to ensure DOM is ready
+    setTimeout(() => {
+      this.initializeEnhancedUI();
+    }, 100);
   }
 
   updateLayoutMode() {
@@ -1042,9 +1050,17 @@ class ModernHandSimulator {
     // Create toast notification
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
+
+    const icons = {
+      success: '✅',
+      error: '❌',
+      warning: '⚠️',
+      info: 'ℹ️'
+    };
+
     toast.innerHTML = `
       <div class="toast-icon">
-        ${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}
+        ${icons[type] || icons.info}
       </div>
       <div class="toast-content">
         <div class="toast-message">${message}</div>
@@ -1055,6 +1071,9 @@ class ModernHandSimulator {
     // Add to container
     const container = document.getElementById('toastContainer') || document.body;
     container.appendChild(toast);
+
+    // Play sound effect
+    this.playSound?.(type);
 
     // Show toast
     setTimeout(() => toast.classList.add('show'), 100);
@@ -3291,6 +3310,367 @@ class ModernHandSimulator {
     if (untappedCount > 0) {
       this.updateBattlefieldDisplay();
       this.showToast(`Untapped ${untappedCount} permanents`, 'success');
+    }
+  }
+
+  // ========================================
+  // ENHANCED UI/UX METHODS
+  // ========================================
+
+  /**
+   * Initialize enhanced UI features like card zoom, animations, and sound effects
+   */
+  initializeEnhancedUI() {
+    this.setupCardZoom();
+    this.setupAnimationHelpers();
+    this.setupToastSystem();
+    this.setupKeyboardSounds();
+    this.setupVisualFeedback();
+    this.initSoundButton();
+  }
+
+  /**
+   * Setup card zoom functionality - click any card to see large preview
+   */
+  setupCardZoom() {
+    const overlay = document.getElementById('cardZoomOverlay');
+    const zoomImage = document.getElementById('cardZoomImage');
+    const closeBtn = document.getElementById('cardZoomClose');
+
+    if (!overlay || !zoomImage || !closeBtn) return;
+
+    // Add click listeners to all card elements
+    this.addCardZoomListeners();
+
+    // Close zoom overlay
+    const closeZoom = () => {
+      overlay.classList.remove('active');
+      this.playSound('cardClose');
+    };
+
+    closeBtn.addEventListener('click', closeZoom);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeZoom();
+    });
+
+    // Keyboard shortcut to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closeZoom();
+      }
+    });
+  }
+
+  /**
+   * Add zoom click listeners to all card elements
+   */
+  addCardZoomListeners() {
+    // Use event delegation for dynamically added cards
+    document.addEventListener('click', (e) => {
+      const cardElement = e.target.closest('.card-item, .card-hand, .zone-card');
+      if (cardElement && e.altKey) { // Alt+click to zoom
+        e.preventDefault();
+        this.showCardZoom(cardElement);
+      }
+    });
+
+    // Also add double-click zoom
+    document.addEventListener('dblclick', (e) => {
+      const cardElement = e.target.closest('.card-item, .card-hand, .zone-card');
+      if (cardElement) {
+        e.preventDefault();
+        this.showCardZoom(cardElement);
+      }
+    });
+  }
+
+  /**
+   * Show large card preview
+   */
+  async showCardZoom(cardElement) {
+    const cardName = cardElement.textContent || cardElement.dataset.cardName;
+    if (!cardName) return;
+
+    const overlay = document.getElementById('cardZoomOverlay');
+    const zoomImage = document.getElementById('cardZoomImage');
+
+    if (!overlay || !zoomImage) return;
+
+    this.playSound('cardOpen');
+
+    try {
+      // Get high-res card image
+      const imageUrl = await this.cardImageService.getCardImageUrl(cardName);
+      zoomImage.src = imageUrl;
+      zoomImage.alt = cardName;
+
+      overlay.classList.add('active');
+    } catch (error) {
+      console.warn('Could not load card image for zoom:', cardName, error);
+      this.showToast(`Could not load image for ${cardName}`, 'warning');
+    }
+  }
+
+  /**
+   * Setup animation helper methods
+   */
+  setupAnimationHelpers() {
+    // Store animation promise for chaining
+    this.animationPromises = new Map();
+  }
+
+  /**
+   * Animate card with specified animation class
+   */
+  animateCard(cardElement, animationType, duration = 600) {
+    return new Promise((resolve) => {
+      if (!cardElement) {
+        resolve();
+        return;
+      }
+
+      const animationClass = `card-${animationType}`;
+      cardElement.classList.add(animationClass);
+
+      // Play appropriate sound
+      this.playSound(animationType);
+
+      const cleanup = () => {
+        cardElement.classList.remove(animationClass);
+        resolve();
+      };
+
+      setTimeout(cleanup, duration);
+    });
+  }
+
+  /**
+   * Enhanced card draw with animation
+   */
+  async animatedDrawCard() {
+    const newCard = this.drawCard(); // Original draw logic
+    if (!newCard) return null;
+
+    // Find the newly added card element and animate it
+    await this.updateHandDisplay();
+    const handContainer = document.getElementById('handContainer');
+    const cardElements = handContainer?.querySelectorAll('.card-item');
+    const newCardElement = cardElements?.[cardElements.length - 1];
+
+    if (newCardElement) {
+      await this.animateCard(newCardElement, 'drawing');
+    }
+
+    return newCard;
+  }
+
+  /**
+   * Enhanced card play with animation
+   */
+  async animatedPlayCard(cardElement, _targetZone = 'battlefield') {
+    if (!cardElement) return;
+
+    // Add playing animation
+    await this.animateCard(cardElement, 'playing');
+
+    // Move card to target zone (original logic)
+    // This would integrate with existing playCard methods
+
+    // Update displays
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+  }
+
+  /**
+   * Setup toast notification system
+   */
+  setupToastSystem() {
+    // Toast container should already exist in HTML
+    this.toastContainer = document.getElementById('toastContainer');
+    if (!this.toastContainer) {
+      this.toastContainer = document.createElement('div');
+      this.toastContainer.id = 'toastContainer';
+      this.toastContainer.className = 'toast-container';
+      document.body.appendChild(this.toastContainer);
+    }
+  }
+
+
+  /**
+   * Setup sound effects system
+   */
+  setupKeyboardSounds() {
+    this.sounds = {
+      drawing: this.createSound('draw', [800, 1000, 1200], 0.3),
+      playing: this.createSound('play', [1200, 800, 600], 0.4),
+      shuffling: this.createSound('shuffle', [400, 600, 500, 700], 0.2),
+      flipping: this.createSound('flip', [600, 800], 0.3),
+      success: this.createSound('success', [523, 659, 784], 0.3),
+      error: this.createSound('error', [200, 150, 100], 0.4),
+      warning: this.createSound('warning', [800, 600], 0.3),
+      info: this.createSound('info', [800], 0.2),
+      cardOpen: this.createSound('open', [600, 800, 1000], 0.2),
+      cardClose: this.createSound('close', [1000, 800, 600], 0.2),
+      click: this.createSound('click', [800], 0.1)
+    };
+
+    // Add sound to button clicks
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('.btn, .mana-btn')) {
+        this.playSound('click');
+      }
+    });
+  }
+
+  /**
+   * Create Web Audio API sound
+   */
+  createSound(name, frequencies, volume = 0.3) {
+    return {
+      name,
+      frequencies,
+      volume,
+      duration: 150
+    };
+  }
+
+  /**
+   * Play sound effect
+   */
+  playSound(soundName) {
+    // Check if user has enabled sounds (respect accessibility)
+    if (!this.soundsEnabled) return;
+
+    const sound = this.sounds[soundName];
+    if (!sound) return;
+
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+      sound.frequencies.forEach((freq, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(sound.volume, audioContext.currentTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + sound.duration / 1000);
+
+        oscillator.start(audioContext.currentTime + index * 0.05);
+        oscillator.stop(audioContext.currentTime + sound.duration / 1000 + index * 0.05);
+      });
+    } catch {
+      // Silently fail if Web Audio API is not supported
+      console.debug('Web Audio API not available for sound effects');
+    }
+  }
+
+  /**
+   * Setup enhanced visual feedback
+   */
+  setupVisualFeedback() {
+    // Add visual feedback for drag and drop zones
+    this.setupDropZoneHighlighting();
+
+    // Add keyboard navigation visual indicators
+    this.setupKeyboardNavigation();
+
+    // Add mana cost highlighting
+    this.setupManaCostFeedback();
+  }
+
+  /**
+   * Setup drop zone highlighting for better UX
+   */
+  setupDropZoneHighlighting() {
+    const zones = document.querySelectorAll('.zone-content');
+
+    zones.forEach(zone => {
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('drop-target');
+      });
+
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('drop-target', 'invalid-drop');
+      });
+
+      zone.addEventListener('drop', () => {
+        zone.classList.remove('drop-target', 'invalid-drop');
+      });
+    });
+  }
+
+  /**
+   * Setup keyboard navigation indicators
+   */
+  setupKeyboardNavigation() {
+    // Add focus indicators for keyboard users
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        document.body.classList.add('keyboard-navigation');
+      }
+    });
+
+    document.addEventListener('mousedown', () => {
+      document.body.classList.remove('keyboard-navigation');
+    });
+  }
+
+  /**
+   * Setup mana cost visual feedback
+   */
+  setupManaCostFeedback() {
+    // This would integrate with card playing to show mana availability
+    // Will be enhanced when we implement proper mana cost checking
+  }
+
+
+  /**
+   * Toggle sound effects on/off
+   */
+  toggleSounds() {
+    this.soundsEnabled = !this.soundsEnabled;
+    localStorage.setItem('mtg-sounds-enabled', this.soundsEnabled.toString());
+
+    // Update button appearance
+    const soundButton = document.getElementById('soundToggle');
+    if (soundButton) {
+      if (this.soundsEnabled) {
+        soundButton.classList.add('sounds-enabled');
+        soundButton.textContent = '🔊 Sound';
+        soundButton.title = 'Sound effects enabled - click to disable';
+      } else {
+        soundButton.classList.remove('sounds-enabled');
+        soundButton.textContent = '🔇 Sound';
+        soundButton.title = 'Sound effects disabled - click to enable';
+      }
+    }
+
+    this.showToast(
+      `Sound effects ${this.soundsEnabled ? 'enabled' : 'disabled'}`,
+      this.soundsEnabled ? 'success' : 'info'
+    );
+  }
+
+  /**
+   * Initialize sound button state
+   */
+  initSoundButton() {
+    const soundButton = document.getElementById('soundToggle');
+    if (soundButton) {
+      if (this.soundsEnabled) {
+        soundButton.classList.add('sounds-enabled');
+        soundButton.textContent = '🔊 Sound';
+        soundButton.title = 'Sound effects enabled - click to disable';
+      } else {
+        soundButton.classList.remove('sounds-enabled');
+        soundButton.textContent = '🔇 Sound';
+        soundButton.title = 'Sound effects disabled - click to enable';
+      }
     }
   }
 }

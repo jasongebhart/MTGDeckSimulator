@@ -40,6 +40,9 @@
                     <button id="testCountersButton" class="btn btn-warning btn-sm">
                         🧪 Test Counters
                     </button>
+                    <button id="soundToggle" class="btn btn-secondary btn-sm" onclick="window.handSimulator?.toggleSounds()" title="Toggle sound effects">
+                        🔊 Sound
+                    </button>
                 </div>
             </div>
 
@@ -685,6 +688,14 @@
                     <!-- Exile cards will appear here -->
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Card Zoom Overlay -->
+    <div id="cardZoomOverlay" class="card-zoom-overlay">
+        <div class="card-zoom-container">
+            <img id="cardZoomImage" class="card-zoom-image" src="" alt="Card Preview">
+            <button id="cardZoomClose" class="card-zoom-close" aria-label="Close card preview">✕</button>
         </div>
     </div>
 
