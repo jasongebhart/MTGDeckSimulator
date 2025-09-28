@@ -237,7 +237,10 @@ const downloadXml = (xmlString, deckName) => {
 };
 
 const clearCardInputs = () => {
-  cardInputsContainer.innerHTML = '';
+  const cardInputsContainer = document.getElementById('cardInputsContainer') || document.querySelector('.card-inputs-container');
+  if (cardInputsContainer) {
+    cardInputsContainer.innerHTML = '';
+  }
 };
 
 const fetchAndUpdateCardDetails = async cardElements => {

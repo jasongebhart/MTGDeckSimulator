@@ -49,6 +49,10 @@ export async function startHandDraw() {
     // Display hand and update deck size
     createHandSection(spells, lands);
 
+    // Enhanced hand analysis
+    const handCards = [...spells, ...lands];
+    analyzeHand(handCards, cardInfo, totalLandsInDeck);
+
     totalHands++;
     const xmlString = await loadXMLDoc('./xml/mulligan.xml');
     const expectedMulliganRate = getMulliganRate(xmlString, totalLandsInDeck);
@@ -191,25 +195,12 @@ function createHandSection(spells, lands) {
   const onthedraw = createOnTheDrawSection(theDraw.spells, theDraw.lands);
   container.appendChild(onthedraw);
 
-  // Append the container to the appropriate parent element
+  // Clear previous hands and add the new container
   const sectionHand = document.getElementById('section_hand');
+  sectionHand.innerHTML = ''; // Clear all previous hands
   sectionHand.appendChild(container);
-  sectionHand.insertBefore(container, sectionHand.firstChild);
-  // Highlight the first child element
-  const firstHandContainer = sectionHand.querySelector('.hand-container:first-child');
-  if (firstHandContainer) {
-    firstHandContainer.style.backgroundColor = '#fbf4af';
-  }
-
-  // Select all elements with the class "hand-container"
-  const handContainers = document.querySelectorAll('.hand-container');
-
-  // Remove the background color from elements that are no longer the first child
-  handContainers.forEach(container => {
-    if (container !== container.parentNode.firstChild) {
-      container.style.backgroundColor = ''; // Remove the background color
-    }
-  });
+  // Highlight the current hand container
+  container.style.backgroundColor = '#fbf4af';
 }
 
 function calculateMulliganPercentage() {
@@ -244,11 +235,47 @@ function updateValues(
 function createCard(card, parentElement) {
   // Create card element and set attributes/content based on card data
   const cardElement = document.createElement('div');
-  cardElement.classList.add('card'); // You can style this class in CSS
+  cardElement.classList.add('card-item'); // You can style this class in CSS
+
+  // Create a wrapper for the card layout
+  const cardWrapper = document.createElement('div');
+  cardWrapper.classList.add('card-wrapper');
 
   // Create a card image element
-  const cardImage = createCardImage(card); // Assuming createCardImage is a function that returns an image element
-  cardElement.appendChild(cardImage);
+  const cardImage = createCardImage(card);
+  cardImage.classList.add('card-image');
+  cardWrapper.appendChild(cardImage);
+
+  // Create info section to the right of the image
+  const cardInfoDiv = document.createElement('div');
+  cardInfoDiv.classList.add('card-info');
+
+  // Get card data
+  const cardData = cardInfo[card] || {};
+  const cardDatabaseEntry = cardDatabase[card] || {};
+
+  // Add casting cost
+  const castingCost = document.createElement('div');
+  castingCost.classList.add('card-casting-cost');
+  const cmc = cardDatabaseEntry.cmc !== undefined ? cardDatabaseEntry.cmc : 'N/A';
+  castingCost.textContent = `CMC: ${cmc}`;
+  cardInfoDiv.appendChild(castingCost);
+
+  // Add card type
+  const cardType = document.createElement('div');
+  cardType.classList.add('card-type');
+  const type = cardData.type || 'Unknown';
+  cardType.textContent = `Type: ${type}`;
+  cardInfoDiv.appendChild(cardType);
+
+  // Add counters section (placeholder for now)
+  const counters = document.createElement('div');
+  counters.classList.add('card-counters');
+  counters.textContent = 'Counters: 0';
+  cardInfoDiv.appendChild(counters);
+
+  cardWrapper.appendChild(cardInfoDiv);
+  cardElement.appendChild(cardWrapper);
 
   // Append the card element to the appropriate parent element
   parentElement.appendChild(cardElement);
@@ -426,3 +453,397 @@ export function showLargerCard(cardName) {
 //const cardName = "Card Name"; // Replace with the actual card name
 //setupCardHoverBehavior(carddiv, cardName);
 //
+
+// Enhanced Hand Analysis Functions
+let handChart = null;
+
+function analyzeHand(handCards, cardInfo, totalLandsInDeck) {
+  console.log('Analyzing hand:', handCards);
+
+  // Calculate hand statistics
+  const handStats = calculateHandStatistics(handCards, cardInfo);
+
+  // Evaluate hand quality
+  const handQuality = evaluateHandQuality(handStats, totalLandsInDeck);
+
+  // Update UI with analysis
+  updateHandAnalysisUI(handQuality, handStats);
+
+  // Create hand mana curve chart
+  createHandManaCurveChart(handStats.manaCurve);
+}
+
+function calculateHandStatistics(handCards, cardInfo) {
+  const stats = {
+    totalCards: handCards.length,
+    lands: 0,
+    creatures: 0,
+    spells: 0,
+    artifacts: 0,
+    manaCurve: {},
+    colors: { W: 0, U: 0, B: 0, R: 0, G: 0 },
+    averageCMC: 0,
+    hasEarlyPlay: false,
+    hasWinCondition: false
+  };
+
+  let totalCMC = 0;
+  let nonLandCards = 0;
+
+  handCards.forEach(cardName => {
+    const card = cardInfo[cardName];
+    if (!card) return;
+
+    const type = (card.type || '').toLowerCase();
+
+    // Count by type
+    if (type.includes('land')) {
+      stats.lands++;
+    } else if (type.includes('creature')) {
+      stats.creatures++;
+      nonLandCards++;
+    } else if (type.includes('artifact')) {
+      stats.artifacts++;
+      nonLandCards++;
+    } else {
+      stats.spells++;
+      nonLandCards++;
+    }
+
+    // Calculate CMC and mana curve
+    const cmc = getCardManaCost(cardName);
+    if (cmc !== null) {
+      totalCMC += cmc;
+      stats.manaCurve[cmc] = (stats.manaCurve[cmc] || 0) + 1;
+
+      // Check for early plays (CMC 1-2)
+      if (cmc <= 2 && !type.includes('land')) {
+        stats.hasEarlyPlay = true;
+      }
+    }
+
+    // Count colors based on card name
+    const colors = getCardColors(cardName);
+    colors.forEach(color => {
+      stats.colors[color] += 1;
+    });
+
+    // Check for win conditions (creatures with power >= 3, or powerful spells)
+    if (type.includes('creature') || type.includes('planeswalker')) {
+      stats.hasWinCondition = true;
+    }
+  });
+
+  if (nonLandCards > 0) {
+    stats.averageCMC = (totalCMC / nonLandCards).toFixed(1);
+  }
+
+  return stats;
+}
+
+function evaluateHandQuality(stats, totalLandsInDeck) {
+  let score = 0;
+  let issues = [];
+  let strengths = [];
+
+  // Land count evaluation (most important)
+  if (stats.lands >= 2 && stats.lands <= 4) {
+    score += 40;
+    strengths.push(`Good land count (${stats.lands})`);
+  } else if (stats.lands === 1 || stats.lands === 5) {
+    score += 20;
+    issues.push(`Questionable land count (${stats.lands})`);
+  } else {
+    score -= 20;
+    issues.push(`Poor land count (${stats.lands})`);
+  }
+
+  // Early plays evaluation
+  if (stats.hasEarlyPlay) {
+    score += 20;
+    strengths.push('Has early plays');
+  } else {
+    score -= 10;
+    issues.push('No early plays');
+  }
+
+  // Win condition evaluation
+  if (stats.hasWinCondition) {
+    score += 15;
+    strengths.push('Has win conditions');
+  } else {
+    score -= 15;
+    issues.push('No clear win conditions');
+  }
+
+  // Mana curve evaluation
+  if (stats.averageCMC <= 3) {
+    score += 15;
+    strengths.push('Good mana curve');
+  } else if (stats.averageCMC > 5) {
+    score -= 10;
+    issues.push('High mana curve');
+  }
+
+  // Spell/creature balance
+  const nonLands = stats.totalCards - stats.lands;
+  if (nonLands >= 3 && nonLands <= 5) {
+    score += 10;
+    strengths.push('Good threat density');
+  }
+
+  // Determine overall quality
+  let quality, recommendation, color;
+  if (score >= 60) {
+    quality = 'Excellent';
+    recommendation = 'KEEP - This is a strong opening hand';
+    color = '#22c55e'; // Green
+  } else if (score >= 40) {
+    quality = 'Good';
+    recommendation = 'KEEP - This hand has good potential';
+    color = '#3b82f6'; // Blue
+  } else if (score >= 20) {
+    quality = 'Questionable';
+    recommendation = 'CONSIDER - Think carefully about keeping this hand';
+    color = '#f59e0b'; // Yellow
+  } else {
+    quality = 'Poor';
+    recommendation = 'MULLIGAN - This hand is likely too weak';
+    color = '#ef4444'; // Red
+  }
+
+  return {
+    quality,
+    recommendation,
+    color,
+    score,
+    issues,
+    strengths
+  };
+}
+
+function updateHandAnalysisUI(handQuality, handStats) {
+  // Update hand quality indicator
+  const qualityIndicator = document.getElementById('hand-quality-indicator');
+  if (qualityIndicator) {
+    qualityIndicator.textContent = `Hand Quality: ${handQuality.quality} (Score: ${handQuality.score})`;
+    qualityIndicator.style.backgroundColor = handQuality.color;
+    qualityIndicator.style.color = 'white';
+  }
+
+  // Update mulligan recommendation
+  const recommendationDiv = document.getElementById('mulligan-recommendation');
+  if (recommendationDiv) {
+    let recommendationHTML = `<strong>Recommendation:</strong> ${handQuality.recommendation}<br/>`;
+
+    if (handQuality.strengths.length > 0) {
+      recommendationHTML += `<br/><strong>✓ Strengths:</strong> ${handQuality.strengths.join(', ')}<br/>`;
+    }
+
+    if (handQuality.issues.length > 0) {
+      recommendationHTML += `<br/><strong>⚠ Issues:</strong> ${handQuality.issues.join(', ')}`;
+    }
+
+    recommendationDiv.innerHTML = recommendationHTML;
+  }
+}
+
+function createHandManaCurveChart(manaCurveData) {
+  const canvas = document.getElementById('handManaCurveChart');
+  const placeholder = document.getElementById('handCurvePlaceholder');
+
+  console.log('Creating hand mana curve chart with data:', manaCurveData);
+
+  if (!canvas) {
+    console.log('Canvas not found for hand mana curve');
+    return;
+  }
+
+  if (!manaCurveData || Object.keys(manaCurveData).length === 0) {
+    console.log('No mana curve data available');
+    return;
+  }
+
+  // Prepare data for chart (0-7+ mana costs)
+  const data = [];
+  const labels = [];
+  for (let i = 0; i <= 7; i++) {
+    if (i === 7) {
+      // Aggregate 7+ costs
+      let count = 0;
+      Object.keys(manaCurveData).forEach(cost => {
+        if (parseInt(cost) >= 7) {
+          count += manaCurveData[cost];
+        }
+      });
+      data.push(count);
+      labels.push('7+');
+    } else {
+      data.push(manaCurveData[i] || 0);
+      labels.push(i.toString());
+    }
+  }
+
+  console.log('Chart data prepared:', { labels, data });
+
+  // Destroy existing chart
+  if (handChart) {
+    handChart.destroy();
+  }
+
+  // Show canvas, hide placeholder
+  canvas.style.display = 'block';
+  placeholder.style.display = 'none';
+
+  // Create new chart
+  if (typeof globalThis.Chart !== 'undefined') {
+    handChart = new globalThis.Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Cards in Hand',
+        data: data,
+        backgroundColor: 'rgba(34, 197, 94, 0.8)',
+        borderColor: 'rgba(34, 197, 94, 1)',
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          top: 10,
+          bottom: 10,
+          left: 10,
+          right: 10
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'Current Hand Mana Curve',
+          color: '#333',
+          font: {
+            size: 14
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: Math.max(7, Math.max(...data) + 1), // Ensure proper scale
+          ticks: {
+            stepSize: 1,
+            color: '#666',
+            font: {
+              size: 11
+            }
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.1)'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#666',
+            font: {
+              size: 11
+            }
+          },
+          grid: {
+            display: false
+          }
+        }
+      }
+    }
+  });
+
+    console.log('Hand chart created successfully:', handChart);
+  } else {
+    console.warn('Chart.js library not available for hand chart');
+    placeholder.textContent = 'Chart.js library not loaded';
+    placeholder.style.display = 'block';
+    canvas.style.display = 'none';
+  }
+}
+
+// Card database with mana costs and colors for common cards
+const cardDatabase = {
+  'Goblin Welder': { cmc: 1, colors: ['R'] },
+  'Bottle Gnomes': { cmc: 3, colors: [] },
+  'Junk Diver': { cmc: 3, colors: [] },
+  'Ticking Gnomes': { cmc: 4, colors: [] },
+  'Rusting Golem': { cmc: 4, colors: [] },
+  'Karn, Silver Golem': { cmc: 5, colors: [] },
+  'Shard Phoenix': { cmc: 5, colors: ['R'] },
+  'Covetous Dragon': { cmc: 5, colors: ['R'] },
+  'Crater Hellion': { cmc: 6, colors: ['R'] },
+  'Shivan Hellkite': { cmc: 7, colors: ['R'] },
+  'Lightning Bolt': { cmc: 1, colors: ['R'] },
+  'Pyroclasm': { cmc: 2, colors: ['R'] },
+  'Incinerate': { cmc: 2, colors: ['R'] },
+  'Disintegrate': { cmc: 1, colors: ['R'] },
+  'Obliterate': { cmc: 8, colors: ['R'] },
+  'Pyrokinesis': { cmc: 6, colors: ['R'] },
+  'Jeweled Amulet': { cmc: 0, colors: [] },
+  'Temporal Aperture': { cmc: 2, colors: [] },
+  'Worn Powerstone': { cmc: 3, colors: [] },
+  'Thran Dynamo': { cmc: 4, colors: [] },
+  "Nevinyrral's Disk": { cmc: 4, colors: [] },
+  'Mana Web': { cmc: 3, colors: [] },
+  'Snake Basket': { cmc: 4, colors: [] },
+  'Predator, Flagship': { cmc: 5, colors: [] },
+  'Serrated Arrows': { cmc: 4, colors: [] },
+  'Rejuvenation Chamber': { cmc: 3, colors: [] }
+};
+
+function getCardManaCost(cardName) {
+  const cardData = cardDatabase[cardName];
+  return cardData ? cardData.cmc : null;
+}
+
+function getCardColors(cardName) {
+  const cardData = cardDatabase[cardName];
+  return cardData ? cardData.colors : [];
+}
+
+function parseManaCost(costString) {
+  if (!costString) return null;
+
+  // Handle already numeric costs
+  if (!isNaN(costString)) {
+    return parseInt(costString);
+  }
+
+  // Parse MTG mana cost format like {3}{R}{R} or {1}{W}{U}
+  let totalCost = 0;
+
+  // Remove all braces and extract individual mana symbols
+  const cleanCost = costString.replace(/[{}]/g, '');
+
+  // Split into individual characters/symbols
+  for (let i = 0; i < cleanCost.length; i++) {
+    const symbol = cleanCost[i];
+
+    // Handle numeric mana costs
+    if (!isNaN(symbol) && symbol !== '') {
+      totalCost += parseInt(symbol);
+    }
+    // Handle colored mana (W, U, B, R, G) and colorless symbols
+    else if (['W', 'U', 'B', 'R', 'G', 'C'].includes(symbol.toUpperCase())) {
+      totalCost += 1;
+    }
+    // Handle hybrid and other special symbols (count as 1 for now)
+    else if (symbol === 'X' || symbol === 'Y' || symbol === 'Z') {
+      totalCost += 0; // Variable costs count as 0
+    }
+  }
+
+  return totalCost;
+}

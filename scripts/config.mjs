@@ -23,10 +23,8 @@ export async function loadXMLDoc(xmlFile) {
     return xmlDoc;
   } catch (error) {
     // Handle errors gracefully and provide user feedback
-    console.error(error);
-    window.alert(
-      'Unable to load the requested file. Please check your internet connection and try again.'
-    );
+    console.error('loadXMLDoc error:', error);
+    throw error; // Re-throw so the calling code can handle it
   }
 }
 
@@ -68,6 +66,8 @@ export function extractCardInfo(deckList) {
     const name = card.getElementsByTagName('Name')[0].textContent;
     const quantity = parseInt(card.getElementsByTagName('Quantity')[0].textContent);
     const type = card.getElementsByTagName('Type')[0].textContent.toLowerCase();
+    const costElement = card.getElementsByTagName('Cost')[0];
+    const cost = costElement ? costElement.textContent : '';
 
     //console.log("Name:", name);
     // console.log("Quantity:", quantity);
@@ -77,6 +77,7 @@ export function extractCardInfo(deckList) {
       cardInfo[name] = {
         quantity: 0,
         type: type,
+        cost: cost,
       };
     }
     cardInfo[name].quantity += quantity;
@@ -244,7 +245,10 @@ export function displaySuggestions(suggestions) {
     });
 
     dropdown.addEventListener('change', () => {
-      cardNameInput.value = dropdown.value; // Set the input value to the selected option
+      const cardNameInput = document.getElementById('cardNameInput') || document.querySelector('input[name*="cardName"]');
+      if (cardNameInput) {
+        cardNameInput.value = dropdown.value; // Set the input value to the selected option
+      }
       suggestionsContainer.style.display = 'block'; // Hide the dropdown when an option is selected
     });
 
@@ -388,7 +392,10 @@ export async function createCardInputFields(cardDetailsMap) {
     });
 
     // Append the card info container to the card inputs container
-    cardInputsContainer.appendChild(cardInfo);
+    const cardInputsContainer = document.getElementById('cardInputsContainer') || document.querySelector('.card-inputs-container');
+    if (cardInputsContainer) {
+      cardInputsContainer.appendChild(cardInfo);
+    }
   }
 }
 
@@ -414,8 +421,9 @@ export function clearGameSections() {
   ];
 
   sectionIdsToClear.forEach(sectionId => {
-    if (document.getElementById(sectionId)) {
-      deleteSection(sectionId);
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.innerHTML = '';
     }
   });
 }
@@ -452,7 +460,8 @@ export const processSelectedXMLFile = async file => {
     const parsed = parseXml(xmlText);
     return parsed;
   } catch (error) {
-    handleProcessingError(error);
+    console.error('Error processing XML file:', error);
+    throw error;
   }
 };
 

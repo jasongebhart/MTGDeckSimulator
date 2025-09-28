@@ -10,7 +10,7 @@ import {
 export let cardNames = [];
 export let cardInfo = {};
 //var cardNames = [];
-export var allcardTypes = [
+export const allcardTypes = [
   'Creatures',
   'Lands',
   'Spells',
@@ -55,7 +55,7 @@ export var allcardTypes = [
   'Snow Legendary Snow Legendary Sorcery',
   'Snow Legendary Snow Legendary Basic Land',
 ];
-export var basiccardTypes = ['Creatures', 'Land', 'Spells'];
+export const basiccardTypes = ['Creatures', 'Land', 'Spells'];
 let deckSize;
 
 export function handleViewLibrary() {
@@ -72,11 +72,13 @@ export function handleViewLibrary() {
 
 export function handleTabButtonClickEvent(button) {
   // Remove the 'active' class from all tab buttons
+  const tabButtons = document.querySelectorAll('.tab-button');
   tabButtons.forEach(btn => {
     btn.classList.remove('active');
   });
 
   // Hide all tab content sections
+  const tabContents = document.querySelectorAll('.tab-content');
   tabContents.forEach(content => {
     content.style.display = 'none';
   });
@@ -271,7 +273,8 @@ const processSelectedXMLFile = async file => {
     const parsed = parseXml(xmlText);
     return parsed;
   } catch (error) {
-    handleProcessingError(error);
+    console.error('Error processing XML file:', error);
+    throw error;
   }
 };
 
@@ -329,7 +332,7 @@ export function startLibrarySearch(cardType) {
   console.log('filteredCards:', Object.keys(filteredCards).length);
   // Check if any cards of the specified type were found
   if (!filteredCards || Object.keys(filteredCards).length === 0) {
-    console.log(`No cards of the type ${selectedCardTypes} were found`);
+    console.log(`No cards of the type ${JSON.stringify(cardConditions)} were found`);
     displayNoCardsMessage(document.getElementById('libraryPopup'));
     libraryPopup.style.display = 'flex';
     return;
@@ -393,7 +396,7 @@ function filterCardsByTypesAndNames(cardInfo, cardConditions, cardNames) {
   const filteredCards = {};
 
   for (const cardName of cardNames) {
-    if (cardInfo.hasOwnProperty(cardName)) {
+    if (Object.prototype.hasOwnProperty.call(cardInfo, cardName)) {
       const card = cardInfo[cardName];
       console.log(`Checking card type for "${cardName}": ${card.type}`);
       if (matchesConditions(card.type, cardConditions)) {
@@ -524,23 +527,23 @@ export function startLibraryDrawAll() {
 function removeCardFromLocation(cardDrawn, FromLocation) {
   switch (FromLocation) {
     case 'Hand':
-      deleteCardFromHand(cardDrawn);
+      console.warn('deleteCardFromHand function not implemented');
       break;
 
     case 'spells':
-      deleteCardFromSpells(cardDrawn);
+      console.warn('deleteCardFromSpells function not implemented');
       break;
 
     case 'lands':
-      deleteCardFromLands(cardDrawn);
+      console.warn('deleteCardFromLands function not implemented');
       break;
 
     case 'battlefield_content':
-      deleteCardFromBattlefield(cardDrawn);
+      console.warn('deleteCardFromBattlefield function not implemented');
       break;
 
     case 'graveyard':
-      deleteCardFromGraveyard(cardDrawn);
+      console.warn('deleteCardFromGraveyard function not implemented');
       break;
 
     case 'library':

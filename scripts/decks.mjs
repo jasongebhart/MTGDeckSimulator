@@ -114,11 +114,11 @@ export async function loadFromXml(xmlFile) {
     }
     const xmlText = await response.text();
     const parser = new DOMParser();
-    xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+    const localXmlDoc = parser.parseFromString(xmlText, 'text/xml');
 
     // Extract data from the XML document and populate form fields
-    const deckName = xmlDoc.querySelector('deckName').textContent;
-    const cardElements = xmlDoc.querySelectorAll('card');
+    const deckName = localXmlDoc.querySelector('deckName').textContent;
+    const cardElements = localXmlDoc.querySelectorAll('card');
 
     // Set the deck name input field
     document.querySelector("input[name='deckName']").value = deckName;
@@ -215,20 +215,21 @@ function countColorOccurrences(currentCost) {
         const colorSymbols = strColorCharacter.replace(/[{}]/g, '');
 
         // Handle colorless as 'X'
-        if (colorSymbols === '') {
-          colorSymbols = 'X';
+        let modifiedColorSymbols = colorSymbols;
+        if (modifiedColorSymbols === '') {
+          modifiedColorSymbols = 'X';
         }
 
         // Update counts for each symbol
-        colorSymbols.split('').forEach(symbol => {
-          if (colorCounts.hasOwnProperty(symbol)) {
+        modifiedColorSymbols.split('').forEach(symbol => {
+          if (Object.prototype.hasOwnProperty.call(colorCounts, symbol)) {
             colorCounts[symbol].count += 1;
           }
         });
 
         // Mark it as one card
-        if (colorSymbols.length > 0) {
-          colorCounts[colorSymbols[0]].cards = 1;
+        if (modifiedColorSymbols.length > 0) {
+          colorCounts[modifiedColorSymbols[0]].cards = 1;
         }
       } else {
         // Handle colorless as 'X'
@@ -238,7 +239,7 @@ function countColorOccurrences(currentCost) {
 
         // Update counts for each character
         strColorCharacter.split('').forEach(symbol => {
-          if (colorCounts.hasOwnProperty(symbol)) {
+          if (Object.prototype.hasOwnProperty.call(colorCounts, symbol)) {
             colorCounts[symbol].count += 1;
           }
         });
@@ -316,7 +317,7 @@ const deckStatistics = {
 
 function resetDeckStatistics() {
   for (const prop in deckStatistics) {
-    if (deckStatistics.hasOwnProperty(prop)) {
+    if (Object.prototype.hasOwnProperty.call(deckStatistics, prop)) {
       deckStatistics[prop] = 0; // Reset numeric properties to 0
     }
   }
@@ -660,22 +661,22 @@ function createCardTable(tblChosen, currentCard, currentQuantity, currentCost, s
   const row = document.createElement('tr');
 
   // Create and add cell for quantity
-  cell = document.createElement('td');
+  const cell = document.createElement('td');
   cell.appendChild(document.createTextNode(currentQuantity));
   row.appendChild(cell);
 
   // Create and add cell for card name with link
-  var cell = document.createElement('td');
+  const cell2 = document.createElement('td');
   const link = document.createElement('a');
   link.href = `http://www.magiccards.info/autocard/${currentCard}`;
   link.appendChild(document.createTextNode(currentCard));
-  cell.appendChild(link);
-  row.appendChild(cell);
+  cell2.appendChild(link);
+  row.appendChild(cell2);
 
   // Check if currentCost is not "NA" before creating cost-related cells
   if (currentCost !== 'NA') {
     // Create and add cell for currentCost
-    cell = document.createElement('td');
+    const cell3 = document.createElement('td');
 
     // Split the cost into individual symbols
     const costSymbols = currentCost.match(/{[^{}]+}/g) || [];
@@ -687,18 +688,18 @@ function createCardTable(tblChosen, currentCard, currentQuantity, currentCost, s
         costImage.src = `/assets/mtgsymbols/${symbolToImageMap[costSymbol]}`;
         costImage.alt = costSymbol;
         costImage.className = 'cost-image-type';
-        cell.appendChild(costImage);
+        cell3.appendChild(costImage);
       } else {
-        cell.appendChild(document.createTextNode(costSymbol));
+        cell3.appendChild(document.createTextNode(costSymbol));
       }
     });
 
-    row.appendChild(cell);
+    row.appendChild(cell3);
 
     // Create and add cell for strConvertedCost
-    cell = document.createElement('td');
-    cell.appendChild(document.createTextNode(strConvertedCost));
-    row.appendChild(cell);
+    const cell4 = document.createElement('td');
+    cell4.appendChild(document.createTextNode(strConvertedCost));
+    row.appendChild(cell4);
   }
 
   // Add the row to the end of the table body
