@@ -77,8 +77,11 @@ export function extractCardInfo(deckList) {
       cardInfo[name] = {
         quantity: 0,
         type: type,
-        cost: cost,
       };
+      // Only include cost if it has a value
+      if (cost && cost.trim() !== '') {
+        cardInfo[name].cost = cost;
+      }
     }
     cardInfo[name].quantity += quantity;
   }

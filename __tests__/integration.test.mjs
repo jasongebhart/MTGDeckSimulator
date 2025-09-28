@@ -43,6 +43,7 @@ describe('XML Integration Tests', () => {
       expect(cardInfo['Dark Ritual']).toEqual({
         quantity: 4,
         type: 'instant',
+        cost: '{B}',
       });
 
       expect(cardInfo).toHaveProperty('Swamp');
