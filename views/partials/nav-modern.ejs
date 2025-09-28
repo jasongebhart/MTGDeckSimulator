@@ -1,0 +1,32 @@
+<!-- Modern Header -->
+<header class="app-header">
+    <nav class="nav-modern">
+        <a href="/" class="nav-brand">
+            <span>🃏</span>
+            MTG Simulator
+        </a>
+
+        <ul class="nav-tabs">
+            <li class="nav-tab">
+                <a href="/decks-modern" class="nav-tab-link <%= (typeof activePage !== 'undefined' && activePage === 'decks') ? 'active' : '' %>">Decks</a>
+            </li>
+            <li class="nav-tab">
+                <a href="/playhand-modern" class="nav-tab-link <%= (typeof activePage !== 'undefined' && activePage === 'playhand') ? 'active' : '' %>">Play Hand</a>
+            </li>
+            <li class="nav-tab">
+                <a href="/handsimulation" class="nav-tab-link <%= (typeof activePage !== 'undefined' && activePage === 'handsimulation') ? 'active' : '' %>">Hand Simulation</a>
+            </li>
+            <li class="nav-tab">
+                <a href="/alldecks" class="nav-tab-link <%= (typeof activePage !== 'undefined' && activePage === 'alldecks') ? 'active' : '' %>">All Decks</a>
+            </li>
+            <li class="nav-tab">
+                <a href="/create-deck-form" class="nav-tab-link <%= (typeof activePage !== 'undefined' && activePage === 'create') ? 'active' : '' %>">Create Deck</a>
+            </li>
+        </ul>
+
+        <div class="nav-controls">
+            <button id="themeToggle" class="btn btn-secondary btn-sm" aria-label="Toggle dark/light theme">🌓</button>
+            <button id="mobileMenuToggle" class="btn btn-secondary btn-sm d-none" aria-label="Open mobile navigation menu">☰</button>
+        </div>
+    </nav>
+</header>
