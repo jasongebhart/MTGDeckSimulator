@@ -466,7 +466,7 @@ export const processSelectedXMLFile = async file => {
 };
 
 export const readXmlFile = file => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = event => resolve(event.target.result);
     reader.readAsText(file);

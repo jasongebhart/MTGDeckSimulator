@@ -19,7 +19,7 @@ function isValidXML(xmlText) {
     const hasClosingTag = xmlText.includes('>');
 
     return hasOpeningTag && hasClosingTag;
-  } catch (_error) {
+  } catch {
     return false;
   }
 }
@@ -41,19 +41,35 @@ function containsXXEPatterns(xmlText) {
 
 // Function to set up routes for the Express app
 export function setupRoutes(app) {
-  // Define routes and their handlers using an array of route objects
-  const routes = [
-    { path: '/', template: 'decks' },
-    { path: '/login', template: 'login' },
-    { path: '/logout', template: 'logout' },
-    { path: '/decks', template: 'decks' },
-    { path: '/decks-modern', template: 'decks-modern' },
-    { path: '/playhand', template: 'playhand' },
-    { path: '/playhand-modern', template: 'playhand-modern' },
+  // Modern routes (primary paths)
+  const modernRoutes = [
+    { path: '/', template: 'decks-modern' }, // Root now redirects to modern deck view
+    { path: '/decks', template: 'decks-modern' },
+    { path: '/decks-modern', template: 'decks-modern' }, // Keep explicit modern URL
+    { path: '/playhand', template: 'playhand-modern' },
+    { path: '/playhand-modern', template: 'playhand-modern' }, // Keep explicit modern URL
     { path: '/handsimulation', template: 'handsimulation' },
     { path: '/alldecks', template: 'alldecks' },
     { path: '/create-deck-form', template: 'create-deck-form' },
   ];
+
+  // Legacy routes (with /legacy prefix)
+  const legacyRoutes = [
+    { path: '/legacy/decks', template: 'legacy/decks' },
+    { path: '/legacy/playhand', template: 'legacy/playhand' },
+    { path: '/legacy/handsimulation', template: 'legacy/handsimulation' },
+    { path: '/legacy/alldecks', template: 'legacy/alldecks' },
+    { path: '/legacy/create-deck-form', template: 'legacy/create-deck-form' },
+  ];
+
+  // Authentication routes
+  const authRoutes = [
+    { path: '/login', template: 'login' },
+    { path: '/logout', template: 'logout' },
+  ];
+
+  // Combine all routes
+  const routes = [...modernRoutes, ...legacyRoutes, ...authRoutes];
 
   // Set up the routes using a loop
   routes.forEach(route => {
@@ -313,45 +329,66 @@ function calculateDeckStatistics(cards) {
   let totalCards = 0;
   let cardsWithCost = 0;
 
+  // Enhanced statistics
+  const manaCurve = {};
+  const colorDistribution = {};
+  const cardTypeDetails = {
+    creatures: 0,
+    spells: 0,
+    lands: 0,
+    artifacts: 0,
+    planeswalkers: 0,
+    enchantments: 0,
+    other: 0
+  };
+
   cards.forEach(card => {
     const quantity = card.quantity || 1;
     totalCards += quantity;
 
     const type = (card.type || '').toLowerCase();
+
+    // Categorize by type with more detail
     if (type.includes('creature')) {
       creatures += quantity;
+      cardTypeDetails.creatures += quantity;
     } else if (type.includes('land')) {
       lands += quantity;
+      cardTypeDetails.lands += quantity;
+      // Count lands as 0-cost for mana curve
+      manaCurve[0] = (manaCurve[0] || 0) + quantity;
+    } else if (type.includes('artifact')) {
+      spells += quantity;
+      cardTypeDetails.artifacts += quantity;
+    } else if (type.includes('planeswalker')) {
+      spells += quantity;
+      cardTypeDetails.planeswalkers += quantity;
+    } else if (type.includes('enchantment')) {
+      spells += quantity;
+      cardTypeDetails.enchantments += quantity;
+    } else if (type.includes('instant') || type.includes('sorcery')) {
+      spells += quantity;
+      cardTypeDetails.spells += quantity;
     } else {
       spells += quantity;
+      cardTypeDetails.other += quantity;
     }
 
-    // Calculate average mana cost - parse mana cost from format like "{2}{R}", "{1}{U}{U}", "{X}{R}", etc.
+    // Calculate average mana cost and build mana curve
     if (card.cost) {
       const costStr = card.cost.toString();
-      let numericCost = 0;
+      const numericCost = parseManaCost(costStr);
 
-      // Extract numeric values from mana cost
-      const numbers = costStr.match(/\{(\d+)\}/g);
-      if (numbers) {
-        numbers.forEach(num => {
-          const value = parseInt(num.replace(/[{}]/g, ''));
-          if (!isNaN(value)) {
-            numericCost += value;
-          }
-        });
-      }
-
-      // Count colored mana symbols (each counts as 1)
-      const coloredMana = costStr.match(/\{[WUBRG]\}/g);
-      if (coloredMana) {
-        numericCost += coloredMana.length;
-      }
-
-      if (numericCost > 0) {
+      if (numericCost !== null && numericCost >= 0) {
         totalCost += numericCost * quantity;
         cardsWithCost += quantity;
+
+        // Build mana curve data
+        manaCurve[numericCost] = (manaCurve[numericCost] || 0) + quantity;
       }
+
+      // Update color distribution
+      updateColorDistribution(colorDistribution, costStr, quantity);
     }
   });
 
@@ -360,6 +397,57 @@ function calculateDeckStatistics(cards) {
     spells,
     lands,
     totalCards,
-    averageCost: cardsWithCost > 0 ? (totalCost / cardsWithCost).toFixed(1) : 0
+    averageCost: cardsWithCost > 0 ? (totalCost / cardsWithCost).toFixed(1) : 0,
+    manaCurve,
+    colorDistribution,
+    cardTypeDetails
   };
+}
+
+// Parse MTG mana cost format
+function parseManaCost(costString) {
+  if (!costString) return null;
+
+  // Handle already numeric costs
+  if (!isNaN(costString)) {
+    return parseInt(costString);
+  }
+
+  // Parse MTG mana cost format like {3}{R}{R} or {1}{W}{U}
+  let totalCost = 0;
+
+  // Remove all braces and extract individual mana symbols
+  const cleanCost = costString.replace(/[{}]/g, '');
+
+  // Split into individual characters/symbols
+  for (let i = 0; i < cleanCost.length; i++) {
+    const symbol = cleanCost[i];
+
+    // Handle numeric mana costs
+    if (!isNaN(symbol) && symbol !== '') {
+      totalCost += parseInt(symbol);
+    }
+    // Handle colored mana (W, U, B, R, G) and colorless symbols
+    else if (['W', 'U', 'B', 'R', 'G', 'C'].includes(symbol.toUpperCase())) {
+      totalCost += 1;
+    }
+    // Handle hybrid and other special symbols (count as 1 for now)
+    else if (symbol === 'X' || symbol === 'Y' || symbol === 'Z') {
+      totalCost += 0; // Variable costs count as 0
+    }
+  }
+
+  return totalCost;
+}
+
+// Update color distribution
+function updateColorDistribution(colorDist, cost, quantity) {
+  const colors = ['W', 'U', 'B', 'R', 'G'];
+
+  for (const color of colors) {
+    const matches = (cost.match(new RegExp(`\\{${color}\\}`, 'g')) || []).length;
+    if (matches > 0) {
+      colorDist[color] = (colorDist[color] || 0) + (matches * quantity);
+    }
+  }
 }

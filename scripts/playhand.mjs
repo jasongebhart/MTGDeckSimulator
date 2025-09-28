@@ -56,7 +56,6 @@ export const allcardTypes = [
   'Snow Legendary Snow Legendary Basic Land',
 ];
 export const basiccardTypes = ['Creatures', 'Land', 'Spells'];
-let deckSize;
 
 export function handleViewLibrary() {
   while (libraryPopup.firstChild) {
@@ -278,7 +277,7 @@ const processSelectedXMLFile = async file => {
   }
 };
 
-function displayError(message) {
+function displayError(_message) {
   // Implement a function to display the error message in the UI, like an alert or status update
 }
 
@@ -293,7 +292,7 @@ function getHandAndDeck(deckInformation) {
   displayHandAndDeck(spells, lands, deckInformation.cardNames);
 }
 
-function displayHandAndDeckElements(spells, lands, cardNames) {
+function displayHandAndDeckElements(_spells, _lands, _cardNames) {
   // Display hand and update deck size
   // Insert logic for updating UI with the hand and deck information
 }
@@ -339,7 +338,7 @@ export function startLibrarySearch(cardType) {
   } else {
     // Create card items in the library section
     for (const cardName in filteredCards) {
-      const card = cardName; // Access the card info from cardInfo
+      // Access the card info from cardInfo
       console.log('name:', cardName);
       const toLocation = 'library';
       const fromLocation = 'librarypopup';
@@ -429,7 +428,6 @@ function addCardToLibrary(cardName) {
 
 export function startDrawOneCard(cardNames, cardInfo) {
   //deleteSection("section_library");
-  const cardsToDraw = 1;
   const handInformation = cardDraw(cardNames, cardInfo, 1);
   const { spells, lands } = handInformation;
   console.log('Spells:', spells);

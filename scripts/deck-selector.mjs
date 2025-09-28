@@ -2,7 +2,6 @@
 
 let currentSelectedDeck = './decks/classic/affinity.xml';
 let allDecks = [];
-let filteredDecks = [];
 let currentCategory = 'all';
 
 // Initialize deck selector when DOM is loaded
@@ -29,7 +28,6 @@ function populateDecksFromHTML() {
         category: getDeckCategory(item),
         element: item
     }));
-    filteredDecks = [...allDecks];
 }
 
 function getDeckCategory(deckElement) {

@@ -543,8 +543,8 @@ function calculateHandStatistics(handCards, cardInfo) {
 
 function evaluateHandQuality(stats, totalLandsInDeck) {
   let score = 0;
-  let issues = [];
-  let strengths = [];
+  const issues = [];
+  const strengths = [];
 
   // Land count evaluation (most important)
   if (stats.lands >= 2 && stats.lands <= 4) {

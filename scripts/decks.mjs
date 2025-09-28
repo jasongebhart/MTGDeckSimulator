@@ -1,15 +1,11 @@
 import {
   loadXMLDoc,
   xmlDoc,
-  handleXMLLoad,
   symbolToImageMap,
   processSelectedXMLFile,
-  getCardNameXML,
-  readXmlFile,
-  parseXml,
 } from './config.mjs';
 
-async function startListDeck(selectedDeck) {
+async function startListDeck(_selectedDeck) {
   const XMLFile = getSelectedItem();
   console.log(`Request was made: ${XMLFile}`);
   await loadXMLDoc(XMLFile);
@@ -510,8 +506,6 @@ function displayDeck(xmlDoc) {
     const cardType = deckStatistics.currentType;
     updateCardStatistics(cardType);
     deckStatistics.deckSize = deckStatistics.deckSize + parseInt(deckStatistics.currentQuantity);
-    const currentCost = deckStatistics.currentCost;
-    const currentQuantity = deckStatistics.currentQuantity;
     let strConvertedCost = ''; // Declare strConvertedCost here
     if (deckStatistics.currentCost !== 'NA') {
       strConvertedCost = updateColorStatistics(

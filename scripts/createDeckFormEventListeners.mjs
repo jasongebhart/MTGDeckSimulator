@@ -1,9 +1,8 @@
-import { convertToXml, loadFromXml, deleteCardInDeck } from './decks.mjs';
+import { convertToXml } from './decks.mjs';
 import {
   loadXMLDoc,
   xmlDoc,
   getCardDetails,
-  fetchCardInformation,
   displaySuggestions,
   createCardInputFields,
   readXmlFile,
@@ -284,10 +283,7 @@ const fetchAndUpdateCardDetails = async cardElements => {
 };
 
 export function loadEventListeners() {
-  const cardCount = 0;
   document.addEventListener('DOMContentLoaded', () => {
-    const cardInputsContainer = document.getElementById('cardInputsContainer');
-    const suggestionsContainer = document.getElementById('suggestionsContainer');
 
     const downloadDeckButton = document.getElementById('downloadDeckButton');
     downloadDeckButton.addEventListener('click', handleDownload);

@@ -49,9 +49,9 @@ class ModernUI {
       if (!this.currentDeck && window.getSelectedDeck) {
         const selectedDeck = window.getSelectedDeck();
         console.log('Found selected deck:', selectedDeck);
-        this.setDebugStatus('Found: ' + selectedDeck);
+        this.setDebugStatus(`Found: ${  selectedDeck}`);
         if (selectedDeck && selectedDeck !== '') {
-          this.setDebugStatus('Loading: ' + selectedDeck.split('/').pop());
+          this.setDebugStatus(`Loading: ${  selectedDeck.split('/').pop()}`);
           this.loadPredefinedDeck(selectedDeck);
         } else {
           this.setDebugStatus('Empty deck path');
@@ -133,7 +133,7 @@ class ModernUI {
     // Deck selection - Listen for deck selection events from the modern selector
     document.addEventListener('deckSelected', (e) => {
       console.log('deckSelected event received:', e.detail);
-      this.setDebugStatus('Loading: ' + e.detail.deckName);
+      this.setDebugStatus(`Loading: ${  e.detail.deckName}`);
       this.loadPredefinedDeck(e.detail.deckPath);
     });
 
@@ -321,7 +321,7 @@ class ModernUI {
       console.log('Deck processing completed');
     } catch (error) {
       console.error('Error loading deck:', error);
-      this.setDebugStatus('Error: ' + error.message);
+      this.setDebugStatus(`Error: ${  error.message}`);
       this.showErrorState('Failed to load deck. Please try again.');
     }
   }
@@ -965,7 +965,7 @@ class ModernUI {
     const labels = [];
     const colors = ['#10b981', '#3b82f6', '#f59e0b', '#9ca3af', '#8b5cf6', '#ec4899', '#6b7280'];
 
-    Object.entries(typeData).forEach(([type, count], index) => {
+    Object.entries(typeData).forEach(([type, count]) => {
       if (count > 0) {
         data.push(count);
         labels.push(type.charAt(0).toUpperCase() + type.slice(1));
