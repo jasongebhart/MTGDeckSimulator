@@ -1,45 +1,285 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
-</style>
-<link rel="stylesheet" href="/assets/decks.css">
-<title>Deck Comparison</title>
+<title>Deck Library - MTG Deck Simulator</title>
+
+<!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
 <link rel="manifest" href="/assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" type="text/css" href="/assets/modern-ui.css">
+
+<!-- Scripts -->
 <script type="module">
 import { startCompareDecks } from "./scripts/alldecks.mjs";
 window.onload = () => {
 	startCompareDecks();
 };
+
+// Theme toggle functionality
+document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.getElementById("themeToggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    });
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }
+});
 </script>
 </head>
 <body onload="startCompareDecks()">
-<div id="header">
-    <%- include('partials/nav'); -%>
-</div>
+<div class="app-container">
+    <%- include('partials/nav-modern', { activePage: 'alldecks' }); -%>
 
-<div class="middle">
-	<table border="1" id="tblDeckList">
-		<tr>
-			<th colspan="9" class="style1 style1">All Decks</th>
-		</tr>
-		<tr style="font-size:24px">
-			<td>Deck Name</td>
-			<td>Cards</td>
-			<td>Total Cost</td>
-			<td>Lands</td>
-			<td>Creatures</td>
-			<td>Instants</td>
-			<td>Sorceries</td>
-			<td>Enchantments</td>
-			<td>Artifacts</td>
-		</tr>
-	</table>
-</div>
+    <div class="library-container">
+        <!-- Header Section -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>📚 Deck Library</h1>
+                    <p>Compare and explore all available decks in your collection</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="refreshLibrary">
+                        🔄 Refresh
+                    </button>
+                    <button class="btn btn-primary" onclick="window.location.href='/create-deck-form'">
+                        ➕ Create New Deck
+                    </button>
+                </div>
+            </div>
+        </header>
 
-	</body>
+        <!-- Stats Summary -->
+        <section class="library-stats">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🃏</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalDecks">-</div>
+                        <div class="stat-label">Total Decks</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="avgCards">-</div>
+                        <div class="stat-label">Avg Cards</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏗️</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="mostCommonType">-</div>
+                        <div class="stat-label">Most Common</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalValue">-</div>
+                        <div class="stat-label">Total Value</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Filters and Search -->
+        <section class="library-controls">
+            <!-- Search Filters Panel -->
+            <div class="search-filters">
+                <div class="search-filter-row">
+                    <div class="search-filter-group" style="flex: 1;">
+                        <label class="filter-label">Search Decks</label>
+                        <div class="search-input-advanced">
+                            <input type="text" id="deckSearch" placeholder="Search by name, cards, or type..." class="form-input search-input">
+                            <div class="search-suggestions" id="searchSuggestions">
+                                <!-- Dynamic suggestions will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-filter-group">
+                        <label class="filter-label">Sort By</label>
+                        <select id="sortBy" class="form-select">
+                            <option value="name">Name A-Z</option>
+                            <option value="cards">Card Count</option>
+                            <option value="cost">Total Cost</option>
+                            <option value="lands">Land Count</option>
+                            <option value="recent">Recently Added</option>
+                        </select>
+                    </div>
+                    <div class="search-filter-group">
+                        <label class="filter-label">View</label>
+                        <div class="view-toggle">
+                            <button class="btn btn-icon view-btn active" id="tableView" data-view="table" title="Table View">📊</button>
+                            <button class="btn btn-icon view-btn" id="cardView" data-view="cards" title="Card View">🃏</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Filters -->
+                <div class="search-filter-row">
+                    <div class="search-filter-group" style="flex: 1;">
+                        <label class="filter-label">Quick Filters</label>
+                        <div class="quick-filters">
+                            <button class="quick-filter active" data-filter="all">
+                                All Decks <span class="count" id="allCount">-</span>
+                            </button>
+                            <button class="quick-filter" data-filter="standard">
+                                Standard <span class="count" id="standardCount">-</span>
+                            </button>
+                            <button class="quick-filter" data-filter="modern">
+                                Modern <span class="count" id="modernCount">-</span>
+                            </button>
+                            <button class="quick-filter" data-filter="commander">
+                                Commander <span class="count" id="commanderCount">-</span>
+                            </button>
+                            <button class="quick-filter" data-filter="budget">
+                                Budget <span class="count" id="budgetCount">-</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Filters -->
+                <div class="filter-tags" id="activeFilters" style="display: none;">
+                    <!-- Active filter tags will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Filter Summary -->
+            <div class="filter-summary hidden" id="filterSummary">
+                <span>
+                    Showing <span class="filter-count" id="resultCount">0</span>
+                    of <span id="totalCount">0</span> decks
+                </span>
+                <span class="clear-filters" id="clearFilters">Clear all filters</span>
+            </div>
+        </section>
+
+        <!-- Deck Library Content -->
+        <section class="library-content">
+            <!-- Table View -->
+            <div class="deck-table-container" id="tableViewContainer">
+                <div class="table-wrapper">
+                    <table class="deck-table" id="tblDeckList">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-column="name">
+                                    <span>Deck Name</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="cards">
+                                    <span>Cards</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="cost">
+                                    <span>Total Cost</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="lands">
+                                    <span>Lands</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="creatures">
+                                    <span>Creatures</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="instants">
+                                    <span>Instants</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="sorceries">
+                                    <span>Sorceries</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="enchantments">
+                                    <span>Enchantments</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="artifacts">
+                                    <span>Artifacts</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deckTableBody">
+                            <!-- Deck rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Loading state -->
+                <div class="loading-state" id="loadingState">
+                    <div class="loading-spinner"></div>
+                    <p>Loading deck library...</p>
+                </div>
+
+                <!-- Empty state -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-state-icon">📭</div>
+                    <h3 class="empty-state-title">No Decks Found</h3>
+                    <p class="empty-state-description">Start building your collection by creating your first deck!</p>
+                    <div class="empty-state-actions">
+                        <button class="btn btn-primary" onclick="window.location.href='/create-deck-form'">
+                            ➕ Create Your First Deck
+                        </button>
+                        <button class="btn btn-secondary" onclick="document.getElementById('deckSearch').focus()">
+                            🔍 Search Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card View (Alternative Layout) -->
+            <div class="deck-cards-container" id="cardViewContainer" style="display: none;">
+                <div class="deck-cards-grid" id="deckCardsGrid">
+                    <!-- Deck cards will be populated here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay" onclick="document.body.classList.remove('mobile-sidebar-open')"></div>
+    <nav class="mobile-nav-bottom">
+        <div class="mobile-nav-tabs">
+            <a href="/decks-modern" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🃏</span>
+                <span>Decks</span>
+            </a>
+            <a href="/playhand-modern" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎮</span>
+                <span>Play</span>
+            </a>
+            <a href="/handsimulation" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎲</span>
+                <span>Simulate</span>
+            </a>
+            <a href="/alldecks" class="mobile-nav-tab active">
+                <span class="mobile-nav-icon">📚</span>
+                <span>Library</span>
+            </a>
+            <a href="/create-deck-form" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">➕</span>
+                <span>Create</span>
+            </a>
+        </div>
+    </nav>
+
+</div> <!-- Close app-container -->
+</body>
 </html>

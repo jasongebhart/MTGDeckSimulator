@@ -1,62 +1,308 @@
-<form class="Largeheader flexlibrary" name="formDecks" height=40em;>
-	<SELECT class="Largeheader" name="selectDeck">
-	<OPTION VALUE = "./xml/BigRedMachine.xml" selected >BigRedMachine</OPTION>
-	<OPTION VALUE = "./xml/MulchandLoam.xml">Mulch and Loam</OPTION>
-	<OPTION VALUE = "./xml/BlackRack.xml">BlackRack</OPTION>
-	<OPTION VALUE = "./xml/BlackDread.xml">BlackDread</OPTION>
-	<OPTION VALUE = "./xml/BloodBraidElf.xml">BloodbraidElf</OPTION>
-	<OPTION VALUE = "./xml/BloodBraidEnchantress.xml">BloodbraidEnchantress</OPTION>
-	<OPTION VALUE = "./xml/Brood.xml">Brood</OPTION>
-	<OPTION VALUE = "./xml/CharredDiscard.xml">CharredDiscard</OPTION>
-	<OPTION VALUE = "./xml/Classic.xml">Classic</OPTION>
-	<OPTION VALUE = "./xml/Dimir_Inverter.xml">Dimir Inverter</OPTION>
-	<OPTION VALUE = "./xml/FireandIce.xml">FireandIce</OPTION>
-	<OPTION VALUE = "./xml/GreenWaste.xml">GreenWaste</OPTION>
-	<OPTION VALUE = "./xml/GreenWasteOrder.xml">GreenWaste Order</OPTION>
-	<OPTION VALUE = "./xml/GreenWasteTomorrow.xml">GreenWaste Tomorrow</OPTION>
-	<OPTION VALUE = "./xml/GreenWasteSakura.xml">GreenWaste Sakura</OPTION>
- 	<OPTION VALUE = "./xml/WelderGamble.xml" >Welder Gamble</OPTION>
- 	<OPTION VALUE = "./xml/CloudpostWelder.xml" >Cloudpost Welder</OPTION>
-	<OPTION VALUE = "./xml/JunkDiver.xml">JunkDiver</OPTION>
-	<OPTION VALUE = "./xml/JeskaiPioneer.xml">JeskaiPioneer</OPTION>
-	<OPTION VALUE = "./xml/KindofBlue.xml">KindofBlue</OPTION>
-	<OPTION VALUE = "./xml/IxalanCannons.xml">Ixalan Cannons</OPTION>
-	<OPTION VALUE = "./xml/Ixalan_BlackRedBlue.xml">Ixalan Cannons BRU</OPTION>
-	<OPTION VALUE = "./xml/Ixalan_Cannons_RedBlue.xml">Ixalan Cannons Red Blue</OPTION>
-	<OPTION VALUE = "./xml/Ixalan_Green_White.xml">Ixalan Green White</OPTION>
-	<OPTION VALUE = "./xml/Lumberjack.xml">Lumberjack</OPTION>
-	<OPTION VALUE = "./xml/Brothers_War/Limited-BrothersWar.xml">Limited Brother's War - WUR</OPTION>
-	<OPTION VALUE = "./xml/Napoleon.xml">Napoleon</OPTION>
-	<OPTION VALUE = "./xml/Nishoba.xml">Nishoba</OPTION>
-	<OPTION VALUE = "./xml/Outpost.xml">Outpost</OPTION>
-	<OPTION VALUE = "./xml/PatriotBlock.xml">PatriotBlock</OPTION>
-    <OPTION VALUE = "./xml/Patriot.xml">Patriot</OPTION>
-	<OPTION VALUE = "./xml/Pernicious.xml">Pernicious</OPTION>
-	<OPTION VALUE = "./xml/Plum.xml">Plum</OPTION>
-	<OPTION VALUE = "./xml/PlumGoneBlock.xml">PlumGoneBlock</OPTION>
-	<OPTION VALUE = "./xml/RayneForest.xml">RayneForest</OPTION>
-	<OPTION VALUE = "./xml/RedPatrol.xml">RedPatrol</OPTION>
-	<OPTION VALUE = "./xml/Rith.xml">Rith</OPTION>
-	<OPTION VALUE = "./xml/Stasis.xml">Stasis</OPTION>
-	<OPTION VALUE = "./xml/TronTate.xml">Tron Tate</OPTION>
-	<OPTION VALUE = "./xml/Welder.xml">Welder</OPTION>
-	<OPTION VALUE = "./xml/ZombieRenewal.xml">ZombieRenewal</OPTION>
-	<OPTION VALUE = "./xml/affinity.xml">Affinity</OPTION>
-	<OPTION VALUE = "./xml/hightide.xml">HighTide</OPTION>
-	<OPTION VALUE = "./xml/oath.xml">Oath</OPTION>
-	<OPTION VALUE = "./xml/trix.xml">Trix</OPTION>
-	<OPTION VALUE = "./xml/belcher.xml">Belcher</OPTION>
-	<OPTION VALUE = "./xml/counterbalance.xml">CounterBalance</OPTION>
-	<OPTION VALUE = "./xml/dredge.xml">Dredge</OPTION>
-	<OPTION VALUE = "./xml/goblins.xml">Goblins</OPTION>
-	<OPTION VALUE = "./xml/landstill.xml">LandStill</OPTION>
-	<OPTION VALUE = "./xml/crimson_vow/Limited-Red.xml">Crimsom Vow Limited Red</OPTION>
-	<OPTION VALUE = "./xml/legacy/Elves.xml">Elves</OPTION>
-	<OPTION VALUE = "./xml/legacy/Red-Delver.xml">Delver</OPTION>
-	<OPTION VALUE = "./xml/crimson_vow/Limited-RedGreen.xml">Crimsom Vow Limited Red Green</OPTION>
-	<OPTION VALUE = "./xml/crimson_vow/Limited-GreenBlack.xml">Crimsom Vow Limited Green Black</OPTION>
-	<OPTION VALUE = "./xml/crimson_vow/Limited-WhiteSplash.xml">Crimsom Vow Limited White Splash</OPTION>
-	<OPTION VALUE = "./xml/crimson_vow/Limited-GreenBlue.xml">Crimsom Vow Limited Green Blue</OPTION>
-	<OPTION VALUE = "./xml/crimson_vow/Limited-GreenWhite.xml">Crimsom Vow Limited Green White</OPTION>
-	</SELECT>
-</form>
+<!-- Modern Deck Selector -->
+<div class="deck-selector-container">
+    <div class="deck-selector-header">
+        <input type="text"
+               class="deck-search-input"
+               placeholder="Search decks..."
+               id="deckSearch">
+        <button class="deck-search-clear" id="deckSearchClear">✕</button>
+    </div>
+
+    <div class="deck-categories">
+        <button class="category-tab active" data-category="all">All (65)</button>
+        <button class="category-tab" data-category="legacy">Legacy</button>
+        <button class="category-tab" data-category="limited">Limited</button>
+        <button class="category-tab" data-category="casual">Casual</button>
+    </div>
+
+    <div class="deck-list-container" id="deckListContainer">
+        <!-- Popular/Featured Decks -->
+        <div class="deck-category" data-category="all">
+            <h4 class="category-title">Featured Decks</h4>
+            <div class="deck-grid">
+                <div class="deck-item" data-path="./xml/BigRedMachine.xml">
+                    <div class="deck-name">Big Red Machine</div>
+                    <div class="deck-type">Artifact/Red</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Stasis.xml">
+                    <div class="deck-name">Stasis</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/affinity.xml">
+                    <div class="deck-name">Affinity</div>
+                    <div class="deck-type">Artifact</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/goblins.xml">
+                    <div class="deck-name">Goblins</div>
+                    <div class="deck-type">Tribal</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legacy Decks -->
+        <div class="deck-category">
+            <h4 class="category-title">Legacy Decks</h4>
+            <div class="deck-grid">
+                <div class="deck-item" data-path="./xml/legacy/Elves.xml">
+                    <div class="deck-name">Elves</div>
+                    <div class="deck-type">Combo</div>
+                </div>
+                <div class="deck-item" data-path="./xml/legacy/Red-Delver.xml">
+                    <div class="deck-name">Red Delver</div>
+                    <div class="deck-type">Tempo</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/hightide.xml">
+                    <div class="deck-name">High Tide</div>
+                    <div class="deck-type">Combo</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/belcher.xml">
+                    <div class="deck-name">Belcher</div>
+                    <div class="deck-type">Combo</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/dredge.xml">
+                    <div class="deck-name">Dredge</div>
+                    <div class="deck-type">Graveyard</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/landstill.xml">
+                    <div class="deck-name">Landstill</div>
+                    <div class="deck-type">Control</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Limited Decks -->
+        <div class="deck-category">
+            <h4 class="category-title">Limited Decks</h4>
+            <div class="deck-grid">
+                <div class="deck-item" data-path="./xml/Brothers_War/Limited-BrothersWar.xml">
+                    <div class="deck-name">Brother's War - WUR</div>
+                    <div class="deck-type">Limited</div>
+                </div>
+                <div class="deck-item" data-path="./xml/crimson_vow/Limited-Red.xml">
+                    <div class="deck-name">Crimson Vow - Red</div>
+                    <div class="deck-type">Limited</div>
+                </div>
+                <div class="deck-item" data-path="./xml/crimson_vow/Limited-RedGreen.xml">
+                    <div class="deck-name">Crimson Vow - RG</div>
+                    <div class="deck-type">Limited</div>
+                </div>
+                <div class="deck-item" data-path="./xml/crimson_vow/Limited-GreenBlack.xml">
+                    <div class="deck-name">Crimson Vow - GB</div>
+                    <div class="deck-type">Limited</div>
+                </div>
+                <div class="deck-item" data-path="./xml/crimson_vow/Limited-WhiteSplash.xml">
+                    <div class="deck-name">Crimson Vow - White</div>
+                    <div class="deck-type">Limited</div>
+                </div>
+                <div class="deck-item" data-path="./xml/crimson_vow/Limited-GreenBlue.xml">
+                    <div class="deck-name">Crimson Vow - UG</div>
+                    <div class="deck-type">Limited</div>
+                </div>
+                <div class="deck-item" data-path="./xml/crimson_vow/Limited-GreenWhite.xml">
+                    <div class="deck-name">Crimson Vow - GW</div>
+                    <div class="deck-type">Limited</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Casual/Other Decks -->
+        <div class="deck-category">
+            <h4 class="category-title">Casual & Other Decks</h4>
+            <div class="deck-grid">
+                <div class="deck-item" data-path="./xml/MulchandLoam.xml">
+                    <div class="deck-name">Mulch and Loam</div>
+                    <div class="deck-type">Graveyard</div>
+                </div>
+                <div class="deck-item" data-path="./xml/BlackRack.xml">
+                    <div class="deck-name">Black Rack</div>
+                    <div class="deck-type">Discard</div>
+                </div>
+                <div class="deck-item" data-path="./xml/BlackDread.xml">
+                    <div class="deck-name">Black Dread</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/BloodBraidElf.xml">
+                    <div class="deck-name">Bloodbraid Elf</div>
+                    <div class="deck-type">Midrange</div>
+                </div>
+                <div class="deck-item" data-path="./xml/BloodBraidEnchantress.xml">
+                    <div class="deck-name">Bloodbraid Enchantress</div>
+                    <div class="deck-type">Enchantment</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Brood.xml">
+                    <div class="deck-name">Brood</div>
+                    <div class="deck-type">Tribal</div>
+                </div>
+                <div class="deck-item" data-path="./xml/CharredDiscard.xml">
+                    <div class="deck-name">Charred Discard</div>
+                    <div class="deck-type">Discard</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Classic.xml">
+                    <div class="deck-name">Classic</div>
+                    <div class="deck-type">Midrange</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Dimir_Inverter.xml">
+                    <div class="deck-name">Dimir Inverter</div>
+                    <div class="deck-type">Combo</div>
+                </div>
+                <div class="deck-item" data-path="./xml/FireandIce.xml">
+                    <div class="deck-name">Fire and Ice</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/GreenWaste.xml">
+                    <div class="deck-name">Green Waste</div>
+                    <div class="deck-type">Ramp</div>
+                </div>
+                <div class="deck-item" data-path="./xml/GreenWasteOrder.xml">
+                    <div class="deck-name">Green Waste Order</div>
+                    <div class="deck-type">Ramp</div>
+                </div>
+                <div class="deck-item" data-path="./xml/GreenWasteTomorrow.xml">
+                    <div class="deck-name">Green Waste Tomorrow</div>
+                    <div class="deck-type">Ramp</div>
+                </div>
+                <div class="deck-item" data-path="./xml/GreenWasteSakura.xml">
+                    <div class="deck-name">Green Waste Sakura</div>
+                    <div class="deck-type">Ramp</div>
+                </div>
+                <div class="deck-item" data-path="./xml/WelderGamble.xml">
+                    <div class="deck-name">Welder Gamble</div>
+                    <div class="deck-type">Artifact</div>
+                </div>
+                <div class="deck-item" data-path="./xml/CloudpostWelder.xml">
+                    <div class="deck-name">Cloudpost Welder</div>
+                    <div class="deck-type">Artifact</div>
+                </div>
+                <div class="deck-item" data-path="./xml/JunkDiver.xml">
+                    <div class="deck-name">Junk Diver</div>
+                    <div class="deck-type">Artifact</div>
+                </div>
+                <div class="deck-item" data-path="./xml/JeskaiPioneer.xml">
+                    <div class="deck-name">Jeskai Pioneer</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/KindofBlue.xml">
+                    <div class="deck-name">Kind of Blue</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/IxalanCannons.xml">
+                    <div class="deck-name">Ixalan Cannons</div>
+                    <div class="deck-type">Tribal</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Ixalan_BlackRedBlue.xml">
+                    <div class="deck-name">Ixalan BRU</div>
+                    <div class="deck-type">Tribal</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Ixalan_Cannons_RedBlue.xml">
+                    <div class="deck-name">Ixalan RU</div>
+                    <div class="deck-type">Tribal</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Ixalan_Green_White.xml">
+                    <div class="deck-name">Ixalan GW</div>
+                    <div class="deck-type">Tribal</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Lumberjack.xml">
+                    <div class="deck-name">Lumberjack</div>
+                    <div class="deck-type">Ramp</div>
+                </div>
+                <div class="deck-item" data-path="./xml/MantisRiderPioneer.xml">
+                    <div class="deck-name">Mantis Rider Pioneer</div>
+                    <div class="deck-type">Aggro</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Napoleon.xml">
+                    <div class="deck-name">Napoleon</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Nishoba.xml">
+                    <div class="deck-name">Nishoba</div>
+                    <div class="deck-type">Midrange</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Outpost.xml">
+                    <div class="deck-name">Outpost</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/PatriotBlock.xml">
+                    <div class="deck-name">Patriot Block</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Patriot.xml">
+                    <div class="deck-name">Patriot</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Pernicious.xml">
+                    <div class="deck-name">Pernicious</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Plum.xml">
+                    <div class="deck-name">Plum</div>
+                    <div class="deck-type">Midrange</div>
+                </div>
+                <div class="deck-item" data-path="./xml/PlumGoneBlock.xml">
+                    <div class="deck-name">Plum Gone Block</div>
+                    <div class="deck-type">Midrange</div>
+                </div>
+                <div class="deck-item" data-path="./xml/RayneForest.xml">
+                    <div class="deck-name">Rayne Forest</div>
+                    <div class="deck-type">Control</div>
+                </div>
+                <div class="deck-item" data-path="./xml/RedPatrol.xml">
+                    <div class="deck-name">Red Patrol</div>
+                    <div class="deck-type">Aggro</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Rith.xml">
+                    <div class="deck-name">Rith</div>
+                    <div class="deck-type">Ramp</div>
+                </div>
+                <div class="deck-item" data-path="./xml/TronTate.xml">
+                    <div class="deck-name">Tron Tate</div>
+                    <div class="deck-type">Ramp</div>
+                </div>
+                <div class="deck-item" data-path="./xml/Welder.xml">
+                    <div class="deck-name">Welder</div>
+                    <div class="deck-type">Artifact</div>
+                </div>
+                <div class="deck-item" data-path="./xml/ZombieRenewal.xml">
+                    <div class="deck-name">Zombie Renewal</div>
+                    <div class="deck-type">Tribal</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/oath.xml">
+                    <div class="deck-name">Oath</div>
+                    <div class="deck-type">Combo</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/trix.xml">
+                    <div class="deck-name">Trix</div>
+                    <div class="deck-type">Combo</div>
+                </div>
+                <div class="deck-item" data-path="./decks/classic/counterbalance.xml">
+                    <div class="deck-name">Counterbalance</div>
+                    <div class="deck-type">Control</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden form field for compatibility -->
+    <form name="formDecks" style="display: none;">
+        <select name="selectDeck" id="hiddenDeckSelect">
+            <option value="./decks/classic/affinity.xml" selected>Affinity</option>
+        </select>
+    </form>
+</div>
+
+<!-- Deck Selector Script -->
+<script type="module">
+    import { initDeckSelector, getSelectedDeck } from '/scripts/deck-selector.mjs';
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            // Small delay to ensure all elements are rendered
+            setTimeout(initDeckSelector, 100);
+        });
+    } else {
+        setTimeout(initDeckSelector, 100);
+    }
+
+    // Make functions available globally for compatibility
+    window.getSelectedDeck = getSelectedDeck;
+</script>

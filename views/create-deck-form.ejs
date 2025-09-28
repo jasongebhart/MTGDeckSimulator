@@ -1,75 +1,358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<title>Build Deck</title>
+<title>Deck Builder - MTG Deck Simulator</title>
+
+<!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
 <link rel="manifest" href="/assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" type="text/css" href="/assets/modern-ui.css">
+
+<!-- Scripts -->
 <script type="module">
   import { loadEventListeners } from "./scripts/createDeckFormEventListeners.mjs";
 
   loadEventListeners(); // This will execute the event listeners when the document loads
+
+  // Theme toggle functionality
+  document.addEventListener("DOMContentLoaded", () => {
+    const themeToggle = document.getElementById("themeToggle");
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      });
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem("theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+  });
 </script>
-<link rel="stylesheet" href="/assets/decks.css">
 </head>
 <body>
-    <header>
-      <%- include('partials/nav'); -%>
-  </header>
-  <main>
-    <div>
-      <section id="deck" class="decklist">
-        <fieldset>
-            <div>
-              <label for="preDefinedDecks">Pre-Defined Decks</label>
-              <div class="deckListContainer">
-                <%- include('partials/decklist'); -%>
-              </div>
+<div class="app-container">
+    <%- include('partials/nav-modern', { activePage: 'create-deck-form' }); -%>
+
+    <div class="builder-container">
+        <!-- Header Section -->
+        <header class="builder-header">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>⚡ Deck Builder</h1>
+                    <p>Create and customize your perfect Magic: The Gathering deck</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="clearDeckButton">
+                        🗑️ Clear All
+                    </button>
+                    <button class="btn btn-secondary" id="downloadDeckButton">
+                        📥 Export
+                    </button>
+                </div>
             </div>
-            <div>
-              <label for="localDecks">Local Decks</label>
-              <button id="loadXMLFileButton">Load XML File</button>
-              <input type="file" name="XMLFile" accept=".xml" id="xmlFile" style="display: none;">
-            </div>
-          </fieldset>
-    </section>
-    </div>
-    <form method="POST" action="/create-deck" enctype="multipart/form-data">
-      <label for="deckName">Deck Name:</label>
-      <input type="text" name="deckName" required>
-      
-      <!-- Action Buttons Section -->
-      <div id="actionButtons">
-        <button type="button" id="addCardButton">Add Card</button>
-        <button type="button" id="downloadDeckButton">Download Deck</button>
-        <button type="submit">Publish Deck</button>
-      </div>
-    </form>
-    <div>
-      <input type="text" name="lookupCardName" id="lookupCardName" placeholder="Enter Card Name">
-      <input type="text" name="cardNameInput" id="cardNameInput" placeholder="Selected Card">
+        </header>
+
+        <!-- Deck Builder Grid -->
+        <div class="builder-grid">
+
+            <!-- Left Panel - Card Search & Library -->
+            <aside class="search-panel">
+                <!-- Quick Start Section -->
+                <section class="quick-start-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>🚀 Quick Start</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="quick-start-options">
+                                <div class="template-option">
+                                    <label for="preDefinedDecks" class="template-label">Load Template</label>
+                                    <div class="template-selector">
+                                        <%- include('partials/decklist'); -%>
+                                    </div>
+                                </div>
+                                <div class="file-option">
+                                    <label class="template-label">Import Deck</label>
+                                    <div class="file-upload-area">
+                                        <button class="btn btn-outline" id="loadXMLFileButton">
+                                            📁 Load XML File
+                                        </button>
+                                        <input type="file" name="XMLFile" accept=".xml" id="xmlFile" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card Search Section -->
+                <section class="card-search-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>🔍 Card Search</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="search-controls">
+                                <div class="search-input-group">
+                                    <input type="text"
+                                           id="lookupCardName"
+                                           name="lookupCardName"
+                                           placeholder="Search for cards..."
+                                           class="form-input search-input"
+                                           autocomplete="off">
+                                    <button class="btn btn-icon search-btn" type="button">
+                                        🔍
+                                    </button>
+                                </div>
+
+                                <div class="selected-card-input">
+                                    <input type="text"
+                                           id="cardNameInput"
+                                           name="cardNameInput"
+                                           placeholder="Selected card will appear here..."
+                                           class="form-input"
+                                           readonly>
+                                    <button class="btn btn-primary" id="addCardButton">
+                                        ➕ Add to Deck
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card Suggestions -->
+                <section class="suggestions-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>💡 Suggestions</h3>
+                        </div>
+                        <div class="card-content">
+                            <div id="suggestionsContainer" class="suggestions-list">
+                                <div class="suggestion-placeholder">
+                                    <p>Search for cards to see related suggestions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card Preview -->
+                <section class="card-preview-section">
+                    <div class="card-preview-area" id="left-sidebar-hover-image">
+                        <div class="preview-placeholder">
+                            <span>Card preview will appear here</span>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- Center Panel - Deck List -->
+            <main class="deck-panel">
+                <!-- Deck Info Header -->
+                <section class="deck-info-section">
+                    <form method="POST" action="/create-deck" enctype="multipart/form-data" class="deck-form">
+                        <div class="deck-info-card">
+                            <div class="deck-name-section">
+                                <label for="deckName" class="deck-name-label">Deck Name</label>
+                                <input type="text"
+                                       name="deckName"
+                                       id="deckName"
+                                       class="form-input deck-name-input"
+                                       placeholder="Enter your deck name..."
+                                       required>
+                            </div>
+
+                            <div class="deck-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Cards</span>
+                                    <span class="stat-value" id="deckCardCount">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Creatures</span>
+                                    <span class="stat-value" id="deckCreatureCount">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Spells</span>
+                                    <span class="stat-value" id="deckSpellCount">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Lands</span>
+                                    <span class="stat-value" id="deckLandCount">0</span>
+                                </div>
+                            </div>
+
+                            <div class="deck-actions">
+                                <button type="button" class="btn btn-secondary" id="validateDeckButton">
+                                    ✅ Validate
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    🚀 Publish Deck
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Current Deck Cards -->
+                <section class="deck-cards-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>📋 Current Deck</h3>
+                            <div class="deck-view-controls">
+                                <button class="btn btn-sm btn-icon" id="sortByName" title="Sort by Name">🔤</button>
+                                <button class="btn btn-sm btn-icon" id="sortByCost" title="Sort by Cost">💰</button>
+                                <button class="btn btn-sm btn-icon" id="sortByType" title="Sort by Type">🏷️</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div id="cardInputsContainer" class="deck-cards-list">
+                                <div class="empty-state empty-state-compact">
+                                    <div class="empty-state-icon">📦</div>
+                                    <h4 class="empty-state-title">Your deck is empty</h4>
+                                    <p class="empty-state-description">Search for cards and add them to start building your deck</p>
+                                    <div class="empty-state-actions">
+                                        <button class="btn btn-sm btn-secondary" onclick="document.getElementById('lookupCardName').focus()">🔍 Search Cards</button>
+                                        <button class="btn btn-sm btn-secondary" onclick="document.getElementById('preDefinedDecks').focus()">📋 Load Template</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mana Curve Analysis -->
+                <section class="mana-curve-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>📊 Mana Curve</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="mana-curve-chart" id="manaCurveChart">
+                                <div class="curve-placeholder">
+                                    <p>Add cards to see mana curve analysis</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Right Panel - Additional Tools -->
+            <aside class="tools-panel">
+                <!-- Deck Validation -->
+                <section class="validation-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>⚠️ Validation</h3>
+                        </div>
+                        <div class="card-content">
+                            <div id="validationResults" class="validation-results">
+                                <div class="validation-item valid">
+                                    <span class="validation-icon">✅</span>
+                                    <span class="validation-text">Ready to validate</span>
+                                </div>
+                                <!-- Dynamic validation errors will be inserted here -->
+                            </div>
+
+                            <!-- Common validation templates (hidden by default) -->
+                            <template id="validation-error-template">
+                                <div class="validation-item error">
+                                    <span class="validation-icon">❌</span>
+                                    <span class="validation-text">
+                                        <strong></strong>
+                                        <br>
+                                        <small></small>
+                                    </span>
+                                </div>
+                            </template>
+
+                            <template id="validation-warning-template">
+                                <div class="validation-item warning">
+                                    <span class="validation-icon">⚠️</span>
+                                    <span class="validation-text">
+                                        <strong></strong>
+                                        <br>
+                                        <small></small>
+                                    </span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Format Compliance -->
+                <section class="format-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>🎯 Format</h3>
+                        </div>
+                        <div class="card-content">
+                            <select class="form-select" id="formatSelector">
+                                <option value="standard">Standard</option>
+                                <option value="modern">Modern</option>
+                                <option value="legacy">Legacy</option>
+                                <option value="vintage">Vintage</option>
+                                <option value="commander">Commander</option>
+                                <option value="casual">Casual</option>
+                            </select>
+                            <div class="format-info">
+                                <p class="format-description">
+                                    Select a format to check deck compliance
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card Detail Preview -->
+                <section class="card-detail-section">
+                    <div class="card-detail-area" id="right-sidebar-hover-image">
+                        <div class="detail-placeholder">
+                            <span>Hover over cards for detailed view</span>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </div>
     </div>
 
-    <div id="suggestionsContainer">
-      <h3>Card Suggestions</h3>
-      <!-- Suggestions will be displayed here -->
-    </div>
-    <div id="left-sidebar">
-      <div id="left-sidebar-hover-image"></div>
-    </div>
-    <div id="cardInputsContainer">
-    </div>
-    <div id="middle-content">
-      <div id="middle-content-hover-image"></div>
-    </div>
-    <div id="right-sidebar">
-      <div id="right-sidebar-hover-image"></div>
-    </div>
-  </main>
-  <footer>
-      <!-- Your footer content -->
-  </footer>
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay" onclick="document.body.classList.remove('mobile-sidebar-open')"></div>
+    <nav class="mobile-nav-bottom">
+        <div class="mobile-nav-tabs">
+            <a href="/decks-modern" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🃏</span>
+                <span>Decks</span>
+            </a>
+            <a href="/playhand-modern" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎮</span>
+                <span>Play</span>
+            </a>
+            <a href="/handsimulation" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎲</span>
+                <span>Simulate</span>
+            </a>
+            <a href="/alldecks" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">📚</span>
+                <span>Library</span>
+            </a>
+            <a href="/create-deck-form" class="mobile-nav-tab active">
+                <span class="mobile-nav-icon">➕</span>
+                <span>Create</span>
+            </a>
+        </div>
+    </nav>
+
+</div> <!-- Close app-container -->
 </body>
 </html>

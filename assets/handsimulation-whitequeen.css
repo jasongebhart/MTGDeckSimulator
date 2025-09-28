@@ -1,4 +1,4 @@
-/* Shared Styles */
+/* Shared Styles - Updated 2025-09-27 */
 .vertical-align-top {
   vertical-align: top;
 }
@@ -84,14 +84,16 @@
 
 .hand-container {
   display: flex;
-  justify-content: space-between; /* Spacing between line and totals */
-  align-items: center; /* Vertically center the line and totals */
+  flex-direction: column;
+  gap: 0px; /* No spacing between rows */
+  align-items: center;
 }
 
 .onthedraw {
   display: flex;
-  justify-content: space-between; /* Spacing between line and totals */
-  align-items: center; /* Vertically center the line and totals */
+  flex-direction: column;
+  gap: 0px; /* No gap for "on the draw" section */
+  align-items: center;
 }
 .hand-line {
   display: flex;
@@ -99,32 +101,20 @@
   align-items: center; /* Vertically center the line and totals */
 }
 .lands-spells-container {
-  margin-left: 20px; /* Adjust the margin to separate lands and spells */
-  margin-right: 20px; 
+  margin: 0; /* Remove all margins */
 }
 
 
 #section_lands,
 #section_spells {
-  padding: 1px;
+  padding: 0;
   box-sizing: border-box;
   max-width: 100%;
   flex-wrap: wrap;
-  margin-right: 30px; 
+  margin: 0; /* Remove all margins */
 }
 
-#section_lands:last-child,
-#section_spells:last-child {
-  margin-right: 0; /* Remove the margin for the last element */
-}
-
-#section_lands {
-  margin-right: 10px; /* Add margin to the right */
-}
-
-#section_spells {
-  margin-left: 10px; /* Add margin to the left */
-}
+/* Removed specific margins to ensure tight spacing */
 
 #section_lands .image-preview {
   width: 40px; /* Set the desired width for graveyard images */
@@ -245,7 +235,7 @@
   width: 100px;
   transform: scale(1); /* Initial state */
   transition: transform 0.3s;
-  margin: 1px; /* Add margin between images */
+  margin: 0; /* No margin between images */
   border-color: #000;
   display: flex;
   flex-wrap: wrap; /* Wrap the images to a new line when needed */
@@ -263,7 +253,7 @@
   width: 50px;
   transform: scale(1); /* Initial state */
   transition: transform 0.3s;
-  margin: 1px; /* Add margin between images */
+  margin: 0; /* No margin between images */
   border-color: #000;
   display: flex;
   flex-wrap: wrap; /* Wrap the images to a new line when needed */
@@ -274,7 +264,7 @@
 .image-large {
   width: 95px;
   transition: transform 0.3s;
-  margin: 5px; /* Add margin between images */
+  margin: 0; /* No margin between images */
   display: flex;
   flex-wrap: wrap; /* Wrap the images to a new line when needed */
   justify-content: flex-start; /* Align images to the start of the container */
@@ -324,10 +314,99 @@
   width: 300px;
 }
 
-/* Style for each card item in the library popup */
+/* Style for each card item in the hand */
 .card-item {
-  /* Add styles for each card item here */
-  margin-right: 10px; /* Add spacing between cards */
+  margin: 1px 0;
+  padding: 2px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Card wrapper to contain image and info side by side */
+.card-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* Card image styling */
+.card-image {
+  width: 50px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* Card info section to the right of image */
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 11px;
+  line-height: 1.1;
+  flex-grow: 1;
+}
+
+/* Individual info elements */
+.card-casting-cost,
+.card-cost {
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.card-type {
+  color: #059669;
+  font-style: italic;
+}
+
+.card-counters {
+  color: #dc2626;
+  font-size: 11px;
+}
+
+/* Battlefield cards styling - match hand cards */
+.zone-card {
+  margin: 1px 0;
+  padding: 2px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.zone-card .card-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.zone-card .card-image-container {
+  width: 50px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.zone-card .card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 11px;
+  line-height: 1.1;
+  flex-grow: 1;
+}
+
+.zone-card .card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.counter-badge {
+  background-color: #dc2626;
+  color: white;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 10px;
+  margin-right: 2px;
 }
 
 /* Style for the context menu */

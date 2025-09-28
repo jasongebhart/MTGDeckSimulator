@@ -13,7 +13,7 @@ const app = express();
 
 // Secure CSP policy
 const cspHeader =
-  "default-src 'self'; img-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';";
+  "default-src 'self'; connect-src 'self' https://api.scryfall.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';";
 app.use((req, res, next) => {
   res.setHeader('Content-Security-Policy', cspHeader);
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -48,6 +48,8 @@ app.set('port', process.env.PORT || 3001);
 app.use('/assets', express.static('assets'));
 app.use('/scripts', express.static('scripts'));
 app.use('/xml', express.static('xml'));
+app.use('/src', express.static('src'));
+app.use('/decks', express.static('decks'));
 
 // Fire controllers
 setupRoutes(app); // Use the imported setupRoutes function

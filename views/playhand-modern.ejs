@@ -15,114 +15,294 @@
     <link rel="stylesheet" type="text/css" href="/assets/modern-ui.css">
 
     <!-- Scripts -->
-    <script type="module" src="./scripts/playhand-modern.mjs" defer></script>
+    <script type="module" src="./scripts/playhand-modern.mjs?v=18" defer></script>
 </head>
 <body>
     <div class="app-container">
-        <!-- Modern Header -->
-        <header class="app-header">
-            <nav class="nav-modern">
-                <a href="/" class="nav-brand">
-                    <span>🃏</span>
-                    MTG Simulator
-                </a>
+        <%- include('partials/nav-modern', { activePage: 'playhand' }); -%>
 
-                <ul class="nav-tabs">
-                    <li class="nav-tab">
-                        <a href="/decks-modern" class="nav-tab-link">Decks</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="/playhand-modern" class="nav-tab-link active">Play Hand</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="/handsimulation" class="nav-tab-link">Hand Simulation</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="/alldecks" class="nav-tab-link">All Decks</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="/create-deck-form" class="nav-tab-link">Create Deck</a>
-                    </li>
-                </ul>
-
-                <div class="nav-controls">
-                    <button id="themeToggle" class="btn btn-secondary btn-sm">🌓</button>
-                    <button id="mobileMenuToggle" class="btn btn-secondary btn-sm d-none">☰</button>
+        <!-- Compact Top Control Bar -->
+        <div class="play-controls-bar">
+            <div class="controls-section">
+                <div class="hand-controls">
+                    <button id="drawHandButton" class="btn btn-primary btn-sm">
+                        🎲 Draw Hand
+                    </button>
+                    <button id="drawCardButton" class="btn btn-secondary btn-sm">
+                        📄 +1
+                    </button>
+                    <button id="mulligan" class="btn btn-secondary btn-sm">
+                        🔄 Mulligan
+                    </button>
+                    <button id="endTurnButton" class="btn btn-success btn-sm">
+                        ⏭️ End Turn
+                    </button>
+                    <button id="testCountersButton" class="btn btn-warning btn-sm">
+                        🧪 Test Counters
+                    </button>
                 </div>
-            </nav>
-        </header>
+            </div>
 
-        <!-- Sidebar -->
-        <aside class="app-sidebar">
-            <!-- Deck Selection -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Select Deck</h3>
+            <div class="controls-section">
+                <div id="turnIndicator" class="turn-indicator">
+                    <div class="turn-info">
+                        <span class="turn-player">Your Turn</span>
+                        <span class="turn-number">Turn 1</span>
+                        <span class="turn-phase">Main Phase 1</span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="preDefinedDecks" class="form-label">Pre-Defined Decks</label>
-                        <select id="preDefinedDecks" class="form-input form-select">
-                            <option value="">Choose a deck...</option>
+            </div>
+
+            <div class="controls-section">
+                <label class="control-label">Deck:</label>
+                <div class="deck-controls">
+                    <div class="compact-deck-selector">
+                        <select id="quickDeckSelect" class="form-select btn-sm">
+                            <option value="">Select a deck...</option>
+                            <option value="./decks/classic/affinity.xml">Affinity</option>
+                            <option value="./xml/BigRedMachine.xml">Big Red Machine</option>
+                            <option value="./xml/Stasis.xml">Stasis</option>
+                            <option value="./decks/classic/goblins.xml">Goblins</option>
+                            <option value="./decks/classic/dredge.xml">Dredge</option>
+                            <option value="./decks/classic/hightide.xml">High Tide</option>
+                        </select>
+                        <button id="expandDeckSelector" class="btn btn-secondary btn-sm" title="More Decks">⋯</button>
+                    </div>
+                    <button id="loadXMLFileButton" class="btn btn-secondary btn-sm" title="Upload XML File">📁</button>
+                    <input type="file" id="xmlFile" accept=".xml" style="display: none;">
+                </div>
+            </div>
+
+            <div class="controls-section" style="border: 2px solid #d63384; border-radius: 6px; padding: 8px; margin-bottom: 8px;">
+                <label class="control-label" style="font-weight: bold; color: #d63384; font-size: 14px;">🎯 OPPONENT CONTROLS:</label>
+                <div class="deck-controls">
+                    <div class="compact-deck-selector">
+                        <select id="opponentDeckSelectTop" class="form-select btn-sm" onchange="window.handSimulator.loadOpponentDeck(this.value)">
+                            <option value="">Select opponent deck...</option>
+
+                            <!-- Featured Decks -->
+                            <optgroup label="Featured Decks">
+                                <option value="./xml/BigRedMachine.xml">Big Red Machine</option>
+                                <option value="./xml/Stasis.xml">Stasis</option>
+                                <option value="./decks/classic/affinity.xml">Affinity</option>
+                                <option value="./decks/classic/goblins.xml">Goblins</option>
+                            </optgroup>
+
+                            <!-- Legacy Decks -->
+                            <optgroup label="Legacy Decks">
+                                <option value="./xml/legacy/Elves.xml">Elves</option>
+                                <option value="./xml/legacy/Red-Delver.xml">Red Delver</option>
+                                <option value="./decks/classic/hightide.xml">High Tide</option>
+                                <option value="./decks/classic/belcher.xml">Belcher</option>
+                                <option value="./decks/classic/dredge.xml">Dredge</option>
+                                <option value="./decks/classic/landstill.xml">Landstill</option>
+                            </optgroup>
+
+                            <!-- Limited Decks -->
+                            <optgroup label="Limited Decks">
+                                <option value="./xml/Brothers_War/Limited-BrothersWar.xml">Brothers War Limited</option>
+                                <option value="./xml/crimson_vow/Limited-Red.xml">Crimson Vow - Red</option>
+                                <option value="./xml/crimson_vow/Limited-RedGreen.xml">Crimson Vow - RG</option>
+                                <option value="./xml/crimson_vow/Limited-GreenBlack.xml">Crimson Vow - GB</option>
+                                <option value="./xml/crimson_vow/Limited-WhiteSplash.xml">Crimson Vow - White</option>
+                                <option value="./xml/crimson_vow/Limited-GreenBlue.xml">Crimson Vow - UG</option>
+                                <option value="./xml/crimson_vow/Limited-GreenWhite.xml">Crimson Vow - GW</option>
+                            </optgroup>
+
+                            <!-- Casual Decks -->
+                            <optgroup label="Casual Decks">
+                                <option value="./xml/MulchandLoam.xml">Mulch and Loam</option>
+                                <option value="./xml/BlackRack.xml">Black Rack</option>
+                                <option value="./xml/BlackDread.xml">Black Dread</option>
+                                <option value="./xml/BloodBraidElf.xml">Bloodbraid Elf</option>
+                                <option value="./xml/BloodBraidEnchantress.xml">Bloodbraid Enchantress</option>
+                                <option value="./xml/Brood.xml">Brood</option>
+                                <option value="./xml/CharredDiscard.xml">Charred Discard</option>
+                                <option value="./xml/Classic.xml">Classic</option>
+                                <option value="./xml/Dimir_Inverter.xml">Dimir Inverter</option>
+                                <option value="./xml/FireandIce.xml">Fire and Ice</option>
+                                <option value="./xml/GreenWaste.xml">Green Waste</option>
+                                <option value="./xml/GreenWasteOrder.xml">Green Waste Order</option>
+                                <option value="./xml/GreenWasteTomorrow.xml">Green Waste Tomorrow</option>
+                                <option value="./xml/GreenWasteSakura.xml">Green Waste Sakura</option>
+                                <option value="./xml/WelderGamble.xml">Welder Gamble</option>
+                                <option value="./xml/CloudpostWelder.xml">Cloudpost Welder</option>
+                                <option value="./xml/JunkDiver.xml">Junk Diver</option>
+                                <option value="./xml/JeskaiPioneer.xml">Jeskai Pioneer</option>
+                                <option value="./xml/KindofBlue.xml">Kind of Blue</option>
+                                <option value="./xml/IxalanCannons.xml">Ixalan Cannons</option>
+                                <option value="./xml/Ixalan_BlackRedBlue.xml">Ixalan BRU</option>
+                                <option value="./xml/Ixalan_Cannons_RedBlue.xml">Ixalan Cannons RU</option>
+                                <option value="./xml/Ixalan_Green_White.xml">Ixalan GW</option>
+                                <option value="./xml/Lumberjack.xml">Lumberjack</option>
+                                <option value="./xml/MantisRiderPioneer.xml">Mantis Rider Pioneer</option>
+                                <option value="./xml/Napoleon.xml">Napoleon</option>
+                                <option value="./xml/Nishoba.xml">Nishoba</option>
+                                <option value="./xml/Outpost.xml">Outpost</option>
+                                <option value="./xml/PatriotBlock.xml">Patriot Block</option>
+                                <option value="./xml/Patriot.xml">Patriot</option>
+                                <option value="./xml/Pernicious.xml">Pernicious</option>
+                                <option value="./xml/Plum.xml">Plum</option>
+                                <option value="./xml/PlumGoneBlock.xml">Plum Gone Block</option>
+                                <option value="./xml/RayneForest.xml">Rayne Forest</option>
+                                <option value="./xml/RedPatrol.xml">Red Patrol</option>
+                                <option value="./xml/Rith.xml">Rith</option>
+                                <option value="./xml/TronTate.xml">Tron Tate</option>
+                                <option value="./xml/Welder.xml">Welder</option>
+                                <option value="./xml/ZombieRenewal.xml">Zombie Renewal</option>
+                                <option value="./decks/classic/oath.xml">Oath</option>
+                                <option value="./decks/classic/trix.xml">Trix</option>
+                                <option value="./decks/classic/counterbalance.xml">Counterbalance</option>
+                            </optgroup>
                         </select>
                     </div>
+                    <button class="btn btn-primary btn-sm" onclick="window.handSimulator.drawOpponentHand(7)" title="Draw opponent hand (7 cards)" style="background-color: #d63384; border-color: #d63384; font-weight: bold;">
+                        🎲 Draw Hand
+                    </button>
+                    <button class="btn btn-secondary btn-sm" onclick="window.handSimulator.drawOpponentCard()" title="Draw 1 card">
+                        +1 Card
+                    </button>
+                    <button class="btn btn-warning btn-sm" onclick="window.handSimulator.mulliganOpponent()" title="Mulligan">
+                        🔄 Mulligan
+                    </button>
+                </div>
+                <div class="text-xs text-muted">
+                    <span id="opponentDeckNameTop">No Deck</span>
+                </div>
+            </div>
 
-                    <div class="form-group mb-0">
-                        <label class="form-label">Local Decks</label>
-                        <div class="d-flex gap-2">
-                            <button id="loadXMLFileButton" class="btn btn-primary btn-sm">
-                                📁 Upload XML
-                            </button>
-                            <input type="file" id="xmlFile" accept=".xml" style="display: none;">
+            <!-- Expandable deck selector (hidden by default) -->
+            <div id="expandedDeckSelector" class="expanded-deck-selector" style="display: none;">
+                <%- include('partials/decklist'); -%>
+            </div>
+
+            <div class="controls-section" style="border: 2px solid #0d6efd; border-radius: 6px; padding: 8px;">
+                <label class="control-label" style="font-weight: bold; color: #0d6efd; font-size: 14px;">👤 YOUR LIBRARY CONTROLS:</label>
+                <div class="deck-controls">
+                    <button id="viewLibraryButton" class="btn btn-secondary btn-sm">
+                        👁️ View Library (<span id="deckSize">0</span>)
+                    </button>
+                    <button id="shuffleLibraryButton" class="btn btn-secondary btn-sm" title="Shuffle Your Library">
+                        🔀 Shuffle Library
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar (Simplified) -->
+        <aside class="app-sidebar">
+            <!-- Quick Stats -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Game Stats</h3>
+                </div>
+                <div class="card-body p-3">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="cardsDrawn">0</div>
+                            <div class="stat-label">Drawn</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="landsPlayed">0</div>
+                            <div class="stat-label">Lands</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="spellsCast">0</div>
+                            <div class="stat-label">Spells</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="turnNumber">1</div>
+                            <div class="stat-label">Turn</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="lifeTotal">20</div>
+                            <div class="stat-label">Life</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Hand Controls -->
+            <!-- Mana Counter -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Hand Controls</h3>
+                    <h3 class="card-title">Mana Pool</h3>
                 </div>
-                <div class="card-body">
-                    <div class="d-flex flex-column gap-2">
-                        <button id="drawHandButton" class="btn btn-primary">
-                            🎲 Draw Hand (7 cards)
-                        </button>
-                        <button id="drawCardButton" class="btn btn-secondary">
-                            📄 Draw Card
-                        </button>
-                        <button id="mulligan" class="btn btn-secondary">
-                            🔄 Mulligan
+                <div class="card-body p-3">
+                    <div class="mana-counters mb-3">
+                        <div class="mana-row">
+                            <button class="mana-btn" data-color="W" onclick="window.handSimulator.addMana('W')">⚪ <span id="manaW">0</span></button>
+                            <button class="mana-btn" data-color="U" onclick="window.handSimulator.addMana('U')">🔵 <span id="manaU">0</span></button>
+                            <button class="mana-btn" data-color="B" onclick="window.handSimulator.addMana('B')">⚫ <span id="manaB">0</span></button>
+                        </div>
+                        <div class="mana-row">
+                            <button class="mana-btn" data-color="R" onclick="window.handSimulator.addMana('R')">🔴 <span id="manaR">0</span></button>
+                            <button class="mana-btn" data-color="G" onclick="window.handSimulator.addMana('G')">🟢 <span id="manaG">0</span></button>
+                            <button class="mana-btn" data-color="C" onclick="window.handSimulator.addMana('C')">💎 <span id="manaC">0</span></button>
+                        </div>
+                    </div>
+                    <div class="mana-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="window.handSimulator.clearMana()">Clear All</button>
+                        <button class="btn btn-primary btn-sm" onclick="window.handSimulator.tapLandsForMana()">Tap Lands</button>
+                        <button class="btn btn-success btn-sm" onclick="window.handSimulator.untapAll()" title="Untap all permanents">
+                            ↺ Untap All
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Library Controls -->
-            <div class="card">
+            <!-- Life Tracker -->
+            <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Library</h3>
-                    <div class="card-subtitle">
-                        <span id="deckSize">0 cards remaining</span>
+                    <h3 class="card-title">Life Tracker</h3>
+                </div>
+                <div class="card-body p-3">
+                    <div class="d-flex gap-2 mb-3 flex-wrap">
+                        <button class="btn btn-success btn-sm" onclick="window.handSimulator.changeLife(1)">+1</button>
+                        <button class="btn btn-success btn-sm" onclick="window.handSimulator.changeLife(5)">+5</button>
+                        <button class="btn btn-danger btn-sm" onclick="window.handSimulator.changeLife(-1)">-1</button>
+                        <button class="btn btn-danger btn-sm" onclick="window.handSimulator.changeLife(-5)">-5</button>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-secondary btn-sm" onclick="window.handSimulator.setLife(20)">Reset to 20</button>
+                        <button class="btn btn-secondary btn-sm" onclick="window.handSimulator.setLife(parseInt(prompt('Set life to:') || '20'))">Set Custom</button>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <select id="cardTypeFilter" class="form-input form-select">
-                            <option value="">Search Library</option>
-                            <option value="All">All Cards</option>
-                            <option value="Creatures">Creatures</option>
-                            <option value="Spells">Instants & Sorceries</option>
-                            <option value="Artifacts">Artifacts</option>
-                            <option value="Enchantments">Enchantments</option>
-                            <option value="Planeswalkers">Planeswalkers</option>
-                            <option value="Land">Lands</option>
-                        </select>
+            </div>
+
+            <!-- Opponent Life Tracker -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Opponent Life</h3>
+                </div>
+                <div class="card-body p-3">
+                    <div class="d-flex gap-2 mb-3 flex-wrap">
+                        <button class="btn btn-success btn-sm" onclick="window.handSimulator.changeOpponentLife(1)">+1</button>
+                        <button class="btn btn-success btn-sm" onclick="window.handSimulator.changeOpponentLife(5)">+5</button>
+                        <button class="btn btn-danger btn-sm" onclick="window.handSimulator.changeOpponentLife(-1)">-1</button>
+                        <button class="btn btn-danger btn-sm" onclick="window.handSimulator.changeOpponentLife(-5)">-5</button>
                     </div>
-                    <button id="viewLibraryButton" class="btn btn-secondary btn-sm">
-                        👁️ View Library
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-secondary btn-sm" onclick="window.handSimulator.setOpponentLife(20)">Reset to 20</button>
+                        <button class="btn btn-secondary btn-sm" onclick="window.handSimulator.setOpponentLife(parseInt(prompt('Set opponent life to:') || '20'))">Set Custom</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library Search -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Search Library</h3>
+                </div>
+                <div class="card-body">
+                    <select id="cardTypeFilter" class="form-input form-select">
+                        <option value="">All Types</option>
+                        <option value="Creatures">Creatures</option>
+                        <option value="Spells">Instants & Sorceries</option>
+                        <option value="Artifacts">Artifacts</option>
+                        <option value="Enchantments">Enchantments</option>
+                        <option value="Planeswalkers">Planeswalkers</option>
+                        <option value="Land">Lands</option>
+                    </select>
                 </div>
             </div>
         </aside>
@@ -147,15 +327,182 @@
                     <p class="text-muted mb-4">
                         Select a deck from the sidebar to start simulating hands and playing cards.
                     </p>
-                    <button onclick="document.getElementById('preDefinedDecks').focus()"
-                            class="btn btn-primary">
-                        Choose Deck to Start
-                    </button>
+                    <div class="d-flex gap-4 justify-content-center">
+                        <button onclick="document.querySelector('.deck-search-input').focus()"
+                                class="btn btn-primary">
+                            Choose Pre-defined Deck
+                        </button>
+                        <button onclick="document.getElementById('loadXMLFileButton').click()"
+                                class="btn btn-secondary">
+                            Upload Deck File
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <!-- Game Content -->
             <div id="gameContent" style="display: none;">
+                <!-- Two-Player Layout for Wide Screens -->
+                <div class="two-player-layout" style="display: none;">
+                    <!-- Opponent Area (Left Side) -->
+                    <div class="player-area" id="opponentArea">
+                        <div class="player-header">
+                            <div class="player-info">
+                                <div>
+                                    <h2>👤 Opponent</h2>
+                                    <div class="text-sm text-muted">
+                                        Hand: <span id="opponentHandCount2">0</span> cards •
+                                        Deck: <span id="opponentDeckName2">No Deck</span>
+                                    </div>
+                                </div>
+                                <div class="life-display" id="opponentLife2">20</div>
+                            </div>
+                            <div class="player-controls">
+                                <button class="btn btn-sm btn-success" onclick="window.handSimulator.changeOpponentLife(1)">+1</button>
+                                <button class="btn btn-sm btn-danger" onclick="window.handSimulator.changeOpponentLife(-1)">-1</button>
+                                <button class="btn btn-sm btn-secondary" onclick="window.handSimulator.giveOpponentCards(1)">+Card</button>
+                            </div>
+                        </div>
+                        <div class="player-zones">
+                            <div class="hand-area">
+                                <div class="zone-title">🃏 Hand</div>
+                                <div id="opponentHandContainer2" class="zone-content"></div>
+                            </div>
+                            <div class="battlefield-area">
+                                <div class="zone-section">
+                                    <div class="zone-title">🏔️ Lands</div>
+                                    <div id="opponentBattlefieldLands2" class="zone-content"></div>
+                                </div>
+                                <div class="zone-section">
+                                    <div class="zone-title">⚔️ Creatures</div>
+                                    <div id="opponentBattlefieldCreatures2" class="zone-content"></div>
+                                </div>
+                                <div class="zone-section">
+                                    <div class="zone-title">✨ Other Permanents</div>
+                                    <div id="opponentBattlefieldOthers2" class="zone-content"></div>
+                                </div>
+                            </div>
+                            <div class="graveyard-exile-area">
+                                <button class="zone-counter btn btn-sm btn-outline-secondary" onclick="window.handSimulator.showOpponentGraveyardModal()" title="Click to view opponent graveyard">
+                                    🪦 Graveyard: <span id="opponentGraveyardCount2">0</span>
+                                </button>
+                                <button class="zone-counter btn btn-sm btn-outline-secondary" onclick="window.handSimulator.showOpponentExileModal()" title="Click to view opponent exile">
+                                    🚫 Exile: <span id="opponentExileCount2">0</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player Area (Right Side) -->
+                    <div class="player-area active" id="playerArea">
+                        <div class="player-header">
+                            <div class="player-info">
+                                <div>
+                                    <h2>🧙‍♂️ You</h2>
+                                    <div class="text-sm text-muted">
+                                        <span id="handCount2">0 cards</span> •
+                                        <span id="mulliganCount2">0 mulligans</span>
+                                    </div>
+                                </div>
+                                <div class="life-display" id="lifeTotal2">20</div>
+                            </div>
+                            <div class="player-controls">
+                                <button class="btn btn-sm btn-success" onclick="window.handSimulator.changeLife(1)">+1</button>
+                                <button class="btn btn-sm btn-danger" onclick="window.handSimulator.changeLife(-1)">-1</button>
+                                <button class="btn btn-sm btn-primary" onclick="window.handSimulator.drawCard()">Draw</button>
+                            </div>
+                        </div>
+                        <div class="player-zones">
+                            <div class="hand-area">
+                                <div class="zone-title">🃏 Your Hand</div>
+                                <div id="handContainer2" class="zone-content"></div>
+                            </div>
+                            <div class="battlefield-area">
+                                <div class="zone-section">
+                                    <div class="zone-title">🏔️ Lands</div>
+                                    <div id="battlefieldLands2" class="zone-content"></div>
+                                </div>
+                                <div class="zone-section">
+                                    <div class="zone-title">⚔️ Creatures</div>
+                                    <div id="battlefieldCreatures2" class="zone-content"></div>
+                                </div>
+                                <div class="zone-section">
+                                    <div class="zone-title">✨ Other Permanents</div>
+                                    <div id="battlefieldOthers2" class="zone-content"></div>
+                                </div>
+                            </div>
+                            <div class="graveyard-exile-area">
+                                <button class="zone-counter btn btn-sm btn-outline-secondary" onclick="window.handSimulator.showGraveyardModal()" title="Click to view graveyard">
+                                    🪦 Graveyard: <span id="graveyardCount2">0</span>
+                                </button>
+                                <button class="zone-counter btn btn-sm btn-outline-secondary" onclick="window.handSimulator.showExileModal()" title="Click to view exile">
+                                    🚫 Exile: <span id="exileCount2">0</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Original Single-Player Layout -->
+                <div class="single-player-layout">
+                <!-- Player Switch Controls -->
+                <div class="card mb-4">
+                    <div class="card-body p-3">
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="text-muted">Active Player:</span>
+                            <button id="switchToPlayer" class="btn btn-primary btn-sm" onclick="window.handSimulator.switchToPlayer()">
+                                🧙‍♂️ You
+                            </button>
+                            <button id="switchToOpponent" class="btn btn-secondary btn-sm" onclick="window.handSimulator.switchToOpponent()">
+                                👤 Opponent
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opponent Section -->
+                <div id="opponentSection" class="card mb-4">
+                    <div class="card-header">
+                        <h2 class="card-title">👤 Opponent</h2>
+                        <div class="card-subtitle">
+                            Life: <span id="opponentLife">20</span> •
+                            Hand: <span id="opponentHandCount">0</span> cards
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Opponent Battlefield -->
+                        <div class="mb-3">
+                            <h4 class="text-sm font-weight-bold mb-2">⚔️ Opponent's Battlefield</h4>
+                            <div class="battlefield-zones">
+                                <div class="mb-2">
+                                    <span class="text-xs">🏔️ Lands:</span>
+                                    <div id="opponentBattlefieldLands" class="d-flex gap-1 flex-wrap" style="min-height: 40px; padding: var(--space-2); background-color: var(--bg-tertiary); border-radius: var(--border-radius);">
+                                        <!-- Opponent lands will appear here -->
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="text-xs">⚔️ Creatures:</span>
+                                    <div id="opponentBattlefieldCreatures" class="d-flex gap-1 flex-wrap" style="min-height: 40px; padding: var(--space-2); background-color: var(--bg-tertiary); border-radius: var(--border-radius);">
+                                        <!-- Opponent creatures will appear here -->
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="text-xs">✨ Others:</span>
+                                    <div id="opponentBattlefieldOthers" class="d-flex gap-1 flex-wrap" style="min-height: 40px; padding: var(--space-2); background-color: var(--bg-tertiary); border-radius: var(--border-radius);">
+                                        <!-- Opponent other permanents will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Opponent Zones -->
+                        <div class="d-flex gap-2">
+                            <span class="badge">🪦 Graveyard: <span id="opponentGraveyardCount">0</span></span>
+                            <span class="badge">🚫 Exile: <span id="opponentExileCount">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Current Hand -->
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -171,7 +518,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div id="handContainer" class="d-flex gap-2 flex-wrap" style="min-height: 120px;">
+                        <div id="handContainer">
                             <!-- Hand cards will be inserted here -->
                         </div>
                     </div>
@@ -212,12 +559,23 @@
                     <!-- Zones -->
                     <div class="card">
                         <div class="card-header">
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 mb-2">
                                 <button class="btn btn-sm zone-tab active" data-zone="graveyard">
                                     🪦 Graveyard (<span id="graveyardCount">0</span>)
                                 </button>
                                 <button class="btn btn-sm zone-tab" data-zone="exile">
                                     🚫 Exile (<span id="exileCount">0</span>)
+                                </button>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-xs btn-secondary" onclick="window.handSimulator?.addTestCardToGraveyard()" title="Add test card to graveyard">
+                                    +Test GY
+                                </button>
+                                <button class="btn btn-xs btn-secondary" onclick="window.handSimulator?.addTestCardToExile()" title="Add test card to exile">
+                                    +Test Exile
+                                </button>
+                                <button class="btn btn-xs btn-success" onclick="window.handSimulator?.addTestCreatureWithCounters()" title="Add test creature with counters">
+                                    +Test Creature
                                 </button>
                             </div>
                         </div>
@@ -231,33 +589,8 @@
                         </div>
                     </div>
                 </div>
+                </div> <!-- End single-player-layout -->
 
-                <!-- Game Stats -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">📊 Game Statistics</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex gap-4 flex-wrap">
-                            <div class="text-center">
-                                <div class="text-2xl font-weight-bold" style="color: var(--primary);" id="cardsDrawn">0</div>
-                                <div class="text-muted text-sm">Cards Drawn</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-weight-bold" style="color: var(--success);" id="landsPlayed">0</div>
-                                <div class="text-muted text-sm">Lands Played</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-weight-bold" style="color: var(--warning);" id="spellsCast">0</div>
-                                <div class="text-muted text-sm">Spells Cast</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-weight-bold" style="color: var(--error);" id="turnNumber">1</div>
-                                <div class="text-muted text-sm">Turn</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </main>
     </div>
@@ -308,6 +641,52 @@
     <button id="fabButton" class="fab" title="Quick Actions">
         ⚡
     </button>
+
+    <!-- Card Preview Modal -->
+    <div id="cardPreviewModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="previewCardName">Card Preview</h3>
+                <button id="closeCardPreview" class="btn btn-secondary btn-sm">✕</button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img id="previewCardImage" src="" alt="Card Preview" style="max-width: 100%; border-radius: var(--border-radius);">
+                <div id="previewCardInfo" style="margin-top: var(--space-4); text-align: left;">
+                    <!-- Card details will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graveyard Modal -->
+    <div id="graveyardModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>🪦 Graveyard</h3>
+                <button id="closeGraveyardModal" class="btn btn-secondary btn-sm">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="graveyardModalContents" class="d-flex flex-wrap gap-2" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Graveyard cards will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exile Modal -->
+    <div id="exileModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>🚫 Exile</h3>
+                <button id="closeExileModal" class="btn btn-secondary btn-sm">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="exileModalContents" class="d-flex flex-wrap gap-2" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Exile cards will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Toast Notifications -->
     <div id="toastContainer" class="toast-container"></div>

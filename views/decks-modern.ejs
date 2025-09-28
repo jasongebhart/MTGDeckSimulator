@@ -15,70 +15,59 @@
     <link rel="stylesheet" type="text/css" href="/assets/modern-ui.css">
 
     <!-- Scripts -->
-    <script type="module" src="./scripts/modern-ui.mjs" defer></script>
+    <script src="/assets/chart.min.js"></script>
+    <script type="module" src="./scripts/modern-ui.mjs?v=7" defer></script>
 </head>
 <body>
     <div class="app-container">
-        <!-- Modern Header -->
-        <header class="app-header">
-            <nav class="nav-modern">
-                <a href="/" class="nav-brand">
-                    <span>🃏</span>
-                    MTG Simulator
-                </a>
+        <%- include('partials/nav-modern', { activePage: 'decks' }); -%>
 
-                <ul class="nav-tabs">
-                    <li class="nav-tab">
-                        <a href="/decks-modern" class="nav-tab-link active">Decks</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="/playhand-modern" class="nav-tab-link">Play Hand</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="/handsimulation" class="nav-tab-link">Hand Simulation</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="/alldecks" class="nav-tab-link">All Decks</a>
-                    </li>
-                    <li class="nav-tab">
-                        <a href="/create-deck-form" class="nav-tab-link">Create Deck</a>
-                    </li>
-                </ul>
-
-                <div class="nav-controls">
-                    <button id="themeToggle" class="btn btn-secondary btn-sm">🌓</button>
-                    <button id="mobileMenuToggle" class="btn btn-secondary btn-sm d-none">☰</button>
-                </div>
-            </nav>
-        </header>
-
-        <!-- Sidebar -->
-        <aside class="app-sidebar">
-            <!-- Deck Selection -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Select Deck</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="preDefinedDecks" class="form-label">Pre-Defined Decks</label>
-                        <select id="preDefinedDecks" class="form-input form-select">
-                            <option value="">Choose a deck...</option>
+        <!-- Compact Top Control Bar -->
+        <div class="play-controls-bar">
+            <div class="controls-section">
+                <label class="control-label">Deck:</label>
+                <div class="deck-controls">
+                    <div class="compact-deck-selector">
+                        <select id="quickDeckSelect" class="form-select btn-sm">
+                            <option value="">Select a deck...</option>
+                            <option value="./decks/classic/affinity.xml">Affinity</option>
+                            <option value="./xml/BigRedMachine.xml">Big Red Machine</option>
+                            <option value="./xml/Stasis.xml">Stasis</option>
+                            <option value="./decks/classic/goblins.xml">Goblins</option>
+                            <option value="./decks/classic/dredge.xml">Dredge</option>
+                            <option value="./decks/classic/hightide.xml">High Tide</option>
                         </select>
+                        <button id="expandDeckSelector" class="btn btn-secondary btn-sm" title="More Decks">⋯</button>
                     </div>
-
-                    <div class="form-group mb-0">
-                        <label class="form-label">Local Decks</label>
-                        <div class="d-flex gap-2">
-                            <button id="loadXMLFileButton" class="btn btn-primary btn-sm">
-                                📁 Upload XML
-                            </button>
-                            <input type="file" id="xmlFile" accept=".xml" style="display: none;">
-                        </div>
-                    </div>
+                    <button id="loadXMLFileButton" class="btn btn-secondary btn-sm" title="Upload XML File">📁</button>
+                    <input type="file" id="xmlFile" accept=".xml" style="display: none;">
                 </div>
             </div>
 
+            <!-- Expandable deck selector (hidden by default) -->
+            <div id="expandedDeckSelector" class="expanded-deck-selector" style="display: none;">
+                <%- include('partials/decklist'); -%>
+            </div>
+
+            <div class="controls-section">
+                <label class="control-label">Resources:</label>
+                <div class="d-flex gap-1">
+                    <a href="https://scryfall.com/" target="_blank" class="btn btn-secondary btn-sm" title="Card Search">
+                        🔍
+                    </a>
+                    <a href="https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/banned-restricted"
+                       target="_blank" class="btn btn-secondary btn-sm" title="Banned List">
+                        📋
+                    </a>
+                    <a href="/api/v1/decks" target="_blank" class="btn btn-secondary btn-sm" title="API Docs">
+                        🔧
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
             <!-- Deck Info -->
             <div class="card mb-4">
                 <div class="card-header">
@@ -89,46 +78,53 @@
                 </div>
                 <div class="card-body">
                     <div id="deckMetadata" class="mb-4">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Deck Size:</span>
-                            <span id="deckSize" class="font-weight-bold">-</span>
+                        <div class="data-group-horizontal">
+                            <span class="data-label">Deck Size:</span>
+                            <span id="deckSize" class="data-value data-placeholder">Loading...</span>
                         </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Avg. Mana Value:</span>
-                            <span id="avgManaCost" class="font-weight-bold">-</span>
+                        <div class="data-group-horizontal">
+                            <span class="data-label">Avg. Mana Value:</span>
+                            <span id="avgManaCost" class="data-value data-placeholder">Loading...</span>
                         </div>
                     </div>
 
-                    <!-- Mana Curve Chart Placeholder -->
+                    <!-- Enhanced Analytics Charts -->
                     <div id="manaCurve" class="mb-4">
-                        <h4 class="text-muted text-center">Mana Curve</h4>
-                        <div id="manaCurveChart" class="bg-tertiary" style="height: 120px; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
-                            <span class="text-muted">Load a deck to see mana curve</span>
+                        <h4 class="text-muted text-center">Deck Analytics</h4>
+
+                        <!-- Mana Curve Chart -->
+                        <div class="mb-3">
+                            <div style="position: relative; height: 300px;">
+                                <canvas id="manaCurveChart" style="display: none;"></canvas>
+                                <div id="manaCurvePlaceholder" class="bg-tertiary" style="height: 300px; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
+                                    <span class="text-muted">Load a deck to see mana curve</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts Column (Stacked for wider sidebar) -->
+                        <div class="d-flex flex-column gap-4">
+                            <!-- Color Distribution -->
+                            <div style="position: relative; height: 220px;">
+                                <canvas id="colorDistributionChart" style="display: none;"></canvas>
+                                <div id="colorPlaceholder" class="bg-tertiary" style="height: 220px; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
+                                    <span class="text-muted" style="font-size: 0.9rem;">Color Distribution</span>
+                                </div>
+                            </div>
+
+                            <!-- Card Types -->
+                            <div style="position: relative; height: 220px;">
+                                <canvas id="cardTypesChart" style="display: none;"></canvas>
+                                <div id="typesPlaceholder" class="bg-tertiary" style="height: 220px; border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center;">
+                                    <span class="text-muted" style="font-size: 0.9rem;">Card Types</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Links -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Quick Links</h3>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex flex-column gap-2">
-                        <a href="https://magic.wizards.com/en/game-info/gameplay/rules-and-formats/banned-restricted"
-                           target="_blank" class="btn btn-secondary btn-sm">
-                            📋 Banned List
-                        </a>
-                        <a href="https://scryfall.com/" target="_blank" class="btn btn-secondary btn-sm">
-                            🔍 Card Search
-                        </a>
-                        <a href="/api/v1/decks" target="_blank" class="btn btn-secondary btn-sm">
-                            🔧 API Docs
-                        </a>
-                    </div>
-                </div>
-            </div>
+
         </aside>
 
         <!-- Main Content -->
@@ -144,9 +140,19 @@
             <!-- Error State -->
             <div id="errorState" class="card" style="display: none; border-color: var(--error);">
                 <div class="card-body text-center">
-                    <div class="text-danger mb-2">⚠️ Error</div>
-                    <div id="errorMessage" class="text-muted">Something went wrong</div>
-                    <button id="retryButton" class="btn btn-primary btn-sm mt-4">Retry</button>
+                    <div class="text-danger mb-3" style="font-size: 2.5rem;">⚠️</div>
+                    <h3 class="text-danger mb-2">Unable to Load Deck</h3>
+                    <div id="errorMessage" class="text-muted mb-4">We encountered an issue loading your deck. This might be due to a network problem or invalid deck data.</div>
+                    <div class="d-flex gap-2 justify-content-center flex-wrap">
+                        <button id="retryButton" class="btn btn-primary">🔄 Try Again</button>
+                        <button id="selectDifferentDeck" class="btn btn-secondary">📋 Choose Different Deck</button>
+                    </div>
+                    <details class="mt-4" style="text-align: left;">
+                        <summary style="cursor: pointer; color: var(--text-muted);">Show technical details</summary>
+                        <div id="technicalError" class="mt-2 p-2 bg-tertiary border-radius" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+                            Error details will appear here
+                        </div>
+                    </details>
                 </div>
             </div>
 
@@ -161,7 +167,7 @@
                         Select a pre-defined deck or upload your own XML deck file to get started.
                     </p>
                     <div class="d-flex gap-4 justify-content-center">
-                        <button onclick="document.getElementById('preDefinedDecks').focus()"
+                        <button onclick="document.querySelector('.deck-search-input').focus()"
                                 class="btn btn-primary">
                             Choose Pre-defined Deck
                         </button>
@@ -184,6 +190,10 @@
                     <div class="card-body">
                         <div id="cardTypesGrid" class="d-flex gap-4 flex-wrap">
                             <!-- Card type cards will be inserted here -->
+                        </div>
+                        <div id="cardTypesLoading" class="loading-overlay" style="display: none;">
+                            <div class="spinner-small"></div>
+                            <span style="margin-left: 0.5rem;">Loading deck analysis...</span>
                         </div>
                     </div>
                 </div>
@@ -242,6 +252,22 @@
     <button id="fabButton" class="fab" title="Upload Deck">
         📁
     </button>
+
+    <!-- Card Preview Modal -->
+    <div id="cardPreviewModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="previewCardName">Card Preview</h3>
+                <button id="closeCardPreview" class="btn btn-secondary btn-sm">✕</button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img id="previewCardImage" src="" alt="Card Preview" style="max-width: 100%; border-radius: var(--border-radius);">
+                <div id="previewCardInfo" style="margin-top: var(--space-4); text-align: left;">
+                    <!-- Card details will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Toast Notifications -->
     <div id="toastContainer" class="toast-container"></div>

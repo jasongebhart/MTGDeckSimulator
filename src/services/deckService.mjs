@@ -128,6 +128,8 @@ export class DeckService {
       lands: 0,
       averageCost: 0,
       colorDistribution: {},
+      manaCurve: {},
+      cardTypeDetails: { creatures: 0, spells: 0, lands: 0, artifacts: 0, planeswalkers: 0, enchantments: 0, other: 0 }
     };
 
     let totalCost = 0;
@@ -137,25 +139,49 @@ export class DeckService {
       const quantity = card.quantity || 1;
       stats.totalCards += quantity;
 
-      // Categorize by type
+      // Categorize by type with more detail
       if (card.type) {
-        if (card.type.toLowerCase().includes('creature')) {
+        const typeStr = card.type.toLowerCase();
+        if (typeStr.includes('creature')) {
           stats.creatures += quantity;
-        } else if (card.type.toLowerCase().includes('land')) {
+          stats.cardTypeDetails.creatures += quantity;
+        } else if (typeStr.includes('land')) {
           stats.lands += quantity;
+          stats.cardTypeDetails.lands += quantity;
+        } else if (typeStr.includes('artifact')) {
+          stats.spells += quantity;
+          stats.cardTypeDetails.artifacts += quantity;
+        } else if (typeStr.includes('planeswalker')) {
+          stats.spells += quantity;
+          stats.cardTypeDetails.planeswalkers += quantity;
+        } else if (typeStr.includes('enchantment')) {
+          stats.spells += quantity;
+          stats.cardTypeDetails.enchantments += quantity;
+        } else if (typeStr.includes('instant') || typeStr.includes('sorcery')) {
+          stats.spells += quantity;
+          stats.cardTypeDetails.spells += quantity;
         } else {
           stats.spells += quantity;
+          stats.cardTypeDetails.other += quantity;
         }
       }
 
-      // Calculate cost statistics
-      if (card.cost && !isNaN(card.cost)) {
-        const cost = parseInt(card.cost);
-        totalCost += cost * quantity;
-        cardsWithCost += quantity;
+      // Calculate cost statistics and mana curve
+      if (card.cost) {
+        const convertedCost = this.parseManaCost(card.cost);
+        if (convertedCost !== null) {
+          totalCost += convertedCost * quantity;
+          cardsWithCost += quantity;
+
+          // Build mana curve data
+          stats.manaCurve[convertedCost] = (stats.manaCurve[convertedCost] || 0) + quantity;
+        }
+      } else if (card.type && card.type.toLowerCase().includes('land')) {
+        // Count lands as 0-cost for mana curve
+        stats.manaCurve[0] = (stats.manaCurve[0] || 0) + quantity;
       }
 
-      // Color distribution (simplified)
+      // Color distribution (enhanced)
       if (card.cost) {
         this.updateColorDistribution(stats.colorDistribution, card.cost, quantity);
       }
@@ -166,6 +192,41 @@ export class DeckService {
     }
 
     return stats;
+  }
+
+  static parseManaCost(costString) {
+    if (!costString) return null;
+
+    // Handle already numeric costs
+    if (!isNaN(costString)) {
+      return parseInt(costString);
+    }
+
+    // Parse MTG mana cost format like {3}{R}{R} or {1}{W}{U}
+    let totalCost = 0;
+
+    // Remove all braces and extract individual mana symbols
+    const cleanCost = costString.replace(/[{}]/g, '');
+
+    // Split into individual characters/symbols
+    for (let i = 0; i < cleanCost.length; i++) {
+      const symbol = cleanCost[i];
+
+      // Handle numeric mana costs
+      if (!isNaN(symbol) && symbol !== '') {
+        totalCost += parseInt(symbol);
+      }
+      // Handle colored mana (W, U, B, R, G) and colorless symbols
+      else if (['W', 'U', 'B', 'R', 'G', 'C'].includes(symbol.toUpperCase())) {
+        totalCost += 1;
+      }
+      // Handle hybrid and other special symbols (count as 1 for now)
+      else if (symbol === 'X' || symbol === 'Y' || symbol === 'Z') {
+        totalCost += 0; // Variable costs count as 0
+      }
+    }
+
+    return totalCost;
   }
 
   static updateColorDistribution(colorDist, cost, quantity) {
