@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<title>Hand Simulation - MTG Deck Simulator</title>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" type="text/css" href="/assets/modern-ui.css">
+<link rel="stylesheet" href="/assets/handsimulation-whitequeen.css">
+
+<!-- Scripts -->
+<script src="/assets/chart.min.js"></script>
+<script type="module">
+	import { startMulliganCheck, startHandDraw } from "./scripts/handsimulation.mjs";
+   	window.onload = () => {
+		startMulliganCheck();
+	};
+    // Wait for the DOM to be fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+      const listHandDraw = document.getElementById("listHandDraw");
+      listHandDraw.addEventListener("click", () => {
+		startHandDraw();
+      });
+
+      // Theme toggle functionality
+      const themeToggle = document.getElementById("themeToggle");
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const html = document.documentElement;
+          const currentTheme = html.getAttribute("data-theme");
+          const newTheme = currentTheme === "dark" ? "light" : "dark";
+          html.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      }
+    });
+  </script>
+</head>
+<body onload="startMulliganCheck()">
+<div class="app-container">
+    <%- include('partials/nav-modern', { activePage: 'handsimulation' }); -%>
+<div class="sim-container">
+    <!-- Main Content Grid -->
+    <div class="sim-grid">
+
+        <!-- Hand Display Section (Primary Content) -->
+        <section class="hand-display-section">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Current Hand</h2>
+                    <button type="button" class="btn btn-primary" id="listHandDraw">
+                        🎲 Draw New Hand
+                    </button>
+                </div>
+                <div class="card-content">
+                    <div id="section_hand" class="hand-container">
+                        <!-- Hand cards will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deck Information -->
+        <section class="deck-section">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Current Deck</h3>
+                </div>
+                <div class="card-content">
+                    <div class="decklist-compact">
+                        <%- include('partials/decklist'); -%>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hand Analysis -->
+        <section class="analysis-section">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Hand Analysis</h3>
+                </div>
+                <div class="card-content">
+                    <div class="analysis-grid">
+                        <div class="hand-quality-section">
+                            <div id="hand-quality-indicator" class="quality-indicator">
+                                Draw a hand to see analysis
+                            </div>
+                            <div id="mulligan-recommendation" class="recommendation">
+                                <strong>Recommendation:</strong> Draw a hand first
+                            </div>
+                        </div>
+
+                        <div class="mana-curve-section">
+                            <h4>Hand Mana Curve</h4>
+                            <div class="chart-container">
+                                <canvas id="handManaCurveChart"></canvas>
+                                <div id="handCurvePlaceholder" class="chart-placeholder">
+                                    <span>Draw a hand to see mana curve</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics -->
+        <section class="stats-section">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Simulation Statistics</h3>
+                </div>
+                <div class="card-content">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Lands in Deck</span>
+                            <span class="stat-value" id="totalLandsInDeck">[Value]</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Expected Mulligan Rate</span>
+                            <span class="stat-value" id="currentMulliganRate">[Value]</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Hands Drawn</span>
+                            <span class="stat-value" id="TotalHandsDrawn">[Value]</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Mulligans</span>
+                            <span class="stat-value" id="TotalMulligans">[Value]</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Current Mulligan %</span>
+                            <span class="stat-value" id="MulliganPercentage">[Value]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mulligan Reference Table -->
+        <section class="mulligan-table-section">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Mulligan Reference</h3>
+                </div>
+                <div class="card-content">
+                    <div class="table-container">
+                        <table class="mulligan-table" id="tblMulliganStats">
+                            <thead>
+                                <tr>
+                                    <th>Lands</th>
+                                    <th>Mulligan %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="19"><td>19</td><td class="Nineteen" id="Nineteen"></td></tr>
+                                <tr id="20"><td>20</td><td class="Twenty" id="Twenty"></td></tr>
+                                <tr id="21"><td>21</td><td class="TwentyOne" id="TwentyOne"></td></tr>
+                                <tr id="22"><td>22</td><td class="TwentyTwo" id="TwentyTwo"></td></tr>
+                                <tr id="23"><td>23</td><td class="TwentyThree" id="TwentyThree"></td></tr>
+                                <tr id="24"><td>24</td><td class="TwentyFour" id="TwentyFour"></td></tr>
+                                <tr id="25"><td>25</td><td class="TwentyFive" id="TwentyFive"></td></tr>
+                                <tr id="26"><td>26</td><td class="TwentySix" id="TwentySix"></td></tr>
+                                <tr id="27"><td>27</td><td class="TwentySeven" id="TwentySeven"></td></tr>
+                                <tr id="28"><td>28</td><td class="TwentyEight" id="TwentyEight"></td></tr>
+                                <tr id="29"><td>29</td><td class="TwentyNine" id="TwentyNine"></td></tr>
+                                <tr id="30"><td>30</td><td class="Thirty" id="Thirty"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Card Preview -->
+        <section class="card-preview-section">
+            <div id="right-sidebar-hover-image" class="card-preview"></div>
+        </section>
+
+    </div>
+</div>
+
+<!-- Mobile Navigation -->
+<div class="mobile-overlay" onclick="document.body.classList.remove('mobile-sidebar-open')"></div>
+<nav class="mobile-nav-bottom">
+    <div class="mobile-nav-tabs">
+        <a href="/decks-modern" class="mobile-nav-tab">
+            <span class="mobile-nav-icon">🃏</span>
+            <span>Decks</span>
+        </a>
+        <a href="/playhand-modern" class="mobile-nav-tab">
+            <span class="mobile-nav-icon">🎮</span>
+            <span>Play</span>
+        </a>
+        <a href="/handsimulation" class="mobile-nav-tab active">
+            <span class="mobile-nav-icon">🎲</span>
+            <span>Simulate</span>
+        </a>
+        <a href="/alldecks" class="mobile-nav-tab">
+            <span class="mobile-nav-icon">📚</span>
+            <span>Library</span>
+        </a>
+        <a href="/create-deck-form" class="mobile-nav-tab">
+            <span class="mobile-nav-icon">➕</span>
+            <span>Create</span>
+        </a>
+    </div>
+</nav>
+
+</div> <!-- Close app-container -->
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<title>Deck Library - MTG Deck Simulator</title>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" type="text/css" href="/assets/modern-ui.css">
+
+<!-- Scripts -->
+<script type="module">
+import { startCompareDecks } from "./scripts/alldecks.mjs";
+window.onload = () => {
+	startCompareDecks();
+};
+
+// Theme toggle functionality
+document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.getElementById("themeToggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    });
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }
+});
+</script>
+</head>
+<body onload="startCompareDecks()">
+<div class="app-container">
+    <%- include('partials/nav-modern', { activePage: 'alldecks' }); -%>
+
+    <div class="library-container">
+        <!-- Header Section -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>📚 Deck Library</h1>
+                    <p>Compare and explore all available decks in your collection</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="refreshLibrary">
+                        🔄 Refresh
+                    </button>
+                    <button class="btn btn-primary" onclick="window.location.href='/create-deck-form'">
+                        ➕ Create New Deck
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Summary -->
+        <section class="library-stats">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🃏</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalDecks">-</div>
+                        <div class="stat-label">Total Decks</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="avgCards">-</div>
+                        <div class="stat-label">Avg Cards</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏗️</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="mostCommonType">-</div>
+                        <div class="stat-label">Most Common</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalValue">-</div>
+                        <div class="stat-label">Total Value</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters and Search -->
+        <section class="library-controls">
+            <div class="controls-grid">
+                <div class="search-section">
+                    <div class="search-input-group">
+                        <input type="text" id="deckSearch" placeholder="Search decks..." class="form-input search-input">
+                        <button class="btn btn-icon search-btn" id="searchBtn">🔍</button>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <select id="sortBy" class="form-select">
+                        <option value="name">Sort by Name</option>
+                        <option value="cards">Sort by Card Count</option>
+                        <option value="cost">Sort by Total Cost</option>
+                        <option value="lands">Sort by Land Count</option>
+                    </select>
+                </div>
+                <div class="view-section">
+                    <div class="view-toggle">
+                        <button class="btn btn-icon view-btn active" id="tableView" data-view="table">📊</button>
+                        <button class="btn btn-icon view-btn" id="cardView" data-view="cards">🃏</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deck Library Content -->
+        <section class="library-content">
+            <!-- Table View -->
+            <div class="deck-table-container" id="tableViewContainer">
+                <div class="table-wrapper">
+                    <table class="deck-table" id="tblDeckList">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-column="name">
+                                    <span>Deck Name</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="cards">
+                                    <span>Cards</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="cost">
+                                    <span>Total Cost</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="lands">
+                                    <span>Lands</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="creatures">
+                                    <span>Creatures</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="instants">
+                                    <span>Instants</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="sorceries">
+                                    <span>Sorceries</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="enchantments">
+                                    <span>Enchantments</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th class="sortable" data-column="artifacts">
+                                    <span>Artifacts</span>
+                                    <span class="sort-indicator">↕️</span>
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deckTableBody">
+                            <!-- Deck rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Loading state -->
+                <div class="loading-state" id="loadingState">
+                    <div class="loading-spinner"></div>
+                    <p>Loading deck library...</p>
+                </div>
+
+                <!-- Empty state -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">📭</div>
+                    <h3>No Decks Found</h3>
+                    <p>Start building your collection by creating your first deck!</p>
+                    <button class="btn btn-primary" onclick="window.location.href='/create-deck-form'">
+                        Create Your First Deck
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card View (Alternative Layout) -->
+            <div class="deck-cards-container" id="cardViewContainer" style="display: none;">
+                <div class="deck-cards-grid" id="deckCardsGrid">
+                    <!-- Deck cards will be populated here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay" onclick="document.body.classList.remove('mobile-sidebar-open')"></div>
+    <nav class="mobile-nav-bottom">
+        <div class="mobile-nav-tabs">
+            <a href="/decks-modern" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🃏</span>
+                <span>Decks</span>
+            </a>
+            <a href="/playhand-modern" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎮</span>
+                <span>Play</span>
+            </a>
+            <a href="/handsimulation" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">🎲</span>
+                <span>Simulate</span>
+            </a>
+            <a href="/alldecks" class="mobile-nav-tab active">
+                <span class="mobile-nav-icon">📚</span>
+                <span>Library</span>
+            </a>
+            <a href="/create-deck-form" class="mobile-nav-tab">
+                <span class="mobile-nav-icon">➕</span>
+                <span>Create</span>
+            </a>
+        </div>
+    </nav>
+
+</div> <!-- Close app-container -->
+</body>
+</html>

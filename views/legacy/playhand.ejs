@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hand Simulation</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<script type="module" src="./scripts/playhand.mjs"></script>
+<script type="module">
+    import { initializeApp } from './scripts/playhand.mjs';
+    initializeApp();
+</script>
+<link rel="stylesheet" href="/assets/decks.css">
+</head>
+<div id="header">
+    <%- include('partials/nav'); -%>
+</div>
+<body>
+<div id="container">
+    <div id="left-sidebar">
+        <section id="deck" class="decklist">
+            <fieldset>
+                <div>
+                  <label for="preDefinedDecks">Pre-Defined Decks</label>
+                  <div class="deckListContainer">
+                    <%- include('partials/decklist'); -%>
+                  </div>
+                </div>
+                <div>
+                  <label for="localDecks">Local Decks</label>
+                  <button id="loadXMLFileButton">Load XML File</button>
+                  <input type="file" name="XMLFile" accept=".xml" id="xmlFile" style="display: none;">
+                </div>
+              </fieldset>
+        </section>
+       <section id="section_hand">
+            <div class="library-controls">
+                <h3><button id="DrawHandButton" type="button" value="Start" class="button">Draw Hand</button>
+                <button  id="DrawACard" type="button" class="button" >Draw</button>
+                <button type="button" class="button" id="ViewLibrary">Library</button>
+                <select id="cardTypeMenu" class="button custom-dropdown">
+                    <option value="">--Search Library--</option>
+                    <option value="All">All</option>
+                    <option value="Spells">Instants & Sorceries</option>
+                    <option value="Creatures">Creatures</option>
+                    <option value="Planeswalkers">Planeswalkers</option>
+                    <option value="Artifacts">Artifacts</option>
+                    <option value="Enchantments">Enchantments</option>
+                    <option value="Land">Land</option>
+                </select>
+                <p class="deckSize flexlibrary" id="deckSize">(0)</p>
+             </h3>
+            </div>  
+            <div class="hand-container">
+                <section id="section_lands" class="flex"></section>
+                <section id="section_spells" class="flex"></section>
+            </div>
+        </section>
+        <div class="tab-container">
+            <button class="tab-button active" data-tab="section_graveyard">
+                <img src="/assets/wallpaper/graveyard_as_icon.png" alt="Graveyard Image"> Graveyard
+              </button>
+            <button class="tab-button" data-tab="section_exile">
+                <img src="/assets/wallpaper/planeswalker_button_small.png" alt="Graveyard Image"> Exile
+            </button>
+        </div>
+        <div class="exile-graveyard-container">
+            <section id="section_graveyard" class="tab-content graveyard" style="display:flex;">
+            <!-- Content for Graveyard Tab -->
+            </section>
+            <section id="section_exile" class="tab-content ">
+            <!-- Content for Exile Tab -->
+            </section>
+        </div>
+    </div>
+    <div id="middle-content">
+        <div><h3>BattleField</h3></div>
+        <section id="section_battlefield" class="flex">
+               <div class="battlefield-container">
+                <section id="section_battlefield-lands" class="flex"></section>
+                <section id="section_battlefield-creatures" class="flex"></section>
+                <section id="section_battlefield-spells" class="flex"></section>
+                <section id="section_battlefield-permananents" class="flex"></section>
+            </div>
+        </section>
+    </div>
+    <div id="right-sidebar">
+        <div id="libraryPopup" style="display: none;">
+            <button id="closeLibraryPopup">Close</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
