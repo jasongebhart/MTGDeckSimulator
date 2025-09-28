@@ -74,6 +74,8 @@ class ModernHandSimulator {
     };
 
     this.activePlayer = 'player'; // 'player' or 'opponent'
+    this.gameMode = 'local'; // 'local' or 'network' (future)
+    this.turnPhase = 'setup'; // 'setup', 'playing', 'waiting-for-opponent'
     this.predefinedDecks = [
       './xml/BigRedMachine.xml',
       './xml/Stasis.xml',
@@ -685,23 +687,37 @@ class ModernHandSimulator {
     this.activePlayer = 'player';
   }
 
-  // Player switching functions
+  // Enhanced player switching functions
   switchToPlayer() {
+    if (this.activePlayer === 'player') {
+      this.showToast('Already controlling Player', 'info');
+      return;
+    }
+
     this.activePlayer = 'player';
+    this.updatePlayerContextUI();
     this.updateUI();
     this.updateHandDisplay();
     this.updateBattlefieldDisplay();
     this.updateActivePlayerView();
-    this.showToast('Switched to Player', 'info');
+    this.playSound?.('success');
+    this.showToast('Now controlling: Player', 'success');
   }
 
   switchToOpponent() {
+    if (this.activePlayer === 'opponent') {
+      this.showToast('Already controlling Opponent', 'info');
+      return;
+    }
+
     this.activePlayer = 'opponent';
+    this.updatePlayerContextUI();
     this.updateUI();
     this.updateOpponentHandDisplay();
     this.updateOpponentBattlefieldDisplay();
     this.updateActivePlayerView();
-    this.showToast('Switched to Opponent', 'info');
+    this.playSound?.('success');
+    this.showToast('Now controlling: Opponent', 'warning');
   }
 
   getCurrentPlayer() {
@@ -1231,8 +1247,12 @@ class ModernHandSimulator {
   endTurn() {
     console.log('endTurn called - advancing to next turn');
 
+    // Clear mana pool for current player
+    this.clearManaForActivePlayer();
+
     // Pass to opponent
     this.turnState.activePlayer = this.turnState.activePlayer === 'player' ? 'opponent' : 'player';
+    this.activePlayer = this.turnState.activePlayer; // Keep activePlayer in sync
 
     // If back to player, increment turn number
     if (this.turnState.activePlayer === 'player') {
@@ -1249,13 +1269,11 @@ class ModernHandSimulator {
     // Execute beginning phase automatically
     this.executeBeginningPhase();
 
-    // Clear mana pool
-    this.clearManaPool();
-
     // Reset lands played for new turn
     this.gameStats.landsPlayedThisTurn = 0;
 
-    // Update UI
+    // Update UI with player context
+    this.updatePlayerContextUI();
     this.updateUI();
     this.updateTurnDisplay();
 
@@ -1404,10 +1422,10 @@ class ModernHandSimulator {
     // Update turn indicator in UI
     const turnIndicator = document.getElementById('turnIndicator');
     if (turnIndicator) {
-      const activePlayerText = this.turnState.activePlayer === 'player' ? 'Your Turn' : 'Opponent\'s Turn';
+      const activePlayerText = this.activePlayer === 'player' ? 'Your Turn' : 'Opponent\'s Turn';
 
       // Set data attribute for styling
-      turnIndicator.setAttribute('data-player', this.turnState.activePlayer);
+      turnIndicator.setAttribute('data-player', this.activePlayer);
 
       turnIndicator.innerHTML = `
         <div class="turn-info">
@@ -3327,6 +3345,7 @@ class ModernHandSimulator {
     this.setupKeyboardSounds();
     this.setupVisualFeedback();
     this.initSoundButton();
+    this.updatePlayerContextUI();
   }
 
   /**
@@ -3672,6 +3691,203 @@ class ModernHandSimulator {
         soundButton.title = 'Sound effects disabled - click to enable';
       }
     }
+  }
+
+  // ========================================
+  // ENHANCED TWO-PLAYER SYSTEM
+  // ========================================
+
+
+  /**
+   * Pass turn to the other player (for structured gameplay)
+   */
+  passTurn() {
+    const previousPlayer = this.activePlayer;
+    const newPlayer = this.activePlayer === 'player' ? 'opponent' : 'player';
+
+    // End current player's turn
+    this.endTurn();
+
+    // Switch to new player
+    this.activePlayer = newPlayer;
+    this.updatePlayerContextUI();
+    this.updateUI();
+
+    // Start new player's turn
+    this.startTurn();
+
+    this.playSound('success');
+    this.showToast(`Turn passed from ${previousPlayer} to ${newPlayer}`, 'info');
+  }
+
+  /**
+   * Start a player's turn
+   */
+  startTurn() {
+    // Draw card (except first turn)
+    if (!this.turnState.isFirstTurn) {
+      this.drawCardForActivePlayer();
+    }
+
+    // Reset phase
+    this.turnState.phase = 'main1';
+    this.turnState.isFirstTurn = false;
+
+    // Untap permanents
+    this.untapAllPermanents();
+
+    this.updateTurnDisplay();
+    this.showToast(`${this.activePlayer}'s turn begins`, 'info');
+  }
+
+  /**
+   * Draw card for currently active player
+   */
+  drawCardForActivePlayer() {
+    if (this.activePlayer === 'player') {
+      return this.drawCard();
+    } else {
+      return this.drawOpponentCard();
+    }
+  }
+
+  /**
+   * Get the state object for the currently active player
+   */
+  getActivePlayerState() {
+    return this.activePlayer === 'player' ? this : this.opponent;
+  }
+
+  /**
+   * Clear mana pool for active player
+   */
+  clearManaForActivePlayer() {
+    const playerState = this.getActivePlayerState();
+    playerState.manaPool = { W: 0, U: 0, B: 0, R: 0, G: 0, C: 0 };
+    this.updateUI();
+  }
+
+  /**
+   * Untap all permanents for active player
+   */
+  untapAllPermanents() {
+    const playerState = this.getActivePlayerState();
+
+    // Untap all battlefield permanents
+    ['lands', 'creatures', 'others'].forEach(zone => {
+      playerState.battlefield[zone].forEach(card => {
+        if (card.tapped) {
+          card.tapped = false;
+        }
+      });
+    });
+
+    this.updateBattlefieldDisplay();
+  }
+
+  /**
+   * Update UI to show which player is active
+   */
+  updatePlayerContextUI() {
+    // Update player switch buttons
+    const playerBtn = document.getElementById('switchToPlayer');
+    const opponentBtn = document.getElementById('switchToOpponent');
+
+    if (playerBtn && opponentBtn) {
+      // Reset classes
+      playerBtn.classList.remove('btn-primary', 'btn-secondary');
+      opponentBtn.classList.remove('btn-primary', 'btn-secondary');
+
+      if (this.activePlayer === 'player') {
+        playerBtn.classList.add('btn-primary');
+        opponentBtn.classList.add('btn-secondary');
+        playerBtn.textContent = '🧙‍♂️ You (Active)';
+        opponentBtn.textContent = '👤 Opponent';
+      } else {
+        playerBtn.classList.add('btn-secondary');
+        opponentBtn.classList.add('btn-primary');
+        playerBtn.textContent = '🧙‍♂️ You';
+        opponentBtn.textContent = '👤 Opponent (Active)';
+      }
+    }
+
+    // Update main control buttons context
+    this.updateControlButtonContexts();
+
+    // Update turn indicator
+    this.updateTurnDisplay();
+  }
+
+  /**
+   * Update control buttons to show which player they affect
+   */
+  updateControlButtonContexts() {
+    const contextIndicator = document.getElementById('activePlayerIndicator');
+    if (contextIndicator) {
+      contextIndicator.textContent = this.activePlayer === 'player' ?
+        'Controlling: You' : 'Controlling: Opponent';
+      contextIndicator.className = `player-context ${this.activePlayer}`;
+    }
+
+    // Update button text to be clearer about who they affect
+    const drawHandBtn = document.getElementById('drawHandButton');
+    const drawCardBtn = document.getElementById('drawCardButton');
+    const mulliganBtn = document.getElementById('mulligan');
+
+    if (drawHandBtn) drawHandBtn.textContent =
+      `🎲 Draw Hand (${this.activePlayer === 'player' ? 'You' : 'Opponent'})`;
+    if (drawCardBtn) drawCardBtn.textContent =
+      `📄 +1 (${this.activePlayer === 'player' ? 'You' : 'Opponent'})`;
+    if (mulliganBtn) mulliganBtn.textContent =
+      `🔄 Mulligan (${this.activePlayer === 'player' ? 'You' : 'Opponent'})`;
+  }
+
+
+  /**
+   * Quick setup for two-player testing
+   */
+  quickTwoPlayerSetup() {
+    // Load default decks for both players
+    const playerDeck = './xml/BigRedMachine.xml';
+    const opponentDeck = './xml/Stasis.xml';
+
+    this.showToast('Setting up two-player game...', 'info');
+
+    // Load player deck
+    this.switchToPlayer();
+    this.loadDeckFromPath(playerDeck).then(() => {
+      this.drawHand(7);
+
+      // Load opponent deck
+      this.loadOpponentDeck(opponentDeck).then(() => {
+        this.drawOpponentHand(7);
+
+        this.showToast('Two-player setup complete! Switch between players to control each side.', 'success');
+        this.updatePlayerContextUI();
+      });
+    });
+  }
+
+  /**
+   * Start structured two-player game
+   */
+  startTwoPlayerGame() {
+    if (!this.currentDeck || !this.opponent.currentDeck) {
+      this.showToast('Both players need decks loaded first!', 'error');
+      return;
+    }
+
+    // Reset game state
+    this.turnState.turnNumber = 1;
+    this.turnState.isFirstTurn = true;
+    this.turnState.phase = 'beginning';
+
+    // Determine starting player (could be random or player choice)
+    this.activePlayer = 'player';
+
+    this.showToast('Two-player game started! Player goes first.', 'success');
+    this.updatePlayerContextUI();
+    this.startTurn();
   }
 }
 

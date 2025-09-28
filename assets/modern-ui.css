@@ -5995,6 +5995,134 @@ body {
 }
 
 /* ========================================
+   TWO-PLAYER SYSTEM STYLING
+   ======================================== */
+
+/* Player context indicators */
+.player-context {
+  transition: all 0.3s ease;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  text-align: center;
+}
+
+.player-context.player {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: 2px solid var(--primary);
+}
+
+.player-context.opponent {
+  background: linear-gradient(135deg, var(--warning), #e67e22);
+  color: white;
+  border: 2px solid var(--warning);
+}
+
+/* Active player button styling */
+#switchToPlayer.btn-primary,
+#switchToOpponent.btn-primary {
+  background: linear-gradient(135deg, var(--success), #27ae60);
+  border-color: var(--success);
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+  animation: active-player-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes active-player-pulse {
+  from { box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3); }
+  to { box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5); }
+}
+
+/* Two-player game control buttons */
+.btn-xs {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-xs);
+  line-height: 1.2;
+}
+
+/* Player switch card enhanced styling */
+.single-player-layout .card:first-child {
+  background: linear-gradient(135deg,
+    rgba(30, 58, 138, 0.05),
+    rgba(59, 130, 246, 0.05)
+  );
+  border: 2px solid var(--primary);
+  box-shadow: 0 8px 16px rgba(30, 58, 138, 0.1);
+}
+
+/* Turn indicator enhancements for two-player */
+.turn-indicator .turn-player {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.turn-indicator .turn-number {
+  background: rgba(255, 255, 255, 0.2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--border-radius);
+  margin: 0 var(--space-1);
+}
+
+.turn-indicator .turn-phase {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* Enhanced opponent section styling */
+#opponentSection {
+  border: 2px solid var(--warning);
+  background: linear-gradient(135deg,
+    rgba(245, 158, 11, 0.05),
+    rgba(251, 191, 36, 0.05)
+  );
+}
+
+#opponentSection .card-header {
+  background: linear-gradient(135deg, var(--warning), #f39c12);
+  color: white;
+  border-bottom: 2px solid var(--warning);
+}
+
+/* Context-aware button styling */
+.btn.context-player {
+  border-left: 4px solid var(--primary);
+}
+
+.btn.context-opponent {
+  border-left: 4px solid var(--warning);
+}
+
+/* Network play preparation - future use */
+.network-status {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--space-2) var(--space-3);
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+  display: none;
+}
+
+.network-status.connected {
+  border-color: var(--success);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.network-status.disconnected {
+  border-color: var(--error);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.network-status.waiting {
+  border-color: var(--warning);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+/* ========================================
    SOUND TOGGLE BUTTON STYLING
    ======================================== */
 
