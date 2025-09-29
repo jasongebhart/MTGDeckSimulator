@@ -1947,6 +1947,93 @@ body {
   border-color: var(--primary);
 }
 
+/* =====================================================
+   CROSS-PLAYER TARGETING SYSTEM
+   ===================================================== */
+
+.targeting-highlight {
+  outline: 3px solid #ff6b6b !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.5) !important;
+  cursor: crosshair !important;
+  animation: targeting-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes targeting-pulse {
+  0%, 100% {
+    outline-color: #ff6b6b;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+  }
+  50% {
+    outline-color: #ff4757;
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
+  }
+}
+
+.targeting-ui {
+  animation: targeting-ui-appear 0.3s ease-out;
+}
+
+@keyframes targeting-ui-appear {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Add targeting buttons to control panel */
+.targeting-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin: var(--space-2) 0;
+  padding: var(--space-2);
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+.targeting-btn {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.targeting-btn:hover {
+  background: var(--error);
+  color: white;
+  border-color: var(--error);
+  transform: translateY(-1px);
+}
+
+.targeting-btn:active {
+  transform: translateY(0);
+}
+
+.targeting-btn.lightning-bolt {
+  background: linear-gradient(135deg, #ffd700, #ff6b6b);
+  color: #1a1a1a;
+  font-weight: var(--font-bold);
+}
+
+.targeting-btn.lightning-bolt:hover {
+  background: linear-gradient(135deg, #ffed4e, #ff5252);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
 /* Performance Optimizations */
 .will-change-transform {
   will-change: transform;

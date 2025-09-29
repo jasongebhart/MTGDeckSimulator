@@ -23,6 +23,7 @@ class ModernHandSimulator {
     this.battlefield = { lands: [], creatures: [], others: [] };
     this.graveyard = [];
     this.exile = [];
+    this.targetingMode = { active: false };
     this.gameStats = {
       cardsDrawn: 0,
       landsPlayed: 0,
@@ -34,6 +35,20 @@ class ModernHandSimulator {
     this.selectedCards = new Set();
     this.manaPool = { W: 0, U: 0, B: 0, R: 0, G: 0, C: 0 };
 
+    // Sorted hand order for keyboard shortcuts
+    this.sortedHandOrder = [];
+    this.sortedOpponentHandOrder = [];
+
+    // Game action log
+    this.gameLog = [];
+    this.maxLogEntries = 50;
+
+    // Priority and Stack System
+    this.stack = []; // Spells/abilities waiting to resolve
+    this.priorityPlayer = 'player'; // Who currently has priority
+    this.waitingForResponse = false; // True when waiting for opponent to respond
+    this.pendingDamage = []; // Damage that needs to be applied
+
     // Turn Management System
     this.turnState = {
       activePlayer: 'player', // 'player' or 'opponent'
@@ -42,6 +57,16 @@ class ModernHandSimulator {
       priority: 'player', // who has priority
       turnNumber: 1,
       isFirstTurn: true
+    };
+
+    // Combat System
+    this.combatState = {
+      step: 'none', // 'beginning', 'declare-attackers', 'declare-blockers', 'combat-damage', 'end'
+      attackers: [], // {cardId, playerId}
+      blockers: [], // {attackerCardId, blockerCardId, playerId}
+      combatDamage: [], // {cardId, damage, target}
+      isSelectingAttackers: false,
+      isSelectingBlockers: false
     };
 
     // Phase definitions with their steps
@@ -669,20 +694,23 @@ class ModernHandSimulator {
       isFirstTurn: true
     };
 
-    // Reset opponent state
-    this.opponent.hand = [];
-    this.opponent.battlefield = { lands: [], creatures: [], others: [] };
-    this.opponent.graveyard = [];
-    this.opponent.exile = [];
-    this.opponent.gameStats = {
-      cardsDrawn: 0,
-      landsPlayed: 0,
-      spellsCast: 0,
-      mulligans: 0,
-      life: 20
-    };
-    this.opponent.selectedCards.clear();
-    this.opponent.manaPool = { W: 0, U: 0, B: 0, R: 0, G: 0, C: 0 };
+    // Only reset opponent state if no opponent deck is loaded
+    // This prevents losing opponent data during two-player setup
+    if (!this.opponent.currentDeck) {
+      this.opponent.hand = [];
+      this.opponent.battlefield = { lands: [], creatures: [], others: [] };
+      this.opponent.graveyard = [];
+      this.opponent.exile = [];
+      this.opponent.gameStats = {
+        cardsDrawn: 0,
+        landsPlayed: 0,
+        spellsCast: 0,
+        mulligans: 0,
+        life: 20
+      };
+      this.opponent.selectedCards.clear();
+      this.opponent.manaPool = { W: 0, U: 0, B: 0, R: 0, G: 0, C: 0 };
+    }
 
     this.activePlayer = 'player';
   }
@@ -705,17 +733,36 @@ class ModernHandSimulator {
   }
 
   switchToOpponent() {
+    console.log('=== switchToOpponent method called ===');
+    console.log('Current activePlayer:', this.activePlayer);
+
     if (this.activePlayer === 'opponent') {
+      console.log('Already controlling opponent, but updating display...');
       this.showToast('Already controlling Opponent', 'info');
+      // Still update the display even if already controlling opponent
+      this.updateOpponentHandDisplayDetailed();
+      this.updateOpponentBattlefieldDisplayDetailed();
+      this.updateActivePlayerView();
       return;
     }
 
     this.activePlayer = 'opponent';
+    console.log('Active player set to:', this.activePlayer);
+    console.log('Opponent hand:', this.opponent.hand);
+    console.log('Opponent hand count:', this.opponent.hand.length);
+
     this.updatePlayerContextUI();
     this.updateUI();
-    this.updateOpponentHandDisplay();
-    this.updateOpponentBattlefieldDisplay();
+
+    console.log('About to call updateOpponentHandDisplayDetailed...');
+    this.updateOpponentHandDisplayDetailed();
+
+    console.log('About to call updateOpponentBattlefieldDisplayDetailed...');
+    this.updateOpponentBattlefieldDisplayDetailed();
+
+    console.log('About to call updateActivePlayerView...');
     this.updateActivePlayerView();
+
     this.playSound?.('success');
     this.showToast('Now controlling: Opponent', 'warning');
   }
@@ -742,16 +789,47 @@ class ModernHandSimulator {
     // Show appropriate hand display
     if (this.activePlayer === 'opponent') {
       this.updateOpponentHandDisplayDetailed();
+      this.updateOpponentBattlefieldDisplayDetailed();
     } else {
       this.updateHandDisplay();
+      this.updateBattlefieldDisplay();
+    }
+  }
+
+  updateOpponentBattlefieldDisplayDetailed() {
+    // When controlling opponent, show their battlefield cards in main interactive areas
+    if (this.activePlayer === 'opponent') {
+      console.log('Updating detailed opponent battlefield display');
+      console.log('Opponent battlefield:', this.opponent.battlefield);
+
+      // Show opponent battlefield cards in the main battlefield containers for interaction
+      this.updateZoneDisplay('battlefieldLands', this.opponent.battlefield.lands);
+      this.updateZoneDisplay('battlefieldCreatures', this.opponent.battlefield.creatures);
+      this.updateZoneDisplay('battlefieldOthers', this.opponent.battlefield.others);
+
+      // Also update the dedicated opponent containers
+      this.updateOpponentBattlefieldDisplay();
     }
   }
 
   updateOpponentHandDisplayDetailed() {
-    // When controlling opponent, show their actual cards
+    // When controlling opponent, show their actual cards in the main hand areas
     if (this.activePlayer === 'opponent') {
+      console.log('=== updateOpponentHandDisplayDetailed ===');
+      console.log('Active player:', this.activePlayer);
+      console.log('Opponent hand length:', this.opponent.hand.length);
+      console.log('Opponent hand:', this.opponent.hand);
+      console.log('First opponent card:', this.opponent.hand[0]);
+
+      // Show opponent cards in the main hand containers for interaction
+      console.log('Calling updateZoneDisplay for handContainer...');
       this.updateZoneDisplay('handContainer', this.opponent.hand);
+      console.log('Calling updateZoneDisplay for handContainer2...');
       this.updateZoneDisplay('handContainer2', this.opponent.hand);
+
+      // Also update the opponent's dedicated container
+      console.log('Calling updateZoneDisplay for opponentHandContainer2...');
+      this.updateZoneDisplay('opponentHandContainer2', this.opponent.hand);
     }
   }
 
@@ -774,6 +852,8 @@ class ModernHandSimulator {
       switch (key) {
         case ' ':
           event.preventDefault();
+          console.log('Spacebar pressed - advancing phase/turn');
+          console.log('Current turn state:', this.turnState);
           this.advancePhaseOrTurn();
           break;
         case 'd':
@@ -801,6 +881,14 @@ class ModernHandSimulator {
           event.preventDefault();
           this.showKeyboardHelp();
           break;
+        case 'c':
+          event.preventDefault();
+          this.jumpToCombat();
+          break;
+        case 'e':
+          event.preventDefault();
+          this.endTurnImmediately();
+          break;
         case 'escape':
           this.hideKeyboardHelp();
           break;
@@ -812,23 +900,43 @@ class ModernHandSimulator {
     const currentPhase = this.turnState.phase;
     const currentStep = this.turnState.step;
 
+    console.log('advancePhaseOrTurn called with:', currentPhase, currentStep);
+
     // If in end phase cleanup step, advance to next turn
     if (currentPhase === 'end' && currentStep === 'cleanup') {
+      console.log('Advancing to next turn');
       this.nextTurn();
     } else {
-      this.nextPhase();
+      console.log('Advancing to next phase');
+      this.advancePhase();
     }
 
-    this.showToast(`${currentPhase} phase`);
+    console.log('New turn state after advancement:', this.turnState);
+    this.showToast(`${this.turnState.phase} phase`);
   }
 
   playCardFromHand(index) {
     const currentPlayer = this.getCurrentPlayer();
-    if (index >= 0 && index < currentPlayer.hand.length) {
-      const card = currentPlayer.hand[index];
+
+    // Use sorted hand order for keyboard shortcuts
+    const sortedHand = this.activePlayer === 'player' ? this.sortedHandOrder : this.sortedOpponentHandOrder;
+
+    if (index >= 0 && index < sortedHand.length) {
+      const card = sortedHand[index];
+
+      // Find the card in the actual hand array to remove it
+      const handArray = currentPlayer.hand;
+      const actualIndex = handArray.findIndex(c => c.id === card.id);
+      if (actualIndex === -1) {
+        console.error('Card not found in actual hand:', card);
+        return;
+      }
       console.log('Playing card:', card);
       console.log('Card type_line:', card.type_line);
       console.log('Card type:', card.type);
+
+      // Log the card play
+      this.logAction(`Played ${card.name}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
 
       this.showToast(`Playing ${card.name}`);
 
@@ -1146,6 +1254,13 @@ class ModernHandSimulator {
 
   drawHand() {
     console.log('=== drawHand called ===');
+    console.log('Active player:', this.activePlayer);
+
+    // Use active player's data
+    if (this.activePlayer === 'opponent') {
+      return this.drawOpponentHand(7);
+    }
+
     console.log('currentDeck:', this.currentDeck);
     console.log('library length:', this.library.length);
 
@@ -1202,6 +1317,9 @@ class ModernHandSimulator {
     console.log('Drew card:', card);
     hand.push(card);
     gameStats.cardsDrawn++;
+
+    // Log the manual draw
+    this.logAction(`Drew ${card.name}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
 
     if (showAnimation) {
       // Update the appropriate hand display based on active player
@@ -1266,6 +1384,10 @@ class ModernHandSimulator {
     this.turnState.priority = this.turnState.activePlayer;
     this.turnState.isFirstTurn = this.turnState.turnNumber === 1 && this.turnState.activePlayer === 'player';
 
+    // Log turn beginning BEFORE executing steps
+    const playerName = this.turnState.activePlayer === 'player' ? 'Your' : 'Opponent\'s';
+    this.logAction(`Turn ${this.turnState.turnNumber} begins`, this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
+
     // Execute beginning phase automatically
     this.executeBeginningPhase();
 
@@ -1277,7 +1399,6 @@ class ModernHandSimulator {
     this.updateUI();
     this.updateTurnDisplay();
 
-    const playerName = this.turnState.activePlayer === 'player' ? 'Your' : 'Opponent\'s';
     this.showToast(`${playerName} Turn ${this.turnState.turnNumber} - ${this.formatPhaseStep()}`, 'info');
   }
 
@@ -1285,15 +1406,22 @@ class ModernHandSimulator {
     console.log('Executing beginning phase');
 
     // Untap Step
+    this.turnState.step = 'untap';
+    this.logAction('Untap step', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
     this.executeUntapStep();
 
-    // Upkeep Step (currently no mechanics)
+    // Upkeep Step
     this.turnState.step = 'upkeep';
+    this.logAction('Upkeep step', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
+    this.executeUpkeepStep();
 
     // Draw Step (skip on first turn)
     this.turnState.step = 'draw';
+    this.logAction('Draw step', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
     if (!this.turnState.isFirstTurn) {
       this.executeDrawStep();
+    } else {
+      this.logAction('No card drawn (first turn)', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
     }
 
     // Move to main phase
@@ -1320,10 +1448,17 @@ class ModernHandSimulator {
     }
   }
 
+  executeUpkeepStep() {
+    console.log('Upkeep step - checking for upkeep triggers');
+    // Currently no upkeep mechanics implemented
+    // This is where triggered abilities would happen
+  }
+
   executeDrawStep() {
     console.log('Draw step - drawing card');
 
     if (this.turnState.activePlayer === 'player') {
+      this.logAction('Drew a card for turn', 'You', true);
       this.drawCard();
     } else {
       // Opponent draws (simulate)
@@ -1331,6 +1466,7 @@ class ModernHandSimulator {
         const drawnCard = this.opponent.library.pop();
         this.opponent.hand.push(drawnCard);
         this.opponent.gameStats.cardsDrawn++;
+        this.logAction('Drew a card for turn', 'Opponent', true);
         this.updateOpponentHandDisplay();
         this.showToast('Opponent draws a card', 'info');
       }
@@ -1359,11 +1495,11 @@ class ModernHandSimulator {
       case 'main1':
         this.turnState.phase = 'combat';
         this.turnState.step = 'beginning-combat';
+        this.initializeCombat();
         break;
       case 'combat':
-        this.turnState.phase = 'main2';
-        this.turnState.step = 'main';
-        break;
+        this.advanceCombatStep();
+        return; // Combat step advancement handles its own progression
       case 'main2':
         this.turnState.phase = 'end';
         this.turnState.step = 'end';
@@ -1387,6 +1523,680 @@ class ModernHandSimulator {
     if (hadMana) {
       this.showToast('Mana pool empties', 'warning');
     }
+  }
+
+  // =====================================================
+  // COMBAT SYSTEM
+  // =====================================================
+
+  initializeCombat() {
+    console.log('Initializing combat phase');
+    this.combatState = {
+      step: 'beginning',
+      attackers: [],
+      blockers: [],
+      combatDamage: [],
+      isSelectingAttackers: false,
+      isSelectingBlockers: false
+    };
+
+    this.showToast('Beginning of Combat', 'info');
+    this.updateCombatUI();
+  }
+
+  advanceCombatStep() {
+    console.log('Advancing combat step from:', this.combatState.step);
+
+    switch (this.combatState.step) {
+      case 'beginning':
+        this.startDeclareAttackersStep();
+        break;
+      case 'declare-attackers':
+        this.startDeclareBlockersStep();
+        break;
+      case 'declare-blockers':
+        this.startCombatDamageStep();
+        break;
+      case 'combat-damage':
+        this.endCombatStep();
+        break;
+      case 'end':
+        // Exit combat phase to main2
+        this.turnState.phase = 'main2';
+        this.turnState.step = 'main';
+        this.combatState.step = 'none';
+        this.showToast('Main Phase 2', 'info');
+        break;
+    }
+
+    this.updateTurnDisplay();
+    this.updateCombatUI();
+  }
+
+  startDeclareAttackersStep() {
+    console.log('Starting declare attackers step');
+    this.combatState.step = 'declare-attackers';
+    this.combatState.isSelectingAttackers = true;
+    this.turnState.step = 'declare-attackers';
+
+    this.showToast('Declare Attackers - Click creatures to attack', 'warning');
+    this.highlightAttackableCreatures();
+    this.showDeclareAttackersUI();
+  }
+
+  startDeclareBlockersStep() {
+    console.log('Starting declare blockers step');
+    this.combatState.step = 'declare-blockers';
+    this.combatState.isSelectingAttackers = false;
+    this.combatState.isSelectingBlockers = true;
+    this.turnState.step = 'declare-blockers';
+
+    if (this.combatState.attackers.length === 0) {
+      this.showToast('No attackers declared - skipping to combat damage', 'info');
+      this.startCombatDamageStep();
+      return;
+    }
+
+    this.showToast('Declare Blockers', 'warning');
+    this.highlightBlockableCreatures();
+    this.showDeclareBlockersUI();
+  }
+
+  startCombatDamageStep() {
+    console.log('Starting combat damage step');
+    this.combatState.step = 'combat-damage';
+    this.combatState.isSelectingBlockers = false;
+    this.turnState.step = 'combat-damage';
+
+    this.calculateCombatDamage();
+    this.applyCombatDamage();
+    this.showToast('Combat Damage', 'info');
+  }
+
+  endCombatStep() {
+    console.log('Ending combat');
+    this.combatState.step = 'end';
+    this.turnState.step = 'end-combat';
+
+    this.clearCombatHighlights();
+    this.showToast('End of Combat', 'info');
+  }
+
+  // Combat Creature Selection
+  toggleAttacker(cardId) {
+    if (!this.combatState.isSelectingAttackers) return;
+
+    console.log('Toggling attacker:', cardId);
+
+    // Check if creature can attack (not tapped, not summoning sick)
+    const creature = this.findBattlefieldCard(cardId);
+    if (!creature) return;
+
+    if (creature.tapped) {
+      this.showToast(`${creature.name} is tapped and cannot attack`, 'error');
+      return;
+    }
+
+    if (creature.summoningSick) {
+      this.showToast(`${creature.name} has summoning sickness`, 'error');
+      return;
+    }
+
+    // Toggle attacker status
+    const attackerIndex = this.combatState.attackers.findIndex(a => a.cardId === cardId);
+    if (attackerIndex >= 0) {
+      // Remove from attackers
+      this.combatState.attackers.splice(attackerIndex, 1);
+      this.showToast(`${creature.name} no longer attacking`, 'info');
+    } else {
+      // Add to attackers
+      this.combatState.attackers.push({
+        cardId: cardId,
+        playerId: this.activePlayer,
+        creatureName: creature.name,
+        power: this.getCreaturePower(creature),
+        toughness: this.getCreatureToughness(creature)
+      });
+      this.logAction(`Declared ${creature.name} as attacker`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+      this.showToast(`${creature.name} declared as attacker`, 'success');
+    }
+
+    this.updateAttackerHighlights();
+    this.updateDeclareAttackersUI();
+  }
+
+  highlightAttackableCreatures() {
+    console.log('Highlighting attackable creatures');
+    const battlefield = this.activePlayer === 'opponent' ? this.opponent.battlefield : this.battlefield;
+
+    battlefield.creatures.forEach(creature => {
+      const element = document.querySelector(`[data-card-id="${creature.id}"]`);
+      if (element && !creature.tapped && !creature.summoningSick) {
+        element.classList.add('attackable-creature');
+        element.style.cursor = 'pointer';
+        element.title = 'Click to declare as attacker';
+      }
+    });
+  }
+
+  updateAttackerHighlights() {
+    // Clear all attacker highlights
+    document.querySelectorAll('.attacking-creature').forEach(el => {
+      el.classList.remove('attacking-creature');
+    });
+
+    // Add highlights to current attackers
+    this.combatState.attackers.forEach(attacker => {
+      const element = document.querySelector(`[data-card-id="${attacker.cardId}"]`);
+      if (element) {
+        element.classList.add('attacking-creature');
+      }
+    });
+  }
+
+  clearCombatHighlights() {
+    document.querySelectorAll('.attackable-creature, .attacking-creature, .blocking-creature').forEach(el => {
+      el.classList.remove('attackable-creature', 'attacking-creature', 'blocking-creature');
+      el.style.cursor = '';
+      el.title = '';
+    });
+  }
+
+  showDeclareAttackersUI() {
+    // Create or update combat UI panel
+    this.updateCombatUI();
+  }
+
+  updateDeclareAttackersUI() {
+    this.updateCombatUI();
+  }
+
+  updateCombatUI() {
+    // Add combat CSS if not already added
+    if (!document.getElementById('combatStyles')) {
+      const style = document.createElement('style');
+      style.id = 'combatStyles';
+      style.textContent = `
+        .attackable-creature {
+          border: 3px solid #4CAF50 !important;
+          box-shadow: 0 0 10px rgba(76, 175, 80, 0.5) !important;
+          animation: attackable-pulse 2s infinite;
+        }
+
+        .attacking-creature {
+          border: 3px solid #f44336 !important;
+          box-shadow: 0 0 15px rgba(244, 67, 54, 0.7) !important;
+          background: rgba(244, 67, 54, 0.1) !important;
+        }
+
+        .blocking-creature {
+          border: 3px solid #2196F3 !important;
+          box-shadow: 0 0 10px rgba(33, 150, 243, 0.5) !important;
+        }
+
+        @keyframes attackable-pulse {
+          0%, 100% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+          50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // This will create/update a combat information panel
+    let combatPanel = document.getElementById('combatPanel');
+    if (!combatPanel) {
+      combatPanel = document.createElement('div');
+      combatPanel.id = 'combatPanel';
+      combatPanel.className = 'combat-panel';
+      combatPanel.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--bg-primary);
+        border: 2px solid var(--accent-color);
+        border-radius: var(--border-radius);
+        padding: var(--space-3);
+        min-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 1000;
+        display: ${this.combatState.step === 'none' ? 'none' : 'block'};
+      `;
+      document.body.appendChild(combatPanel);
+    }
+
+    if (this.combatState.step === 'none') {
+      combatPanel.style.display = 'none';
+      return;
+    }
+
+    combatPanel.style.display = 'block';
+
+    let content = `
+      <div class="combat-header">
+        <h3>⚔️ Combat Phase</h3>
+        <p>Step: ${this.combatState.step.replace('-', ' ').toUpperCase()}</p>
+      </div>
+    `;
+
+    if (this.combatState.step === 'declare-attackers') {
+      content += `
+        <div class="combat-section">
+          <h4>Declare Attackers (${this.combatState.attackers.length})</h4>
+          ${this.combatState.attackers.length === 0 ?
+            '<p>Click creatures to declare as attackers</p>' :
+            this.combatState.attackers.map(a => `<div>• ${a.creatureName} (${a.power}/${a.toughness})</div>`).join('')
+          }
+          <button onclick="window.handSimulator.finalizeDeclareAttackers()"
+                  class="btn btn-primary" style="margin-top: 10px;">
+            Declare Attackers
+          </button>
+        </div>
+      `;
+    }
+
+    combatPanel.innerHTML = content;
+  }
+
+  finalizeDeclareAttackers() {
+    console.log('Finalizing declare attackers:', this.combatState.attackers);
+    this.combatState.isSelectingAttackers = false;
+    this.clearCombatHighlights();
+
+    if (this.combatState.attackers.length > 0) {
+      this.showToast(`${this.combatState.attackers.length} attackers declared`, 'success');
+      // Tap attacking creatures
+      this.combatState.attackers.forEach(attacker => {
+        const creature = this.findBattlefieldCard(attacker.cardId);
+        if (creature) {
+          creature.tapped = true;
+        }
+      });
+      this.updateBattlefieldDisplay();
+    } else {
+      this.showToast('No attackers declared', 'info');
+    }
+
+    // Advance to declare blockers
+    this.advanceCombatStep();
+  }
+
+  getCreaturePower(creature) {
+    // Extract power from power/toughness string like "2/2" or from separate property
+    if (creature.power !== undefined) return creature.power;
+    if (creature.powerToughness) {
+      const match = creature.powerToughness.match(/^(\d+)\/(\d+)$/);
+      return match ? parseInt(match[1]) : 0;
+    }
+    return 0;
+  }
+
+  getCreatureToughness(creature) {
+    // Extract toughness from power/toughness string like "2/2" or from separate property
+    if (creature.toughness !== undefined) return creature.toughness;
+    if (creature.powerToughness) {
+      const match = creature.powerToughness.match(/^(\d+)\/(\d+)$/);
+      return match ? parseInt(match[2]) : 0;
+    }
+    return 0;
+  }
+
+  // Placeholder functions for combat steps
+  highlightBlockableCreatures() {
+    console.log('Highlighting blockable creatures - TODO');
+  }
+
+  showDeclareBlockersUI() {
+    console.log('Showing declare blockers UI - TODO');
+  }
+
+  calculateCombatDamage() {
+    console.log('Calculating combat damage - TODO');
+  }
+
+  applyCombatDamage() {
+    console.log('Applying combat damage - TODO');
+  }
+
+  handleBattlefieldCardClick(event, cardId, cardName) {
+    // If we're in targeting mode, handle creature targeting
+    if (this.targetingMode && this.targetingMode.active) {
+      const result = this.findBattlefieldCardAnyPlayer(cardId);
+      if (result && this.getCardMainType(result.card.type).toLowerCase() === 'creature') {
+        event.preventDefault();
+        this.targetCreature(cardId);
+        return;
+      }
+    }
+
+    // If we're in declare attackers step and it's a creature, handle combat selection
+    if (this.combatState.isSelectingAttackers) {
+      const creature = this.findBattlefieldCard(cardId);
+      if (creature && this.getCardMainType(creature.type).toLowerCase() === 'creature') {
+        event.preventDefault();
+        this.toggleAttacker(cardId);
+        return;
+      }
+    }
+
+    // Default behavior - show card preview
+    this.showCardPreview(cardName);
+  }
+
+  jumpToCombat() {
+    console.log('Jumping to combat phase');
+
+    // Skip phases until we reach combat
+    while (this.turnState.phase !== 'combat' && this.turnState.phase !== 'end') {
+      this.turnState.phase = this.getNextPhase(this.turnState.phase);
+    }
+
+    if (this.turnState.phase === 'combat') {
+      this.turnState.step = 'beginning-combat';
+      this.initializeCombat();
+      this.updateTurnDisplay();
+      this.showToast('Jumped to Combat Phase', 'info');
+    } else {
+      this.showToast('Cannot jump to combat - already at end of turn', 'warning');
+    }
+  }
+
+  getNextPhase(currentPhase) {
+    const phaseOrder = ['beginning', 'main1', 'combat', 'main2', 'end'];
+    const currentIndex = phaseOrder.indexOf(currentPhase);
+    return currentIndex >= 0 && currentIndex < phaseOrder.length - 1 ?
+           phaseOrder[currentIndex + 1] : 'end';
+  }
+
+  endTurnImmediately() {
+    console.log('Ending turn immediately');
+
+    // Clean up any ongoing combat
+    if (this.turnState.phase === 'combat') {
+      this.clearCombatHighlights();
+      this.combatState.step = 'none';
+    }
+
+    // Jump straight to end turn
+    this.endTurn();
+    this.showToast('Turn ended', 'info');
+  }
+
+  // =====================================================
+  // PRIORITY AND STACK SYSTEM
+  // =====================================================
+
+  dealDamageToCreature(creatureId, damage, source = 'Unknown') {
+    const result = this.findBattlefieldCardAnyPlayer(creatureId);
+    if (!result) return;
+
+    const creature = result.card;
+    const owner = result.owner;
+
+    // Add damage to creature
+    if (!creature.damage) creature.damage = 0;
+    creature.damage += damage;
+
+    this.logAction(`${source} deals ${damage} damage to ${creature.name} (${owner === 'player' ? 'Your' : 'Opponent\'s'})`, null, true);
+
+    // Check for lethal damage
+    const toughness = this.getCreatureToughness(creature);
+    if (creature.damage >= toughness) {
+      this.logAction(`${creature.name} destroyed (lethal damage)`, null, true);
+      this.destroyCreatureByOwner(creatureId, owner);
+    } else {
+      this.updateBattlefieldDisplay();
+      this.showToast(`${creature.name} takes ${damage} damage (${creature.damage}/${toughness})`, 'warning');
+    }
+  }
+
+  destroyCreature(creatureId) {
+    const creature = this.removeBattlefieldCard(creatureId);
+    if (creature) {
+      // Add to appropriate graveyard
+      const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+      currentGraveyard.push(creature);
+
+      this.updateBattlefieldDisplay();
+      this.updateGraveyardDisplay();
+      this.showToast(`${creature.name} destroyed`, 'info');
+    }
+  }
+
+  destroyCreatureByOwner(creatureId, owner) {
+    const creature = this.removeBattlefieldCardByOwner(creatureId, owner);
+    if (creature) {
+      // Add to the creature owner's graveyard (not the active player's)
+      const graveyard = owner === 'opponent' ? this.opponent.graveyard : this.graveyard;
+      graveyard.push(creature);
+
+      this.updateBattlefieldDisplay();
+      this.updateGraveyardDisplay();
+      this.showToast(`${creature.name} destroyed`, 'info');
+    }
+  }
+
+  removeBattlefieldCardByOwner(cardId, owner) {
+    // Remove from the specified player's battlefield
+    const battlefield = owner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+
+    // Check lands
+    let cardIndex = battlefield.lands.findIndex(card => card.id === cardId);
+    if (cardIndex !== -1) {
+      return battlefield.lands.splice(cardIndex, 1)[0];
+    }
+
+    // Check creatures
+    cardIndex = battlefield.creatures.findIndex(card => card.id === cardId);
+    if (cardIndex !== -1) {
+      return battlefield.creatures.splice(cardIndex, 1)[0];
+    }
+
+    // Check other permanents
+    cardIndex = battlefield.others.findIndex(card => card.id === cardId);
+    if (cardIndex !== -1) {
+      return battlefield.others.splice(cardIndex, 1)[0];
+    }
+
+    return null;
+  }
+
+  // Quick damage functions for testing
+  dealDamage1(creatureId) { this.dealDamageToCreature(creatureId, 1, 'Test'); }
+  dealDamage2(creatureId) { this.dealDamageToCreature(creatureId, 2, 'Test'); }
+  dealDamage3(creatureId) { this.dealDamageToCreature(creatureId, 3, 'Lightning Bolt'); }
+  dealDamage4(creatureId) { this.dealDamageToCreature(creatureId, 4, 'Test'); }
+
+  // Cross-player targeting functions
+  enableTargetingMode(damage, source = 'Spell') {
+    this.targetingMode = {
+      active: true,
+      damage: damage,
+      source: source
+    };
+
+    this.showTargetingUI();
+    this.highlightAllCreatures();
+    this.showToast(`Select a creature to deal ${damage} damage`, 'info');
+  }
+
+  disableTargetingMode() {
+    this.targetingMode = { active: false };
+    this.hideTargetingUI();
+    this.clearAllCreatureHighlights();
+  }
+
+  showTargetingUI() {
+    let targetingUI = document.getElementById('targetingUI');
+    if (!targetingUI) {
+      targetingUI = document.createElement('div');
+      targetingUI.id = 'targetingUI';
+      targetingUI.className = 'targeting-ui';
+      targetingUI.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--bg-primary);
+        border: 2px solid #ff6b6b;
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        z-index: 1000;
+        box-shadow: var(--shadow);
+      `;
+      document.body.appendChild(targetingUI);
+    }
+
+    targetingUI.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <span style="color: #ff6b6b; font-weight: bold;">🎯 Targeting Mode</span>
+        <span>Select any creature to deal ${this.targetingMode.damage} damage</span>
+        <button onclick="window.handSimulator.disableTargetingMode()"
+                style="background: #ff4757; color: white; border: none; padding: 0.5rem; border-radius: 4px; cursor: pointer;">
+          Cancel
+        </button>
+      </div>
+    `;
+  }
+
+  hideTargetingUI() {
+    const targetingUI = document.getElementById('targetingUI');
+    if (targetingUI) {
+      targetingUI.remove();
+    }
+  }
+
+  highlightAllCreatures() {
+    // Add targeting highlights to all creatures
+    const allCreatures = this.getAllBattlefieldCreatures();
+    allCreatures.forEach(creature => {
+      const cardElement = document.querySelector(`[data-card-id="${creature.id}"]`);
+      if (cardElement) {
+        cardElement.classList.add('targeting-highlight');
+      }
+    });
+  }
+
+  clearAllCreatureHighlights() {
+    document.querySelectorAll('.targeting-highlight').forEach(element => {
+      element.classList.remove('targeting-highlight');
+    });
+  }
+
+  targetCreature(creatureId) {
+    if (!this.targetingMode.active) return;
+
+    this.dealDamageToCreature(creatureId, this.targetingMode.damage, this.targetingMode.source);
+    this.disableTargetingMode();
+  }
+
+  checkStateBasedActions() {
+    // Check all creatures for lethal damage using the new cross-player system
+    const allCreatures = this.getAllBattlefieldCreatures();
+
+    allCreatures.forEach(creature => {
+      if (creature.damage && creature.damage >= this.getCreatureToughness(creature)) {
+        this.destroyCreatureByOwner(creature.id, creature.owner);
+      }
+    });
+  }
+
+  // =====================================================
+  // GAME LOG SYSTEM
+  // =====================================================
+
+  logAction(action, player = null, automatic = false) {
+    const timestamp = new Date().toLocaleTimeString();
+    const playerName = player || (this.activePlayer === 'player' ? 'You' : 'Opponent');
+    const actionType = automatic ? 'auto' : 'manual';
+
+    const logEntry = {
+      timestamp,
+      player: playerName,
+      action,
+      type: actionType,
+      turn: this.turnState.turnNumber,
+      phase: this.turnState.phase
+    };
+
+    this.gameLog.unshift(logEntry); // Add to beginning
+
+    // Keep log size manageable
+    if (this.gameLog.length > this.maxLogEntries) {
+      this.gameLog = this.gameLog.slice(0, this.maxLogEntries);
+    }
+
+    this.updateGameLogDisplay();
+  }
+
+  updateGameLogDisplay() {
+    let gameLogPanel = document.getElementById('gameLogPanel');
+
+    if (!gameLogPanel) {
+      gameLogPanel = document.createElement('div');
+      gameLogPanel.id = 'gameLogPanel';
+      gameLogPanel.className = 'game-log-panel';
+      gameLogPanel.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+        max-height: 200px;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: var(--space-2);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 999;
+        overflow-y: auto;
+        font-size: 12px;
+      `;
+
+      // Add toggle button
+      const toggleButton = document.createElement('button');
+      toggleButton.textContent = '📜 Log';
+      toggleButton.style.cssText = `
+        position: fixed;
+        bottom: 230px;
+        right: 20px;
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 8px 12px;
+        cursor: pointer;
+        z-index: 1000;
+        font-size: 12px;
+      `;
+      toggleButton.onclick = () => {
+        const isVisible = gameLogPanel.style.display !== 'none';
+        gameLogPanel.style.display = isVisible ? 'none' : 'block';
+        toggleButton.textContent = isVisible ? '📜 Log' : '📜 Hide';
+      };
+
+      document.body.appendChild(toggleButton);
+      document.body.appendChild(gameLogPanel);
+    }
+
+    // Update log content
+    const logHTML = this.gameLog.slice(0, 15).map(entry => {
+      const typeIcon = entry.type === 'auto' ? '⚙️' : '👤';
+      const playerColor = entry.player === 'You' ? 'var(--accent-color)' : 'var(--text-secondary)';
+
+      return `
+        <div style="margin-bottom: 4px; padding: 2px 0; border-bottom: 1px solid var(--bg-tertiary);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: ${playerColor}; font-weight: bold;">${typeIcon} ${entry.player}</span>
+            <span style="color: var(--text-muted); font-size: 10px;">T${entry.turn} ${entry.timestamp}</span>
+          </div>
+          <div style="color: var(--text-primary); margin-top: 2px;">${entry.action}</div>
+        </div>
+      `;
+    }).join('');
+
+    gameLogPanel.innerHTML = `
+      <div style="font-weight: bold; margin-bottom: 8px; color: var(--accent-color);">Game Log</div>
+      ${logHTML || '<div style="color: var(--text-muted); font-style: italic;">No actions yet</div>'}
+    `;
   }
 
   formatPhaseStep() {
@@ -1421,19 +2231,96 @@ class ModernHandSimulator {
   updateTurnDisplay() {
     // Update turn indicator in UI
     const turnIndicator = document.getElementById('turnIndicator');
+    console.log('updateTurnDisplay called');
+    console.log('turnIndicator element:', turnIndicator);
+    console.log('activePlayer:', this.activePlayer);
+    console.log('turnState:', this.turnState);
+    console.log('formatPhaseStep result:', this.formatPhaseStep());
+
     if (turnIndicator) {
       const activePlayerText = this.activePlayer === 'player' ? 'Your Turn' : 'Opponent\'s Turn';
 
       // Set data attribute for styling
       turnIndicator.setAttribute('data-player', this.activePlayer);
 
+      // Create phase progression display - showing proper MTG turn structure
+      const currentPhase = this.turnState.phase;
+      const currentStep = this.turnState.step;
+
+      // Show either high-level phases or detailed combat steps
+      let allPhases, phaseLabels;
+
+      if (currentPhase === 'combat') {
+        // Show detailed combat steps when in combat
+        allPhases = ['beginning-combat', 'declare-attackers', 'declare-blockers', 'combat-damage', 'end-combat'];
+        phaseLabels = {
+          'beginning-combat': 'Begin Combat',
+          'declare-attackers': 'Declare Attackers',
+          'declare-blockers': 'Declare Blockers',
+          'combat-damage': 'Combat Damage',
+          'end-combat': 'End Combat'
+        };
+      } else {
+        // Show main turn phases
+        allPhases = ['untap', 'upkeep', 'draw', 'main1', 'combat', 'main2', 'end'];
+        phaseLabels = {
+          'untap': 'Untap',
+          'upkeep': 'Upkeep',
+          'draw': 'Draw',
+          'main1': 'Main 1',
+          'combat': 'Combat',
+          'main2': 'Main 2',
+          'end': 'End'
+        };
+      }
+
+      const phaseProgressHTML = allPhases.map(phase => {
+        // For combat, check both phase and step
+        const isCurrentPhase = currentPhase === 'combat' ?
+          currentStep === phase :
+          currentPhase === phase;
+        const phaseClass = isCurrentPhase ? 'current-phase' : 'future-phase';
+        return `<span class="phase-indicator ${phaseClass}">${phaseLabels[phase]}</span>`;
+      }).join('');
+
       turnIndicator.innerHTML = `
         <div class="turn-info">
           <span class="turn-player">${activePlayerText}</span>
           <span class="turn-number">Turn ${this.turnState.turnNumber}</span>
-          <span class="turn-phase">${this.formatPhaseStep()}</span>
+          <div class="phase-progression">
+            ${phaseProgressHTML}
+          </div>
+          <span class="turn-phase-detail">${this.formatPhaseStep()}</span>
         </div>
+        <style>
+          .phase-progression {
+            display: flex;
+            gap: 8px;
+            margin: 4px 0;
+          }
+          .phase-indicator {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+          }
+          .current-phase {
+            background: var(--accent-color);
+            color: white;
+          }
+          .future-phase {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+          }
+          .turn-phase-detail {
+            font-size: 12px;
+            color: var(--text-secondary);
+          }
+        </style>
       `;
+      console.log('Updated turnIndicator innerHTML:', turnIndicator.innerHTML);
+    } else {
+      console.log('turnIndicator element not found');
     }
 
     // Update phase buttons
@@ -1469,17 +2356,31 @@ class ModernHandSimulator {
   }
 
   showHandCardMenu(event, cardId) {
+    console.log('=== showHandCardMenu called ===');
+    console.log('event:', event);
+    console.log('cardId:', cardId);
+    console.log('activePlayer:', this.activePlayer);
+
     event.preventDefault();
 
+    // Determine which hand to search based on active player
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    console.log('currentHand length:', currentHand.length);
+
     // Find the card
-    const cardIndex = this.hand.findIndex((card, idx) => {
+    const cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
 
-    if (cardIndex === -1) return;
+    console.log('cardIndex found:', cardIndex);
+    if (cardIndex === -1) {
+      console.log('Card not found in hand');
+      return;
+    }
 
-    const card = this.hand[cardIndex];
+    const card = currentHand[cardIndex];
+    console.log('Found card:', card);
 
     // Create context menu
     const menu = document.createElement('div');
@@ -1644,6 +2545,17 @@ class ModernHandSimulator {
           onclick: `window.handSimulator.toggleTap('${cardId}')`
         });
         if (zone === 'battlefield') {
+          // Damage options for creatures
+          actions.push({
+            icon: '💔',
+            text: '1 Damage',
+            onclick: `window.handSimulator.dealDamage1('${cardId}')`
+          });
+          actions.push({
+            icon: '⚡',
+            text: '3 Damage (Bolt)',
+            onclick: `window.handSimulator.dealDamage3('${cardId}')`
+          });
           actions.push({
             icon: '⚰️',
             text: 'Dies → Graveyard',
@@ -1896,14 +2808,46 @@ class ModernHandSimulator {
   }
 
   findBattlefieldCard(cardId) {
-    return [...this.battlefield.lands, ...this.battlefield.creatures, ...this.battlefield.others]
+    // Search in the appropriate battlefield based on active player
+    const currentBattlefield = this.activePlayer === 'opponent' ? this.opponent.battlefield : this.battlefield;
+    return [...currentBattlefield.lands, ...currentBattlefield.creatures, ...currentBattlefield.others]
       .find(card => card.id === cardId);
+  }
+
+  findBattlefieldCardAnyPlayer(cardId) {
+    // Search across all players' battlefields
+    const playerCard = [...this.battlefield.lands, ...this.battlefield.creatures, ...this.battlefield.others]
+      .find(card => card.id === cardId);
+    if (playerCard) return { card: playerCard, owner: 'player' };
+
+    const opponentCard = [...this.opponent.battlefield.lands, ...this.opponent.battlefield.creatures, ...this.opponent.battlefield.others]
+      .find(card => card.id === cardId);
+    if (opponentCard) return { card: opponentCard, owner: 'opponent' };
+
+    return null;
+  }
+
+  getAllBattlefieldCreatures() {
+    // Get all creatures from all battlefields with owner information
+    const playerCreatures = this.battlefield.creatures.map(creature => ({
+      ...creature,
+      owner: 'player'
+    }));
+
+    const opponentCreatures = this.opponent.battlefield.creatures.map(creature => ({
+      ...creature,
+      owner: 'opponent'
+    }));
+
+    return [...playerCreatures, ...opponentCreatures];
   }
 
   moveToGraveyard(cardId) {
     const card = this.removeBattlefieldCard(cardId);
     if (card) {
-      this.graveyard.push(card);
+      // Add to the appropriate graveyard based on active player
+      const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+      currentGraveyard.push(card);
       this.updateBattlefieldDisplay();
       this.updateGraveyardDisplay();
       this.updateUI();
@@ -1914,7 +2858,9 @@ class ModernHandSimulator {
   moveToExile(cardId) {
     const card = this.removeBattlefieldCard(cardId);
     if (card) {
-      this.exile.push(card);
+      // Add to the appropriate exile zone based on active player
+      const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+      currentExile.push(card);
       this.updateBattlefieldDisplay();
       this.updateExileDisplay();
       this.updateUI();
@@ -1925,7 +2871,9 @@ class ModernHandSimulator {
   moveToHand(cardId) {
     const card = this.removeBattlefieldCard(cardId);
     if (card) {
-      this.hand.push(card);
+      // Add to the appropriate hand based on active player
+      const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+      currentHand.push(card);
       this.updateBattlefieldDisplay();
       this.updateHandDisplay();
       this.updateUI();
@@ -1934,22 +2882,25 @@ class ModernHandSimulator {
   }
 
   removeBattlefieldCard(cardId) {
+    // Remove from the appropriate battlefield based on active player
+    const currentBattlefield = this.activePlayer === 'opponent' ? this.opponent.battlefield : this.battlefield;
+
     // Check lands
-    let cardIndex = this.battlefield.lands.findIndex(card => card.id === cardId);
+    let cardIndex = currentBattlefield.lands.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      return this.battlefield.lands.splice(cardIndex, 1)[0];
+      return currentBattlefield.lands.splice(cardIndex, 1)[0];
     }
 
     // Check creatures
-    cardIndex = this.battlefield.creatures.findIndex(card => card.id === cardId);
+    cardIndex = currentBattlefield.creatures.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      return this.battlefield.creatures.splice(cardIndex, 1)[0];
+      return currentBattlefield.creatures.splice(cardIndex, 1)[0];
     }
 
     // Check others
-    cardIndex = this.battlefield.others.findIndex(card => card.id === cardId);
+    cardIndex = currentBattlefield.others.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      return this.battlefield.others.splice(cardIndex, 1)[0];
+      return currentBattlefield.others.splice(cardIndex, 1)[0];
     }
 
     return null;
@@ -1980,18 +2931,25 @@ class ModernHandSimulator {
   }
 
   findGraveyardCard(cardId) {
-    return this.graveyard.find(card => card.id === cardId);
+    // Search in the appropriate graveyard based on active player
+    const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+    return currentGraveyard.find(card => card.id === cardId);
   }
 
   findExileCard(cardId) {
-    return this.exile.find(card => card.id === cardId);
+    // Search in the appropriate exile zone based on active player
+    const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+    return currentExile.find(card => card.id === cardId);
   }
 
   moveGraveyardToHand(cardId) {
-    const cardIndex = this.graveyard.findIndex(card => card.id === cardId);
+    const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+
+    const cardIndex = currentGraveyard.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      const card = this.graveyard.splice(cardIndex, 1)[0];
-      this.hand.push(card.name);
+      const card = currentGraveyard.splice(cardIndex, 1)[0];
+      currentHand.push(card.name);
       this.updateGraveyardDisplay();
       this.updateHandDisplay();
       this.updateUI();
@@ -2000,10 +2958,13 @@ class ModernHandSimulator {
   }
 
   moveGraveyardToExile(cardId) {
-    const cardIndex = this.graveyard.findIndex(card => card.id === cardId);
+    const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+    const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+
+    const cardIndex = currentGraveyard.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      const card = this.graveyard.splice(cardIndex, 1)[0];
-      this.exile.push(card);
+      const card = currentGraveyard.splice(cardIndex, 1)[0];
+      currentExile.push(card);
       this.updateGraveyardDisplay();
       this.updateExileDisplay();
       this.updateUI();
@@ -2012,18 +2973,21 @@ class ModernHandSimulator {
   }
 
   moveGraveyardToBattlefield(cardId) {
-    const cardIndex = this.graveyard.findIndex(card => card.id === cardId);
+    const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+    const currentBattlefield = this.activePlayer === 'opponent' ? this.opponent.battlefield : this.battlefield;
+
+    const cardIndex = currentGraveyard.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      const card = this.graveyard.splice(cardIndex, 1)[0];
+      const card = currentGraveyard.splice(cardIndex, 1)[0];
 
       // Add to appropriate battlefield zone based on card type
       const cardType = this.getCardMainType(card.type).toLowerCase();
       if (cardType === 'land') {
-        this.battlefield.lands.push(card);
+        currentBattlefield.lands.push(card);
       } else if (cardType === 'creature') {
-        this.battlefield.creatures.push(card);
+        currentBattlefield.creatures.push(card);
       } else {
-        this.battlefield.others.push(card);
+        currentBattlefield.others.push(card);
       }
 
       this.updateGraveyardDisplay();
@@ -2034,10 +2998,13 @@ class ModernHandSimulator {
   }
 
   moveExileToHand(cardId) {
-    const cardIndex = this.exile.findIndex(card => card.id === cardId);
+    const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+
+    const cardIndex = currentExile.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      const card = this.exile.splice(cardIndex, 1)[0];
-      this.hand.push(card.name);
+      const card = currentExile.splice(cardIndex, 1)[0];
+      currentHand.push(card.name);
       this.updateExileDisplay();
       this.updateHandDisplay();
       this.updateUI();
@@ -2046,10 +3013,13 @@ class ModernHandSimulator {
   }
 
   moveExileToGraveyard(cardId) {
-    const cardIndex = this.exile.findIndex(card => card.id === cardId);
+    const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+    const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+
+    const cardIndex = currentExile.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      const card = this.exile.splice(cardIndex, 1)[0];
-      this.graveyard.push(card);
+      const card = currentExile.splice(cardIndex, 1)[0];
+      currentGraveyard.push(card);
       this.updateExileDisplay();
       this.updateGraveyardDisplay();
       this.updateUI();
@@ -2058,18 +3028,21 @@ class ModernHandSimulator {
   }
 
   moveExileToBattlefield(cardId) {
-    const cardIndex = this.exile.findIndex(card => card.id === cardId);
+    const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+    const currentBattlefield = this.activePlayer === 'opponent' ? this.opponent.battlefield : this.battlefield;
+
+    const cardIndex = currentExile.findIndex(card => card.id === cardId);
     if (cardIndex !== -1) {
-      const card = this.exile.splice(cardIndex, 1)[0];
+      const card = currentExile.splice(cardIndex, 1)[0];
 
       // Add to appropriate battlefield zone based on card type
       const cardType = this.getCardMainType(card.type).toLowerCase();
       if (cardType === 'land') {
-        this.battlefield.lands.push(card);
+        currentBattlefield.lands.push(card);
       } else if (cardType === 'creature') {
-        this.battlefield.creatures.push(card);
+        currentBattlefield.creatures.push(card);
       } else {
-        this.battlefield.others.push(card);
+        currentBattlefield.others.push(card);
       }
 
       this.updateExileDisplay();
@@ -2668,25 +3641,39 @@ class ModernHandSimulator {
   }
 
   updateOpponentHandDisplay() {
-    // For opponent, just show card backs or count
-    const container2 = document.getElementById('opponentHandContainer2');
-
-    const cardBacks = this.opponent.hand.map((_, index) =>
-      `<div class="card-back">Card ${index + 1}</div>`
-    ).join('');
-
-    if (container2) {
-      container2.innerHTML = cardBacks;
+    // Check if we're actively controlling the opponent
+    if (this.activePlayer === 'opponent') {
+      // When controlling opponent, show detailed cards
+      this.updateOpponentHandDisplayDetailed();
     } else {
-      console.warn('opponentHandContainer2 not found');
+      // When not controlling opponent, show card backs or count
+      const container2 = document.getElementById('opponentHandContainer2');
+
+      const cardBacks = this.opponent.hand.map((_, index) =>
+        `<div class="card-back">Card ${index + 1}</div>`
+      ).join('');
+
+      if (container2) {
+        container2.innerHTML = cardBacks;
+      } else {
+        console.warn('opponentHandContainer2 not found');
+      }
     }
   }
 
   updateHandDisplay() {
-    console.log('updateHandDisplay called, hand:', this.hand);
-    // Update both single and two-player layouts
-    this.updateZoneDisplay('handContainer', this.hand);
-    this.updateZoneDisplay('handContainer2', this.hand);
+    console.log('updateHandDisplay called, activePlayer:', this.activePlayer);
+
+    // Check which player is active and show their hand
+    if (this.activePlayer === 'opponent') {
+      console.log('Active player is opponent, showing opponent hand');
+      this.updateOpponentHandDisplayDetailed();
+    } else {
+      console.log('Active player is player, showing player hand:', this.hand);
+      // Update both single and two-player layouts
+      this.updateZoneDisplay('handContainer', this.hand);
+      this.updateZoneDisplay('handContainer2', this.hand);
+    }
   }
 
   updateGraveyardDisplay() {
@@ -2699,6 +3686,7 @@ class ModernHandSimulator {
 
   updateZoneDisplay(containerId, cards) {
     console.log('updateZoneDisplay called:', containerId, 'cards:', cards.length);
+    console.log('Testing container ID logic:', containerId, 'includes handContainer?', containerId.includes('handContainer'));
     const container = document.getElementById(containerId);
     console.log('container found:', container);
     if (!container) {
@@ -2707,13 +3695,37 @@ class ModernHandSimulator {
     }
 
     // Special handling for hand containers
-    if (containerId.includes('handContainer')) {
-      console.log('Processing hand container:', containerId);
+    if (containerId.includes('handContainer') || containerId.includes('HandContainer')) {
+      console.log('ENHANCED TEMPLATE - Processing hand container:', containerId);
       console.log('Cards to display:', cards);
       console.log('First card structure:', cards[0]);
+      console.trace('Call stack for enhanced template rendering');
 
       try {
-        container.innerHTML = cards.map((card, index) => {
+        // Sort cards with lands first, then by type
+        const sortedCards = [...cards].sort((a, b) => {
+          const aType = this.getCardMainType(a.type || '').toLowerCase();
+          const bType = this.getCardMainType(b.type || '').toLowerCase();
+
+          // Lands first
+          if (aType === 'land' && bType !== 'land') return -1;
+          if (bType === 'land' && aType !== 'land') return 1;
+
+          // Then sort alphabetically by type
+          if (aType !== bType) return aType.localeCompare(bType);
+
+          // Finally sort by name within same type
+          return a.name.localeCompare(b.name);
+        });
+
+        // Store sorted order for keyboard shortcuts (only for main hand containers)
+        if (containerId === 'handContainer' && this.activePlayer === 'player') {
+          this.sortedHandOrder = sortedCards;
+        } else if (containerId === 'handContainer' && this.activePlayer === 'opponent') {
+          this.sortedOpponentHandOrder = sortedCards;
+        }
+
+        container.innerHTML = sortedCards.map((card, index) => {
           console.log('Processing card', index, ':', card);
           const cardId = card.id || `${card.name}_${index}`;
           const isSelected = this.selectedCards.has(cardId);
@@ -2780,12 +3792,19 @@ class ModernHandSimulator {
       const hasCounters = activeCounters.length > 0;
       const counterText = activeCounters.map(([type, count]) => `${count} ${type}`).join(', ');
 
-      console.log(`Rendering card ${card.name}:`, {
+      // Damage display for creatures
+      const damage = card.damage || 0;
+      const hasDamage = damage > 0;
+      const toughness = this.getCreatureToughness(card);
+      const isCreature = this.getCardMainType(card.type).toLowerCase() === 'creature';
+
+      console.log(`SIMPLE TEMPLATE - Rendering card ${card.name} in container ${containerId}:`, {
         isTapped,
         hasCounters,
         counters,
         counterText
       });
+      console.trace('Call stack for simple template rendering');
 
       let counterHTML = '';
       if (hasCounters) {
@@ -2798,18 +3817,25 @@ class ModernHandSimulator {
         tapHTML = '<div class=\'tap-indicator\' style=\'position: absolute; top: 2px; right: 2px; background: rgba(255, 255, 255, 0.9); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 100;\'>⤵️</div>';
       }
 
+      let damageHTML = '';
+      if (isCreature && hasDamage) {
+        const damageColor = damage >= toughness ? 'red' : 'orange';
+        damageHTML = `<div class="damage-indicator" style="position: absolute; bottom: 2px; right: 2px; background: ${damageColor}; color: white; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: bold; z-index: 100;">💔 ${damage}</div>`;
+      }
+
       return `
         <div class="zone-card card-played ${isTapped ? 'tapped' : ''}"
              style="animation-delay: ${index * 0.05}s; cursor: pointer;"
              data-card-id="${card.id}"
              data-card-name="${this.escapeHtml(card.name)}"
-             onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')"
+             onclick="window.handSimulator.handleBattlefieldCardClick(event, '${card.id}', '${this.escapeHtml(card.name)}')"
              oncontextmenu="window.handSimulator.${menuFunction}(event, '${card.id}'); return false;"
              title="Left-click to view card, Right-click for options">
           <div class="card-content">
             <div class="card-image-container" style="position: relative;">
               <div class="loading-placeholder">🎴</div>
               ${tapHTML}
+              ${damageHTML}
             </div>
             <div class="card-info">
               <div class="card-name">${this.escapeHtml(card.name)}</div>
@@ -3192,60 +4218,75 @@ class ModernHandSimulator {
 
   // Hand card movement functions
   moveHandCardToGraveyard(cardId) {
-    const cardIndex = this.hand.findIndex((card, idx) => {
+    // Determine which player's hand and graveyard to use
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+
+    const cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
 
     if (cardIndex !== -1) {
-      const card = this.hand.splice(cardIndex, 1)[0];
-      this.graveyard.push(card);
+      const card = currentHand.splice(cardIndex, 1)[0];
+      currentGraveyard.push(card);
       this.updateHandDisplay();
       this.updateGraveyardDisplay();
       this.updateUI();
-      this.showToast(`${card.name} moved to graveyard`, 'info');
+      const playerName = this.activePlayer === 'opponent' ? 'Opponent\'s' : '';
+      this.showToast(`${playerName} ${card.name} moved to graveyard`, 'info');
     }
   }
 
   moveHandCardToExile(cardId) {
-    const cardIndex = this.hand.findIndex((card, idx) => {
+    // Determine which player's hand and exile to use
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+
+    const cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
 
     if (cardIndex !== -1) {
-      const card = this.hand.splice(cardIndex, 1)[0];
-      this.exile.push(card);
+      const card = currentHand.splice(cardIndex, 1)[0];
+      currentExile.push(card);
       this.updateHandDisplay();
       this.updateExileDisplay();
       this.updateUI();
-      this.showToast(`${card.name} exiled`, 'info');
+      const playerName = this.activePlayer === 'opponent' ? 'Opponent\'s' : '';
+      this.showToast(`${playerName} ${card.name} exiled`, 'info');
     }
   }
 
   moveHandCardToLibrary(cardId) {
-    const cardIndex = this.hand.findIndex((card, idx) => {
+    // Determine which player's hand and library to use
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    const currentLibrary = this.activePlayer === 'opponent' ? this.opponent.library : this.library;
+
+    const cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
 
     if (cardIndex !== -1) {
-      const card = this.hand.splice(cardIndex, 1)[0];
+      const card = currentHand.splice(cardIndex, 1)[0];
 
       // Ask where to put it in library
       const position = window.prompt('Put on top (t) or bottom (b) of library?', 't');
       if (position === null) {
         // Cancelled - put card back in hand
-        this.hand.splice(cardIndex, 0, card);
+        currentHand.splice(cardIndex, 0, card);
         return;
       }
 
+      const playerName = this.activePlayer === 'opponent' ? 'Opponent\'s ' : '';
       if (position.toLowerCase() === 'b' || position.toLowerCase() === 'bottom') {
-        this.library.unshift(card); // Bottom of library
-        this.showToast(`${card.name} put on bottom of library`, 'info');
+        currentLibrary.unshift(card); // Bottom of library
+        this.showToast(`${playerName}${card.name} put on bottom of library`, 'info');
       } else {
-        this.library.push(card); // Top of library
-        this.showToast(`${card.name} put on top of library`, 'info');
+        currentLibrary.push(card); // Top of library
+        this.showToast(`${playerName}${card.name} put on top of library`, 'info');
       }
 
       this.updateHandDisplay();
@@ -3703,38 +4744,32 @@ class ModernHandSimulator {
    */
   passTurn() {
     const previousPlayer = this.activePlayer;
-    const newPlayer = this.activePlayer === 'player' ? 'opponent' : 'player';
 
-    // End current player's turn
+    // Use the existing endTurn() method which handles everything
+    // including switching players, drawing cards, and advancing phases
     this.endTurn();
 
-    // Switch to new player
-    this.activePlayer = newPlayer;
+    // Update our enhanced UI context
     this.updatePlayerContextUI();
-    this.updateUI();
 
-    // Start new player's turn
-    this.startTurn();
-
-    this.playSound('success');
-    this.showToast(`Turn passed from ${previousPlayer} to ${newPlayer}`, 'info');
+    this.playSound?.('success');
+    this.showToast(`Turn passed from ${previousPlayer} to ${this.activePlayer}`, 'info');
   }
 
   /**
-   * Start a player's turn
+   * Start a player's turn (used by startTwoPlayerGame)
    */
   startTurn() {
-    // Draw card (except first turn)
-    if (!this.turnState.isFirstTurn) {
-      this.drawCardForActivePlayer();
-    }
+    // This method is mainly for initial game setup
+    // Normal turn progression uses the existing endTurn() -> executeBeginningPhase() flow
 
-    // Reset phase
-    this.turnState.phase = 'main1';
+    // Reset phase to beginning for proper turn structure
+    this.turnState.phase = 'beginning';
+    this.turnState.step = 'untap';
     this.turnState.isFirstTurn = false;
 
-    // Untap permanents
-    this.untapAllPermanents();
+    // Use the existing beginning phase logic
+    this.executeBeginningPhase();
 
     this.updateTurnDisplay();
     this.showToast(`${this.activePlayer}'s turn begins`, 'info');
@@ -3846,26 +4881,35 @@ class ModernHandSimulator {
   /**
    * Quick setup for two-player testing
    */
-  quickTwoPlayerSetup() {
-    // Load default decks for both players
-    const playerDeck = './xml/BigRedMachine.xml';
-    const opponentDeck = './xml/Stasis.xml';
+  async quickTwoPlayerSetup() {
+    try {
+      // Load default decks for both players
+      const playerDeck = './xml/BigRedMachine.xml';
+      const opponentDeck = './xml/Stasis.xml';
 
-    this.showToast('Setting up two-player game...', 'info');
+      this.showToast('Setting up two-player game...', 'info');
 
-    // Load player deck
-    this.switchToPlayer();
-    this.loadDeckFromPath(playerDeck).then(() => {
-      this.drawHand(7);
+      // Load player deck first (this will reset game state)
+      this.switchToPlayer();
+      console.log('Loading player deck:', playerDeck);
+      await this.loadDeck(playerDeck);
+      console.log('Player deck loaded, drawing hand...');
+      this.drawHand();
 
-      // Load opponent deck
-      this.loadOpponentDeck(opponentDeck).then(() => {
-        this.drawOpponentHand(7);
+      // Load opponent deck AFTER player deck to avoid reset
+      console.log('Loading opponent deck:', opponentDeck);
+      await this.loadOpponentDeck(opponentDeck);
+      console.log('Opponent deck loaded, drawing opponent hand...');
+      this.drawOpponentHand(7);
 
-        this.showToast('Two-player setup complete! Switch between players to control each side.', 'success');
-        this.updatePlayerContextUI();
-      });
-    });
+      this.showToast('Two-player setup complete! Switch between players to control each side.', 'success');
+      this.updatePlayerContextUI();
+
+      console.log('Quick setup completed successfully');
+    } catch (error) {
+      console.error('Error during quick setup:', error);
+      this.showToast('Error setting up two-player game. Please try manual setup.', 'error');
+    }
   }
 
   /**
@@ -3897,6 +4941,27 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     handSimulator = new ModernHandSimulator();
     window.handSimulator = handSimulator; // Make available globally for onclick handlers
+
+    console.log('=== GLOBAL ASSIGNMENT DEBUG ===');
+    console.log('window.handSimulator set:', !!window.handSimulator);
+    console.log('switchToOpponent method exists:', typeof window.handSimulator?.switchToOpponent);
+
+    // Test the button after DOM is loaded
+    setTimeout(() => {
+      const opponentBtn = document.getElementById('switchToOpponent');
+      console.log('Opponent button found:', !!opponentBtn);
+      if (opponentBtn) {
+        console.log('Button onclick attribute:', opponentBtn.getAttribute('onclick'));
+
+        // Test direct method call
+        console.log('Testing direct method call...');
+        try {
+          window.handSimulator.switchToOpponent();
+        } catch (error) {
+          console.error('Direct call failed:', error);
+        }
+      }
+    }, 2000);
   });
 } else {
   handSimulator = new ModernHandSimulator();

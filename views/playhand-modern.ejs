@@ -44,6 +44,19 @@
                         🔊 Sound
                     </button>
                 </div>
+
+                <!-- Targeting Controls -->
+                <div class="targeting-controls">
+                    <button class="targeting-btn" onclick="window.handSimulator?.enableTargetingMode(1, 'Damage Spell')" title="Deal 1 damage to any creature">
+                        💔 1 Damage
+                    </button>
+                    <button class="targeting-btn lightning-bolt" onclick="window.handSimulator?.enableTargetingMode(3, 'Lightning Bolt')" title="Lightning Bolt - Deal 3 damage to any creature">
+                        ⚡ Lightning Bolt
+                    </button>
+                    <button class="targeting-btn" onclick="window.handSimulator?.enableTargetingMode(4, 'Damage Spell')" title="Deal 4 damage to any creature">
+                        🔥 4 Damage
+                    </button>
+                </div>
             </div>
 
             <div class="controls-section">
@@ -320,6 +333,47 @@
                 </div>
             </div>
 
+            <!-- Two-Player Controls (Always Visible) -->
+            <div class="card mb-4" style="border: 2px solid var(--primary); background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));">
+                <div class="card-body p-3">
+                    <div class="d-flex gap-2 align-items-center mb-3">
+                        <span class="text-muted font-weight-bold">Active Player:</span>
+                        <button id="switchToPlayer" class="btn btn-primary btn-sm" onclick="window.handSimulator?.switchToPlayer()">
+                            🧙‍♂️ You
+                        </button>
+                        <button id="switchToOpponent" class="btn btn-secondary btn-sm" onclick="window.handSimulator?.switchToOpponent()">
+                            👤 Opponent
+                        </button>
+                    </div>
+
+                    <!-- Active Player Context Indicator -->
+                    <div id="activePlayerIndicator" class="player-context player" style="
+                        padding: var(--space-2) var(--space-3);
+                        background: var(--primary);
+                        color: white;
+                        border-radius: var(--border-radius);
+                        text-align: center;
+                        font-weight: bold;
+                        margin-bottom: var(--space-2);
+                    ">
+                        Controlling: You
+                    </div>
+
+                    <!-- Two-Player Game Controls -->
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-success btn-xs" onclick="window.handSimulator?.quickTwoPlayerSetup()" title="Quick setup with default decks">
+                            ⚡ Quick Setup
+                        </button>
+                        <button class="btn btn-warning btn-xs" onclick="window.handSimulator?.startTwoPlayerGame()" title="Start structured turn-based game">
+                            🎮 Start Game
+                        </button>
+                        <button class="btn btn-info btn-xs" onclick="window.handSimulator?.passTurn()" title="Pass turn to other player">
+                            ↻ Pass Turn
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Empty State -->
             <div id="emptyState" class="card">
                 <div class="card-body text-center">
@@ -328,10 +382,10 @@
                     </div>
                     <h2 class="mb-2">MTG Hand Simulator</h2>
                     <p class="text-muted mb-4">
-                        Select a deck from the sidebar to start simulating hands and playing cards.
+                        Select a deck to start simulating, or use <strong>Quick Setup</strong> above for instant two-player testing.
                     </p>
                     <div class="d-flex gap-4 justify-content-center">
-                        <button onclick="document.querySelector('.deck-search-input').focus()"
+                        <button onclick="document.querySelector('.deck-search-input')?.focus()"
                                 class="btn btn-primary">
                             Choose Pre-defined Deck
                         </button>
@@ -448,46 +502,6 @@
 
                 <!-- Original Single-Player Layout -->
                 <div class="single-player-layout">
-                <!-- Enhanced Player Switch Controls -->
-                <div class="card mb-4" style="border: 2px solid var(--primary); background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));">
-                    <div class="card-body p-3">
-                        <div class="d-flex gap-2 align-items-center mb-3">
-                            <span class="text-muted font-weight-bold">Active Player:</span>
-                            <button id="switchToPlayer" class="btn btn-primary btn-sm" onclick="window.handSimulator.switchToPlayer()">
-                                🧙‍♂️ You
-                            </button>
-                            <button id="switchToOpponent" class="btn btn-secondary btn-sm" onclick="window.handSimulator.switchToOpponent()">
-                                👤 Opponent
-                            </button>
-                        </div>
-
-                        <!-- Active Player Context Indicator -->
-                        <div id="activePlayerIndicator" class="player-context player" style="
-                            padding: var(--space-2) var(--space-3);
-                            background: var(--primary);
-                            color: white;
-                            border-radius: var(--border-radius);
-                            text-align: center;
-                            font-weight: bold;
-                            margin-bottom: var(--space-2);
-                        ">
-                            Controlling: You
-                        </div>
-
-                        <!-- Two-Player Game Controls -->
-                        <div class="d-flex gap-2 flex-wrap">
-                            <button class="btn btn-success btn-xs" onclick="window.handSimulator.quickTwoPlayerSetup()" title="Quick setup with default decks">
-                                ⚡ Quick Setup
-                            </button>
-                            <button class="btn btn-warning btn-xs" onclick="window.handSimulator.startTwoPlayerGame()" title="Start structured turn-based game">
-                                🎮 Start Game
-                            </button>
-                            <button class="btn btn-info btn-xs" onclick="window.handSimulator.passTurn()" title="Pass turn to other player">
-                                ↻ Pass Turn
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Opponent Section -->
                 <div id="opponentSection" class="card mb-4">
