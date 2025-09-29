@@ -47,15 +47,113 @@
 
                 <!-- Targeting Controls -->
                 <div class="targeting-controls">
-                    <button class="targeting-btn" onclick="window.handSimulator?.enableTargetingMode(1, 'Damage Spell')" title="Deal 1 damage to any creature">
-                        💔 1 Damage
-                    </button>
-                    <button class="targeting-btn lightning-bolt" onclick="window.handSimulator?.enableTargetingMode(3, 'Lightning Bolt')" title="Lightning Bolt - Deal 3 damage to any creature">
-                        ⚡ Lightning Bolt
-                    </button>
-                    <button class="targeting-btn" onclick="window.handSimulator?.enableTargetingMode(4, 'Damage Spell')" title="Deal 4 damage to any creature">
-                        🔥 4 Damage
-                    </button>
+                    <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px;">🎯 Spell Targeting</h4>
+
+                    <!-- Damage Spells -->
+                    <div style="margin-bottom: 8px;">
+                        <strong style="font-size: 12px; color: var(--text-secondary);">Damage:</strong>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="targeting-btn" onclick="window.handSimulator?.shock()" title="Shock - Deal 2 damage to any target">
+                                💥 Shock
+                            </button>
+                            <button class="targeting-btn lightning-bolt" onclick="window.handSimulator?.lightningBolt()" title="Lightning Bolt - Deal 3 damage to any target">
+                                ⚡ Bolt
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Removal Spells -->
+                    <div style="margin-bottom: 8px;">
+                        <strong style="font-size: 12px; color: var(--text-secondary);">Removal:</strong>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="targeting-btn" onclick="window.handSimulator?.swordsToPlowshares()" title="Swords to Plowshares - Exile target creature">
+                                ⚔️ Swords
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.murder()" title="Murder - Destroy target creature">
+                                💀 Murder
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.terror()" title="Terror - Destroy target non-black creature">
+                                😱 Terror
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bounce Spells -->
+                    <div style="margin-bottom: 8px;">
+                        <strong style="font-size: 12px; color: var(--text-secondary);">Bounce:</strong>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="targeting-btn" onclick="window.handSimulator?.unsummon()" title="Unsummon - Return target creature to hand">
+                                🔄 Unsummon
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.boomerang()" title="Boomerang - Return target permanent to hand">
+                                🪃 Boomerang
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Library Manipulation -->
+                    <div style="margin-bottom: 8px;">
+                        <strong style="font-size: 12px; color: var(--text-secondary);">Library:</strong>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="targeting-btn" onclick="window.handSimulator?.scry2()" title="Scry 2 - Look at top 2 cards, put any on bottom">
+                                🔮 Scry 2
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.ponder()" title="Ponder - Look at top 3 cards, rearrange or shuffle">
+                                🤔 Ponder
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.preordain()" title="Preordain - Scry 2, then draw a card">
+                                📜 Preordain
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.surveil2()" title="Surveil 2 - Look at top 2 cards, put any in graveyard">
+                                🗂️ Surveil
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tutor/Search Spells -->
+                    <div style="margin-bottom: 8px;">
+                        <strong style="font-size: 12px; color: var(--text-secondary);">Tutors:</strong>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="targeting-btn" onclick="window.handSimulator?.fetchland()" title="Fetchland - Search library for basic land">
+                                🏞️ Fetchland
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.evolvingWilds()" title="Evolving Wilds - Search for basic land">
+                                🌍 Evolving
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.rampantGrowth()" title="Rampant Growth - Search for basic land to battlefield">
+                                🌿 Rampant
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.cultivate()" title="Cultivate - Search for 2 lands, 1 to hand, 1 to battlefield">
+                                🌾 Cultivate
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Graveyard Spells -->
+                    <div style="margin-bottom: 8px;">
+                        <strong style="font-size: 12px; color: var(--text-secondary);">Graveyard:</strong>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="targeting-btn" onclick="window.handSimulator?.reanimate()" title="Reanimate - Put target creature from graveyard onto battlefield">
+                                ⚰️ Reanimate
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.regrowth()" title="Regrowth - Return target card from graveyard to hand">
+                                🌱 Regrowth
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Utility Spells -->
+                    <div>
+                        <strong style="font-size: 12px; color: var(--text-secondary);">Other:</strong>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="targeting-btn" onclick="window.handSimulator?.sleep()" title="Sleep - Tap target creature">
+                                💤 Tap
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.pacifism()" title="Pacifism - Enchant target creature">
+                                🕊️ Pacifism
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
