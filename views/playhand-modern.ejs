@@ -30,6 +30,55 @@
                 toggleButton.textContent = '❌ Close Targeting';
             }
         }
+
+        // Progressive Disclosure Functions (Phase 2)
+        function setExpertiseLevel(level) {
+            // Update active button
+            document.querySelectorAll('.expertise-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-level') === level) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update targeting controls container
+            const targetingControls = document.getElementById('targetingControls');
+            targetingControls.setAttribute('data-expertise', level);
+
+            // Store preference
+            localStorage.setItem('mtg-expertise-level', level);
+
+            // Show appropriate toast message
+            const messages = {
+                'beginner': 'Beginner mode: Essential spells only',
+                'advanced': 'Advanced mode: Basic + Advanced spells',
+                'expert': 'Expert mode: All spells available'
+            };
+
+            if (window.handSimulator && window.handSimulator.showToast) {
+                window.handSimulator.showToast(messages[level], 'info');
+            }
+        }
+
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const header = section.previousElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+
+            if (section.classList.contains('collapsed')) {
+                section.classList.remove('collapsed');
+                header.classList.remove('collapsed');
+            } else {
+                section.classList.add('collapsed');
+                header.classList.add('collapsed');
+            }
+        }
+
+        // Initialize progressive disclosure on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLevel = localStorage.getItem('mtg-expertise-level') || 'beginner';
+            setExpertiseLevel(savedLevel);
+        });
     </script>
 </head>
 <body>
@@ -37,26 +86,27 @@
         <%- include('partials/nav-modern', { activePage: 'playhand' }); -%>
 
         <!-- Compact Top Control Bar -->
-        <div class="play-controls-bar">
+        <div class="play-controls-bar" role="toolbar" aria-label="Game Controls">
             <div class="controls-section">
-                <div class="hand-controls">
-                    <button id="drawHandButton" class="btn btn-primary-action">
-                        🎲 Draw Hand
+                <div class="hand-controls" role="group" aria-label="Hand Actions">
+                    <button id="drawHandButton" class="btn btn-primary-action" aria-describedby="draw-hand-desc">
+                        <span aria-hidden="true">🎲</span> Draw Hand
                     </button>
-                    <button id="endTurnButton" class="btn btn-primary-action">
-                        ⏭️ End Turn
+                    <button id="endTurnButton" class="btn btn-primary-action" aria-describedby="end-turn-desc">
+                        <span aria-hidden="true">⏭️</span> End Turn
                     </button>
-                    <button id="drawCardButton" class="btn btn-secondary-action">
-                        📄 +1 Card
+                    <button id="drawCardButton" class="btn btn-secondary-action" aria-describedby="draw-card-desc">
+                        <span aria-hidden="true">📄</span> +1 Card
                     </button>
-                    <button id="mulligan" class="btn btn-secondary-action">
-                        🔄 Mulligan
+                    <button id="mulligan" class="btn btn-secondary-action" aria-describedby="mulligan-desc">
+                        <span aria-hidden="true">🔄</span> Mulligan
                     </button>
-                    <button id="testCountersButton" class="btn btn-tertiary-action">
-                        🧪 Test Counters
+                    <button id="testCountersButton" class="btn btn-tertiary-action" aria-describedby="test-counters-desc">
+                        <span aria-hidden="true">🧪</span> Test Counters
                     </button>
-                    <button id="soundToggle" class="btn btn-tertiary-action" onclick="window.handSimulator?.toggleSounds()" title="Toggle sound effects">
-                        🔊 Sound
+                    <button id="soundToggle" class="btn btn-tertiary-action" onclick="window.handSimulator?.toggleSounds()"
+                            aria-describedby="sound-toggle-desc" aria-pressed="true">
+                        <span aria-hidden="true">🔊</span> Sound
                     </button>
                 </div>
 
@@ -65,55 +115,114 @@
                     🎯 Spell Targeting
                 </button>
 
-                <!-- Targeting Controls -->
-                <div class="targeting-controls" id="targetingControls">
-                    <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px;">🎯 Spell Targeting</h4>
-
-                    <!-- Damage Spells -->
-                    <div style="margin-bottom: 8px;">
-                        <strong style="font-size: 12px; color: var(--text-secondary);">Damage:</strong>
-                        <div style="display: flex; gap: 4px; margin-top: 4px;">
-                            <button class="targeting-btn" onclick="window.handSimulator?.shock()" title="Shock - Deal 2 damage to any target">
-                                💥 Shock
+                <!-- Targeting Controls with Progressive Disclosure (Phase 2) -->
+                <section class="targeting-controls" id="targetingControls" role="region" aria-label="Spell Targeting Controls">
+                    <div class="targeting-header">
+                        <h4><span aria-hidden="true">🎯</span> Spell Targeting</h4>
+                        <div class="expertise-toggle" role="tablist" aria-label="Expertise Level Selection">
+                            <button class="expertise-btn active" data-level="beginner" onclick="setExpertiseLevel('beginner')"
+                                    role="tab" aria-selected="true" aria-controls="spell-sections">
+                                <span aria-hidden="true">📚</span> Beginner
                             </button>
-                            <button class="targeting-btn lightning-bolt" onclick="window.handSimulator?.lightningBolt()" title="Lightning Bolt - Deal 3 damage to any target">
-                                ⚡ Bolt
+                            <button class="expertise-btn" data-level="advanced" onclick="setExpertiseLevel('advanced')"
+                                    role="tab" aria-selected="false" aria-controls="spell-sections">
+                                <span aria-hidden="true">⚡</span> Advanced
                             </button>
-                        </div>
-                    </div>
-
-                    <!-- Removal Spells -->
-                    <div style="margin-bottom: 8px;">
-                        <strong style="font-size: 12px; color: var(--text-secondary);">Removal:</strong>
-                        <div style="display: flex; gap: 4px; margin-top: 4px;">
-                            <button class="targeting-btn" onclick="window.handSimulator?.swordsToPlowshares()" title="Swords to Plowshares - Exile target creature">
-                                ⚔️ Swords
-                            </button>
-                            <button class="targeting-btn" onclick="window.handSimulator?.murder()" title="Murder - Destroy target creature">
-                                💀 Murder
-                            </button>
-                            <button class="targeting-btn" onclick="window.handSimulator?.terror()" title="Terror - Destroy target non-black creature">
-                                😱 Terror
+                            <button class="expertise-btn" data-level="expert" onclick="setExpertiseLevel('expert')"
+                                    role="tab" aria-selected="false" aria-controls="spell-sections">
+                                <span aria-hidden="true">🎯</span> Expert
                             </button>
                         </div>
                     </div>
 
-                    <!-- Bounce Spells -->
-                    <div style="margin-bottom: 8px;">
-                        <strong style="font-size: 12px; color: var(--text-secondary);">Bounce:</strong>
-                        <div style="display: flex; gap: 4px; margin-top: 4px;">
-                            <button class="targeting-btn" onclick="window.handSimulator?.unsummon()" title="Unsummon - Return target creature to hand">
-                                🔄 Unsummon
-                            </button>
-                            <button class="targeting-btn" onclick="window.handSimulator?.boomerang()" title="Boomerang - Return target permanent to hand">
-                                🪃 Boomerang
-                            </button>
+                    <!-- Beginner Level: Essential Spells -->
+                    <div class="spell-section beginner-level">
+                        <div class="section-header collapsible" onclick="toggleSection('essential-spells')">
+                            <strong>⭐ Essential Spells</strong>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="section-content" id="essential-spells">
+                            <div class="spell-group">
+                                <button class="targeting-btn essential" onclick="window.handSimulator?.lightningBolt()" title="Lightning Bolt - Deal 3 damage to any target">
+                                    ⚡ Lightning Bolt
+                                </button>
+                                <button class="targeting-btn essential" onclick="window.handSimulator?.swordsToPlowshares()" title="Swords to Plowshares - Exile target creature">
+                                    ⚔️ Swords to Plowshares
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Library Manipulation -->
-                    <div style="margin-bottom: 8px;">
-                        <strong style="font-size: 12px; color: var(--text-secondary);">Library:</strong>
+                    <!-- Advanced Level: Damage Spells -->
+                    <div class="spell-section advanced-level" style="display: none;">
+                        <div class="section-header collapsible" onclick="toggleSection('damage-spells')">
+                            <strong>💥 Damage Spells</strong>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="section-content" id="damage-spells">
+                            <div class="spell-group">
+                                <button class="targeting-btn" onclick="window.handSimulator?.shock()" title="Shock - Deal 2 damage to any target">
+                                    💥 Shock
+                                </button>
+                                <button class="targeting-btn lightning-bolt" onclick="window.handSimulator?.lightningBolt()" title="Lightning Bolt - Deal 3 damage to any target">
+                                    ⚡ Lightning Bolt
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Level: Removal Spells -->
+                    <div class="spell-section advanced-level" style="display: none;">
+                        <div class="section-header collapsible" onclick="toggleSection('removal-spells')">
+                            <strong>💀 Removal Spells</strong>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="section-content" id="removal-spells">
+                            <div class="spell-group">
+                                <button class="targeting-btn" onclick="window.handSimulator?.swordsToPlowshares()" title="Swords to Plowshares - Exile target creature">
+                                    ⚔️ Swords to Plowshares
+                                </button>
+                                <button class="targeting-btn" onclick="window.handSimulator?.murder()" title="Murder - Destroy target creature">
+                                    💀 Murder
+                                </button>
+                                <button class="targeting-btn" onclick="window.handSimulator?.terror()" title="Terror - Destroy target non-black creature">
+                                    😱 Terror
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expert Level: Advanced Spells -->
+                    <div class="spell-section expert-level" style="display: none;">
+                        <div class="section-header collapsible" onclick="toggleSection('advanced-spells')">
+                            <strong>🎯 Advanced Spells</strong>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="section-content" id="advanced-spells">
+                            <div class="spell-group">
+                                <button class="targeting-btn" onclick="window.handSimulator?.unsummon()" title="Unsummon - Return target creature to hand">
+                                    🔄 Unsummon
+                                </button>
+                                <button class="targeting-btn" onclick="window.handSimulator?.boomerang()" title="Boomerang - Return target permanent to hand">
+                                    🪃 Boomerang
+                                </button>
+                                <button class="targeting-btn" onclick="window.handSimulator?.sleep()" title="Sleep - Tap target creature">
+                                    💤 Sleep
+                                </button>
+                                <button class="targeting-btn" onclick="window.handSimulator?.pacifism()" title="Pacifism - Enchant target creature">
+                                    🕊️ Pacifism
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expert Level: Library & Fetchlands -->
+                    <div class="spell-section expert-level" style="display: none;">
+                        <div class="section-header collapsible" onclick="toggleSection('library-spells')">
+                            <strong>📚 Library & Fetchlands</strong>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="section-content" id="library-spells">
                         <div style="display: flex; gap: 4px; margin-top: 4px;">
                             <button class="targeting-btn" onclick="window.handSimulator?.scry2()" title="Scry 2 - Look at top 2 cards, put any on bottom">
                                 🔮 Scry 2
@@ -162,32 +271,19 @@
                         </div>
                     </div>
 
-                    <!-- Graveyard Spells -->
-                    <div style="margin-bottom: 8px;">
-                        <strong style="font-size: 12px; color: var(--text-secondary);">Graveyard:</strong>
-                        <div style="display: flex; gap: 4px; margin-top: 4px;">
-                            <button class="targeting-btn" onclick="window.handSimulator?.reanimate()" title="Reanimate - Put target creature from graveyard onto battlefield">
-                                ⚰️ Reanimate
-                            </button>
-                            <button class="targeting-btn" onclick="window.handSimulator?.regrowth()" title="Regrowth - Return target card from graveyard to hand">
-                                🌱 Regrowth
-                            </button>
                         </div>
                     </div>
 
-                    <!-- Utility Spells -->
-                    <div>
-                        <strong style="font-size: 12px; color: var(--text-secondary);">Other:</strong>
-                        <div style="display: flex; gap: 4px; margin-top: 4px;">
-                            <button class="targeting-btn" onclick="window.handSimulator?.sleep()" title="Sleep - Tap target creature">
-                                💤 Tap
-                            </button>
-                            <button class="targeting-btn" onclick="window.handSimulator?.pacifism()" title="Pacifism - Enchant target creature">
-                                🕊️ Pacifism
-                            </button>
-                        </div>
+                    <!-- Screen Reader Descriptions -->
+                    <div class="sr-only">
+                        <div id="draw-hand-desc">Draw a new 7-card starting hand</div>
+                        <div id="end-turn-desc">End your turn and pass to opponent</div>
+                        <div id="draw-card-desc">Draw one additional card</div>
+                        <div id="mulligan-desc">Shuffle and draw a new hand with one less card</div>
+                        <div id="test-counters-desc">Test counter mechanics and +1/+1 counters</div>
+                        <div id="sound-toggle-desc">Toggle sound effects on or off</div>
                     </div>
-                </div>
+                </section>
             </div>
 
             <div class="controls-section">
