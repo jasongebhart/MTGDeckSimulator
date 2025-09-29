@@ -87,6 +87,29 @@
   /* Layout */
   --max-width: 1200px;
   --header-height: 4rem;
+
+  /* Component Library Standards (Phase 3) */
+  --component-spacing: var(--space-4);
+  --component-padding: var(--space-4);
+  --component-margin: var(--space-6);
+  --component-border-radius: var(--border-radius);
+  --component-shadow: var(--shadow);
+
+  /* Interactive States */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+  --transform-hover: translateY(-2px);
+  --transform-active: translateY(-1px);
+
+  /* Z-index Scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
 }
 
 /* Dark theme variables */
@@ -7076,4 +7099,1276 @@ body {
   font-size: 0.875rem;
   flex: 1;
   margin-left: 16px;
+}
+
+/* ==========================
+   PHASE 3: COMPONENT LIBRARY STANDARDIZATION
+   ========================== */
+
+/* Base Component Architecture */
+.component {
+  /* Standard component foundation */
+  border-radius: var(--component-border-radius);
+  transition: var(--transition-base);
+  position: relative;
+}
+
+.component--interactive {
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.component--interactive:hover {
+  transform: var(--transform-hover);
+}
+
+.component--interactive:active {
+  transform: var(--transform-active);
+}
+
+/* Standardized Card Component System */
+.card-system {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--component-border-radius);
+  box-shadow: var(--component-shadow);
+  transition: var(--transition-base);
+  overflow: hidden;
+}
+
+.card-system--elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+.card-system--interactive:hover {
+  transform: var(--transform-hover);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.card-system__header {
+  padding: var(--component-padding);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+}
+
+.card-system__title {
+  margin: 0;
+  font-size: var(--font-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+}
+
+.card-system__subtitle {
+  margin: var(--space-1) 0 0 0;
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.card-system__body {
+  padding: var(--component-padding);
+}
+
+.card-system__footer {
+  padding: var(--component-padding);
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--component-spacing);
+}
+
+/* Standardized Button System */
+.btn-system {
+  /* Base button styles with consistent architecture */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border: 1px solid transparent;
+  border-radius: var(--component-border-radius);
+  font-family: inherit;
+  font-size: var(--font-base);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-none);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  min-height: 44px;
+  min-width: 44px;
+  user-select: none;
+  outline: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-system:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.btn-system:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Button Variants */
+.btn-system--primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-system--primary:hover:not(:disabled) {
+  transform: var(--transform-hover);
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+}
+
+.btn-system--secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.btn-system--secondary:hover:not(:disabled) {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-light);
+  transform: var(--transform-hover);
+}
+
+.btn-system--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.btn-system--ghost:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary);
+}
+
+.btn-system--danger {
+  background: var(--error);
+  color: white;
+  border-color: var(--error);
+}
+
+.btn-system--danger:hover:not(:disabled) {
+  background: #dc2626;
+  transform: var(--transform-hover);
+}
+
+/* Button Sizes */
+.btn-system--sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-sm);
+  min-height: 36px;
+  min-width: 36px;
+}
+
+.btn-system--lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--font-lg);
+  min-height: 56px;
+  min-width: 120px;
+}
+
+/* Standardized Form System */
+.form-system {
+  display: flex;
+  flex-direction: column;
+  gap: var(--component-spacing);
+}
+
+.form-system__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-system__label {
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+}
+
+.form-system__input {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--component-border-radius);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: var(--font-base);
+  line-height: var(--leading-normal);
+  transition: var(--transition-base);
+  min-height: 44px;
+}
+
+.form-system__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-system__input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--bg-tertiary);
+}
+
+.form-system__error {
+  font-size: var(--font-sm);
+  color: var(--error);
+  margin-top: var(--space-1);
+}
+
+.form-system__help {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+
+/* Standardized Layout System */
+.layout-system {
+  display: grid;
+  gap: var(--component-spacing);
+  padding: var(--component-padding);
+}
+
+.layout-system--sidebar {
+  grid-template-columns: 300px 1fr;
+  grid-template-areas: "sidebar main";
+  gap: var(--component-margin);
+}
+
+.layout-system__sidebar {
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  gap: var(--component-spacing);
+}
+
+.layout-system__main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: var(--component-spacing);
+}
+
+/* Standardized State System */
+.state-loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.state-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-dropdown);
+}
+
+.state-loading::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border: 2px solid transparent;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: calc(var(--z-dropdown) + 1);
+}
+
+.state-error {
+  border-color: var(--error);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.state-success {
+  border-color: var(--success);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+/* Standardized Animation System */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn var(--transition-slow) ease-out;
+}
+
+.animate-slideIn {
+  animation: slideIn var(--transition-slow) ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Component Responsive Patterns */
+@media (max-width: 768px) {
+  .layout-system--sidebar {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "main"
+      "sidebar";
+  }
+
+  .card-system__header {
+    padding: var(--space-3);
+    min-height: 48px;
+  }
+
+  .card-system__body,
+  .card-system__footer {
+    padding: var(--space-3);
+  }
+
+  .btn-system {
+    min-height: 48px;
+    padding: var(--space-3) var(--space-5);
+  }
+
+  .btn-system--lg {
+    min-height: 52px;
+    padding: var(--space-4) var(--space-6);
+  }
+}
+
+/* ==========================
+   PHASE 3: ADVANCED ANIMATION SYSTEM
+   ========================== */
+
+/* Core Animation Variables */
+:root {
+  --animation-duration-fast: 150ms;
+  --animation-duration-base: 250ms;
+  --animation-duration-slow: 400ms;
+  --animation-easing-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-easing-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --animation-easing-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --animation-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --animation-easing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Preference: respect user motion settings */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Advanced Keyframe Animations */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-8px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes morphButton {
+  0% {
+    border-radius: var(--border-radius);
+  }
+  50% {
+    border-radius: 50px;
+    transform: scale(1.05);
+  }
+  100% {
+    border-radius: var(--border-radius);
+    transform: scale(1);
+  }
+}
+
+@keyframes cardFlip {
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(-90deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+}
+
+@keyframes floatUp {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+}
+
+/* Advanced Animation Classes */
+.animate-slideInTop {
+  animation: slideInFromTop var(--animation-duration-base) var(--animation-easing-ease-out);
+}
+
+.animate-slideInBottom {
+  animation: slideInFromBottom var(--animation-duration-base) var(--animation-easing-ease-out);
+}
+
+.animate-slideInLeft {
+  animation: slideInFromLeft var(--animation-duration-base) var(--animation-easing-ease-out);
+}
+
+.animate-slideInRight {
+  animation: slideInFromRight var(--animation-duration-base) var(--animation-easing-ease-out);
+}
+
+.animate-scaleIn {
+  animation: scaleIn var(--animation-duration-base) var(--animation-easing-spring);
+}
+
+.animate-scaleOut {
+  animation: scaleOut var(--animation-duration-base) var(--animation-easing-ease-in);
+}
+
+.animate-bounceIn {
+  animation: bounceIn var(--animation-duration-slow) var(--animation-easing-bounce);
+}
+
+.animate-shake {
+  animation: shake var(--animation-duration-slow) ease-in-out;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-morphButton {
+  animation: morphButton var(--animation-duration-base) var(--animation-easing-ease);
+}
+
+.animate-cardFlip {
+  animation: cardFlip var(--animation-duration-slow) var(--animation-easing-ease);
+}
+
+.animate-floatUp {
+  animation: floatUp 3s ease-in-out infinite;
+}
+
+/* Interactive Hover Animations */
+.hover-lift {
+  transition: transform var(--animation-duration-fast) var(--animation-easing-ease-out),
+              box-shadow var(--animation-duration-fast) var(--animation-easing-ease-out);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-grow {
+  transition: transform var(--animation-duration-fast) var(--animation-easing-ease-out);
+}
+
+.hover-grow:hover {
+  transform: scale(1.05);
+}
+
+.hover-shrink {
+  transition: transform var(--animation-duration-fast) var(--animation-easing-ease-out);
+}
+
+.hover-shrink:hover {
+  transform: scale(0.95);
+}
+
+.hover-rotate {
+  transition: transform var(--animation-duration-base) var(--animation-easing-ease-out);
+}
+
+.hover-rotate:hover {
+  transform: rotate(5deg);
+}
+
+.hover-glow {
+  transition: box-shadow var(--animation-duration-base) var(--animation-easing-ease-out);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Click Animations */
+.click-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.click-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translate(-50%, -50%);
+  transition: width var(--animation-duration-fast) ease-out,
+              height var(--animation-duration-fast) ease-out;
+}
+
+.click-ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+.click-morph {
+  transition: all var(--animation-duration-fast) var(--animation-easing-ease);
+}
+
+.click-morph:active {
+  transform: scale(0.95);
+  border-radius: 50px;
+}
+
+/* Staggered Animations */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideInFromBottom var(--animation-duration-base) var(--animation-easing-ease-out) forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 500ms; }
+
+/* Loading & Progress Animations */
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.loading-bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.progress-bar {
+  position: relative;
+  background: var(--bg-tertiary);
+  border-radius: 50px;
+  overflow: hidden;
+  height: 8px;
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: inherit;
+  animation: progressFill 2s var(--animation-easing-ease-out);
+}
+
+/* Modal & Overlay Animations */
+.modal-backdrop {
+  opacity: 0;
+  transition: opacity var(--animation-duration-base) var(--animation-easing-ease-out);
+}
+
+.modal-backdrop.show {
+  opacity: 1;
+}
+
+.modal-content {
+  transform: scale(0.7) translateY(-50px);
+  opacity: 0;
+  transition: all var(--animation-duration-base) var(--animation-easing-spring);
+}
+
+.modal-content.show {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Card Entrance Animations */
+.card-entrance {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all var(--animation-duration-slow) var(--animation-easing-ease-out);
+}
+
+.card-entrance.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Interactive State Animations */
+.button-processing {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.button-processing::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Success & Error Feedback Animations */
+.feedback-success {
+  animation: bounceIn var(--animation-duration-base) var(--animation-easing-bounce);
+  background: var(--success) !important;
+  color: white !important;
+}
+
+.feedback-error {
+  animation: shake var(--animation-duration-slow) ease-in-out;
+  background: var(--error) !important;
+  color: white !important;
+}
+
+/* Page Transition Animations */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity var(--animation-duration-base) var(--animation-easing-ease-out),
+              transform var(--animation-duration-base) var(--animation-easing-ease-out);
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity var(--animation-duration-base) var(--animation-easing-ease-in),
+              transform var(--animation-duration-base) var(--animation-easing-ease-in);
+}
+
+/* Utility Animation Classes */
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+.animate-delay-700 { animation-delay: 700ms; }
+.animate-delay-1000 { animation-delay: 1000ms; }
+
+.animate-duration-fast { animation-duration: var(--animation-duration-fast); }
+.animate-duration-base { animation-duration: var(--animation-duration-base); }
+.animate-duration-slow { animation-duration: var(--animation-duration-slow); }
+
+.animate-infinite { animation-iteration-count: infinite; }
+.animate-once { animation-iteration-count: 1; }
+.animate-twice { animation-iteration-count: 2; }
+
+.animate-paused { animation-play-state: paused; }
+.animate-running { animation-play-state: running; }
+
+/* ==========================
+   PHASE 3: PERFORMANCE OPTIMIZATION
+   ========================== */
+
+/* GPU Acceleration for Performance */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Critical Rendering Path Optimization */
+.above-fold {
+  /* Priority content that needs immediate rendering */
+  content-visibility: visible;
+}
+
+.below-fold {
+  /* Defer rendering of off-screen content */
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
+}
+
+/* CSS Containment for Performance */
+.layout-contain {
+  contain: layout;
+}
+
+.style-contain {
+  contain: style;
+}
+
+.paint-contain {
+  contain: paint;
+}
+
+.size-contain {
+  contain: size;
+}
+
+.strict-contain {
+  contain: strict;
+}
+
+/* Intersection Observer Optimization */
+.lazy-load {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.lazy-load.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image Optimization */
+.img-optimized {
+  object-fit: cover;
+  object-position: center;
+  loading: lazy;
+  decoding: async;
+}
+
+.img-placeholder {
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Virtual Scrolling Optimization */
+.virtual-scroll-container {
+  height: 400px;
+  overflow-y: auto;
+  contain: strict;
+}
+
+.virtual-scroll-item {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Memory Management */
+.memory-efficient {
+  /* Minimize memory footprint */
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* Critical CSS Inlining Classes */
+.critical-btn {
+  /* Minimal styles for critical path */
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.critical-card {
+  /* Minimal card for critical rendering */
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+/* Optimized Grid Layouts */
+.efficient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  contain: layout;
+}
+
+.efficient-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  contain: layout;
+}
+
+/* Resource Loading Optimization */
+.preload-critical {
+  /* Mark for preloading critical resources */
+  position: relative;
+}
+
+.preload-critical::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  background: url('critical-resource.jpg') no-repeat;
+  background-size: 1px 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Animation Performance Optimization */
+.perf-animation {
+  /* Optimize animations for 60fps */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  animation-fill-mode: both;
+}
+
+.perf-animation-end {
+  /* Remove will-change after animation */
+  will-change: auto;
+}
+
+/* Layout Stability (CLS Prevention) */
+.layout-stable {
+  /* Prevent layout shifts */
+  min-height: 100px;
+  contain-intrinsic-size: 300px 100px;
+}
+
+.aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+/* CPU Usage Optimization */
+.debounced-hover {
+  /* Reduce CPU usage on hover events */
+  transition-delay: 50ms;
+}
+
+.throttled-scroll {
+  /* Optimize scroll performance */
+  overflow-anchor: auto;
+  scroll-behavior: smooth;
+}
+
+/* Bundle Size Optimization Utilities */
+.essential-only {
+  /* Mark as essential for critical bundle */
+  position: relative;
+}
+
+.defer-load {
+  /* Mark for deferred loading */
+  visibility: hidden;
+}
+
+.defer-load.ready {
+  visibility: visible;
+}
+
+/* Performance Monitoring Helpers */
+.perf-mark::before {
+  /* Performance measurement marker */
+  content: attr(data-perf-id);
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 10px;
+  color: red;
+  pointer-events: none;
+  opacity: 0;
+}
+
+[data-debug="true"] .perf-mark::before {
+  opacity: 1;
+}
+
+/* Reduced Motion Performance */
+@media (prefers-reduced-motion: reduce) {
+  .perf-animation,
+  .hover-lift,
+  .hover-grow,
+  .hover-shrink,
+  .click-ripple,
+  .click-morph {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Dark Mode Performance Optimization */
+[data-theme="dark"] .performance-sensitive {
+  /* Optimize dark mode rendering */
+  color-scheme: dark;
+  forced-color-adjust: none;
+}
+
+/* Network Performance Optimization */
+.offline-ready {
+  /* Styles for offline state */
+  position: relative;
+}
+
+.offline-ready::after {
+  content: '⚡ Cached';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.offline-ready.cached::after {
+  opacity: 1;
+}
+
+/* Font Loading Optimization */
+.font-display-swap {
+  font-display: swap;
+}
+
+.font-display-fallback {
+  font-display: fallback;
+}
+
+.font-display-optional {
+  font-display: optional;
+}
+
+/* Critical Resource Hints */
+.preconnect-hint::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  background: url('//fonts.googleapis.com') no-repeat;
+  background-size: 0 0;
+}
+
+/* Mobile Performance Optimization */
+@media (max-width: 768px) {
+  .mobile-optimized {
+    /* Reduce complexity on mobile */
+    box-shadow: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  .mobile-optimized .hover-effect {
+    /* Disable hover effects on mobile */
+    pointer-events: none;
+  }
+
+  .mobile-simplified {
+    /* Simplified mobile styles */
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: var(--space-3);
+    border-radius: var(--border-radius);
+  }
+}
+
+/* High DPI Optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hidpi-optimized {
+    /* Optimize for high DPI displays */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Battery Performance Consideration */
+@media (prefers-reduced-motion: reduce) {
+  .battery-conscious {
+    /* Reduce battery usage */
+    animation: none;
+    transition: none;
+    will-change: auto;
+    transform: none;
+  }
+}
+
+/* Intersection Observer Performance */
+.viewport-enter {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.6s ease-out;
+}
+
+.viewport-enter.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Resource Cleanup */
+.cleanup-after-animation {
+  animation-fill-mode: forwards;
+}
+
+.cleanup-after-animation.animation-complete {
+  will-change: auto;
+  transform: translateZ(0);
+}
+
+/* Performance Budget Helpers */
+.lightweight {
+  /* Minimal footprint component */
+  contain: layout style;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  padding: 0.25rem 0.5rem;
+}
+
+.medium-weight {
+  /* Balanced performance component */
+  contain: layout;
+  transition: transform 0.2s ease;
+}
+
+.heavy-weight {
+  /* Rich component with careful optimization */
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Cache Optimization */
+.cache-friendly {
+  /* Styles that cache well */
+  background-image: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+}
+
+/* Final Performance Utilities */
+.performance-critical {
+  /* Mark as performance critical */
+  contain: strict;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.performance-optimized {
+  /* Fully optimized component */
+  contain: layout style paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
+}
+
+/* Performance Debugging */
+.perf-debug {
+  outline: 2px solid red;
+  position: relative;
+}
+
+.perf-debug::after {
+  content: 'PERF: ' attr(data-perf-note);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: red;
+  color: white;
+  padding: 2px 4px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 9999;
 }
