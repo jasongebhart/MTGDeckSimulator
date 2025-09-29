@@ -16,6 +16,21 @@
 
     <!-- Scripts -->
     <script type="module" src="./scripts/playhand-modern.mjs?v=18" defer></script>
+    <script>
+        // Mobile targeting toggle function (Phase 1: Mobile-First Layout)
+        function toggleMobileTargeting() {
+            const targetingControls = document.getElementById('targetingControls');
+            const toggleButton = document.getElementById('mobileTargetingToggle');
+
+            if (targetingControls.classList.contains('expanded')) {
+                targetingControls.classList.remove('expanded');
+                toggleButton.textContent = '🎯 Spell Targeting';
+            } else {
+                targetingControls.classList.add('expanded');
+                toggleButton.textContent = '❌ Close Targeting';
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="app-container">
@@ -25,28 +40,33 @@
         <div class="play-controls-bar">
             <div class="controls-section">
                 <div class="hand-controls">
-                    <button id="drawHandButton" class="btn btn-primary btn-sm">
+                    <button id="drawHandButton" class="btn btn-primary-action">
                         🎲 Draw Hand
                     </button>
-                    <button id="drawCardButton" class="btn btn-secondary btn-sm">
-                        📄 +1
-                    </button>
-                    <button id="mulligan" class="btn btn-secondary btn-sm">
-                        🔄 Mulligan
-                    </button>
-                    <button id="endTurnButton" class="btn btn-success btn-sm">
+                    <button id="endTurnButton" class="btn btn-primary-action">
                         ⏭️ End Turn
                     </button>
-                    <button id="testCountersButton" class="btn btn-warning btn-sm">
+                    <button id="drawCardButton" class="btn btn-secondary-action">
+                        📄 +1 Card
+                    </button>
+                    <button id="mulligan" class="btn btn-secondary-action">
+                        🔄 Mulligan
+                    </button>
+                    <button id="testCountersButton" class="btn btn-tertiary-action">
                         🧪 Test Counters
                     </button>
-                    <button id="soundToggle" class="btn btn-secondary btn-sm" onclick="window.handSimulator?.toggleSounds()" title="Toggle sound effects">
+                    <button id="soundToggle" class="btn btn-tertiary-action" onclick="window.handSimulator?.toggleSounds()" title="Toggle sound effects">
                         🔊 Sound
                     </button>
                 </div>
 
+                <!-- Mobile Targeting Toggle (visible only on mobile) -->
+                <button id="mobileTargetingToggle" class="btn btn-secondary-action mobile-only" style="display: none;" onclick="toggleMobileTargeting()">
+                    🎯 Spell Targeting
+                </button>
+
                 <!-- Targeting Controls -->
-                <div class="targeting-controls">
+                <div class="targeting-controls" id="targetingControls">
                     <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px;">🎯 Spell Targeting</h4>
 
                     <!-- Damage Spells -->
