@@ -112,19 +112,32 @@
 
                     <!-- Tutor/Search Spells -->
                     <div style="margin-bottom: 8px;">
-                        <strong style="font-size: 12px; color: var(--text-secondary);">Tutors:</strong>
+                        <strong style="font-size: 12px; color: var(--text-secondary);">Slow Fetchlands:</strong>
                         <div style="display: flex; gap: 4px; margin-top: 4px;">
-                            <button class="targeting-btn" onclick="window.handSimulator?.fetchland()" title="Fetchland - Search library for basic land">
-                                🏞️ Fetchland
-                            </button>
-                            <button class="targeting-btn" onclick="window.handSimulator?.evolvingWilds()" title="Evolving Wilds - Search for basic land">
+                            <button class="targeting-btn" onclick="window.handSimulator?.evolvingWilds()" title="Evolving Wilds - Search for basic land (enters tapped)">
                                 🌍 Evolving
                             </button>
-                            <button class="targeting-btn" onclick="window.handSimulator?.rampantGrowth()" title="Rampant Growth - Search for basic land to battlefield">
+                            <button class="targeting-btn" onclick="window.handSimulator?.rampantGrowth()" title="Rampant Growth - Search for basic land to battlefield (enters tapped)">
                                 🌿 Rampant
                             </button>
                             <button class="targeting-btn" onclick="window.handSimulator?.cultivate()" title="Cultivate - Search for 2 lands, 1 to hand, 1 to battlefield">
                                 🌾 Cultivate
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- True Fetchlands -->
+                    <div style="margin-bottom: 8px;">
+                        <strong style="font-size: 12px; color: var(--text-secondary);">True Fetchlands:</strong>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="targeting-btn" onclick="window.handSimulator?.scalding_tarn()" title="Scalding Tarn - Pay 1 life, search for Island/Mountain (enters untapped)">
+                                🌋 Scalding
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.flooded_strand()" title="Flooded Strand - Pay 1 life, search for Plains/Island (enters untapped)">
+                                🌊 Flooded
+                            </button>
+                            <button class="targeting-btn" onclick="window.handSimulator?.polluted_delta()" title="Polluted Delta - Pay 1 life, search for Island/Swamp (enters untapped)">
+                                💀 Polluted
                             </button>
                         </div>
                     </div>

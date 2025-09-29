@@ -2690,6 +2690,37 @@ class ModernHandSimulator {
     });
   }
 
+  // True fetchlands (enter untapped, cost life)
+  scalding_tarn() {
+    this.showTutorInterface('land', 'Scalding Tarn', {
+      description: 'Pay 1 life, sacrifice Scalding Tarn: Search your library for an Island or Mountain card, put it onto the battlefield, then shuffle.',
+      destination: 'battlefield',
+      tapped: false, // True fetchlands produce untapped lands
+      restrictions: ['basic'],
+      types: ['island', 'mountain']
+    });
+  }
+
+  flooded_strand() {
+    this.showTutorInterface('land', 'Flooded Strand', {
+      description: 'Pay 1 life, sacrifice Flooded Strand: Search your library for a Plains or Island card, put it onto the battlefield, then shuffle.',
+      destination: 'battlefield',
+      tapped: false,
+      restrictions: ['basic'],
+      types: ['plains', 'island']
+    });
+  }
+
+  polluted_delta() {
+    this.showTutorInterface('land', 'Polluted Delta', {
+      description: 'Pay 1 life, sacrifice Polluted Delta: Search your library for an Island or Swamp card, put it onto the battlefield, then shuffle.',
+      destination: 'battlefield',
+      tapped: false,
+      restrictions: ['basic'],
+      types: ['island', 'swamp']
+    });
+  }
+
   evolving_wilds() {
     this.showTutorInterface('land', 'Evolving Wilds', {
       description: 'Search your library for a basic land card and put it onto the battlefield tapped. Then shuffle your library.',
@@ -4021,12 +4052,23 @@ class ModernHandSimulator {
       return;
     }
 
-    // Remove the fetchland from battlefield (sacrifice it)
+    // Find the fetchland on battlefield by name AND sacrifice it
     const fetchlandIndex = this.battlefield.lands.findIndex(land => land.name === fetchlandName);
-    if (fetchlandIndex !== -1) {
-      const fetchland = this.battlefield.lands.splice(fetchlandIndex, 1)[0];
-      this.graveyard.push(fetchland);
+    if (fetchlandIndex === -1) {
+      this.showToast(`${fetchlandName} not found on battlefield`, 'error');
+      return;
     }
+
+    // Pay the life cost (most fetchlands cost 1 life)
+    const lifeCost = this.getFetchlandLifeCost(fetchlandName);
+    if (lifeCost > 0) {
+      this.life -= lifeCost;
+      this.logAction(`Pay ${lifeCost} life for ${fetchlandName}`, 'You', false);
+    }
+
+    // Sacrifice the fetchland to graveyard
+    const fetchland = this.battlefield.lands.splice(fetchlandIndex, 1)[0];
+    this.graveyard.push(fetchland);
 
     // Remove the found land from library
     const libraryIndex = library.findIndex(card => card.id === targetLand.id);
@@ -4034,20 +4076,80 @@ class ModernHandSimulator {
       library.splice(libraryIndex, 1);
     }
 
-    // Put the land onto battlefield tapped
-    targetLand.tapped = true;
+    // Put the land onto battlefield - tapped status depends on fetchland type
+    const shouldEnterTapped = this.fetchlandProducesTaskedLands(fetchlandName);
+    targetLand.tapped = shouldEnterTapped;
     this.battlefield.lands.push(targetLand);
 
     // Shuffle library
     this.shuffleLibrary();
 
+    // Close the fetchland popup
+    this.closeFetchlandQuickSelect();
+
     // Log the action
-    this.logAction(`${fetchlandName} fetches ${targetLand.name}`, 'You', false);
+    const tappedStatus = shouldEnterTapped ? 'enters tapped' : 'enters untapped';
+    this.logAction(`${fetchlandName} fetches ${targetLand.name} (${tappedStatus})`, 'You', false);
 
     // Update displays
     this.updateBattlefieldDisplay();
     this.updateGraveyardDisplay();
-    this.showToast(`Fetched ${targetLand.name} with ${fetchlandName}`, 'success');
+    this.updateUI(); // Update life total display
+
+    const lifeCostText = lifeCost > 0 ? `, paid ${lifeCost} life` : '';
+    this.showToast(`Fetched ${targetLand.name} with ${fetchlandName} (${tappedStatus}${lifeCostText})`, 'success');
+  }
+
+  getFetchlandLifeCost(fetchlandName) {
+    const name = fetchlandName.toLowerCase();
+
+    // True fetchlands cost 1 life
+    const trueFetchlands = [
+      'flooded strand', 'polluted delta', 'bloodstained mire', 'wooded foothills', 'windswept heath',
+      'scalding tarn', 'verdant catacombs', 'arid mesa', 'misty rainforest', 'marsh flats'
+    ];
+
+    if (trueFetchlands.includes(name)) {
+      return 1;
+    }
+
+    // Free fetchlands
+    const freeFetchlands = [
+      'evolving wilds', 'terramorphic expanse', 'prismatic vista'
+    ];
+
+    if (freeFetchlands.includes(name)) {
+      return 0;
+    }
+
+    // Default to 1 life for unknown fetchlands
+    return 1;
+  }
+
+  fetchlandProducesTaskedLands(fetchlandName) {
+    const name = fetchlandName.toLowerCase();
+
+    // True fetchlands (fast fetchlands) produce UNTAPPED lands
+    const trueFetchlands = [
+      'flooded strand', 'polluted delta', 'bloodstained mire', 'wooded foothills', 'windswept heath',
+      'scalding tarn', 'verdant catacombs', 'arid mesa', 'misty rainforest', 'marsh flats'
+    ];
+
+    if (trueFetchlands.includes(name)) {
+      return false; // Lands enter untapped
+    }
+
+    // Slow fetchlands produce TAPPED lands
+    const slowFetchlands = [
+      'evolving wilds', 'terramorphic expanse', 'prismatic vista'
+    ];
+
+    if (slowFetchlands.includes(name)) {
+      return true; // Lands enter tapped
+    }
+
+    // Default to tapped for unknown fetchlands (safer assumption)
+    return true;
   }
 
   isFetchableLand(cardName) {
