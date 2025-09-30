@@ -10,7 +10,7 @@ export class CardImageService {
   static MAX_CACHE_SIZE = 1000; // Limit cache size for memory management
   static REQUEST_DELAY = 75; // Delay between requests to respect rate limits
 
-  static async getCardImageUrl(cardName, size = 'normal') {
+  static async getCardImageUrl(cardName, size = 'normal', dfcFrontFace = null) {
     if (!cardName) return this.getPlaceholderImageUrl('Unknown Card');
 
     const cacheKey = `${cardName}-${size}`;
@@ -40,7 +40,13 @@ export class CardImageService {
       // Try exact match first
       let response = await fetch(`${this.SCRYFALL_API}?exact=${encodeURIComponent(cardName)}`);
 
-      // If exact match fails, try fuzzy search
+      // If exact match fails and we have a DFC front face hint, try the full DFC name
+      if (!response.ok && response.status === 404 && dfcFrontFace) {
+        const dfcFullName = `${dfcFrontFace} // ${cardName}`;
+        response = await fetch(`${this.SCRYFALL_API}?exact=${encodeURIComponent(dfcFullName)}`);
+      }
+
+      // If still failing, try fuzzy search
       if (!response.ok && response.status === 404) {
         response = await fetch(`${this.SCRYFALL_API}?fuzzy=${encodeURIComponent(cardName)}`);
       }
@@ -55,10 +61,37 @@ export class CardImageService {
       const fallbackSizes = [size, 'normal', 'small', 'large'];
       let imageUrl = null;
 
-      for (const fallbackSize of fallbackSizes) {
-        if (cardData.image_uris?.[fallbackSize]) {
-          imageUrl = cardData.image_uris[fallbackSize];
-          break;
+      // Check if this is a double-faced card (card_faces array exists)
+      if (cardData.card_faces && cardData.card_faces.length > 0) {
+        // Find the matching face by name
+        const matchingFace = cardData.card_faces.find(face =>
+          face.name.toLowerCase() === cardName.toLowerCase()
+        );
+
+        if (matchingFace) {
+          // Get image from the specific face
+          for (const fallbackSize of fallbackSizes) {
+            if (matchingFace.image_uris?.[fallbackSize]) {
+              imageUrl = matchingFace.image_uris[fallbackSize];
+              break;
+            }
+          }
+        } else {
+          // Default to first face if no match found
+          for (const fallbackSize of fallbackSizes) {
+            if (cardData.card_faces[0].image_uris?.[fallbackSize]) {
+              imageUrl = cardData.card_faces[0].image_uris[fallbackSize];
+              break;
+            }
+          }
+        }
+      } else {
+        // Single-faced card - use normal image_uris
+        for (const fallbackSize of fallbackSizes) {
+          if (cardData.image_uris?.[fallbackSize]) {
+            imageUrl = cardData.image_uris[fallbackSize];
+            break;
+          }
         }
       }
 

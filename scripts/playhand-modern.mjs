@@ -24,6 +24,157 @@ class ModernHandSimulator {
     this.graveyard = [];
     this.exile = [];
     this.targetingMode = { active: false };
+
+    // Double-Faced Card (DFC) Database (case-insensitive keys)
+    this.dfcDatabase = {
+      // Delver and similar upkeep triggers
+      'delver of secrets': {
+        frontFace: 'Delver Of Secrets',
+        backFace: 'Insectile Aberration',
+        transformTrigger: 'upkeep_reveal_instant_sorcery',
+        canTransformBack: false
+      },
+
+      // Werewolves (Innistrad)
+      'huntmaster of the fells': {
+        frontFace: 'Huntmaster of the Fells',
+        backFace: 'Ravager of the Fells',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'mayor of avabruck': {
+        frontFace: 'Mayor of Avabruck',
+        backFace: 'Howlpack Alpha',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'daybreak ranger': {
+        frontFace: 'Daybreak Ranger',
+        backFace: 'Nightfall Predator',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'village ironsmith': {
+        frontFace: 'Village Ironsmith',
+        backFace: 'Ironfang',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'kruin outlaw': {
+        frontFace: 'Kruin Outlaw',
+        backFace: 'Terror of Kruin Pass',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'tormented pariah': {
+        frontFace: 'Tormented Pariah',
+        backFace: 'Rampaging Werewolf',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'garruk relentless': {
+        frontFace: 'Garruk Relentless',
+        backFace: 'Garruk, the Veil-Cursed',
+        transformTrigger: 'loyalty_2_or_less',
+        canTransformBack: false
+      },
+
+      // Innistrad Horror/Transforms
+      'civilized scholar': {
+        frontFace: 'Civilized Scholar',
+        backFace: 'Homicidal Brute',
+        transformTrigger: 'discard_creature',
+        canTransformBack: true
+      },
+      'ludevic\'s test subject': {
+        frontFace: 'Ludevic\'s Test Subject',
+        backFace: 'Ludevic\'s Abomination',
+        transformTrigger: 'counter_based',
+        canTransformBack: false
+      },
+      'chalice of life': {
+        frontFace: 'Chalice of Life',
+        backFace: 'Chalice of Death',
+        transformTrigger: 'life_30_or_more',
+        canTransformBack: false
+      },
+
+      // Eldritch Moon DFCs
+      'thing in the ice': {
+        frontFace: 'Thing in the Ice',
+        backFace: 'Awoken Horror',
+        transformTrigger: 'counter_removal',
+        canTransformBack: false
+      },
+      'ulvenwald observer': {
+        frontFace: 'Ulvenwald Observer',
+        backFace: 'Ulvenwald Abomination',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+
+      // Shadows over Innistrad DFCs
+      'westvale abbey': {
+        frontFace: 'Westvale Abbey',
+        backFace: 'Ormendahl, Profane Prince',
+        transformTrigger: 'sacrifice_five_creatures',
+        canTransformBack: false
+      },
+      'hanweir battlements': {
+        frontFace: 'Hanweir Battlements',
+        backFace: 'Hanweir, the Writhing Township',
+        transformTrigger: 'meld',
+        canTransformBack: false
+      },
+
+      // Midnight Hunt/Crimson Vow DFCs
+      'suspicious stowaway': {
+        frontFace: 'Suspicious Stowaway',
+        backFace: 'Seafaring Werewolf',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'village watch': {
+        frontFace: 'Village Watch',
+        backFace: 'Village Reavers',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'tovolar, dire overlord': {
+        frontFace: 'Tovolar, Dire Overlord',
+        backFace: 'Tovolar, the Midnight Scourge',
+        transformTrigger: 'werewolf',
+        canTransformBack: true
+      },
+      'arlinn, the pack\'s hope': {
+        frontFace: 'Arlinn, the Pack\'s Hope',
+        backFace: 'Arlinn, the Moon\'s Fury',
+        transformTrigger: 'daybound_nightbound',
+        canTransformBack: true
+      },
+
+      // Zendikar Rising MDFCs (Modal Double-Faced Cards)
+      'valakut awakening': {
+        frontFace: 'Valakut Awakening',
+        backFace: 'Valakut Stoneforge',
+        transformTrigger: 'mdfc',
+        canTransformBack: false
+      },
+      'agadeem\'s awakening': {
+        frontFace: 'Agadeem\'s Awakening',
+        backFace: 'Agadeem, the Undercrypt',
+        transformTrigger: 'mdfc',
+        canTransformBack: false
+      },
+      'glasspool mimic': {
+        frontFace: 'Glasspool Mimic',
+        backFace: 'Glasspool Shore',
+        transformTrigger: 'mdfc',
+        canTransformBack: false
+      }
+      // Add more DFCs as needed
+    };
+
     this.gameStats = {
       cardsDrawn: 0,
       landsPlayed: 0,
@@ -42,6 +193,11 @@ class ModernHandSimulator {
     // Game action log
     this.gameLog = [];
     this.maxLogEntries = 50;
+
+    // Undo/Redo system
+    this.history = [];
+    this.maxHistorySize = 20;
+    this.historyIndex = -1;
 
     // Priority and Stack System
     this.stack = []; // Spells/abilities waiting to resolve
@@ -95,12 +251,18 @@ class ModernHandSimulator {
       selectedCards: new Set(),
       manaPool: { W: 0, U: 0, B: 0, R: 0, G: 0, C: 0 },
       currentDeck: null,
-      deckName: 'No Deck'
+      deckName: 'No Deck',
+      deckPath: null
     };
 
     this.activePlayer = 'player'; // 'player' or 'opponent'
     this.gameMode = 'local'; // 'local' or 'network' (future)
     this.turnPhase = 'setup'; // 'setup', 'playing', 'waiting-for-opponent'
+
+    // Spell Stack System for responses
+    this.spellStack = [];
+    this.awaitingResponse = false;
+    this.priorityPlayer = null; // Who has priority to respond
     this.predefinedDecks = [
       './xml/BigRedMachine.xml',
       './xml/Stasis.xml',
@@ -207,12 +369,34 @@ class ModernHandSimulator {
     checkDeckSelector();
   }
 
-  loadDefaultDeck() {
+  async loadDefaultDeck() {
+    // Always try to load opponent deck regardless of player deck status
+    console.log('Scheduling opponent deck load in 1500ms...');
+    setTimeout(() => {
+      console.log('Timeout fired - calling loadDefaultOpponentDeckFromStorage');
+      this.loadDefaultOpponentDeckFromStorage();
+      this.updateOpponentDeckSelectorLabels();
+    }, 1500);
+
     if (this.currentDeck) {
       this.setDebugStatus('Deck already loaded');
       return;
     }
 
+    // First, try to load from localStorage (saved default deck)
+    const savedDefault = localStorage.getItem('mtg_default_deck');
+    if (savedDefault) {
+      console.log('Loading saved default deck:', savedDefault);
+      this.setDebugStatus(`Loading saved default: ${savedDefault.split('/').pop().replace('.xml', '')}`);
+      try {
+        await this.loadPredefinedDeck(savedDefault);
+        return;
+      } catch (error) {
+        console.error('Failed to load saved default, trying selector:', error);
+      }
+    }
+
+    // Fallback to deck selector or hardcoded default
     try {
       const selectedDeck = window.getSelectedDeck();
       console.log('Selected deck from selector:', selectedDeck);
@@ -265,8 +449,10 @@ class ModernHandSimulator {
     // Expand deck selector button
     const expandDeckSelector = document.getElementById('expandDeckSelector');
     const expandedDeckSelector = document.getElementById('expandedDeckSelector');
+    console.log('Deck selector elements:', { expandDeckSelector: !!expandDeckSelector, expandedDeckSelector: !!expandedDeckSelector });
     if (expandDeckSelector && expandedDeckSelector) {
       expandDeckSelector.addEventListener('click', () => {
+        console.log('Deck selector clicked!');
         const isVisible = expandedDeckSelector.style.display !== 'none';
         expandedDeckSelector.style.display = isVisible ? 'none' : 'block';
         expandDeckSelector.textContent = isVisible ? '⋯' : '×';
@@ -583,7 +769,7 @@ class ModernHandSimulator {
     }
   }
 
-  async loadDeck(deckPath) {
+  async loadDeck(deckPath, saveAsDefault = false) {
     try {
       console.log('Loading deck:', deckPath);
       this.setDebugStatus('Loading XML...');
@@ -594,10 +780,175 @@ class ModernHandSimulator {
       this.setDebugStatus('Processing XML...');
       await this.processDeckXML(xmlDoc, deckPath);
       console.log('Deck processing completed');
+
+      // Save as default deck if requested
+      if (saveAsDefault) {
+        this.saveDefaultDeck(deckPath);
+      }
     } catch (error) {
       console.error('Error loading deck:', error);
       this.setDebugStatus(`Error: ${  error.message}`);
       this.showErrorState('Failed to load deck. Please try again.');
+    }
+  }
+
+  saveDefaultDeck(deckPath) {
+    localStorage.setItem('mtg_default_deck', deckPath);
+    this.showToast('✓ Set as default deck', 'success');
+    console.log('Default deck saved:', deckPath);
+  }
+
+  setCurrentDeckAsDefault() {
+    console.log('setCurrentDeckAsDefault called, currentDeck:', this.currentDeck);
+    if (!this.currentDeck || !this.currentDeck.source) {
+      console.log('No deck loaded or no source');
+      this.showToast('No deck loaded', 'warning');
+      return;
+    }
+    console.log('Saving default deck:', this.currentDeck.source);
+    this.saveDefaultDeck(this.currentDeck.source);
+
+    // Update the deck selector to show the star
+    this.updateDeckSelectorLabels();
+  }
+
+  async loadDefaultDeckFromStorage() {
+    const defaultDeck = localStorage.getItem('mtg_default_deck');
+    if (defaultDeck) {
+      console.log('Loading default deck from storage:', defaultDeck);
+      try {
+        await this.loadDeck(defaultDeck);
+        this.showToast(`Loaded default: ${this.currentDeck.name}`, 'info');
+        return true;
+      } catch (error) {
+        console.error('Failed to load default deck:', error);
+        this.showToast('Failed to load default deck', 'warning');
+        return false;
+      }
+    }
+    return false;
+  }
+
+  getDefaultDeckPath() {
+    return localStorage.getItem('mtg_default_deck');
+  }
+
+  isDefaultDeck(deckPath) {
+    const defaultDeck = localStorage.getItem('mtg_default_deck');
+    return defaultDeck === deckPath;
+  }
+
+  clearDefaultDeck() {
+    const hadDefault = localStorage.getItem('mtg_default_deck');
+    localStorage.removeItem('mtg_default_deck');
+    if (hadDefault) {
+      this.showToast('Default deck cleared', 'info');
+      // Remove star from all deck selector options
+      const quickDeckSelect = document.getElementById('quickDeckSelect');
+      if (quickDeckSelect) {
+        Array.from(quickDeckSelect.options).forEach(option => {
+          option.textContent = option.textContent.replace('⭐ ', '');
+        });
+      }
+    } else {
+      this.showToast('No default deck set', 'warning');
+    }
+  }
+
+  // ===== OPPONENT DEFAULT DECK METHODS =====
+
+  setOpponentDeckAsDefault() {
+    console.log('=== setOpponentDeckAsDefault called ===');
+    console.log('opponent object:', this.opponent);
+    console.log('opponent.deckPath:', this.opponent.deckPath);
+    console.log('opponent.deckName:', this.opponent.deckName);
+
+    if (!this.opponent.deckPath) {
+      console.log('No opponent deck loaded - deckPath is missing');
+      this.showToast('No opponent deck loaded', 'warning');
+      return;
+    }
+
+    console.log('Saving to localStorage:', this.opponent.deckPath);
+    localStorage.setItem('mtg_default_opponent_deck', this.opponent.deckPath);
+
+    // Verify it was saved
+    const saved = localStorage.getItem('mtg_default_opponent_deck');
+    console.log('Verified saved value:', saved);
+
+    this.showToast(`✓ Set ${this.opponent.deckName} as default opponent deck`, 'success');
+    console.log('Default opponent deck saved successfully');
+
+    // Update the opponent deck selector to show the star
+    this.updateOpponentDeckSelectorLabels();
+  }
+
+  async loadDefaultOpponentDeckFromStorage() {
+    console.log('=== loadDefaultOpponentDeckFromStorage called ===');
+    console.log('Current opponent state:', {
+      deckName: this.opponent.deckName,
+      deckPath: this.opponent.deckPath,
+      librarySize: this.opponent.library?.length
+    });
+
+    const defaultDeck = localStorage.getItem('mtg_default_opponent_deck');
+    console.log('Retrieved from localStorage:', defaultDeck);
+    console.log('localStorage keys:', Object.keys(localStorage));
+
+    if (defaultDeck) {
+      console.log('Found default opponent deck, loading:', defaultDeck);
+      try {
+        await this.loadOpponentDeck(defaultDeck);
+        console.log('Default opponent deck loaded successfully');
+        console.log('After load - opponent state:', {
+          deckName: this.opponent.deckName,
+          deckPath: this.opponent.deckPath,
+          librarySize: this.opponent.library?.length
+        });
+        return true;
+      } catch (error) {
+        console.error('Failed to load default opponent deck:', error);
+        return false;
+      }
+    } else {
+      console.log('No default opponent deck found in localStorage');
+      console.log('All localStorage items:', localStorage);
+    }
+    return false;
+  }
+
+  clearDefaultOpponentDeck() {
+    const hadDefault = localStorage.getItem('mtg_default_opponent_deck');
+    localStorage.removeItem('mtg_default_opponent_deck');
+    if (hadDefault) {
+      this.showToast('Default opponent deck cleared', 'info');
+      // Remove star from opponent deck selector options
+      const opponentDeckSelect = document.getElementById('opponentDeckSelectTop');
+      if (opponentDeckSelect) {
+        Array.from(opponentDeckSelect.options).forEach(option => {
+          option.textContent = option.textContent.replace('⭐ ', '');
+        });
+      }
+    } else {
+      this.showToast('No default opponent deck set', 'warning');
+    }
+  }
+
+  updateOpponentDeckSelectorLabels() {
+    const defaultDeck = localStorage.getItem('mtg_default_opponent_deck');
+    if (!defaultDeck) return;
+
+    const opponentDeckSelect = document.getElementById('opponentDeckSelectTop');
+    if (opponentDeckSelect) {
+      Array.from(opponentDeckSelect.options).forEach(option => {
+        if (option.value === defaultDeck) {
+          if (!option.textContent.includes('⭐')) {
+            option.textContent = `⭐ ${option.textContent}`;
+          }
+        } else {
+          option.textContent = option.textContent.replace('⭐ ', '');
+        }
+      });
     }
   }
 
@@ -644,8 +995,14 @@ class ModernHandSimulator {
       // Update the quick deck selector to show the selected deck
       this.updateDeckSelector(source);
 
-      // Show success message
-      this.showToast(`Loaded deck: ${this.currentDeck.name}`, 'success');
+      // Check if this is the default deck
+      const isDefault = this.isDefaultDeck(source);
+
+      // Show success message with default indicator
+      const message = isDefault
+        ? `Loaded deck: ${this.currentDeck.name} ⭐ (Default)`
+        : `Loaded deck: ${this.currentDeck.name}`;
+      this.showToast(message, 'success');
 
     } catch (error) {
       console.error('Error processing deck:', error);
@@ -739,9 +1096,7 @@ class ModernHandSimulator {
     if (this.activePlayer === 'opponent') {
       console.log('Already controlling opponent, but updating display...');
       this.showToast('Already controlling Opponent', 'info');
-      // Still update the display even if already controlling opponent
-      this.updateOpponentHandDisplayDetailed();
-      this.updateOpponentBattlefieldDisplayDetailed();
+      // Update displays but keep both hands visible
       this.updateActivePlayerView();
       return;
     }
@@ -754,12 +1109,7 @@ class ModernHandSimulator {
     this.updatePlayerContextUI();
     this.updateUI();
 
-    console.log('About to call updateOpponentHandDisplayDetailed...');
-    this.updateOpponentHandDisplayDetailed();
-
-    console.log('About to call updateOpponentBattlefieldDisplayDetailed...');
-    this.updateOpponentBattlefieldDisplayDetailed();
-
+    // Update active player view - this will keep both hands visible
     console.log('About to call updateActivePlayerView...');
     this.updateActivePlayerView();
 
@@ -786,14 +1136,20 @@ class ModernHandSimulator {
       }
     }
 
-    // Show appropriate hand display
-    if (this.activePlayer === 'opponent') {
-      this.updateOpponentHandDisplayDetailed();
-      this.updateOpponentBattlefieldDisplayDetailed();
-    } else {
-      this.updateHandDisplay();
-      this.updateBattlefieldDisplay();
+    // ALWAYS keep both hands visible for playtesting
+    // Update player hand
+    this.updateZoneDisplay('handContainer', this.hand);
+    this.updateZoneDisplay('handContainer2', this.hand);
+
+    // Update opponent hand separately
+    const opponentContainer = document.getElementById('opponentHandContainer2');
+    if (opponentContainer) {
+      this.updateZoneDisplay('opponentHandContainer2', this.opponent.hand);
     }
+
+    // Update battlefields
+    this.updateBattlefieldDisplay();
+    this.updateOpponentBattlefieldDisplay();
   }
 
   updateOpponentBattlefieldDisplayDetailed() {
@@ -813,24 +1169,15 @@ class ModernHandSimulator {
   }
 
   updateOpponentHandDisplayDetailed() {
-    // When controlling opponent, show their actual cards in the main hand areas
-    if (this.activePlayer === 'opponent') {
-      console.log('=== updateOpponentHandDisplayDetailed ===');
-      console.log('Active player:', this.activePlayer);
-      console.log('Opponent hand length:', this.opponent.hand.length);
-      console.log('Opponent hand:', this.opponent.hand);
-      console.log('First opponent card:', this.opponent.hand[0]);
+    // In two-player mode, opponent hand always stays in opponentHandContainer2
+    // Never overwrite the player's hand containers
+    console.log('=== updateOpponentHandDisplayDetailed ===');
+    console.log('Active player:', this.activePlayer);
+    console.log('Opponent hand length:', this.opponent.hand.length);
 
-      // Show opponent cards in the main hand containers for interaction
-      console.log('Calling updateZoneDisplay for handContainer...');
-      this.updateZoneDisplay('handContainer', this.opponent.hand);
-      console.log('Calling updateZoneDisplay for handContainer2...');
-      this.updateZoneDisplay('handContainer2', this.opponent.hand);
-
-      // Also update the opponent's dedicated container
-      console.log('Calling updateZoneDisplay for opponentHandContainer2...');
-      this.updateZoneDisplay('opponentHandContainer2', this.opponent.hand);
-    }
+    // Only update the opponent's dedicated container
+    console.log('Calling updateZoneDisplay for opponentHandContainer2...');
+    this.updateZoneDisplay('opponentHandContainer2', this.opponent.hand);
   }
 
   shuffleLibrary() {
@@ -842,13 +1189,68 @@ class ModernHandSimulator {
 
   setupKeyboardShortcuts() {
     document.addEventListener('keydown', (event) => {
-      // Prevent shortcuts when typing in inputs
-      if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+      // Prevent shortcuts when typing in inputs or in modals
+      if (event.target.tagName === 'INPUT' ||
+          event.target.tagName === 'TEXTAREA' ||
+          document.getElementById('delverRevealModal')) {
         return;
       }
 
       const key = event.key.toLowerCase();
+      const ctrl = event.ctrlKey || event.metaKey;
+      const shift = event.shiftKey;
 
+      // Ctrl/Cmd shortcuts
+      if (ctrl) {
+        switch (key) {
+          case 'z':
+            event.preventDefault();
+            this.undo();
+            break;
+          case 's':
+            event.preventDefault();
+            console.log('Ctrl+S pressed - saving game state');
+            this.saveGameState();
+            break;
+          case 'l':
+            event.preventDefault();
+            this.loadGameState();
+            break;
+          case 'n':
+            event.preventDefault();
+            this.resetGame();
+            break;
+          case 'd':
+            if (shift) {
+              // Ctrl+Shift+D - Set current deck as default
+              event.preventDefault();
+              console.log('Ctrl+Shift+D pressed - setting default deck');
+              this.setCurrentDeckAsDefault();
+            } else {
+              // Ctrl+D - Clear default deck
+              event.preventDefault();
+              this.clearDefaultDeck();
+            }
+            break;
+          case 'o':
+            if (shift) {
+              // Ctrl+Shift+O - Set opponent deck as default
+              event.preventDefault();
+              console.log('Ctrl+Shift+O pressed - setting default opponent deck');
+              this.setOpponentDeckAsDefault();
+            } else {
+              // Ctrl+O - Clear default opponent deck
+              event.preventDefault();
+              this.clearDefaultOpponentDeck();
+            }
+            break;
+          default:
+            return;
+        }
+        return;
+      }
+
+      // Regular shortcuts
       switch (key) {
         case ' ':
           event.preventDefault();
@@ -863,6 +1265,26 @@ class ModernHandSimulator {
         case 'm':
           event.preventDefault();
           this.mulligan();
+          break;
+        case 'u':
+          event.preventDefault();
+          this.untapAll();
+          break;
+        case 't':
+          event.preventDefault();
+          this.nextTurn();
+          break;
+        case 'g':
+          event.preventDefault();
+          this.showSimpleModal('graveyard', this.graveyard, '🪦 Graveyard');
+          break;
+        case 'x':
+          event.preventDefault();
+          this.showSimpleModal('exile', this.exile, '🚫 Exile');
+          break;
+        case 'l':
+          event.preventDefault();
+          this.showLibraryModal();
           break;
         case '1':
         case '2':
@@ -898,30 +1320,20 @@ class ModernHandSimulator {
           event.preventDefault();
           this.activateLastFetchland();
           break;
-        case 'shift+p':
-          // Quick fetch plains
-          event.preventDefault();
-          this.quickFetchByType('plains');
+        case 's':
+          if (shift) {
+            event.preventDefault();
+            this.switchPlayer();
+          }
           break;
-        case 'shift+i':
-          // Quick fetch island
+        case 'r':
           event.preventDefault();
-          this.quickFetchByType('island');
+          this.shuffleLibrary();
+          this.showToast('Library shuffled', 'info');
           break;
-        case 'shift+s':
-          // Quick fetch swamp
+        case 'a':
           event.preventDefault();
-          this.quickFetchByType('swamp');
-          break;
-        case 'shift+m':
-          // Quick fetch mountain
-          event.preventDefault();
-          this.quickFetchByType('mountain');
-          break;
-        case 'shift+f':
-          // Quick fetch forest
-          event.preventDefault();
-          this.quickFetchByType('forest');
+          this.showDeckAnalytics();
           break;
       }
     });
@@ -1061,10 +1473,49 @@ class ModernHandSimulator {
         </div>
         <div class="keyboard-help-content">
           <div class="shortcut-section">
+            <h4>⚡ Quick Actions</h4>
+            <div class="shortcut-item">
+              <kbd>Ctrl+Z</kbd>
+              <span>Undo Last Action</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl+S</kbd>
+              <span>Save Game State</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl+Shift+D</kbd>
+              <span>Set Current Deck as Default</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl+L</kbd>
+              <span>Load Game State</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl+D</kbd>
+              <span>Clear Default Deck</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl+Shift+O</kbd>
+              <span>Set Opponent Deck as Default</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl+O</kbd>
+              <span>Clear Default Opponent Deck</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl+N</kbd>
+              <span>New Game / Reset</span>
+            </div>
+          </div>
+          <div class="shortcut-section">
             <h4>Game Control</h4>
             <div class="shortcut-item">
               <kbd>Space</kbd>
               <span>Advance Phase/End Turn</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>T</kbd>
+              <span>Next Turn</span>
             </div>
             <div class="shortcut-item">
               <kbd>D</kbd>
@@ -1074,12 +1525,35 @@ class ModernHandSimulator {
               <kbd>M</kbd>
               <span>Mulligan</span>
             </div>
+            <div class="shortcut-item">
+              <kbd>U</kbd>
+              <span>Untap All</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>R</kbd>
+              <span>Shuffle Library</span>
+            </div>
+          </div>
+          <div class="shortcut-section">
+            <h4>View Zones</h4>
+            <div class="shortcut-item">
+              <kbd>G</kbd>
+              <span>View Graveyard</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>X</kbd>
+              <span>View Exile</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>L</kbd>
+              <span>View Library</span>
+            </div>
           </div>
           <div class="shortcut-section">
             <h4>Play Cards</h4>
             <div class="shortcut-item">
               <kbd>1-9</kbd>
-              <span>Play numbered card from hand (cards show numbers)</span>
+              <span>Play numbered card from hand</span>
             </div>
           </div>
           <div class="shortcut-section">
@@ -1091,6 +1565,14 @@ class ModernHandSimulator {
             <div class="shortcut-item">
               <kbd>E</kbd>
               <span>End Turn Immediately</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Shift+S</kbd>
+              <span>Switch Player Control</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>A</kbd>
+              <span>View Deck Analytics</span>
             </div>
           </div>
           <div class="shortcut-section">
@@ -1229,7 +1711,32 @@ class ModernHandSimulator {
     if (hiddenDeckSelect) {
       hiddenDeckSelect.value = deckPath;
     }
+
+    // Update all deck selector options to show default indicator
+    this.updateDeckSelectorLabels();
+
     console.log('Deck selected:', deckPath);
+  }
+
+  updateDeckSelectorLabels() {
+    const defaultDeck = localStorage.getItem('mtg_default_deck');
+    if (!defaultDeck) return;
+
+    // Update main deck selector
+    const quickDeckSelect = document.getElementById('quickDeckSelect');
+    if (quickDeckSelect) {
+      Array.from(quickDeckSelect.options).forEach(option => {
+        if (option.value === defaultDeck) {
+          // Add star indicator if not already there
+          if (!option.textContent.includes('⭐')) {
+            option.textContent = `⭐ ${option.textContent}`;
+          }
+        } else {
+          // Remove star indicator if present
+          option.textContent = option.textContent.replace('⭐ ', '');
+        }
+      });
+    }
   }
 
   setDebugStatus(message) {
@@ -1368,11 +1875,14 @@ class ModernHandSimulator {
 
   drawCard(showAnimation = true) {
     console.log('drawCard called, showAnimation:', showAnimation);
-    console.log('Active player:', this.activePlayer);
+    console.log('Turn active player:', this.turnState.activePlayer);
+    console.log('Viewing player:', this.activePlayer);
 
-    const library = this.activePlayer === 'player' ? this.library : this.opponent.library;
-    const hand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
-    const gameStats = this.activePlayer === 'player' ? this.gameStats : this.opponent.gameStats;
+    // Use turnState.activePlayer to determine whose turn it is (not this.activePlayer which is for viewing)
+    const turnPlayer = this.turnState.activePlayer;
+    const library = turnPlayer === 'player' ? this.library : this.opponent.library;
+    const hand = turnPlayer === 'player' ? this.hand : this.opponent.hand;
+    const gameStats = turnPlayer === 'player' ? this.gameStats : this.opponent.gameStats;
 
     console.log('library length before draw:', library.length);
 
@@ -1388,11 +1898,11 @@ class ModernHandSimulator {
     gameStats.cardsDrawn++;
 
     // Log the manual draw
-    this.logAction(`Drew ${card.name}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    this.logAction(`Drew ${card.name}`, turnPlayer === 'player' ? 'You' : 'Opponent', false);
 
     if (showAnimation) {
-      // Update the appropriate hand display based on active player
-      if (this.activePlayer === 'player') {
+      // Update the appropriate hand display based on whose turn it is
+      if (turnPlayer === 'player') {
         this.updateHandDisplay();
       } else {
         this.updateOpponentHandDisplayDetailed();
@@ -1407,7 +1917,7 @@ class ModernHandSimulator {
         }
       }, 100);
 
-      const playerName = this.activePlayer === 'player' ? 'You' : 'Opponent';
+      const playerName = turnPlayer === 'player' ? 'You' : 'Opponent';
       this.showToast(`${playerName} drew ${card.name}`, 'info');
     }
 
@@ -1420,6 +1930,9 @@ class ModernHandSimulator {
       return;
     }
 
+    // Save state before mulligan
+    this.saveHistoryState('mulligan');
+
     // Put cards back in library
     this.library.push(...this.hand);
     this.shuffleArray(this.library);
@@ -1428,6 +1941,817 @@ class ModernHandSimulator {
     this.drawHand();
 
     this.showToast(`Mulligan ${this.gameStats.mulligans}`, 'info');
+  }
+
+  redrawHand() {
+    // Redraw 7 cards without mulligan penalty
+    if (this.library.length === 0) {
+      this.showToast('Library is empty. Cannot redraw cards.', 'warning');
+      return;
+    }
+
+    // Put cards back in library
+    this.library.push(...this.hand);
+    this.shuffleArray(this.library);
+
+    // Clear current hand
+    this.hand = [];
+    this.selectedCards.clear();
+
+    // Draw 7 cards (ignore mulligan count)
+    const handSize = Math.min(7, this.library.length);
+    for (let i = 0; i < handSize; i++) {
+      this.drawCard(false);
+    }
+
+    this.updateHandDisplay();
+    this.showToast(`Redrew ${handSize} cards (no penalty)`, 'success');
+  }
+
+  redrawOpponentHand() {
+    // Redraw 7 cards for opponent without mulligan penalty
+    if (!this.opponent.library || this.opponent.library.length === 0) {
+      this.showToast('Opponent has no deck loaded', 'warning');
+      return;
+    }
+
+    // Put cards back in library
+    this.opponent.library.push(...this.opponent.hand);
+    this.shuffleOpponentLibrary();
+
+    // Draw 7 cards (ignore mulligan count)
+    this.drawOpponentHand(7);
+    this.showToast('Opponent redrew 7 cards (no penalty)', 'success');
+  }
+
+  // ===== SPELL STACK SYSTEM =====
+
+  castSpellWithResponse(spellConfig) {
+    // Add spell to stack
+    const spell = {
+      id: `spell_${Date.now()}`,
+      name: spellConfig.source,
+      type: spellConfig.type,
+      caster: this.activePlayer,
+      target: null,
+      targetId: null,
+      config: spellConfig,
+      timestamp: Date.now()
+    };
+
+    this.spellStack.push(spell);
+    this.updateStackDisplay();
+
+    // Give priority to opponent
+    const opponent = this.activePlayer === 'player' ? 'opponent' : 'player';
+    this.priorityPlayer = opponent;
+    this.awaitingResponse = true;
+
+    this.showResponseUI(spell);
+    this.showToast(`${spell.name} on the stack - ${opponent} may respond`, 'info');
+  }
+
+  addSpellToStack(spellName, type, caster, targetId, config) {
+    const spell = {
+      id: `spell_${Date.now()}`,
+      name: spellName,
+      type: type,
+      caster: caster,
+      target: null,
+      targetId: targetId,
+      config: config,
+      timestamp: Date.now()
+    };
+
+    this.spellStack.push(spell);
+    this.updateStackDisplay();
+
+    // Give priority to the other player
+    const opponent = caster === 'player' ? 'opponent' : 'player';
+    this.priorityPlayer = opponent;
+    this.awaitingResponse = true;
+
+    this.showResponseUI(spell);
+    return spell;
+  }
+
+  passResponse() {
+    if (!this.awaitingResponse) return;
+
+    // Switch priority back to original caster
+    const topSpell = this.spellStack[this.spellStack.length - 1];
+    if (topSpell.caster === this.priorityPlayer) {
+      // Both players passed - resolve the stack
+      this.resolveStack();
+    } else {
+      // Give priority back to caster
+      this.priorityPlayer = topSpell.caster;
+      this.showToast(`${this.priorityPlayer} has priority`, 'info');
+      // If both passed, resolve
+      if (!this.awaitingResponse) {
+        this.resolveStack();
+      }
+    }
+  }
+
+  respondToSpell(responseSpellName, responseType, targetId) {
+    // Add response spell to stack
+    const responseSpell = {
+      id: `spell_${Date.now()}`,
+      name: responseSpellName,
+      type: responseType,
+      caster: this.priorityPlayer,
+      target: null,
+      targetId: targetId,
+      isResponse: true,
+      timestamp: Date.now()
+    };
+
+    this.spellStack.push(responseSpell);
+    this.updateStackDisplay();
+
+    // Give priority back to other player
+    const opponent = this.priorityPlayer === 'player' ? 'opponent' : 'player';
+    this.priorityPlayer = opponent;
+
+    this.showResponseUI(responseSpell);
+    this.showToast(`${responseSpellName} added to stack - ${opponent} may respond`, 'info');
+  }
+
+  resolveStack() {
+    if (this.spellStack.length === 0) {
+      this.awaitingResponse = false;
+      this.hideResponseUI();
+      return;
+    }
+
+    // Resolve spells in LIFO order (last in, first out)
+    const spell = this.spellStack.pop();
+    this.updateStackDisplay();
+
+    this.showToast(`Resolving ${spell.name}...`, 'info');
+
+    // Execute the spell effect
+    if (spell.type === 'counter') {
+      // Counter the next spell on the stack
+      if (this.spellStack.length > 0) {
+        const counteredSpell = this.spellStack.pop();
+        this.showToast(`${spell.name} counters ${counteredSpell.name}`, 'success');
+        this.updateStackDisplay();
+      } else {
+        this.showToast(`${spell.name} fizzles (no target)`, 'warning');
+      }
+    } else if (spell.targetId) {
+      // Execute targeted spell
+      this.executeSpellEffect(spell);
+    }
+
+    // Continue resolving if there are more spells
+    setTimeout(() => {
+      if (this.spellStack.length > 0) {
+        this.resolveStack();
+      } else {
+        this.awaitingResponse = false;
+        this.hideResponseUI();
+        this.showToast('Stack empty', 'info');
+      }
+    }, 1000);
+  }
+
+  executeSpellEffect(spell) {
+    const config = spell.config;
+    if (!config) return;
+
+    // Use existing executeTargeting logic
+    switch (config.type) {
+      case 'damage':
+        this.dealDamageToCreature(spell.targetId, config.damage, config.source);
+        break;
+      case 'destroy':
+        this.destroyPermanent(spell.targetId, config.source);
+        break;
+      case 'exile':
+        this.exilePermanent(spell.targetId, config.source);
+        break;
+      case 'bounce':
+        this.bouncePermanent(spell.targetId, config.source);
+        break;
+    }
+  }
+
+  showResponseUI(spell) {
+    let responseUI = document.getElementById('responseUI');
+    if (!responseUI) {
+      responseUI = document.createElement('div');
+      responseUI.id = 'responseUI';
+      responseUI.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--bg-primary);
+        border: 3px solid #ffa502;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        z-index: 10000;
+        box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        min-width: 400px;
+      `;
+      document.body.appendChild(responseUI);
+    }
+
+    const casterName = spell.caster === 'player' ? 'You' : 'Opponent';
+    const responderName = this.priorityPlayer === 'player' ? 'You' : 'Opponent';
+
+    responseUI.innerHTML = `
+      <div style="text-align: center;">
+        <h3 style="color: #ffa502; margin-bottom: 1rem;">⚡ Spell on the Stack</h3>
+        <div style="margin-bottom: 1.5rem;">
+          <strong>${casterName}</strong> cast <strong style="color: #e74c3c;">${spell.name}</strong>
+        </div>
+        <div style="margin-bottom: 1rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 4px;">
+          <div style="font-size: 0.9rem; color: var(--text-muted);">Stack (${this.spellStack.length} spells):</div>
+          ${this.spellStack.map((s, i) => `
+            <div style="margin: 0.5rem 0; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
+              ${i + 1}. ${s.name} <span style="color: var(--text-muted);">(${s.caster})</span>
+            </div>
+          `).join('')}
+        </div>
+        <div style="font-weight: bold; margin-bottom: 1.5rem;">
+          ${responderName} have priority - respond or pass?
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <button onclick="window.handSimulator.counterSpell()"
+                  style="background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
+            ❌ Counterspell
+          </button>
+          <button onclick="window.handSimulator.castResponseSpell()"
+                  style="background: #9b59b6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
+            ⚡ Cast Response
+          </button>
+          <button onclick="window.handSimulator.passResponse()"
+                  style="background: #27ae60; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
+            ✓ Pass Priority
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  hideResponseUI() {
+    const responseUI = document.getElementById('responseUI');
+    if (responseUI) {
+      responseUI.remove();
+    }
+  }
+
+  updateStackDisplay() {
+    // Update the response UI if it exists
+    if (this.spellStack.length > 0 && document.getElementById('responseUI')) {
+      const topSpell = this.spellStack[this.spellStack.length - 1];
+      this.showResponseUI(topSpell);
+    }
+  }
+
+  counterSpell() {
+    // Add counterspell to stack
+    this.respondToSpell('Counterspell', 'counter', null);
+  }
+
+  castResponseSpell() {
+    // Close response UI and enable targeting for response spell
+    this.hideResponseUI();
+    this.showToast('Select a response spell from the targeting controls', 'info');
+    // The player can then click one of the spell buttons to cast in response
+  }
+
+  // ===== UNDO/REDO SYSTEM =====
+
+  saveHistoryState(actionName = 'action') {
+    // Create a snapshot of the current game state
+    const state = {
+      actionName,
+      timestamp: Date.now(),
+      library: JSON.parse(JSON.stringify(this.library)),
+      hand: JSON.parse(JSON.stringify(this.hand)),
+      battlefield: JSON.parse(JSON.stringify(this.battlefield)),
+      graveyard: JSON.parse(JSON.stringify(this.graveyard)),
+      exile: JSON.parse(JSON.stringify(this.exile)),
+      gameStats: JSON.parse(JSON.stringify(this.gameStats)),
+      manaPool: JSON.parse(JSON.stringify(this.manaPool)),
+      turnState: JSON.parse(JSON.stringify(this.turnState)),
+      opponent: {
+        hand: JSON.parse(JSON.stringify(this.opponent.hand)),
+        battlefield: JSON.parse(JSON.stringify(this.opponent.battlefield)),
+        graveyard: JSON.parse(JSON.stringify(this.opponent.graveyard)),
+        exile: JSON.parse(JSON.stringify(this.opponent.exile)),
+        gameStats: JSON.parse(JSON.stringify(this.opponent.gameStats)),
+        manaPool: JSON.parse(JSON.stringify(this.opponent.manaPool))
+      },
+      activePlayer: this.activePlayer
+    };
+
+    // Remove any states after current index (for redo)
+    if (this.historyIndex < this.history.length - 1) {
+      this.history = this.history.slice(0, this.historyIndex + 1);
+    }
+
+    // Add new state
+    this.history.push(state);
+
+    // Limit history size
+    if (this.history.length > this.maxHistorySize) {
+      this.history.shift();
+    } else {
+      this.historyIndex++;
+    }
+
+    console.log(`Saved history state: ${actionName} (${this.historyIndex + 1}/${this.history.length})`);
+  }
+
+  undo() {
+    if (this.historyIndex < 0) {
+      this.showToast('Nothing to undo', 'warning');
+      return;
+    }
+
+    const state = this.history[this.historyIndex];
+    this.restoreState(state);
+    this.historyIndex--;
+
+    this.showToast(`Undo: ${state.actionName}`, 'info');
+    console.log(`Undone action: ${state.actionName} (now at ${this.historyIndex + 1}/${this.history.length})`);
+  }
+
+  restoreState(state) {
+    // Restore game state from snapshot
+    this.library = JSON.parse(JSON.stringify(state.library));
+    this.hand = JSON.parse(JSON.stringify(state.hand));
+    this.battlefield = JSON.parse(JSON.stringify(state.battlefield));
+    this.graveyard = JSON.parse(JSON.stringify(state.graveyard));
+    this.exile = JSON.parse(JSON.stringify(state.exile));
+    this.gameStats = JSON.parse(JSON.stringify(state.gameStats));
+    this.manaPool = JSON.parse(JSON.stringify(state.manaPool));
+    this.turnState = JSON.parse(JSON.stringify(state.turnState));
+    this.activePlayer = state.activePlayer;
+
+    // Restore opponent state
+    this.opponent.hand = JSON.parse(JSON.stringify(state.opponent.hand));
+    this.opponent.battlefield = JSON.parse(JSON.stringify(state.opponent.battlefield));
+    this.opponent.graveyard = JSON.parse(JSON.stringify(state.opponent.graveyard));
+    this.opponent.exile = JSON.parse(JSON.stringify(state.opponent.exile));
+    this.opponent.gameStats = JSON.parse(JSON.stringify(state.opponent.gameStats));
+    this.opponent.manaPool = JSON.parse(JSON.stringify(state.opponent.manaPool));
+
+    // Update all displays
+    this.updateAllDisplays();
+    this.updateUI();
+  }
+
+  // ===== SAVE/LOAD GAME STATE =====
+
+  saveGameState() {
+    const saveData = {
+      version: '1.0',
+      timestamp: new Date().toISOString(),
+      deckName: this.currentDeck?.name || 'Unknown Deck',
+      gameState: {
+        library: this.library,
+        hand: this.hand,
+        battlefield: this.battlefield,
+        graveyard: this.graveyard,
+        exile: this.exile,
+        gameStats: this.gameStats,
+        manaPool: this.manaPool,
+        turnState: this.turnState,
+        activePlayer: this.activePlayer,
+        opponent: {
+          hand: this.opponent.hand,
+          battlefield: this.opponent.battlefield,
+          graveyard: this.opponent.graveyard,
+          exile: this.opponent.exile,
+          gameStats: this.opponent.gameStats,
+          manaPool: this.opponent.manaPool,
+          library: this.opponent.library
+        },
+        gameLog: this.gameLog.slice(-20) // Save last 20 log entries
+      }
+    };
+
+    // Save to localStorage
+    const saveKey = `mtg_save_${Date.now()}`;
+    localStorage.setItem(saveKey, JSON.stringify(saveData));
+    localStorage.setItem('mtg_last_save', saveKey);
+
+    // Also allow download as JSON
+    this.downloadGameState(saveData);
+
+    this.showToast('Game saved successfully', 'success');
+    console.log('Game state saved:', saveKey);
+  }
+
+  loadGameState() {
+    // Try to load from localStorage
+    const lastSaveKey = localStorage.getItem('mtg_last_save');
+    if (!lastSaveKey) {
+      this.showToast('No saved game found', 'warning');
+      this.showLoadGameDialog();
+      return;
+    }
+
+    const saveData = JSON.parse(localStorage.getItem(lastSaveKey));
+    if (!saveData) {
+      this.showToast('Failed to load saved game', 'error');
+      return;
+    }
+
+    this.restoreGameState(saveData);
+    this.showToast(`Game loaded: ${saveData.deckName}`, 'success');
+  }
+
+  restoreGameState(saveData) {
+    const state = saveData.gameState;
+
+    // Restore all game state
+    this.library = state.library;
+    this.hand = state.hand;
+    this.battlefield = state.battlefield;
+    this.graveyard = state.graveyard;
+    this.exile = state.exile;
+    this.gameStats = state.gameStats;
+    this.manaPool = state.manaPool;
+    this.turnState = state.turnState;
+    this.activePlayer = state.activePlayer;
+
+    // Restore opponent
+    this.opponent.hand = state.opponent.hand;
+    this.opponent.battlefield = state.opponent.battlefield;
+    this.opponent.graveyard = state.opponent.graveyard;
+    this.opponent.exile = state.opponent.exile;
+    this.opponent.gameStats = state.opponent.gameStats;
+    this.opponent.manaPool = state.opponent.manaPool;
+    this.opponent.library = state.opponent.library || [];
+
+    // Restore game log
+    this.gameLog = state.gameLog || [];
+
+    // Update all displays
+    this.updateAllDisplays();
+    this.updateUI();
+
+    console.log('Game state restored:', saveData.timestamp);
+  }
+
+  downloadGameState(saveData) {
+    const dataStr = JSON.stringify(saveData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `mtg-save-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  showLoadGameDialog() {
+    // Create a simple file input dialog
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const saveData = JSON.parse(event.target.result);
+          this.restoreGameState(saveData);
+          this.showToast(`Game loaded: ${saveData.deckName}`, 'success');
+        } catch (error) {
+          this.showToast('Failed to load game file', 'error');
+          console.error('Load error:', error);
+        }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  }
+
+  // ===== DECK STATISTICS & ANALYSIS =====
+
+  showDeckAnalytics() {
+    const stats = this.calculateDeckStatistics();
+
+    const modal = document.createElement('div');
+    modal.id = 'deckAnalyticsModal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    `;
+
+    modal.innerHTML = `
+      <div style="
+        background: var(--bg-primary);
+        border: 2px solid var(--accent-color);
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 700px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      ">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2 style="margin: 0; color: var(--text-primary); font-size: 1.5rem;">
+            📊 Deck Analytics
+          </h2>
+          <button
+            onclick="document.getElementById('deckAnalyticsModal').remove()"
+            style="
+              background: transparent;
+              border: none;
+              font-size: 2rem;
+              cursor: pointer;
+              color: var(--text-secondary);
+              line-height: 1;
+              padding: 0;
+              width: 32px;
+              height: 32px;
+            ">×</button>
+        </div>
+
+        <!-- Game Stats -->
+        <div style="
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        ">
+          <h3 style="margin: 0 0 1rem 0; font-size: 1.1rem; color: var(--accent-color);">
+            Game Progress
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;">
+            <div>
+              <div style="color: var(--text-secondary); font-size: 0.85rem;">Turn</div>
+              <div style="font-size: 1.5rem; font-weight: bold; color: var(--text-primary);">${stats.currentTurn}</div>
+            </div>
+            <div>
+              <div style="color: var(--text-secondary); font-size: 0.85rem;">Cards Drawn</div>
+              <div style="font-size: 1.5rem; font-weight: bold; color: var(--text-primary);">${stats.cardsDrawn}</div>
+            </div>
+            <div>
+              <div style="color: var(--text-secondary); font-size: 0.85rem;">Lands Played</div>
+              <div style="font-size: 1.5rem; font-weight: bold; color: var(--text-primary);">${stats.landsPlayed}</div>
+            </div>
+            <div>
+              <div style="color: var(--text-secondary); font-size: 0.85rem;">Spells Cast</div>
+              <div style="font-size: 1.5rem; font-weight: bold; color: var(--text-primary);">${stats.spellsCast}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Library Stats -->
+        <div style="
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        ">
+          <h3 style="margin: 0 0 1rem 0; font-size: 1.1rem; color: var(--accent-color);">
+            Library Composition
+          </h3>
+          <div style="margin-bottom: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+              <span>Cards Remaining</span>
+              <strong>${stats.library.total}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+              <span>🏞️ Lands</span>
+              <strong>${stats.library.lands} (${stats.library.landPercent}%)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+              <span>⚡ Spells</span>
+              <strong>${stats.library.spells} (${stats.library.spellPercent}%)</strong>
+            </div>
+          </div>
+          <div style="
+            height: 24px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+          ">
+            <div style="
+              width: ${stats.library.landPercent}%;
+              background: linear-gradient(90deg, #10b981, #059669);
+              transition: width 0.3s ease;
+            "></div>
+            <div style="
+              width: ${stats.library.spellPercent}%;
+              background: linear-gradient(90deg, #3b82f6, #2563eb);
+              transition: width 0.3s ease;
+            "></div>
+          </div>
+        </div>
+
+        <!-- Mana Curve -->
+        <div style="
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        ">
+          <h3 style="margin: 0 0 1rem 0; font-size: 1.1rem; color: var(--accent-color);">
+            Mana Curve (Library)
+          </h3>
+          ${this.renderManaCurve(stats.manaCurve)}
+        </div>
+
+        <!-- Zones -->
+        <div style="
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0.75rem;
+          margin-bottom: 1rem;
+        ">
+          <div style="
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+          ">
+            <div style="font-size: 1.75rem; margin-bottom: 0.25rem;">✋</div>
+            <div style="font-size: 1.25rem; font-weight: bold;">${stats.hand}</div>
+            <div style="color: var(--text-secondary); font-size: 0.8rem;">Hand</div>
+          </div>
+          <div style="
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+          ">
+            <div style="font-size: 1.75rem; margin-bottom: 0.25rem;">⚔️</div>
+            <div style="font-size: 1.25rem; font-weight: bold;">${stats.battlefield}</div>
+            <div style="color: var(--text-secondary); font-size: 0.8rem;">Battlefield</div>
+          </div>
+          <div style="
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+          ">
+            <div style="font-size: 1.75rem; margin-bottom: 0.25rem;">🪦</div>
+            <div style="font-size: 1.25rem; font-weight: bold;">${stats.graveyard}</div>
+            <div style="color: var(--text-secondary); font-size: 0.8rem;">Graveyard</div>
+          </div>
+          <div style="
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+          ">
+            <div style="font-size: 1.75rem; margin-bottom: 0.25rem;">🚫</div>
+            <div style="font-size: 1.25rem; font-weight: bold;">${stats.exile}</div>
+            <div style="color: var(--text-secondary); font-size: 0.8rem;">Exile</div>
+          </div>
+        </div>
+
+        <div style="text-align: center; color: var(--text-secondary); font-size: 0.85rem; margin-top: 1rem;">
+          Press <kbd style="padding: 2px 6px; background: var(--bg-tertiary); border-radius: 3px;">Esc</kbd> to close
+        </div>
+      </div>
+    `;
+
+    // Close on Escape
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        modal.remove();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+
+    // Close on click outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    });
+
+    document.body.appendChild(modal);
+  }
+
+  calculateDeckStatistics() {
+    const library = this.library;
+    const lands = library.filter(card =>
+      (card.type || '').toLowerCase().includes('land')
+    );
+    const spells = library.filter(card =>
+      !(card.type || '').toLowerCase().includes('land')
+    );
+
+    // Calculate mana curve for spells in library
+    const manaCurve = {};
+    for (let i = 0; i <= 7; i++) manaCurve[i] = 0;
+    manaCurve['7+'] = 0;
+
+    library.forEach(card => {
+      if ((card.type || '').toLowerCase().includes('land')) return;
+
+      const cmc = this.calculateCMC(card.cost || '');
+      if (cmc >= 7) {
+        manaCurve['7+']++;
+      } else {
+        manaCurve[cmc]++;
+      }
+    });
+
+    return {
+      currentTurn: this.turnState.turnNumber,
+      cardsDrawn: this.gameStats.cardsDrawn,
+      landsPlayed: this.gameStats.landsPlayed,
+      spellsCast: this.gameStats.spellsCast,
+      library: {
+        total: library.length,
+        lands: lands.length,
+        spells: spells.length,
+        landPercent: library.length > 0 ? Math.round((lands.length / library.length) * 100) : 0,
+        spellPercent: library.length > 0 ? Math.round((spells.length / library.length) * 100) : 0
+      },
+      manaCurve,
+      hand: this.hand.length,
+      battlefield: this.battlefield.lands.length + this.battlefield.creatures.length + this.battlefield.others.length,
+      graveyard: this.graveyard.length,
+      exile: this.exile.length
+    };
+  }
+
+  renderManaCurve(manaCurve) {
+    const maxCount = Math.max(...Object.values(manaCurve));
+    const bars = [];
+
+    for (let i = 0; i <= 7; i++) {
+      const key = i === 7 ? '7+' : i;
+      const count = manaCurve[key] || 0;
+      const heightPercent = maxCount > 0 ? (count / maxCount) * 100 : 0;
+
+      bars.push(`
+        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+          <div style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 0.25rem;">
+            ${count}
+          </div>
+          <div style="
+            width: 100%;
+            height: 80px;
+            background: var(--bg-tertiary);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+          ">
+            <div style="
+              width: 100%;
+              height: ${heightPercent}%;
+              background: linear-gradient(180deg, #3b82f6, #2563eb);
+              border-radius: 4px 4px 0 0;
+              transition: height 0.3s ease;
+            "></div>
+          </div>
+          <div style="
+            color: var(--text-primary);
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+          ">${key}</div>
+        </div>
+      `);
+    }
+
+    return `
+      <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
+        ${bars.join('')}
+      </div>
+    `;
   }
 
   // Turn Management System
@@ -1484,14 +2808,15 @@ class ModernHandSimulator {
     this.logAction('Upkeep step', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
     this.executeUpkeepStep();
 
-    // Draw Step (skip on first turn)
+    // Draw Step (manual - no auto-draw to allow for upkeep triggers like Delver)
     this.turnState.step = 'draw';
-    this.logAction('Draw step', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
-    if (!this.turnState.isFirstTurn) {
-      this.executeDrawStep();
-    } else {
-      this.logAction('No card drawn (first turn)', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
-    }
+    this.logAction('Draw step - use Draw Card button when ready', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
+    // Auto-draw disabled to allow upkeep trigger handling
+    // if (!this.turnState.isFirstTurn) {
+    //   this.executeDrawStep();
+    // } else {
+    //   this.logAction('No card drawn (first turn)', this.turnState.activePlayer === 'player' ? 'You' : 'Opponent', true);
+    // }
 
     // Move to main phase
     this.advanceToMainPhase();
@@ -1519,8 +2844,183 @@ class ModernHandSimulator {
 
   executeUpkeepStep() {
     console.log('Upkeep step - checking for upkeep triggers');
-    // Currently no upkeep mechanics implemented
-    // This is where triggered abilities would happen
+
+    // Check for Delver of Secrets triggers
+    this.checkDelverTriggers();
+  }
+
+  checkDelverTriggers() {
+    const activePlayer = this.activePlayer === 'player' ? this : this.opponent;
+    const battlefield = activePlayer.battlefield;
+
+    // Find all Delver of Secrets on battlefield (not transformed)
+    const delvers = battlefield.creatures.filter(card => {
+      const cardName = (card.name || '').toLowerCase();
+      const currentFace = (card.currentFace || card.name).toLowerCase();
+      return cardName === 'delver of secrets' && currentFace === 'delver of secrets';
+    });
+
+    if (delvers.length === 0) {
+      console.log('No Delver of Secrets found on battlefield');
+      return;
+    }
+
+    console.log(`Found ${delvers.length} Delver(s) of Secrets`);
+
+    // Process each Delver trigger
+    delvers.forEach((delver, index) => {
+      this.triggerDelverReveal(delver, index);
+    });
+  }
+
+  triggerDelverReveal(delver, index = 0) {
+    const activePlayer = this.activePlayer === 'player' ? this : this.opponent;
+    const library = activePlayer.library;
+
+    if (library.length === 0) {
+      this.showToast('Library is empty - cannot reveal for Delver', 'warning');
+      this.logAction('Delver of Secrets trigger - no cards in library',
+        this.activePlayer === 'player' ? 'You' : 'Opponent', true);
+      return;
+    }
+
+    // Get top card
+    const topCard = library[library.length - 1];
+    const cardType = this.getCardMainType(topCard.type || '').toLowerCase();
+    const isInstantOrSorcery = cardType === 'instant' || cardType === 'sorcery';
+
+    console.log('Delver trigger:', topCard.name, 'Type:', cardType, 'Transform?', isInstantOrSorcery);
+
+    // Show modal with reveal
+    this.showDelverRevealModal(delver, topCard, isInstantOrSorcery);
+  }
+
+  showDelverRevealModal(delver, revealedCard, shouldTransform) {
+    const modal = document.createElement('div');
+    modal.id = 'delverRevealModal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    `;
+
+    const cardType = this.getCardMainType(revealedCard.type || '');
+
+    modal.innerHTML = `
+      <div style="
+        background: var(--bg-primary);
+        border: 3px solid ${shouldTransform ? '#10b981' : '#ef4444'};
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      ">
+        <h2 style="margin: 0 0 1rem 0; color: var(--text-primary); font-size: 1.5rem;">
+          🔮 Delver of Secrets Trigger
+        </h2>
+
+        <div style="
+          background: var(--bg-secondary);
+          border: 2px solid var(--border-color);
+          border-radius: 8px;
+          padding: 1.5rem;
+          margin: 1rem 0;
+        ">
+          <div style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+            Revealed card:
+          </div>
+          <div style="font-size: 1.25rem; font-weight: bold; color: var(--text-primary); margin-bottom: 0.5rem;">
+            ${this.escapeHtml(revealedCard.name)}
+          </div>
+          <div style="
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: ${shouldTransform ? '#10b98120' : '#ef444420'};
+            color: ${shouldTransform ? '#10b981' : '#ef4444'};
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+          ">
+            ${cardType}
+          </div>
+        </div>
+
+        <div style="
+          font-size: 1.1rem;
+          font-weight: bold;
+          color: ${shouldTransform ? '#10b981' : '#ef4444'};
+          margin: 1rem 0;
+        ">
+          ${shouldTransform ?
+            '✅ Transform into Insectile Aberration!' :
+            '❌ Does not transform (not an instant or sorcery)'}
+        </div>
+
+        <button
+          onclick="window.handSimulator.resolveDelverTrigger(${shouldTransform})"
+          style="
+            background: ${shouldTransform ? '#10b981' : '#3b82f6'};
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+          "
+          onmouseover="this.style.transform='scale(1.05)'"
+          onmouseout="this.style.transform='scale(1)'">
+          ${shouldTransform ? 'Transform Delver' : 'Continue'}
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Store the delver and decision for resolution
+    this.pendingDelverTrigger = {
+      delver: delver,
+      shouldTransform: shouldTransform
+    };
+  }
+
+  resolveDelverTrigger(shouldTransform) {
+    // Close modal
+    document.getElementById('delverRevealModal')?.remove();
+
+    if (!this.pendingDelverTrigger) {
+      console.error('No pending Delver trigger');
+      return;
+    }
+
+    const delver = this.pendingDelverTrigger.delver;
+
+    if (shouldTransform) {
+      // Transform the Delver
+      const cardId = delver.id || `${delver.name}_0`;
+      this.transformCard(cardId);
+      this.showToast('Delver of Secrets transformed!', 'success');
+      this.logAction('Delver of Secrets transformed into Insectile Aberration',
+        this.activePlayer === 'player' ? 'You' : 'Opponent', true);
+    } else {
+      this.showToast('Delver of Secrets does not transform', 'info');
+      this.logAction('Delver of Secrets revealed a non-instant/sorcery',
+        this.activePlayer === 'player' ? 'You' : 'Opponent', true);
+    }
+
+    // Clear pending trigger
+    this.pendingDelverTrigger = null;
   }
 
   executeDrawStep() {
@@ -1927,6 +3427,8 @@ class ModernHandSimulator {
   }
 
   handleBattlefieldCardClick(event, cardId, cardName) {
+    console.log('Battlefield card clicked:', cardId, cardName);
+
     // If we're in targeting mode, handle targeting
     if (this.targetingMode && this.targetingMode.active) {
       // Check if this card is a valid target
@@ -1951,7 +3453,14 @@ class ModernHandSimulator {
       }
     }
 
+    // Prevent event from bubbling to avoid conflicts
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     // Default behavior - show card preview
+    console.log('Showing card preview for:', cardName);
     this.showCardPreview(cardName);
   }
 
@@ -2017,7 +3526,9 @@ class ModernHandSimulator {
       this.logAction(`${creature.name} destroyed (lethal damage)`, null, true);
       this.destroyCreatureByOwner(creatureId, owner);
     } else {
+      // Update both battlefields to show damage markers
       this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
       this.showToast(`${creature.name} takes ${damage} damage (${creature.damage}/${toughness})`, 'warning');
     }
   }
@@ -2042,7 +3553,9 @@ class ModernHandSimulator {
       const graveyard = owner === 'opponent' ? this.opponent.graveyard : this.graveyard;
       graveyard.push(creature);
 
+      // Update both battlefields and graveyards
       this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
       this.updateGraveyardDisplay();
       this.showToast(`${creature.name} destroyed`, 'info');
     }
@@ -2317,37 +3830,9 @@ class ModernHandSimulator {
       return;
     }
 
-    // Execute the spell effect
-    switch (mode.type) {
-      case 'damage':
-        this.dealDamageToCreature(targetId, mode.damage, mode.source);
-        break;
-      case 'destroy':
-        this.destroyPermanent(targetId, mode.source);
-        break;
-      case 'exile':
-        this.exilePermanent(targetId, mode.source);
-        break;
-      case 'bounce':
-        this.bouncePermanent(targetId, mode.source);
-        break;
-      case 'tap':
-        this.tapPermanent(targetId, mode.source);
-        break;
-      case 'untap':
-        this.untapPermanent(targetId, mode.source);
-        break;
-      case 'enchant':
-        this.enchantPermanent(targetId, mode.source);
-        break;
-      case 'custom':
-        if (mode.effect) {
-          mode.effect(targetId, target, mode.source);
-        }
-        break;
-      default:
-        this.showToast(`Unknown targeting type: ${mode.type}`, 'error');
-    }
+    // ADD SPELL TO STACK instead of immediately resolving
+    // This allows for responses/counterspells
+    const spell = this.addSpellToStack(mode.source, mode.type, this.activePlayer, targetId, mode);
 
     this.disableTargetingMode();
   }
@@ -2692,13 +4177,16 @@ class ModernHandSimulator {
 
   // True fetchlands (enter untapped, cost life)
   scalding_tarn() {
-    this.showTutorInterface('land', 'Scalding Tarn', {
+    const options = {
       description: 'Pay 1 life, sacrifice Scalding Tarn: Search your library for an Island or Mountain card, put it onto the battlefield, then shuffle.',
       destination: 'battlefield',
       tapped: false, // True fetchlands produce untapped lands
       restrictions: ['basic'],
-      types: ['island', 'mountain']
-    });
+      types: ['island', 'mountain'],
+      fetchlandName: 'Scalding Tarn'
+    };
+    console.log('Scalding Tarn options:', options);
+    this.showTutorInterface('land', 'Scalding Tarn', options);
   }
 
   flooded_strand() {
@@ -2707,7 +4195,8 @@ class ModernHandSimulator {
       destination: 'battlefield',
       tapped: false,
       restrictions: ['basic'],
-      types: ['plains', 'island']
+      types: ['plains', 'island'],
+      fetchlandName: 'Flooded Strand'
     });
   }
 
@@ -2717,7 +4206,8 @@ class ModernHandSimulator {
       destination: 'battlefield',
       tapped: false,
       restrictions: ['basic'],
-      types: ['island', 'swamp']
+      types: ['island', 'swamp'],
+      fetchlandName: 'Polluted Delta'
     });
   }
 
@@ -3411,6 +4901,159 @@ class ModernHandSimulator {
     return fetchlands.includes(name);
   }
 
+  isWasteland(cardName) {
+    const name = cardName.toLowerCase();
+    return name === 'wasteland' || name === 'strip mine' || name === 'dust bowl' || name === 'ghost quarter';
+  }
+
+  hasSurveil(cardName) {
+    const name = cardName.toLowerCase();
+    // Common surveil cards
+    return name.includes('surveil') ||
+           name === 'dimir spybug' ||
+           name === 'thoughtbound phantasm' ||
+           name === 'doom whisperer' ||
+           name === 'nightveil sprite' ||
+           name === 'disinformation campaign';
+  }
+
+  getSurveilAmount(cardName) {
+    const name = cardName.toLowerCase();
+    // Default amounts for common surveil cards
+    const surveilMap = {
+      'doom whisperer': 2,
+      'thoughtbound phantasm': 1,
+      'dimir spybug': 1,
+      'nightveil sprite': 1,
+      'disinformation campaign': 1
+    };
+
+    // Check if card name contains "surveil X"
+    const match = name.match(/surveil (\d+)/);
+    if (match) {
+      return parseInt(match[1]);
+    }
+
+    return surveilMap[name] || 1;
+  }
+
+  // =====================================================
+  // MASS SPELL DETECTION
+  // =====================================================
+
+  isMassSpell(cardName) {
+    const name = cardName.toLowerCase();
+    return this.isBoardWipe(name) || this.isMassLandDestruction(name) || this.isMassArtifactEnchantmentDestruction(name);
+  }
+
+  isBoardWipe(cardName) {
+    const name = cardName.toLowerCase();
+    // Cards that destroy all creatures
+    return name === 'wrath of god' ||
+           name === 'damnation' ||
+           name === 'day of judgment' ||
+           name === 'supreme verdict' ||
+           name === 'terminus' ||
+           name === 'blasphemous act' ||
+           name === 'toxic deluge' ||
+           name === 'languish' ||
+           name === 'anger of the gods' ||
+           name === 'cry of the carnarium' ||
+           name === 'extinction event' ||
+           name === 'shatter the sky' ||
+           name === 'settle the wreckage';
+  }
+
+  isMassLandDestruction(cardName) {
+    const name = cardName.toLowerCase();
+    // Cards that destroy all/many lands
+    return name === 'armageddon' ||
+           name === 'ravages of war' ||
+           name === 'global ruin' ||
+           name === 'obliterate' ||
+           name === 'worldslayer' ||
+           name === 'jokulhaups' ||
+           name === 'devastation' ||
+           name === 'decree of annihilation';
+  }
+
+  isMassArtifactEnchantmentDestruction(cardName) {
+    const name = cardName.toLowerCase();
+    return name === 'cleansing nova' ||
+           name === 'austere command' ||
+           name === 'merciless eviction' ||
+           name === 'fractured identity' ||
+           name === 'vandalblast' ||
+           name === 'shatterstorm' ||
+           name === 'creeping corrosion';
+  }
+
+  getMassSpellType(cardName) {
+    const name = cardName.toLowerCase();
+
+    if (this.isBoardWipe(name)) {
+      return {
+        type: 'creatures',
+        description: 'Destroy all creatures',
+        icon: '💀',
+        targets: ['creatures']
+      };
+    }
+
+    if (this.isMassLandDestruction(name)) {
+      return {
+        type: 'lands',
+        description: 'Destroy all lands',
+        icon: '🌋',
+        targets: ['lands']
+      };
+    }
+
+    // Special cases
+    if (name === 'cleansing nova') {
+      return {
+        type: 'choice',
+        description: 'Choose: destroy all creatures OR all artifacts/enchantments',
+        icon: '✨',
+        targets: ['creatures', 'artifacts', 'enchantments']
+      };
+    }
+
+    if (name === 'austere command') {
+      return {
+        type: 'choice',
+        description: 'Choose two: destroy all creatures, artifacts, enchantments, or lands',
+        icon: '⚖️',
+        targets: ['creatures', 'artifacts', 'enchantments', 'lands']
+      };
+    }
+
+    if (name === 'merciless eviction') {
+      return {
+        type: 'choice',
+        description: 'Choose a permanent type, exile all permanents of that type',
+        icon: '🚫',
+        targets: ['creatures', 'artifacts', 'enchantments', 'planeswalkers']
+      };
+    }
+
+    if (this.isMassArtifactEnchantmentDestruction(name)) {
+      return {
+        type: 'artifacts-enchantments',
+        description: 'Destroy all artifacts and/or enchantments',
+        icon: '💥',
+        targets: ['artifacts', 'enchantments']
+      };
+    }
+
+    return {
+      type: 'generic',
+      description: 'Mass destruction',
+      icon: '💥',
+      targets: []
+    };
+  }
+
   getFetchlandTypes(cardName) {
     const name = cardName.toLowerCase();
     const fetchlandMap = {
@@ -3439,6 +5082,9 @@ class ModernHandSimulator {
     const currentPlayer = this.getCurrentPlayer();
     const availableLands = this.getAvailableLandsInLibrary(currentPlayer.library, types);
 
+    // Get dual lands that match these colors
+    const dualLands = this.getAvailableDualLands(currentPlayer.library, types);
+
     // Remove any existing fetchland popup
     document.getElementById('fetchlandQuickSelect')?.remove();
 
@@ -3458,9 +5104,29 @@ class ModernHandSimulator {
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
       text-align: center;
       min-width: 350px;
-      max-width: 500px;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
       animation: fetchlandSlideIn 0.2s ease-out;
     `;
+
+    // Create dual land buttons (show first if available)
+    let dualLandButtons = '';
+    if (dualLands.length > 0) {
+      dualLandButtons = `
+        <div style="margin-bottom: 15px;">
+          <div style="font-size: 12px; font-weight: bold; color: var(--text-primary); margin-bottom: 8px;">Dual Lands:</div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+            ${dualLands.map(land => `
+              <button onclick="window.handSimulator.quickFetchSpecificLand('${this.escapeJs(land.id)}', '${this.escapeJs(fetchlandCard.name)}')"
+                      style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                ${land.name}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
 
     // Create smart type buttons based on what's actually available
     const typeButtons = types.map(type => {
@@ -3493,10 +5159,13 @@ class ModernHandSimulator {
         💡 ${suggestions}
       </div>` : ''}
 
-      <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 14px;">Choose a basic land type:</p>
+      ${dualLandButtons}
 
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px;">
-        ${typeButtons}
+      <div style="margin-bottom: 15px;">
+        <div style="font-size: 12px; font-weight: bold; color: var(--text-primary); margin-bottom: 8px;">Basic Lands:</div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+          ${typeButtons}
+        </div>
       </div>
 
       <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
@@ -3546,62 +5215,16 @@ class ModernHandSimulator {
     }
   }
 
-  quickFetchBasic(basicType, fetchlandName) {
-    const currentPlayer = this.getCurrentPlayer();
-    const library = currentPlayer.library;
-
-    // Find the first basic land of the requested type
-    const targetLand = library.find(card =>
-      card.type && card.type.toLowerCase().includes('land') &&
-      card.name.toLowerCase() === basicType
-    );
-
-    if (targetLand) {
-      // Store fetch choice for future suggestions
-      this.storeFetchChoice(fetchlandName, basicType);
-
-      // Remove from library with visual feedback
-      this.showFetchAnimation(targetLand.name);
-      const landIndex = library.indexOf(targetLand);
-      library.splice(landIndex, 1);
-
-      // Add to battlefield tapped
-      targetLand.tapped = true;
-      this.battlefield.lands.push(targetLand);
-
-      // Remove the fetchland (sacrifice it)
-      const fetchlandIndex = this.battlefield.lands.findIndex(card => card.name === fetchlandName);
-      if (fetchlandIndex >= 0) {
-        const sacrificedFetchland = this.battlefield.lands.splice(fetchlandIndex, 1)[0];
-        this.graveyard.push(sacrificedFetchland);
-      }
-
-      // Shuffle library
-      this.shuffleLibrary();
-
-      // Update displays
-      this.updateBattlefieldDisplay();
-      this.updateGraveyardDisplay();
-      this.updateUI();
-
-      this.showToast(`Fetched ${targetLand.name} (enters tapped)`, 'success');
-    } else {
-      this.showToast(`No ${basicType} found in library`, 'warning');
-    }
-
-    this.closeFetchlandQuickSelect();
-
-    // Show success message with land type
-    this.showToast(`🏞️ Fetched ${basicType.charAt(0).toUpperCase() + basicType.slice(1)} with ${fetchlandName}`, 'success');
-  }
 
   showFullFetchSearch(fetchlandName) {
     this.closeFetchlandQuickSelect();
     // Use the existing tutor interface but specify it's for a fetchland
+    // Determine if this fetchland produces tapped lands
+    const shouldEnterTapped = this.fetchlandProducesTaskedLands(fetchlandName);
     this.showTutorInterface('land', fetchlandName, {
-      description: 'Search your library for a land card and put it onto the battlefield tapped. Then shuffle your library.',
+      description: `Search your library for a land card and put it onto the battlefield${shouldEnterTapped ? ' tapped' : ''}. Then shuffle your library.`,
       destination: 'battlefield',
-      tapped: true,
+      tapped: shouldEnterTapped,
       restrictions: ['basic'],
       isFetchlandSacrifice: true,
       fetchlandName: fetchlandName
@@ -3610,6 +5233,418 @@ class ModernHandSimulator {
 
   closeFetchlandQuickSelect() {
     document.getElementById('fetchlandQuickSelect')?.remove();
+  }
+
+  getAvailableDualLands(library, types) {
+    // Find dual lands that produce the specified mana types
+    const dualLands = [];
+
+    library.forEach(card => {
+      const cardName = card.name.toLowerCase();
+      const cardType = (card.type_line || card.type || '').toLowerCase();
+
+      // Check if it's a land
+      if (!cardType.includes('land')) return;
+
+      // Check if it's a dual land that produces the right colors
+      // Common dual land patterns: "Volcanic Island", "Tropical Island", "Taiga", etc.
+      const isDualLand = !this.isBasicLand(card.name) &&
+                         (cardName.includes('volcanic') || cardName.includes('tropical') ||
+                          cardName.includes('underground') || cardName.includes('badlands') ||
+                          cardName.includes('bayou') || cardName.includes('savannah') ||
+                          cardName.includes('scrubland') || cardName.includes('taiga') ||
+                          cardName.includes('tundra') || cardName.includes('plateau'));
+
+      if (isDualLand) {
+        // Check if this dual produces the right colors
+        const producesRightColors = types.some(type => this.isLandOfType(card, type));
+        if (producesRightColors) {
+          dualLands.push(card);
+        }
+      }
+    });
+
+    return dualLands;
+  }
+
+  quickFetchSpecificLand(landId, fetchlandName) {
+    const currentPlayer = this.getCurrentPlayer();
+    const library = currentPlayer.library;
+    const battlefield = currentPlayer.battlefield;
+
+    // Find the specific land by ID
+    const landIndex = library.findIndex(card => card.id === landId);
+    if (landIndex === -1) {
+      this.showToast('Land not found in library', 'error');
+      return;
+    }
+
+    const land = library[landIndex];
+
+    // Pay life cost for fetchlands
+    const lifeCost = this.getFetchlandLifeCost(fetchlandName);
+    if (lifeCost > 0) {
+      currentPlayer.gameStats.life -= lifeCost;
+      this.logAction(`Pay ${lifeCost} life for ${fetchlandName}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    // Sacrifice the fetchland
+    const fetchlandIndex = battlefield.lands.findIndex(l => l.name === fetchlandName);
+    if (fetchlandIndex >= 0) {
+      const sacrificedFetchland = battlefield.lands.splice(fetchlandIndex, 1)[0];
+      const graveyard = this.activePlayer === 'player' ? this.graveyard : this.opponent.graveyard;
+      graveyard.push(sacrificedFetchland);
+      this.logAction(`Sacrifice ${fetchlandName}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    // Remove land from library
+    library.splice(landIndex, 1);
+
+    // Determine if it enters tapped
+    const shouldEnterTapped = this.fetchlandProducesTaskedLands(fetchlandName);
+    if (shouldEnterTapped) {
+      land.tapped = true;
+    }
+
+    // Add to battlefield
+    battlefield.lands.push(land);
+
+    // Shuffle library
+    this.shuffleArray(library);
+
+    this.logAction(`${fetchlandName}: Found ${land.name}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    this.showToast(`Fetched ${land.name}${shouldEnterTapped ? ' (tapped)' : ''}`, 'success');
+
+    // Update displays
+    this.closeFetchlandQuickSelect();
+    this.updateBattlefieldDisplay();
+    this.updateUI();
+  }
+
+  // =====================================================
+  // WASTELAND LOGIC
+  // =====================================================
+
+  showWastelandTargetSelectById(wastelandId) {
+    const wasteland = this.battlefield.lands.find(land => land.id === wastelandId);
+    if (!wasteland) {
+      this.showToast('Wasteland not found', 'error');
+      return;
+    }
+    this.showWastelandTargetSelect(wasteland);
+  }
+
+  showWastelandTargetSelect(wastelandCard) {
+    // Get all nonbasic lands on both battlefields
+    const playerNonbasicLands = this.battlefield.lands.filter(land => !this.isBasicLand(land.name));
+    const opponentNonbasicLands = this.opponent.battlefield.lands.filter(land => !this.isBasicLand(land.name));
+
+    const allTargets = [
+      ...playerNonbasicLands.map(land => ({ ...land, owner: 'player' })),
+      ...opponentNonbasicLands.map(land => ({ ...land, owner: 'opponent' }))
+    ];
+
+    if (allTargets.length === 0) {
+      this.showToast('No nonbasic lands to target', 'warning');
+      return;
+    }
+
+    // Remove any existing wasteland popup
+    document.getElementById('wastelandTargetSelect')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'wastelandTargetSelect';
+    popup.className = 'wasteland-popup';
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid #8b4513;
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 350px;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: fetchlandSlideIn 0.2s ease-out;
+    `;
+
+    const targetButtons = allTargets.map(target => {
+      const ownerLabel = target.owner === 'player' ? '🟢 Your' : '🔴 Opponent';
+      return `
+        <button onclick="window.handSimulator.activateWasteland('${this.escapeJs(wastelandCard.id)}', '${this.escapeJs(target.id)}', '${target.owner}')"
+                style="background: #dc3545; color: white; border: none; padding: 12px 16px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; width: calc(100% - 10px); text-align: left; display: flex; justify-content: space-between; align-items: center;"
+                title="Destroy ${target.name}">
+          <span>${target.name}</span>
+          <span style="font-size: 12px; opacity: 0.9;">${ownerLabel}</span>
+        </button>
+      `;
+    }).join('');
+
+    popup.innerHTML = `
+      <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; color: var(--text-primary);">💥 ${wastelandCard.name}</h3>
+      </div>
+
+      <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 14px; text-align: center;">
+        {T}, Sacrifice: Destroy target nonbasic land
+      </p>
+
+      <div style="margin-bottom: 15px;">
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; text-align: center;">
+          Select a nonbasic land to destroy:
+        </div>
+        ${targetButtons}
+      </div>
+
+      <div style="display: flex; justify-content: center;">
+        <button onclick="window.handSimulator.closeWastelandTargetSelect()"
+                style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+          ❌ Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Add keyboard listener for Escape key
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        this.closeWastelandTargetSelect();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+  }
+
+  activateWasteland(wastelandId, targetLandId, targetOwner) {
+    // Find the wasteland on battlefield
+    const wastelandIndex = this.battlefield.lands.findIndex(land => land.id === wastelandId);
+    if (wastelandIndex === -1) {
+      this.showToast('Wasteland not found on battlefield', 'error');
+      return;
+    }
+
+    const wasteland = this.battlefield.lands[wastelandIndex];
+
+    // Check if wasteland is tapped
+    if (wasteland.tapped) {
+      this.showToast('Wasteland is already tapped', 'warning');
+      return;
+    }
+
+    // Find the target land
+    const targetBattlefield = targetOwner === 'player' ? this.battlefield : this.opponent.battlefield;
+    const targetGraveyard = targetOwner === 'player' ? this.graveyard : this.opponent.graveyard;
+    const targetIndex = targetBattlefield.lands.findIndex(land => land.id === targetLandId);
+
+    if (targetIndex === -1) {
+      this.showToast('Target land not found', 'error');
+      return;
+    }
+
+    const targetLand = targetBattlefield.lands[targetIndex];
+
+    // Verify it's nonbasic
+    if (this.isBasicLand(targetLand.name)) {
+      this.showToast('Cannot target basic lands with Wasteland', 'warning');
+      return;
+    }
+
+    // Tap and sacrifice Wasteland
+    this.battlefield.lands.splice(wastelandIndex, 1);
+    this.graveyard.push(wasteland);
+
+    // Destroy target land (move to its owner's graveyard)
+    targetBattlefield.lands.splice(targetIndex, 1);
+    targetGraveyard.push(targetLand);
+
+    const ownerText = targetOwner === 'player' ? 'your' : "opponent's";
+    this.logAction(`${wasteland.name} destroys ${ownerText} ${targetLand.name}`, 'You', false);
+    this.showToast(`💥 ${wasteland.name} destroys ${targetLand.name}`, 'success');
+
+    // Update UI - need to update both battlefield displays and graveyard
+    this.updateAllDisplays();
+    this.closeWastelandTargetSelect();
+  }
+
+  closeWastelandTargetSelect() {
+    document.getElementById('wastelandTargetSelect')?.remove();
+  }
+
+  // =====================================================
+  // SURVEIL LOGIC
+  // =====================================================
+
+  showSurveilUI(cardName, amount = 1, isOpponent = false) {
+    const player = isOpponent ? this.opponent : this;
+    const library = player.library;
+
+    if (library.length === 0) {
+      this.showToast('No cards in library to surveil', 'warning');
+      return;
+    }
+
+    // Get the top N cards
+    const surveilCards = library.slice(0, Math.min(amount, library.length));
+
+    // Remove any existing surveil popup
+    document.getElementById('surveilUI')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'surveilUI';
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid var(--accent-color);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 400px;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: fetchlandSlideIn 0.2s ease-out;
+    `;
+
+    // Create card display with checkboxes for graveyard
+    const cardButtons = surveilCards.map((card, index) => {
+      return `
+        <div id="surveil-card-${card.id}" style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px; border: 2px solid transparent;" data-card-id="${card.id}" data-to-graveyard="false">
+          <input type="checkbox" id="surveil-check-${card.id}" onchange="window.handSimulator.toggleSurveilGraveyard('${this.escapeJs(card.id)}')" style="width: 20px; height: 20px; margin-right: 12px; cursor: pointer;">
+          <div style="flex: 1;">
+            <div style="font-weight: bold; color: var(--text-primary);">${card.name}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">${card.type || 'Unknown'}</div>
+          </div>
+          <button onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')" style="background: var(--accent-color); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 10px;">
+            👁️ View
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    popup.innerHTML = `
+      <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; color: var(--text-primary);">🔍 Surveil ${amount}</h3>
+      </div>
+
+      <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 14px; text-align: center;">
+        Check cards to put into graveyard. Unchecked cards go back on top.
+      </p>
+
+      <div id="surveilCardList" style="margin-bottom: 20px;">
+        ${cardButtons}
+      </div>
+
+      <div style="margin-bottom: 15px; padding: 10px; background: var(--bg-tertiary); border-radius: 6px;">
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 5px;">Order remaining cards (drag to reorder):</div>
+        <div id="surveilOrderHint" style="font-size: 11px; color: var(--text-secondary);">Cards will go back on top in the order shown above</div>
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 10px;">
+        <button onclick="window.handSimulator.completeSurveil(${isOpponent})"
+                style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">
+          ✓ Done
+        </button>
+        <button onclick="window.handSimulator.closeSurveilUI()"
+                style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+          ❌ Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Add escape key listener
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        this.closeSurveilUI();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+  }
+
+  toggleSurveilGraveyard(cardId) {
+    const cardDiv = document.querySelector(`#surveil-card-${cardId}`);
+    const checkbox = document.getElementById(`surveil-check-${cardId}`);
+
+    if (!cardDiv || !checkbox) return;
+
+    const toGraveyard = checkbox.checked;
+    cardDiv.dataset.toGraveyard = toGraveyard;
+
+    // Visual feedback
+    if (toGraveyard) {
+      cardDiv.style.borderColor = '#dc3545';
+      cardDiv.style.background = '#3d1e1e';
+    } else {
+      cardDiv.style.borderColor = 'transparent';
+      cardDiv.style.background = 'var(--bg-secondary)';
+    }
+  }
+
+  completeSurveil(isOpponent = false) {
+    const player = isOpponent ? this.opponent : this;
+    const cardList = document.getElementById('surveilCardList');
+    if (!cardList) return;
+
+    const cardDivs = Array.from(cardList.querySelectorAll('[data-card-id]'));
+    const toGraveyard = [];
+    const toTop = [];
+
+    // Separate cards based on checkbox state
+    cardDivs.forEach(div => {
+      const cardId = div.dataset.cardId;
+      const shouldGraveyard = div.dataset.toGraveyard === 'true';
+      const card = player.library.find(c => c.id === cardId);
+
+      if (card) {
+        if (shouldGraveyard) {
+          toGraveyard.push(card);
+        } else {
+          toTop.push(card);
+        }
+      }
+    });
+
+    // Remove all surveiled cards from library
+    const surveiledIds = [...toGraveyard, ...toTop].map(c => c.id);
+    player.library = player.library.filter(c => !surveiledIds.includes(c.id));
+
+    // Add cards to graveyard
+    toGraveyard.forEach(card => {
+      player.graveyard.push(card);
+    });
+
+    // Put remaining cards back on top (in current order)
+    player.library = [...toTop, ...player.library];
+
+    // Log the action
+    const graveyardCount = toGraveyard.length;
+    const topCount = toTop.length;
+    const message = graveyardCount > 0 ?
+      `Surveiled: ${graveyardCount} to graveyard, ${topCount} on top` :
+      `Surveiled: all ${topCount} cards back on top`;
+
+    this.logAction(message, isOpponent ? 'Opponent' : 'You', false);
+    this.showToast(message, 'success');
+
+    // Update UI
+    this.updateAllDisplays();
+    this.closeSurveilUI();
+  }
+
+  closeSurveilUI() {
+    document.getElementById('surveilUI')?.remove();
   }
 
   // =====================================================
@@ -3839,10 +5874,12 @@ class ModernHandSimulator {
     this.closeFetchlandQuickSelect();
 
     // Enhanced search that shows detailed land information
+    // Determine if this fetchland produces tapped lands
+    const shouldEnterTapped = this.fetchlandProducesTaskedLands(fetchlandName);
     this.showTutorInterface('land', fetchlandName, {
-      description: 'Search your library for a land card and put it onto the battlefield tapped. Then shuffle your library.',
+      description: `Search your library for a land card and put it onto the battlefield${shouldEnterTapped ? ' tapped' : ''}. Then shuffle your library.`,
       destination: 'battlefield',
-      tapped: true,
+      tapped: shouldEnterTapped,
       restrictions: ['basic', 'fetchable'],
       isFetchlandSacrifice: true,
       fetchlandName: fetchlandName,
@@ -4062,7 +6099,7 @@ class ModernHandSimulator {
     // Pay the life cost (most fetchlands cost 1 life)
     const lifeCost = this.getFetchlandLifeCost(fetchlandName);
     if (lifeCost > 0) {
-      this.life -= lifeCost;
+      this.gameStats.life -= lifeCost;
       this.logAction(`Pay ${lifeCost} life for ${fetchlandName}`, 'You', false);
     }
 
@@ -4383,6 +6420,16 @@ class ModernHandSimulator {
     if (counter) {
       counter.textContent = `(${selectedIndices.length}/${this.tutorState.maxSelections} selected)`;
     }
+
+    // Update button text from "Search" to "OK" when something is selected
+    const searchButton = document.querySelector('button[onclick*="finishTutor"]');
+    if (searchButton) {
+      if (selectedIndices.length > 0) {
+        searchButton.textContent = 'OK';
+      } else {
+        searchButton.textContent = 'Search';
+      }
+    }
   }
 
   updateTutorCardDisplay(cardIndex, selected) {
@@ -4426,6 +6473,8 @@ class ModernHandSimulator {
 
     // Put cards in appropriate destination(s)
     const options = this.tutorState.options;
+    console.log('finishTutor options:', options);
+    console.log('Selected cards:', selectedCards.map(c => c.name));
     const battlefield = this.activePlayer === 'player' ? this.battlefield : this.opponent.battlefield;
     const hand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
 
@@ -4435,19 +6484,48 @@ class ModernHandSimulator {
           hand.push(card);
           break;
         case 'battlefield':
-          if (options.tapped) card.tapped = true;
-          if (this.getCardMainType(card.type).toLowerCase() === 'land') {
-            battlefield.lands.push(card);
-          } else if (this.getCardMainType(card.type).toLowerCase() === 'creature') {
-            battlefield.creatures.push(card);
+          const cardType = this.getCardMainType(card.type).toLowerCase();
+
+          // Instants and sorceries should go to graveyard, not battlefield
+          if (cardType === 'instant' || cardType === 'sorcery') {
+            const graveyard = this.activePlayer === 'player' ? this.graveyard : this.opponent.graveyard;
+            graveyard.push(card);
           } else {
-            battlefield.others.push(card);
+            // Set tapped status based on options for permanents
+            // Initialize tapped property if it doesn't exist
+            if (card.tapped === undefined) {
+              card.tapped = false;
+            }
+
+            console.log(`Setting tapped status: options.tapped=${options.tapped}, card.name=${card.name}, initial card.tapped=${card.tapped}`);
+            if (options.tapped === true) {
+              card.tapped = true;
+              console.log(`Set ${card.name} to tapped=true`);
+            } else if (options.tapped === false) {
+              card.tapped = false;
+              console.log(`Set ${card.name} to tapped=false`);
+            }
+            console.log(`Final card.tapped=${card.tapped}`);
+            // If options.tapped is undefined, don't modify the card's tapped status
+
+            if (cardType === 'land') {
+              battlefield.lands.push(card);
+              console.log(`${card.name} added to battlefield with tapped=${card.tapped}`);
+            } else if (cardType === 'creature') {
+              battlefield.creatures.push(card);
+            } else {
+              battlefield.others.push(card);
+            }
           }
           break;
         case 'both':
           // For spells like Cultivate - first card to battlefield, rest to hand
           if (index === 0) {
-            if (options.tapped) card.tapped = true;
+            if (options.tapped === true) {
+              card.tapped = true;
+            } else if (options.tapped === false) {
+              card.tapped = false;
+            }
             battlefield.lands.push(card);
           } else {
             hand.push(card);
@@ -4459,6 +6537,29 @@ class ModernHandSimulator {
     // Shuffle library
     this.shuffleLibrary();
 
+    // Handle fetchland effects if this was triggered by a fetchland
+    if (options.fetchlandName) {
+      // Pay life cost for true fetchlands
+      const lifeCost = this.getFetchlandLifeCost(options.fetchlandName);
+      if (lifeCost > 0) {
+        if (this.activePlayer === 'player') {
+          this.gameStats.life -= lifeCost;
+        } else {
+          this.opponent.gameStats.life -= lifeCost;
+        }
+        this.logAction(`Pay ${lifeCost} life for ${options.fetchlandName}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+      }
+
+      // Sacrifice the fetchland
+      const fetchlandIndex = battlefield.lands.findIndex(land => land.name === options.fetchlandName);
+      if (fetchlandIndex >= 0) {
+        const sacrificedFetchland = battlefield.lands.splice(fetchlandIndex, 1)[0];
+        const graveyard = this.activePlayer === 'player' ? this.graveyard : this.opponent.graveyard;
+        graveyard.push(sacrificedFetchland);
+        this.logAction(`Sacrifice ${options.fetchlandName}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+      }
+    }
+
     // Log the action
     const cardNames = selectedCards.map(card => card.name).join(', ');
     this.logAction(`${source}: Found ${cardNames}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
@@ -4469,6 +6570,8 @@ class ModernHandSimulator {
 
     this.updateHandDisplay();
     this.updateBattlefieldDisplay();
+    this.updateGraveyardDisplay();
+    this.updateUI(); // Update life totals and other stats
     this.showToast(`${source} complete - ${selectedCards.length} card(s) found`, 'success');
   }
 
@@ -4513,6 +6616,15 @@ class ModernHandSimulator {
       this.gameLog = this.gameLog.slice(0, this.maxLogEntries);
     }
 
+    // Show life change indicator if action involves life
+    if (action.toLowerCase().includes('pay') && action.toLowerCase().includes('life')) {
+      this.showLifeChangeIndicator('loss', playerName);
+    } else if (action.toLowerCase().includes('damage') && action.toLowerCase().includes('deal')) {
+      this.showLifeChangeIndicator('damage', playerName);
+    } else if (action.toLowerCase().includes('gain') && action.toLowerCase().includes('life')) {
+      this.showLifeChangeIndicator('gain', playerName);
+    }
+
     this.updateGameLogDisplay();
   }
 
@@ -4526,9 +6638,9 @@ class ModernHandSimulator {
       gameLogPanel.style.cssText = `
         position: fixed;
         bottom: 20px;
-        right: 20px;
-        width: 380px;
-        max-height: 300px;
+        left: 20px;
+        width: 280px;
+        max-height: 200px;
         background: var(--bg-primary);
         border: 1px solid var(--border-color);
         border-radius: var(--border-radius);
@@ -4544,8 +6656,8 @@ class ModernHandSimulator {
       toggleButton.textContent = '📜 Log';
       toggleButton.style.cssText = `
         position: fixed;
-        bottom: 330px;
-        right: 20px;
+        bottom: 230px;
+        left: 20px;
         background: var(--accent-color);
         color: white;
         border: none;
@@ -4566,20 +6678,34 @@ class ModernHandSimulator {
     }
 
     // Update log content
-    const logHTML = this.gameLog.slice(0, 15).map(entry => {
+    const logHTML = this.gameLog.slice(0, 8).map(entry => {
       const typeIcon = entry.type === 'auto' ? '⚙️' : '👤';
       const playerColor = entry.player === 'You' ? 'var(--accent-color)' : 'var(--text-secondary)';
+
+      // Detect life loss actions and add special icons
+      let lifeIcon = '';
+      let actionColor = 'var(--text-primary)';
+      if (entry.action.toLowerCase().includes('pay') && entry.action.toLowerCase().includes('life')) {
+        lifeIcon = ' 💔';
+        actionColor = '#dc2626'; // red color for life loss
+      } else if (entry.action.toLowerCase().includes('damage') && entry.action.toLowerCase().includes('deal')) {
+        lifeIcon = ' 💥';
+        actionColor = '#dc2626'; // red color for damage
+      } else if (entry.action.toLowerCase().includes('gain') && entry.action.toLowerCase().includes('life')) {
+        lifeIcon = ' 💚';
+        actionColor = '#16a34a'; // green color for life gain
+      }
 
       return `
         <div style="margin-bottom: 6px; padding: 4px; border-left: 3px solid ${playerColor}; background: var(--bg-tertiary); border-radius: 4px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="background: var(--accent-color); color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold;">T${entry.turn}</span>
+              <span style="background: #2563eb; color: white; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold;">T${entry.turn}</span>
               <span style="color: ${playerColor}; font-weight: bold; font-size: 11px;">${typeIcon} ${entry.player}</span>
             </div>
             <span style="color: var(--text-muted); font-size: 9px;">${entry.timestamp}</span>
           </div>
-          <div style="color: var(--text-primary); font-size: 11px; line-height: 1.3;">${entry.action}</div>
+          <div style="color: ${actionColor}; font-size: 11px; line-height: 1.3; font-weight: ${lifeIcon ? 'bold' : 'normal'};">${entry.action}${lifeIcon}</div>
           <div style="color: var(--text-muted); font-size: 9px; margin-top: 2px;">${entry.phase || 'Unknown Phase'}</div>
         </div>
       `;
@@ -4589,6 +6715,70 @@ class ModernHandSimulator {
       <div style="font-weight: bold; margin-bottom: 8px; color: var(--accent-color);">Game Log</div>
       ${logHTML || '<div style="color: var(--text-muted); font-style: italic;">No actions yet</div>'}
     `;
+  }
+
+  showLifeChangeIndicator(type, player) {
+    // Determine which life total to flash
+    const isPlayerLife = player === 'You' || player === 'Player';
+    const lifeElement = document.getElementById(isPlayerLife ? 'playerLife' : 'opponentLife');
+
+    if (!lifeElement) return;
+
+    // Create indicator element
+    const indicator = document.createElement('div');
+    indicator.style.cssText = `
+      position: absolute;
+      top: -10px;
+      right: -15px;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 1000;
+      animation: lifePulse 1.5s ease-out;
+      pointer-events: none;
+    `;
+
+    // Set icon and color based on type
+    if (type === 'loss' || type === 'damage') {
+      indicator.textContent = '💔';
+      indicator.style.color = '#dc2626';
+    } else if (type === 'gain') {
+      indicator.textContent = '💚';
+      indicator.style.color = '#16a34a';
+    }
+
+    // Add CSS animation if not already present
+    if (!document.getElementById('lifeChangeAnimation')) {
+      const style = document.createElement('style');
+      style.id = 'lifeChangeAnimation';
+      style.textContent = `
+        @keyframes lifePulse {
+          0% { transform: scale(1) translateY(0); opacity: 1; }
+          50% { transform: scale(1.3) translateY(-5px); opacity: 0.8; }
+          100% { transform: scale(1) translateY(-10px); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // Position relative to life element
+    lifeElement.style.position = 'relative';
+    lifeElement.appendChild(indicator);
+
+    // Remove indicator after animation
+    setTimeout(() => {
+      if (indicator.parentNode) {
+        indicator.parentNode.removeChild(indicator);
+      }
+    }, 1500);
+
+    // Flash the life total background
+    const originalBackground = lifeElement.style.backgroundColor;
+    lifeElement.style.backgroundColor = type === 'gain' ? '#16a34a20' : '#dc262620';
+    lifeElement.style.transition = 'background-color 0.3s ease';
+
+    setTimeout(() => {
+      lifeElement.style.backgroundColor = originalBackground;
+    }, 500);
   }
 
   formatPhaseStep() {
@@ -4639,23 +6829,26 @@ class ModernHandSimulator {
       const currentPhase = this.turnState.phase;
       const currentStep = this.turnState.step;
 
-      // Show either high-level phases or detailed combat steps
-      let allPhases, phaseLabels;
+      // Show compact phase display - only current and next phase
+      let currentPhaseLabel, nextPhaseLabel;
 
       if (currentPhase === 'combat') {
-        // Show detailed combat steps when in combat
-        allPhases = ['beginning-combat', 'declare-attackers', 'declare-blockers', 'combat-damage', 'end-combat'];
-        phaseLabels = {
+        // Combat phase details
+        const combatPhases = ['beginning-combat', 'declare-attackers', 'declare-blockers', 'combat-damage', 'end-combat'];
+        const combatLabels = {
           'beginning-combat': 'Begin Combat',
-          'declare-attackers': 'Declare Attackers',
-          'declare-blockers': 'Declare Blockers',
-          'combat-damage': 'Combat Damage',
+          'declare-attackers': 'Attackers',
+          'declare-blockers': 'Blockers',
+          'combat-damage': 'Damage',
           'end-combat': 'End Combat'
         };
+        currentPhaseLabel = combatLabels[currentStep] || 'Combat';
+        const currentIndex = combatPhases.indexOf(currentStep);
+        nextPhaseLabel = currentIndex < combatPhases.length - 1 ? combatLabels[combatPhases[currentIndex + 1]] : 'Main 2';
       } else {
-        // Show main turn phases
-        allPhases = ['untap', 'upkeep', 'draw', 'main1', 'combat', 'main2', 'end'];
-        phaseLabels = {
+        // Main turn phases
+        const mainPhases = ['untap', 'upkeep', 'draw', 'main1', 'combat', 'main2', 'end'];
+        const mainLabels = {
           'untap': 'Untap',
           'upkeep': 'Upkeep',
           'draw': 'Draw',
@@ -4664,51 +6857,27 @@ class ModernHandSimulator {
           'main2': 'Main 2',
           'end': 'End'
         };
+        currentPhaseLabel = mainLabels[currentPhase] || currentPhase;
+        const currentIndex = mainPhases.indexOf(currentPhase);
+        nextPhaseLabel = currentIndex < mainPhases.length - 1 ? mainLabels[mainPhases[currentIndex + 1]] : 'Next Turn';
       }
 
-      const phaseProgressHTML = allPhases.map(phase => {
-        // For combat, check both phase and step
-        const isCurrentPhase = currentPhase === 'combat' ?
-          currentStep === phase :
-          currentPhase === phase;
-        const phaseClass = isCurrentPhase ? 'current-phase' : 'future-phase';
-        return `<span class="phase-indicator ${phaseClass}">${phaseLabels[phase]}</span>`;
-      }).join('');
+      const phaseProgressHTML = `
+        <span class="phase-indicator current-phase">${currentPhaseLabel}</span>
+        <span class="phase-arrow">→</span>
+        <span class="phase-indicator next-phase">${nextPhaseLabel}</span>
+      `;
 
       turnIndicator.innerHTML = `
-        <div class="turn-info">
-          <span class="turn-player">${activePlayerText}</span>
-          <span class="turn-number">Turn ${this.turnState.turnNumber}</span>
-          <div class="phase-progression">
-            ${phaseProgressHTML}
-          </div>
-          <span class="turn-phase-detail">${this.formatPhaseStep()}</span>
+        <div style="display: flex; align-items: center; gap: 4px; font-size: 11px; padding: 1px 4px; background: var(--bg-tertiary); border-radius: 3px;">
+          <span style="color: var(--text-primary); font-weight: bold;">${activePlayerText}</span>
+          <span style="color: var(--text-muted);">•</span>
+          <span style="color: var(--text-muted);">T${this.turnState.turnNumber}</span>
+          <span style="color: var(--text-muted);">•</span>
+          <span style="color: var(--primary); font-weight: bold;">${currentPhaseLabel}</span>
+          <span style="color: var(--text-muted);">→</span>
+          <span style="color: var(--text-muted);">${nextPhaseLabel}</span>
         </div>
-        <style>
-          .phase-progression {
-            display: flex;
-            gap: 8px;
-            margin: 4px 0;
-          }
-          .phase-indicator {
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: bold;
-          }
-          .current-phase {
-            background: var(--accent-color);
-            color: white;
-          }
-          .future-phase {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-          }
-          .turn-phase-detail {
-            font-size: 12px;
-            color: var(--text-secondary);
-          }
-        </style>
       `;
       console.log('Updated turnIndicator innerHTML:', turnIndicator.innerHTML);
     } else {
@@ -4749,15 +6918,14 @@ class ModernHandSimulator {
 
   showHandCardMenu(event, cardId) {
     console.log('=== showHandCardMenu called ===');
-    console.log('event:', event);
     console.log('cardId:', cardId);
+    console.log('event:', event);
     console.log('activePlayer:', this.activePlayer);
 
     event.preventDefault();
 
     // Determine which hand to search based on active player
     const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
-    console.log('currentHand length:', currentHand.length);
 
     // Find the card
     const cardIndex = currentHand.findIndex((card, idx) => {
@@ -4765,14 +6933,12 @@ class ModernHandSimulator {
       return actualCardId === cardId;
     });
 
-    console.log('cardIndex found:', cardIndex);
     if (cardIndex === -1) {
       console.log('Card not found in hand');
       return;
     }
 
     const card = currentHand[cardIndex];
-    console.log('Found card:', card);
 
     // Create context menu
     const menu = document.createElement('div');
@@ -4785,30 +6951,44 @@ class ModernHandSimulator {
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius);
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 1000;
+      z-index: 1000000;
       min-width: 140px;
     `;
 
     const cardType = this.getCardMainType(card.type || '').toLowerCase();
     const isLand = cardType === 'land';
+    const hasSurveil = this.hasSurveil(card.name);
+    const surveilAmount = hasSurveil ? this.getSurveilAmount(card.name) : 0;
 
-    menu.innerHTML = `
-      <div class="menu-item" onclick="window.handSimulator.playCardDirectly('${cardId}', event)">
+    let menuItems = `
+      <div class="menu-item" onclick="window.handSimulator.playCardDirectly('${this.escapeJs(cardId)}', event)">
         ⚔️ ${isLand ? 'Play Land' : 'Cast Spell'}
-      </div>
-      <div class="menu-item" onclick="window.handSimulator.moveHandCardToGraveyard('${cardId}')">
+      </div>`;
+
+    // Add surveil option if card has surveil
+    if (hasSurveil) {
+      menuItems += `
+      <div class="menu-item" onclick="window.handSimulator.showSurveilUI('${this.escapeJs(card.name)}', ${surveilAmount}, ${this.activePlayer === 'opponent'})">
+        🔍 Surveil ${surveilAmount}
+      </div>`;
+    }
+
+    menuItems += `
+      <div class="menu-item" onclick="window.handSimulator.moveHandCardToGraveyard('${this.escapeJs(cardId)}')">
         🪦 To Graveyard
       </div>
-      <div class="menu-item" onclick="window.handSimulator.moveHandCardToExile('${cardId}')">
+      <div class="menu-item" onclick="window.handSimulator.moveHandCardToExile('${this.escapeJs(cardId)}')">
         🚫 Exile
       </div>
-      <div class="menu-item" onclick="window.handSimulator.moveHandCardToLibrary('${cardId}')">
+      <div class="menu-item" onclick="window.handSimulator.moveHandCardToLibrary('${this.escapeJs(cardId)}')">
         📚 To Library
       </div>
       <div class="menu-item" onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')">
         👁️ View Card
       </div>
     `;
+
+    menu.innerHTML = menuItems;
 
     document.body.appendChild(menu);
 
@@ -4824,11 +7004,18 @@ class ModernHandSimulator {
   }
 
   showBattlefieldCardMenu(event, cardId) {
+    console.log('=== showBattlefieldCardMenu called ===');
+    console.log('cardId:', cardId);
+
     event.preventDefault();
 
     // Find the card
     const card = this.findBattlefieldCard(cardId);
-    if (!card) return;
+    console.log('Found card:', card);
+    if (!card) {
+      console.error('Card not found in battlefield');
+      return;
+    }
 
     // Create context menu
     const menu = document.createElement('div');
@@ -4841,7 +7028,7 @@ class ModernHandSimulator {
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius);
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 1000;
+      z-index: 1000000;
       min-width: 120px;
     `;
 
@@ -4862,7 +7049,7 @@ class ModernHandSimulator {
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius);
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 1000;
+      z-index: 1000000;
       min-width: 180px;
       overflow: hidden;
     `;
@@ -4872,7 +7059,7 @@ class ModernHandSimulator {
     const currentCounters = card.counters || {};
 
     // Get context-sensitive primary actions
-    const primaryActions = this.getPrimaryActions(cardType, isTapped, cardId, zone);
+    const primaryActions = this.getPrimaryActions(cardType, isTapped, cardId, zone, card);
 
     // Create menu structure
     let menuHTML = '<div class="menu-section primary-actions">';
@@ -4889,14 +7076,14 @@ class ModernHandSimulator {
     // +1/+1 Counter section (special treatment)
     if (zone === 'battlefield' && (cardType === 'creature' || cardType === 'planeswalker')) {
       const current = currentCounters['+1/+1'] || 0;
-      menuHTML += `<div class="menu-item counter-quick" onclick="window.handSimulator.addCounter('${cardId}', '+1/+1')">
+      menuHTML += `<div class="menu-item counter-quick" onclick="window.handSimulator.addCounter('${this.escapeJs(cardId)}', '+1/+1')">
         <span class="action-icon">➕</span>
         <span class="action-text">+1/+1 Counter</span>
         ${current > 0 ? `<span class="counter-count">${current}</span>` : ''}
       </div>`;
 
       if (current > 0) {
-        menuHTML += `<div class="menu-item counter-quick remove" onclick="window.handSimulator.removeCounter('${cardId}', '+1/+1')">
+        menuHTML += `<div class="menu-item counter-quick remove" onclick="window.handSimulator.removeCounter('${this.escapeJs(cardId)}', '+1/+1')">
           <span class="action-icon">➖</span>
           <span class="action-text">Remove +1/+1</span>
         </div>`;
@@ -4907,7 +7094,7 @@ class ModernHandSimulator {
 
     // More actions (expandable)
     if (zone === 'battlefield') {
-      menuHTML += `<div class="menu-item expandable" onclick="window.handSimulator.expandMenuActions(event, '${cardId}', '${zone}')">
+      menuHTML += `<div class="menu-item expandable" onclick="window.handSimulator.expandMenuActions(event, '${this.escapeJs(cardId)}', '${zone}')">
         <span class="action-icon">⋯</span>
         <span class="action-text">More Actions</span>
         <span class="expand-indicator">▶</span>
@@ -4924,54 +7111,69 @@ class ModernHandSimulator {
     this.addMenuClickOutsideListener(menu);
   }
 
-  getPrimaryActions(cardType, isTapped, cardId, zone) {
+  getPrimaryActions(cardType, isTapped, cardId, zone, card = null) {
     const actions = [];
 
     // Context-sensitive primary actions based on realistic game flow
     switch (cardType) {
       case 'creature':
+        // Check if this is a DFC and add transform option first
+        if (card && this.isDFC(card.name)) {
+          const dfcData = this.getDFCData(card.name);
+          const currentFace = card.currentFace || card.name;
+          const isOnFront = currentFace === dfcData.frontFace;
+
+          actions.push({
+            icon: '🔄',
+            text: isOnFront ? `Transform → ${dfcData.backFace.split(' ')[0]}` : `Transform → ${dfcData.frontFace.split(' ')[0]}`,
+            onclick: `window.handSimulator.transformCard('${this.escapeJs(cardId)}')`,
+            badge: 'DFC'
+          });
+        }
+
         // Creatures: Tap -> Die/Graveyard -> Counters
         actions.push({
           icon: isTapped ? '↺' : '⤵️',
           text: isTapped ? 'Untap' : 'Tap',
-          onclick: `window.handSimulator.toggleTap('${cardId}')`
+          onclick: `window.handSimulator.toggleTap('${this.escapeJs(cardId)}')`
         });
         if (zone === 'battlefield') {
           // Damage options for creatures
           actions.push({
             icon: '💔',
             text: '1 Damage',
-            onclick: `window.handSimulator.dealDamage1('${cardId}')`
+            onclick: `window.handSimulator.dealDamage1('${this.escapeJs(cardId)}')`
           });
           actions.push({
             icon: '⚡',
             text: '3 Damage (Bolt)',
-            onclick: `window.handSimulator.dealDamage3('${cardId}')`
+            onclick: `window.handSimulator.dealDamage3('${this.escapeJs(cardId)}')`
           });
           actions.push({
             icon: '⚰️',
             text: 'Dies → Graveyard',
-            onclick: `window.handSimulator.moveToGraveyard('${cardId}')`
+            onclick: `window.handSimulator.moveToGraveyard('${this.escapeJs(cardId)}')`
           });
           actions.push({
             icon: '🚫',
             text: 'Exile',
-            onclick: `window.handSimulator.moveToExile('${cardId}')`
+            onclick: `window.handSimulator.moveToExile('${this.escapeJs(cardId)}')`
           });
         }
         break;
 
       case 'land': {
-        // Check if this is a fetchland for special actions
+        // Check if this is a fetchland or wasteland for special actions
         const card = zone === 'battlefield' ? this.findBattlefieldCard(cardId) : null;
         const isFetchland = card && this.isFetchland(card.name);
+        const isWasteland = card && this.isWasteland(card.name);
 
         if (isFetchland && zone === 'battlefield') {
           // Fetchland-specific actions
           actions.push({
             icon: '🏞️',
             text: 'Fetch Land',
-            onclick: `window.handSimulator.showFetchlandQuickSelectById('${cardId}', true)`
+            onclick: `window.handSimulator.showFetchlandQuickSelectById('${this.escapeJs(cardId)}', true)`
           });
           actions.push({
             icon: '🔍',
@@ -4982,25 +7184,42 @@ class ModernHandSimulator {
           actions.push({
             icon: '💀',
             text: 'Sacrifice → Graveyard',
-            onclick: `window.handSimulator.moveToGraveyard('${cardId}')`
+            onclick: `window.handSimulator.moveToGraveyard('${this.escapeJs(cardId)}')`
+          });
+        } else if (isWasteland && zone === 'battlefield') {
+          // Wasteland-specific actions
+          actions.push({
+            icon: '💥',
+            text: 'Destroy Nonbasic Land',
+            onclick: `window.handSimulator.showWastelandTargetSelectById('${this.escapeJs(cardId)}')`
+          });
+          actions.push({
+            icon: isTapped ? '↺' : '🔥',
+            text: isTapped ? 'Untap' : 'Tap for Mana',
+            onclick: `window.handSimulator.toggleTap('${this.escapeJs(cardId)}')`
+          });
+          actions.push({
+            icon: '💀',
+            text: 'Sacrifice → Graveyard',
+            onclick: `window.handSimulator.moveToGraveyard('${this.escapeJs(cardId)}')`
           });
         } else {
           // Regular land actions
           actions.push({
             icon: isTapped ? '↺' : '🔥',
             text: isTapped ? 'Untap' : 'Tap for Mana',
-            onclick: `window.handSimulator.toggleTap('${cardId}')`
+            onclick: `window.handSimulator.toggleTap('${this.escapeJs(cardId)}')`
           });
           if (zone === 'battlefield') {
             actions.push({
               icon: '⚰️',
               text: 'Destroy → Graveyard',
-              onclick: `window.handSimulator.moveToGraveyard('${cardId}')`
+              onclick: `window.handSimulator.moveToGraveyard('${this.escapeJs(cardId)}')`
             });
             actions.push({
               icon: '🤲',
               text: 'Bounce → Hand',
-              onclick: `window.handSimulator.moveToHand('${cardId}')`
+              onclick: `window.handSimulator.moveToHand('${this.escapeJs(cardId)}')`
             });
           }
         }
@@ -5015,20 +7234,20 @@ class ModernHandSimulator {
           icon: '💎',
           text: 'Loyalty +1',
           badge: loyalty > 0 ? loyalty.toString() : '',
-          onclick: `window.handSimulator.addCounter('${cardId}', 'loyalty')`
+          onclick: `window.handSimulator.addCounter('${this.escapeJs(cardId)}', 'loyalty')`
         });
         if (loyalty > 0) {
           actions.push({
             icon: '💎',
             text: 'Loyalty -1',
-            onclick: `window.handSimulator.removeCounter('${cardId}', 'loyalty')`
+            onclick: `window.handSimulator.removeCounter('${this.escapeJs(cardId)}', 'loyalty')`
           });
         }
         if (zone === 'battlefield') {
           actions.push({
             icon: '⚰️',
             text: loyalty === 0 ? 'Dies (0 Loyalty)' : 'Destroy',
-            onclick: `window.handSimulator.moveToGraveyard('${cardId}')`
+            onclick: `window.handSimulator.moveToGraveyard('${this.escapeJs(cardId)}')`
           });
         }
         break;
@@ -5040,18 +7259,18 @@ class ModernHandSimulator {
         actions.push({
           icon: isTapped ? '↺' : '⤵️',
           text: isTapped ? 'Untap' : 'Tap',
-          onclick: `window.handSimulator.toggleTap('${cardId}')`
+          onclick: `window.handSimulator.toggleTap('${this.escapeJs(cardId)}')`
         });
         if (zone === 'battlefield') {
           actions.push({
             icon: '⚰️',
             text: 'Destroy → Graveyard',
-            onclick: `window.handSimulator.moveToGraveyard('${cardId}')`
+            onclick: `window.handSimulator.moveToGraveyard('${this.escapeJs(cardId)}')`
           });
           actions.push({
             icon: '🚫',
             text: 'Exile',
-            onclick: `window.handSimulator.moveToExile('${cardId}')`
+            onclick: `window.handSimulator.moveToExile('${this.escapeJs(cardId)}')`
           });
         }
         break;
@@ -5061,12 +7280,12 @@ class ModernHandSimulator {
           actions.push({
             icon: isTapped ? '↺' : '⤵️',
             text: isTapped ? 'Untap' : 'Tap',
-            onclick: `window.handSimulator.toggleTap('${cardId}')`
+            onclick: `window.handSimulator.toggleTap('${this.escapeJs(cardId)}')`
           });
           actions.push({
             icon: '⚰️',
             text: 'To Graveyard',
-            onclick: `window.handSimulator.moveToGraveyard('${cardId}')`
+            onclick: `window.handSimulator.moveToGraveyard('${this.escapeJs(cardId)}')`
           });
         }
     }
@@ -5076,37 +7295,46 @@ class ModernHandSimulator {
       actions.push({
         icon: '🤲',
         text: 'Return → Hand',
-        onclick: `window.handSimulator.moveGraveyardToHand('${cardId}')`
+        onclick: `window.handSimulator.moveGraveyardToHand('${this.escapeJs(cardId)}')`
       });
       actions.push({
         icon: '⚡',
         text: 'Reanimate → Battlefield',
-        onclick: `window.handSimulator.moveGraveyardToBattlefield('${cardId}')`
+        onclick: `window.handSimulator.moveGraveyardToBattlefield('${this.escapeJs(cardId)}')`
       });
       actions.push({
         icon: '🚫',
         text: 'Exile from Graveyard',
-        onclick: `window.handSimulator.moveGraveyardToExile('${cardId}')`
+        onclick: `window.handSimulator.moveGraveyardToExile('${this.escapeJs(cardId)}')`
       });
     } else if (zone === 'exile') {
       actions.push({
         icon: '🤲',
         text: 'Return → Hand',
-        onclick: `window.handSimulator.moveExileToHand('${cardId}')`
+        onclick: `window.handSimulator.moveExileToHand('${this.escapeJs(cardId)}')`
       });
       actions.push({
         icon: '⚡',
         text: 'Return → Battlefield',
-        onclick: `window.handSimulator.moveExileToBattlefield('${cardId}')`
+        onclick: `window.handSimulator.moveExileToBattlefield('${this.escapeJs(cardId)}')`
       });
       actions.push({
         icon: '⚰️',
         text: 'To Graveyard',
-        onclick: `window.handSimulator.moveExileToGraveyard('${cardId}')`
+        onclick: `window.handSimulator.moveExileToGraveyard('${this.escapeJs(cardId)}')`
       });
     }
 
-    return actions.slice(0, 4); // Allow up to 4 primary actions for better coverage
+    // Always add View Card option for all zones and card types
+    if (card && card.name) {
+      actions.push({
+        icon: '👁️',
+        text: 'View Card',
+        onclick: `window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')`
+      });
+    }
+
+    return actions.slice(0, 5); // Allow up to 5 primary actions to include View Card
   }
 
   removeExistingMenus() {
@@ -5154,7 +7382,7 @@ class ModernHandSimulator {
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius);
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 1000;
+      z-index: 1000000;
       min-width: 200px;
       max-height: 400px;
       overflow-y: auto;
@@ -5164,7 +7392,7 @@ class ModernHandSimulator {
 
     let menuHTML = `
       <div class="menu-header">
-        <span onclick="window.handSimulator.showBattlefieldCardMenu(event, '${cardId}')" style="cursor: pointer;">← Back</span>
+        <span onclick="window.handSimulator.showBattlefieldCardMenu(event, '${this.escapeJs(cardId)}')" style="cursor: pointer;">← Back</span>
         <span>All Actions</span>
       </div>
       <div class="menu-section">
@@ -5187,13 +7415,13 @@ class ModernHandSimulator {
       const current = counters[counter.type] || 0;
       menuHTML += `
         <div class="counter-group">
-          <div class="menu-item" onclick="window.handSimulator.addCounter('${cardId}', '${counter.type}')">
+          <div class="menu-item" onclick="window.handSimulator.addCounter('${this.escapeJs(cardId)}', '${counter.type}')">
             <span class="action-icon">${counter.icon}</span>
             <span class="action-text">Add ${counter.name}</span>
             ${current > 0 ? `<span class="counter-count">${current}</span>` : ''}
           </div>
           ${current > 0 ? `
-            <div class="menu-item remove" onclick="window.handSimulator.removeCounter('${cardId}', '${counter.type}')">
+            <div class="menu-item remove" onclick="window.handSimulator.removeCounter('${this.escapeJs(cardId)}', '${counter.type}')">
               <span class="action-icon">➖</span>
               <span class="action-text">Remove ${counter.name}</span>
             </div>
@@ -5206,13 +7434,19 @@ class ModernHandSimulator {
       </div>
       <div class="menu-section">
         <div class="section-title">Movement</div>
-        <div class="menu-item" onclick="window.handSimulator.moveToExile('${cardId}')">
+        <div class="menu-item" onclick="window.handSimulator.moveToExile('${this.escapeJs(cardId)}')">
           <span class="action-icon">🚫</span>
           <span class="action-text">To Exile</span>
         </div>
-        <div class="menu-item" onclick="window.handSimulator.moveToHand('${cardId}')">
+        <div class="menu-item" onclick="window.handSimulator.moveToHand('${this.escapeJs(cardId)}')">
           <span class="action-icon">🤲</span>
           <span class="action-text">To Hand</span>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-item" onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')">
+          <span class="action-icon">👁️</span>
+          <span class="action-text">View Card</span>
         </div>
       </div>
     `;
@@ -5325,10 +7559,15 @@ class ModernHandSimulator {
 
   showGraveyardCardMenu(event, cardId) {
     event.preventDefault();
+    console.log('showGraveyardCardMenu called with cardId:', cardId);
 
     // Find the card
     const card = this.findGraveyardCard(cardId);
-    if (!card) return;
+    console.log('Found graveyard card:', card);
+    if (!card) {
+      console.log('Card not found in graveyard');
+      return;
+    }
 
     // Use the new smart context menu system
     this.removeExistingMenus();
@@ -5348,15 +7587,59 @@ class ModernHandSimulator {
   }
 
   findGraveyardCard(cardId) {
+    console.log('findGraveyardCard called with cardId:', cardId);
     // Search in the appropriate graveyard based on active player
     const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
-    return currentGraveyard.find(card => card.id === cardId);
+    console.log('Current graveyard:', currentGraveyard);
+
+    // First try to find by actual card ID
+    let card = currentGraveyard.find(card => card.id === cardId);
+    console.log('Found by ID:', card);
+
+    // If not found and this looks like a modal card ID, try to find by name_index pattern
+    if (!card && cardId.includes('_')) {
+      console.log('Trying name_index pattern');
+      const parts = cardId.split('_');
+      if (parts.length >= 2) {
+        const index = parseInt(parts[parts.length - 1]);
+        const cardName = parts.slice(0, -1).join('_');
+        console.log('Looking for card name:', cardName, 'at index:', index);
+        // Try to find card by name and position
+        const cardsWithName = currentGraveyard.filter(c => c.name === cardName);
+        console.log('Cards with name:', cardsWithName);
+        if (cardsWithName.length > index) {
+          card = cardsWithName[index];
+          console.log('Found by name/index:', card);
+        }
+      }
+    }
+
+    console.log('Final result:', card);
+    return card;
   }
 
   findExileCard(cardId) {
     // Search in the appropriate exile zone based on active player
     const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
-    return currentExile.find(card => card.id === cardId);
+
+    // First try to find by actual card ID
+    let card = currentExile.find(card => card.id === cardId);
+
+    // If not found and this looks like a modal card ID, try to find by name_index pattern
+    if (!card && cardId.includes('_')) {
+      const parts = cardId.split('_');
+      if (parts.length >= 2) {
+        const index = parseInt(parts[parts.length - 1]);
+        const cardName = parts.slice(0, -1).join('_');
+        // Try to find card by name and position
+        const cardsWithName = currentExile.filter(c => c.name === cardName);
+        if (cardsWithName.length > index) {
+          card = cardsWithName[index];
+        }
+      }
+    }
+
+    return card;
   }
 
   moveGraveyardToHand(cardId) {
@@ -5607,6 +7890,7 @@ class ModernHandSimulator {
         cardInfo: deckInformation.cardInfo
       };
       this.opponent.deckName = this.extractDeckName(xmlDoc, deckPath);
+      this.opponent.deckPath = deckPath;
 
       // Reset opponent game state when loading new deck (but preserve deck info)
       this.resetOpponentGameState();
@@ -5629,7 +7913,16 @@ class ModernHandSimulator {
       console.log('Opponent library size:', this.opponent.library.length);
       console.log('First few cards:', this.opponent.library.slice(0, 3));
 
-      this.showToast(`Opponent loaded: ${this.opponent.deckName}`, 'success');
+      // Check if this is the default opponent deck
+      const isDefault = localStorage.getItem('mtg_default_opponent_deck') === deckPath;
+      const message = isDefault
+        ? `Opponent loaded: ${this.opponent.deckName} ⭐ (Default)`
+        : `Opponent loaded: ${this.opponent.deckName}`;
+
+      this.showToast(message, 'success');
+
+      // Update opponent deck selector labels
+      this.updateOpponentDeckSelectorLabels();
 
     } catch (error) {
       console.error('Error loading opponent deck:', error);
@@ -5687,8 +7980,21 @@ class ModernHandSimulator {
       }
     }
 
+    // Save the current active player to restore it after updating
+    const previousActivePlayer = this.activePlayer;
+
     this.updateUI();
-    this.updateOpponentHandDisplay();
+
+    // Only update opponent hand display without switching context
+    // This ensures the player's hand remains visible
+    const container2 = document.getElementById('opponentHandContainer2');
+    if (container2) {
+      this.updateZoneDisplay('opponentHandContainer2', this.opponent.hand);
+    }
+
+    // Restore the active player context
+    this.activePlayer = previousActivePlayer;
+
     this.showToast(`Opponent drew ${cardsToDraw} cards`, 'info');
   }
 
@@ -5707,8 +8013,20 @@ class ModernHandSimulator {
       this.opponent.hand.push(opponentCard);
       this.opponent.gameStats.cardsDrawn++;
 
+      // Save the current active player to restore it after updating
+      const previousActivePlayer = this.activePlayer;
+
       this.updateUI();
-      this.updateOpponentHandDisplay();
+
+      // Only update opponent hand display without switching context
+      const container2 = document.getElementById('opponentHandContainer2');
+      if (container2) {
+        this.updateZoneDisplay('opponentHandContainer2', this.opponent.hand);
+      }
+
+      // Restore the active player context
+      this.activePlayer = previousActivePlayer;
+
       this.showToast('Opponent drew a card', 'info');
     }
   }
@@ -5817,6 +8135,98 @@ class ModernHandSimulator {
     return totalCost;
   }
 
+  // ===== DOUBLE-FACED CARD (DFC) SYSTEM =====
+
+  isDFC(cardName) {
+    // Check both original name and current name (in case it's transformed)
+    const baseName = cardName.replace(' // ', '/').split(' //')[0].trim().toLowerCase();
+    return this.dfcDatabase[baseName] !== undefined ||
+           Object.values(this.dfcDatabase).some(dfc => dfc.backFace.toLowerCase() === baseName);
+  }
+
+  getDFCData(cardName) {
+    const baseName = cardName.replace(' // ', '/').split(' //')[0].trim().toLowerCase();
+    // Check if it's a front face
+    if (this.dfcDatabase[baseName]) {
+      return this.dfcDatabase[baseName];
+    }
+    // Check if it's a back face
+    for (const [frontName, dfcData] of Object.entries(this.dfcDatabase)) {
+      if (dfcData.backFace.toLowerCase() === baseName) {
+        return dfcData;
+      }
+    }
+    return null;
+  }
+
+  transformCard(cardId) {
+    console.log(`Attempting to transform card: ${cardId}`);
+
+    // Find the card in all zones
+    let card = null;
+    let zone = null;
+    let zoneArray = null;
+
+    // Check player battlefield
+    for (const zoneType of ['lands', 'creatures', 'others']) {
+      const found = this.battlefield[zoneType].find(c => (c.id || `${c.name}_0`) === cardId);
+      if (found) {
+        card = found;
+        zone = 'player_battlefield';
+        zoneArray = this.battlefield[zoneType];
+        break;
+      }
+    }
+
+    // Check opponent battlefield
+    if (!card) {
+      for (const zoneType of ['lands', 'creatures', 'others']) {
+        const found = this.opponent.battlefield[zoneType].find(c => (c.id || `${c.name}_0`) === cardId);
+        if (found) {
+          card = found;
+          zone = 'opponent_battlefield';
+          zoneArray = this.opponent.battlefield[zoneType];
+          break;
+        }
+      }
+    }
+
+    if (!card) {
+      console.error('Card not found for transform:', cardId);
+      return;
+    }
+
+    const dfcData = this.getDFCData(card.name);
+    if (!dfcData) {
+      console.error('Card is not a DFC:', card.name);
+      return;
+    }
+
+    // Determine which face to transform to
+    const currentName = card.currentFace || card.name;
+    const isOnFrontFace = currentName === dfcData.frontFace;
+
+    if (isOnFrontFace) {
+      // Transform to back face
+      card.currentFace = dfcData.backFace;
+      card.transformed = true;
+      this.logAction('You', `Transform ${dfcData.frontFace} → ${dfcData.backFace}`, 'manual');
+      this.showToast(`${dfcData.frontFace} transformed into ${dfcData.backFace}!`, 'info');
+    } else if (dfcData.canTransformBack) {
+      // Transform back to front face
+      card.currentFace = dfcData.frontFace;
+      card.transformed = false;
+      this.logAction('You', `Transform ${dfcData.backFace} → ${dfcData.frontFace}`, 'manual');
+      this.showToast(`${dfcData.backFace} transformed back into ${dfcData.frontFace}!`, 'info');
+    } else {
+      this.showToast(`${card.name} cannot transform back`, 'warning');
+      return;
+    }
+
+    // Update displays
+    this.updateBattlefieldDisplay();
+    this.updateUI();
+  }
 
   async loadHandImages() {
     console.log('loadHandImages called');
@@ -5835,14 +8245,25 @@ class ModernHandSimulator {
   }
 
   async loadZoneImages(cards) {
-    const uniqueCardNames = [...new Set(cards.map(card => card.name))];
+    // Create a map of card names to their original/front face for DFC support
+    const cardNameMap = new Map();
 
-    for (const cardName of uniqueCardNames) {
+    for (const card of cards) {
+      const displayName = card.currentFace || card.name;
+      if (!cardNameMap.has(displayName)) {
+        // Store both the display name and the original name (for DFC lookup)
+        cardNameMap.set(displayName, card.name);
+      }
+    }
+
+    for (const [displayName, originalName] of cardNameMap) {
       try {
-        const imageUrl = await CardImageService.getCardImageUrl(cardName, 'normal');
-        this.updateHandCardImage(cardName, imageUrl); // This method works for any element with data-card-name
+        // Pass the original name as dfcFrontFace hint if this is a transformed card
+        const dfcFrontFace = displayName !== originalName ? originalName : null;
+        const imageUrl = await CardImageService.getCardImageUrl(displayName, 'normal', dfcFrontFace);
+        this.updateHandCardImage(displayName, imageUrl); // This method works for any element with data-card-name
       } catch (error) {
-        console.warn(`Failed to load image for ${cardName}:`, error);
+        console.warn(`Failed to load image for ${displayName}:`, error);
       }
     }
   }
@@ -5899,6 +8320,53 @@ class ModernHandSimulator {
     this.updateHandDisplay();
   }
 
+  playModalCard(cardId, event, modalId) {
+    // Prevent event bubbling
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+
+    console.log('playModalCard called:', cardId, modalId);
+
+    // Find the card in the appropriate zone
+    let card = null;
+    let sourceZone = null;
+    let currentZone = null;
+
+    if (modalId === 'graveyard' || modalId === 'opponent-graveyard') {
+      card = this.findGraveyardCard(cardId);
+      sourceZone = 'graveyard';
+      currentZone = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+    } else if (modalId === 'exile' || modalId === 'opponent-exile') {
+      card = this.findExileCard(cardId);
+      sourceZone = 'exile';
+      currentZone = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+    }
+
+    if (!card) {
+      console.log('Card not found in', sourceZone);
+      this.showToast('Card not found', 'warning');
+      return;
+    }
+
+    // Remove from source zone
+    const cardIndex = currentZone.findIndex(c => c === card);
+    if (cardIndex !== -1) {
+      currentZone.splice(cardIndex, 1);
+
+      // Add to battlefield using existing logic
+      this.playCard(card);
+
+      // Close the modal
+      document.getElementById(`simple-modal-${modalId}`)?.remove();
+
+      // Update displays
+      this.updateAllDisplays();
+      this.showToast(`Played ${card.name} from ${sourceZone}`, 'success');
+    }
+  }
+
   playSelectedCards() {
     if (this.selectedCards.size === 0) {
       this.showToast('No cards selected', 'warning');
@@ -5944,6 +8412,11 @@ class ModernHandSimulator {
   }
 
   playCardDirectly(cardId, event) {
+    console.log('=== playCardDirectly called ===');
+    console.log('cardId:', cardId);
+    console.log('event:', event);
+    console.log('event target:', event ? event.target : 'no event');
+
     // Prevent any event bubbling
     if (event) {
       event.stopPropagation();
@@ -6086,15 +8559,15 @@ class ModernHandSimulator {
   updateHandDisplay() {
     console.log('updateHandDisplay called, activePlayer:', this.activePlayer);
 
-    // Check which player is active and show their hand
-    if (this.activePlayer === 'opponent') {
-      console.log('Active player is opponent, showing opponent hand');
-      this.updateOpponentHandDisplayDetailed();
-    } else {
-      console.log('Active player is player, showing player hand:', this.hand);
-      // Update both single and two-player layouts
-      this.updateZoneDisplay('handContainer', this.hand);
-      this.updateZoneDisplay('handContainer2', this.hand);
+    // ALWAYS show player's hand in player hand containers for playtesting
+    console.log('Showing player hand:', this.hand);
+    this.updateZoneDisplay('handContainer', this.hand);
+    this.updateZoneDisplay('handContainer2', this.hand);
+
+    // Also update opponent hand in their separate container
+    const opponentContainer = document.getElementById('opponentHandContainer2');
+    if (opponentContainer) {
+      this.updateZoneDisplay('opponentHandContainer2', this.opponent.hand);
     }
   }
 
@@ -6159,8 +8632,8 @@ class ModernHandSimulator {
                data-card-id="${cardId}"
                data-card-name="${this.escapeHtml(card.name)}"
                style="animation-delay: ${index * 0.1}s; position: relative;"
-               onclick="window.handSimulator.playCardDirectly('${cardId}', event)"
-               oncontextmenu="window.handSimulator.showHandCardMenu(event, '${cardId}'); return false;"
+               onclick="window.handSimulator.playCardDirectly('${this.escapeJs(cardId)}', event)"
+               oncontextmenu="window.handSimulator.showHandCardMenu(event, '${this.escapeJs(cardId)}'); return false;"
                title="${this.escapeHtml(card.name)} - ${this.escapeHtml(card.cost || '0')} (Press ${index + 1} or Left-click to play, Right-click for options)">
             ${index < 9 ? `<div class="card-number" style="position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.8); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; z-index: 10;">${index + 1}</div>` : ''}
             <div class="card-content">
@@ -6220,11 +8693,17 @@ class ModernHandSimulator {
       const toughness = this.getCreatureToughness(card);
       const isCreature = this.getCardMainType(card.type).toLowerCase() === 'creature';
 
+      // Use currentFace for transformed cards
+      const displayName = card.currentFace || card.name;
+      const isTransformed = card.transformed || false;
+
       console.log(`SIMPLE TEMPLATE - Rendering card ${card.name} in container ${containerId}:`, {
         isTapped,
         hasCounters,
         counters,
-        counterText
+        counterText,
+        isTransformed,
+        displayName
       });
       console.trace('Call stack for simple template rendering');
 
@@ -6236,31 +8715,38 @@ class ModernHandSimulator {
 
       let tapHTML = '';
       if (isTapped) {
-        tapHTML = '<div class=\'tap-indicator\' style=\'position: absolute; top: 2px; right: 2px; background: rgba(255, 255, 255, 0.9); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 100;\'>⤵️</div>';
+        tapHTML = '<div class=\'tap-indicator\' style=\'position: absolute; top: 2px; right: 2px; background: rgba(255, 255, 255, 0.9); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 100; pointer-events: none;\'>⤵️</div>';
       }
 
       let damageHTML = '';
       if (isCreature && hasDamage) {
         const damageColor = damage >= toughness ? 'red' : 'orange';
-        damageHTML = `<div class="damage-indicator" style="position: absolute; bottom: 2px; right: 2px; background: ${damageColor}; color: white; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: bold; z-index: 100;">💔 ${damage}</div>`;
+        damageHTML = `<div class="damage-indicator" style="position: absolute; bottom: 2px; right: 2px; background: ${damageColor}; color: white; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: bold; z-index: 100; pointer-events: none;">💔 ${damage}</div>`;
+      }
+
+      // Add transform indicator for DFCs
+      let transformHTML = '';
+      if (isTransformed) {
+        transformHTML = '<div class=\'transform-indicator\' style=\'position: absolute; top: 2px; left: 2px; background: rgba(139, 92, 246, 0.9); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 100; pointer-events: none;\' title=\'Transformed\'>🔄</div>';
       }
 
       return `
-        <div class="zone-card card-played ${isTapped ? 'tapped' : ''}"
+        <div class="zone-card card-played ${isTapped ? 'tapped' : ''} ${isTransformed ? 'transformed' : ''}"
              style="animation-delay: ${index * 0.05}s; cursor: pointer;"
              data-card-id="${card.id}"
-             data-card-name="${this.escapeHtml(card.name)}"
-             onclick="window.handSimulator.handleBattlefieldCardClick(event, '${card.id}', '${this.escapeHtml(card.name)}')"
-             oncontextmenu="window.handSimulator.${menuFunction}(event, '${card.id}'); return false;"
+             data-card-name="${this.escapeHtml(displayName)}"
+             onclick="window.handSimulator.handleBattlefieldCardClick(event, '${this.escapeJs(card.id)}', '${this.escapeHtml(displayName)}')"
+             oncontextmenu="window.handSimulator.${menuFunction}(event, '${this.escapeJs(card.id)}'); return false;"
              title="Left-click to view card, Right-click for options">
           <div class="card-content">
             <div class="card-image-container" style="position: relative;">
               <div class="loading-placeholder">🎴</div>
+              ${transformHTML}
               ${tapHTML}
               ${damageHTML}
             </div>
             <div class="card-info">
-              <div class="card-name">${this.escapeHtml(card.name)}</div>
+              <div class="card-name">${this.escapeHtml(displayName)}</div>
               <div class="card-details">
                 <div class="card-cost">${this.escapeHtml(card.cost || '0')}</div>
                 <div class="card-type">${this.escapeHtml(this.getCardMainType(card.type || 'Unknown'))}</div>
@@ -6337,13 +8823,10 @@ class ModernHandSimulator {
     const landsPlayedEl = document.getElementById('landsPlayed');
     const spellsCastEl = document.getElementById('spellsCast');
     const turnNumberEl = document.getElementById('turnNumber');
-    const lifeEl = document.getElementById('lifeTotal');
-
     if (cardsDrawnEl) cardsDrawnEl.textContent = this.gameStats.cardsDrawn;
     if (landsPlayedEl) landsPlayedEl.textContent = this.gameStats.landsPlayed;
     if (spellsCastEl) spellsCastEl.textContent = this.gameStats.spellsCast;
     if (turnNumberEl) turnNumberEl.textContent = this.gameStats.turnNumber;
-    if (lifeEl) lifeEl.textContent = this.gameStats.life;
 
     // Update two-player layout player stats
     const handCount2El = document.getElementById('handCount2');
@@ -6358,22 +8841,11 @@ class ModernHandSimulator {
     if (graveyardCount2El) graveyardCount2El.textContent = this.graveyard.length;
     if (exileCount2El) exileCount2El.textContent = this.exile.length;
 
-    // Update opponent info (both layouts)
-    const opponentLifeEl = document.getElementById('opponentLife');
-    const opponentHandCountEl = document.getElementById('opponentHandCount');
-    const opponentGraveyardCountEl = document.getElementById('opponentGraveyardCount');
-    const opponentExileCountEl = document.getElementById('opponentExileCount');
-
-    // Two-player layout elements
+    // Update opponent info (two-player layout only)
     const opponentLife2El = document.getElementById('opponentLife2');
     const opponentHandCount2El = document.getElementById('opponentHandCount2');
     const opponentGraveyardCount2El = document.getElementById('opponentGraveyardCount2');
     const opponentExileCount2El = document.getElementById('opponentExileCount2');
-
-    if (opponentLifeEl) opponentLifeEl.textContent = this.opponent.gameStats.life;
-    if (opponentHandCountEl) opponentHandCountEl.textContent = this.opponent.hand.length;
-    if (opponentGraveyardCountEl) opponentGraveyardCountEl.textContent = this.opponent.graveyard.length;
-    if (opponentExileCountEl) opponentExileCountEl.textContent = this.opponent.exile.length;
 
     if (opponentLife2El) opponentLife2El.textContent = this.opponent.gameStats.life;
     if (opponentHandCount2El) opponentHandCount2El.textContent = this.opponent.hand.length;
@@ -6426,15 +8898,35 @@ class ModernHandSimulator {
     const previewCardImage = document.getElementById('previewCardImage');
     const previewCardInfo = document.getElementById('previewCardInfo');
 
-    if (!modal || !previewCardName || !previewCardImage || !previewCardInfo) return;
+    if (!modal || !previewCardName || !previewCardImage || !previewCardInfo) {
+      console.error('Missing modal elements for card preview');
+      return;
+    }
 
     // Show modal with loading state
     previewCardName.textContent = cardName;
     previewCardImage.src = '';
     previewCardImage.style.display = 'none';
     previewCardInfo.innerHTML = '<div class="text-center text-muted">Loading card details...</div>';
+
+    // Ensure modal is visible with high z-index
     modal.style.display = 'flex';
+    modal.style.zIndex = '9999';
     modal.classList.add('fade-in');
+
+    // Check if modal content needs show class for visibility
+    const modalContent = modal.querySelector('.modal-content');
+    if (modalContent) {
+      modalContent.classList.add('show');
+      // Force visible styles as fallback
+      modalContent.style.opacity = '1';
+      modalContent.style.transform = 'scale(1) translateY(0)';
+    }
+
+    // Force visible background
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    modal.style.opacity = '1';
+
 
     try {
       // Get high-quality image and card data
@@ -6495,6 +8987,16 @@ class ModernHandSimulator {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  escapeJs(text) {
+    if (typeof text !== 'string') return text;
+    return text.replace(/\\/g, '\\\\')
+               .replace(/'/g, "\\'")
+               .replace(/"/g, '\\"')
+               .replace(/\n/g, '\\n')
+               .replace(/\r/g, '\\r')
+               .replace(/\t/g, '\\t');
   }
 
   // Test functions for zone functionality
@@ -6573,41 +9075,306 @@ class ModernHandSimulator {
     }
   }
 
-  // Modal functions for graveyard and exile in two-player layout
   showGraveyardModal() {
-    this.showZoneModal('graveyardModal', 'graveyardModalContents', this.graveyard, 'Graveyard');
+    console.log('showGraveyardModal called');
+    this.showSimpleModal('graveyard', this.graveyard, '🪦 Graveyard');
   }
 
   showExileModal() {
-    this.showZoneModal('exileModal', 'exileModalContents', this.exile, 'Exile');
+    console.log('showExileModal called');
+    this.showSimpleModal('exile', this.exile, '🚫 Exile');
   }
 
   showOpponentGraveyardModal() {
-    this.showZoneModal('graveyardModal', 'graveyardModalContents', this.opponent.graveyard, 'Opponent Graveyard');
+    this.showSimpleModal('opponent-graveyard', this.opponent.graveyard, '🪦 Opponent Graveyard');
+  }
+
+  async showSimpleModal(modalId, cards, title) {
+    console.log(`showSimpleModal called: ${modalId}, cards: ${cards.length}`);
+
+    // Remove any existing modal with this ID
+    const existingModal = document.getElementById(`simple-modal-${modalId}`);
+    if (existingModal) {
+      existingModal.remove();
+    }
+
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.id = `simple-modal-${modalId}`;
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    `;
+
+    // Generate cards HTML with full card display like hand section
+    let cardsHtml = '';
+    if (cards.length === 0) {
+      cardsHtml = '<div style="text-align: center; color: #666; padding: 40px; font-size: 16px;">No cards in this zone</div>';
+    } else {
+      // Show cards in reverse order (most recent first, which is typical for graveyard viewing)
+      const orderedCards = [...cards].reverse();
+
+      cardsHtml = orderedCards.map((card, index) => {
+        const orderNumber = cards.length - index; // Show original position
+        // Use the actual card ID if available, otherwise find the original index in the non-reversed array
+        const originalIndex = cards.findIndex(c => c === card);
+        const cardId = card.id || `${card.name}_${originalIndex}`;
+        const cardType = this.getCardMainType(card.type || '').toLowerCase();
+        const menuFunction = modalId === 'graveyard' || modalId === 'opponent-graveyard' ? 'showGraveyardCardMenu' : 'showExileCardMenu';
+        const sourceZone = modalId.includes('graveyard') ? 'graveyard' : 'exile';
+
+        return `
+        <div class="card-hand ${cardType} card-dealt modal-card-item"
+             data-card-id="${cardId}"
+             data-card-name="${this.escapeHtml(card.name)}"
+             style="position: relative;"
+             onclick="window.handSimulator.playModalCard('${this.escapeJs(cardId)}', event, '${modalId}')"
+             oncontextmenu="window.handSimulator.${menuFunction}(event, '${this.escapeJs(cardId)}'); return false;"
+             title="${this.escapeHtml(card.name)} - ${this.escapeHtml(card.cost || '0')} (Left-click to play from ${sourceZone || 'zone'}, Right-click for options)">
+
+          <!-- Order indicator -->
+          <div style="
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 10;
+          ">${orderNumber}</div>
+
+          <div class="card-content">
+            <div class="card-image-container">
+              <div class="loading-placeholder">🎴</div>
+            </div>
+            <div class="card-info">
+              <div class="card-name">${this.escapeHtml(card.name)}</div>
+              <div class="card-details">
+                <div class="card-cost">${this.escapeHtml(card.cost || '0')}</div>
+                <div class="card-type">${this.escapeHtml(this.getCardMainType(card.type || 'Unknown'))}</div>
+                ${card.counters && Object.keys(card.counters).length > 0 ?
+                  `<div class="card-counters">
+                    ${Object.entries(card.counters).map(([type, count]) =>
+                      `<span class="counter-badge" data-type="${type}">${count} ${type}</span>`
+                    ).join('')}
+                  </div>` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
+      }).join('');
+    }
+
+    // Create modal content
+    modal.innerHTML = `
+      <div style="
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        max-width: 90vw;
+        max-height: 90vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      ">
+        <div style="
+          padding: 20px;
+          border-bottom: 1px solid #eee;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: #f8f9fa;
+        ">
+          <div>
+            <h3 style="margin: 0; font-size: 18px; color: #333;">${title}</h3>
+            <div style="font-size: 14px; color: #666; margin-top: 4px;">
+              ${cards.length} cards • ${cards.length > 0 ? 'Most recent first • Numbers show original order' : 'Empty zone'}
+            </div>
+          </div>
+          <button onclick="document.getElementById('simple-modal-${modalId}').remove()" style="
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+          ">✕ Close</button>
+        </div>
+        <div style="
+          padding: 20px;
+          overflow-y: auto;
+          max-height: 70vh;
+        ">
+          <div style="
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+          ">
+            ${cardsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Add click-to-close on backdrop
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
+
+    // Add to document
+    document.body.appendChild(modal);
+
+    // Load card images if there are cards - use same method as hand cards
+    if (cards.length > 0) {
+      await this.loadZoneImages(cards);
+    }
+
+    console.log(`Modal ${modalId} created and added to DOM`);
+  }
+
+  async loadModalCardImages(cards, modal) {
+    console.log('loadModalCardImages called with cards:', cards.length);
+    console.log('Original cards order:', cards.map(c => c.name));
+
+    const orderedCards = [...cards].reverse();
+    console.log('Reversed cards order:', orderedCards.map(c => c.name));
+
+    // Collect all placeholders upfront before any modifications
+    const placeholders = modal.querySelectorAll('.loading-placeholder');
+    console.log(`Found ${placeholders.length} placeholders for ${orderedCards.length} cards`);
+
+    for (let i = 0; i < orderedCards.length; i++) {
+      const card = orderedCards[i];
+      const cardName = card.name;
+
+      try {
+        console.log(`Loading image for ${cardName} using CardImageService`);
+        const imageUrl = await CardImageService.getCardImageUrl(cardName, 'small');
+
+        if (placeholders[i]) {
+          const placeholder = placeholders[i];
+          console.log(`Updating placeholder ${i} with image for ${cardName} (position ${i+1} of ${orderedCards.length})`);
+
+          // Create image element with proper styling like hand display
+          const img = document.createElement('img');
+          img.src = imageUrl;
+          img.alt = cardName;
+          img.style.cssText = `
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+          `;
+
+          img.onload = function() {
+            this.style.opacity = '1';
+          };
+
+          // Replace the placeholder content but keep the container structure
+          placeholder.innerHTML = '';
+          placeholder.appendChild(img);
+          // Remove the loading-placeholder class since we're done loading
+          placeholder.classList.remove('loading-placeholder');
+        } else {
+          console.log('No placeholder found for card at index', i);
+        }
+      } catch (error) {
+        console.log(`Failed to load image for ${cardName}:`, error);
+        // Show a better placeholder for failed images
+        if (placeholders[i]) {
+          const placeholder = placeholders[i];
+          placeholder.innerHTML = `<div style="
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+          ">
+            <div style="font-size: 20px; margin-bottom: 4px;">🎴</div>
+            <div style="font-size: 10px; line-height: 1.2;">${cardName}</div>
+          </div>`;
+          placeholder.classList.remove('loading-placeholder');
+        }
+      }
+    }
   }
 
   showOpponentExileModal() {
-    this.showZoneModal('exileModal', 'exileModalContents', this.opponent.exile, 'Opponent Exile');
+    this.showSimpleModal('opponent-exile', this.opponent.exile, '🚫 Opponent Exile');
   }
 
   showZoneModal(modalId, contentId, cards, title) {
+    console.log(`showZoneModal called: modalId=${modalId}, contentId=${contentId}, title=${title}`);
+    console.log('Cards to display:', cards);
     const modal = document.getElementById(modalId);
     const content = document.getElementById(contentId);
+    console.log('Modal found:', !!modal);
+    console.log('Content found:', !!content);
+
+    if (modal) {
+      console.log('Modal current display style:', modal.style.display);
+      console.log('Modal current innerHTML length:', modal.innerHTML.length);
+      console.log('Modal HTML starts with:', modal.innerHTML.substring(0, 100));
+    }
+
+    if (!modal || !content) {
+      console.log('Modal or content not found, returning');
+      return;
+    }
+
     const titleElement = modal.querySelector('h3');
+    console.log('Title element found:', !!titleElement);
+    console.log('Modal structure:', modal.innerHTML.substring(0, 200));
 
-    if (!modal || !content) return;
-
-    titleElement.textContent = title;
+    if (titleElement) {
+      titleElement.textContent = title;
+      console.log('Title set to:', title);
+    } else {
+      console.log('ERROR: No h3 element found in modal');
+    }
 
     // Update modal content with cards
     if (cards.length === 0) {
+      console.log('No cards in zone, showing empty message');
       content.innerHTML = '<div class="text-muted text-center p-4">No cards in this zone</div>';
     } else {
-      content.innerHTML = cards.map(card => `
+      console.log(`Generating HTML for ${cards.length} cards`);
+      const cardHtml = cards.map(card => {
+        console.log('Processing card:', card);
+        return `
         <div class="zone-card"
              data-card-id="${card.id}"
              data-card-name="${this.escapeHtml(card.name)}"
-             style="cursor: pointer;"
+             style="cursor: pointer; background: white; border: 1px solid #ccc; padding: 8px; margin: 4px; min-height: 100px;"
              onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')"
              title="${this.escapeHtml(card.name)} - ${this.escapeHtml(card.cost || '0')}">
           <div class="card-image-container">
@@ -6618,23 +9385,134 @@ class ModernHandSimulator {
             <div class="card-cost">${this.escapeHtml(card.cost || '0')}</div>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
+
+      console.log('Generated HTML length:', cardHtml.length);
+      content.innerHTML = cardHtml;
+      console.log('Content innerHTML set, length:', content.innerHTML.length);
+
+      // Add a test div to ensure something is visible
+      content.innerHTML += '<div style="background: red; color: white; padding: 20px; margin: 10px;">TEST: Graveyard Modal Content</div>';
 
       // Load images for cards
       this.loadZoneImages(cards);
     }
 
+    // Use the original modal structure but update only the content
+    const modalTitleElement = modal.querySelector('h3');
+    console.log('Title element found:', !!modalTitleElement);
+    console.log('Modal structure:', modal.innerHTML.substring(0, 200));
+
+    if (modalTitleElement) {
+      modalTitleElement.textContent = title;
+      console.log('Title set to:', title);
+    } else {
+      console.log('ERROR: No h3 element found in modal');
+    }
+
+    // Generate card HTML with simple, visible styling
+    let cardHtml = '';
+    if (cards.length === 0) {
+      console.log('No cards in zone, showing empty message');
+      cardHtml = '<div style="color: #666; text-align: center; padding: 20px;">No cards in this zone</div>';
+    } else {
+      console.log(`Generating HTML for ${cards.length} cards`);
+      cardHtml = cards.map(card => {
+        console.log('Processing card:', card);
+        return `
+        <div style="
+          background: #f0f0f0;
+          border: 2px solid #333;
+          border-radius: 8px;
+          padding: 12px;
+          margin: 8px;
+          display: inline-block;
+          min-width: 120px;
+          text-align: center;
+          cursor: pointer;
+        " onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')">
+          <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">${this.escapeHtml(card.name)}</div>
+          <div style="font-size: 12px; color: #666;">${this.escapeHtml(card.cost || 'N/A')}</div>
+          <div style="font-size: 10px; color: #999;">${this.escapeHtml(card.type || '')}</div>
+        </div>
+        `;
+      }).join('');
+
+      console.log('Generated HTML length:', cardHtml.length);
+    }
+
+    // Update only the content area, not the entire modal
+    if (content) {
+      content.innerHTML = cardHtml;
+      console.log('Content innerHTML set, length:', content.innerHTML.length);
+    } else {
+      console.log('ERROR: Content element not found, using modal body');
+      const modalBody = modal.querySelector('.modal-body');
+      if (modalBody) {
+        modalBody.innerHTML = cardHtml;
+      }
+    }
+
+    // Simple test - just override the modal content completely to see if it works
+    modal.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 40px;
+        border: 3px solid red;
+        border-radius: 8px;
+        z-index: 999999;
+        max-width: 600px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      ">
+        <h3>🪦 ${title} TEST</h3>
+        <div style="background: yellow; padding: 20px; margin: 20px 0; border: 2px solid black;">
+          MODAL IS WORKING! Cards: ${cards.length}
+        </div>
+        <button onclick="window.handSimulator.hideZoneModal('${modalId}')"
+                style="background: red; color: white; padding: 10px 20px; border: none; border-radius: 4px;">
+          CLOSE
+        </button>
+      </div>
+    `;
+
+    console.log('Setting modal display to flex');
     modal.style.display = 'flex';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    modal.style.zIndex = '999999';
     modal.classList.add('fade-in');
+    console.log('Modal should now be visible with all styles applied');
   }
 
   hideZoneModal(modalId) {
+    console.log('hideZoneModal called for:', modalId);
     const modal = document.getElementById(modalId);
     if (modal) {
+      console.log('Modal found, hiding...');
       modal.classList.remove('fade-in');
-      setTimeout(() => {
-        modal.style.display = 'none';
-      }, 200);
+      modal.style.display = 'none';
+
+      // Reset the modal structure to ensure it can be reused
+      modal.style.position = '';
+      modal.style.top = '';
+      modal.style.left = '';
+      modal.style.width = '';
+      modal.style.height = '';
+      modal.style.backgroundColor = '';
+      modal.style.zIndex = '';
+
+      console.log('Modal hidden and reset');
+    } else {
+      console.log('Modal not found:', modalId);
     }
   }
 
@@ -7291,12 +10169,16 @@ class ModernHandSimulator {
     const drawCardBtn = document.getElementById('drawCardButton');
     const mulliganBtn = document.getElementById('mulligan');
 
+    // Show whose turn it is (not who you're viewing)
+    const turnPlayer = this.turnState.activePlayer === 'player' ? 'You' : 'Opponent';
+    const viewingPlayer = this.activePlayer === 'player' ? 'You' : 'Opponent';
+
     if (drawHandBtn) drawHandBtn.textContent =
-      `🎲 Draw Hand (${this.activePlayer === 'player' ? 'You' : 'Opponent'})`;
+      `🎲 Draw Hand (Viewing: ${viewingPlayer})`;
     if (drawCardBtn) drawCardBtn.textContent =
-      `📄 +1 (${this.activePlayer === 'player' ? 'You' : 'Opponent'})`;
+      `📄 +1 (Turn: ${turnPlayer})`;
     if (mulliganBtn) mulliganBtn.textContent =
-      `🔄 Mulligan (${this.activePlayer === 'player' ? 'You' : 'Opponent'})`;
+      `🔄 Mulligan (Viewing: ${viewingPlayer})`;
   }
 
 

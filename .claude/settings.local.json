@@ -33,7 +33,8 @@
       "Bash(npm outdated)",
       "Bash(npm update)",
       "Bash(npm ls:*)",
-      "Bash(npm update:*)"
+      "Bash(npm update:*)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []

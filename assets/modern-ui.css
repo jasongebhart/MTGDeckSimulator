@@ -512,16 +512,17 @@ body {
   background: rgba(59, 130, 246, 0.05);
 }
 
-/* Enhanced Layout (Phase 1: Visual Hierarchy) */
+/* Enhanced Layout (Phase 1: Visual Hierarchy) - Compact Override */
 .hand-controls {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--border-radius-lg);
-  border: 1px solid var(--border-color);
+  gap: var(--space-2);
+  padding: var(--space-1);
+  background: transparent;
+  border-radius: var(--border-radius);
+  border: none;
   flex-wrap: wrap;
+  margin: 0;
 }
 
 .hand-controls .btn-primary-action {
@@ -537,26 +538,61 @@ body {
   margin-left: auto; /* Push tertiary actions to the right */
 }
 
+/* Compact Targeting Controls */
 .targeting-controls {
-  margin-top: var(--space-6);
-  padding: var(--space-4);
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.compact-spell-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1);
   background: var(--bg-secondary);
   border-radius: var(--border-radius);
   border: 1px solid var(--border-color);
 }
 
-.targeting-controls h4 {
-  margin: 0 0 var(--space-4) 0;
+.spell-buttons {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.targeting-btn {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   color: var(--text-primary);
-  font-size: var(--font-lg);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: var(--font-sm);
+  min-width: 36px;
+  height: 28px;
+}
+
+.targeting-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.targeting-controls h4 {
+  margin: 0;
+  padding: var(--space-1);
+  color: var(--text-primary);
+  font-size: var(--font-sm);
   font-weight: var(--font-semibold);
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .targeting-controls > div {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-1);
 }
 
 .targeting-controls > div:last-child {
@@ -639,7 +675,7 @@ body {
 }
 
 .spell-section {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-1);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -672,7 +708,7 @@ body {
 }
 
 .section-content {
-  padding: var(--space-4);
+  padding: var(--space-1);
   background: var(--bg-secondary);
   max-height: 1000px;
   overflow: hidden;
@@ -681,7 +717,7 @@ body {
 
 .section-content.collapsed {
   max-height: 0;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-1);
 }
 
 .spell-group {
@@ -703,18 +739,20 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-/* Expertise Level Visibility */
-.beginner-level { display: block; }
-.advanced-level { display: none; }
-.expert-level { display: none; }
+/* Compact Expertise Level Visibility */
+.targeting-btn.advanced-level,
+.targeting-btn.expert-level {
+  display: none;
+}
 
-[data-expertise="advanced"] .beginner-level { display: block; }
-[data-expertise="advanced"] .advanced-level { display: block; }
-[data-expertise="advanced"] .expert-level { display: none; }
+[data-expertise="advanced"] .targeting-btn.advanced-level {
+  display: inline-flex;
+}
 
-[data-expertise="expert"] .beginner-level { display: block; }
-[data-expertise="expert"] .advanced-level { display: block; }
-[data-expertise="expert"] .expert-level { display: block; }
+[data-expertise="expert"] .targeting-btn.advanced-level,
+[data-expertise="expert"] .targeting-btn.expert-level {
+  display: inline-flex;
+}
 
 /* Accessibility Enhancements (Phase 2) */
 .sr-only {
@@ -962,8 +1000,8 @@ body {
 @media (max-width: 768px) {
   .hand-controls {
     flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-3);
+    gap: var(--space-1);
+    padding: var(--space-1);
   }
 
   .hand-controls .btn-primary-action {
@@ -1756,8 +1794,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2614,16 +2652,7 @@ body {
   }
 }
 
-/* Add targeting buttons to control panel */
-.targeting-controls {
-  display: flex;
-  gap: 0.5rem;
-  margin: var(--space-2) 0;
-  padding: var(--space-2);
-  background: var(--bg-secondary);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
-}
+/* Targeting controls - minimal styling */
 
 .targeting-btn {
   padding: var(--space-2) var(--space-3);
@@ -2913,22 +2942,24 @@ body {
   z-index: 20;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-1) var(--space-2);
   display: flex;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-2);
   flex-wrap: wrap;
-  min-height: 60px;
+  min-height: 28px;
 }
 
 .controls-section {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
 }
 
 .control-label {
-  font-size: var(--font-sm);
+  font-size: var(--font-xs);
   font-weight: var(--font-medium);
   color: var(--text-primary);
   white-space: nowrap;
@@ -2941,17 +2972,59 @@ body {
 }
 
 .deck-controls select {
-  min-width: 200px;
-  max-width: 250px;
+  min-width: 150px;
+  max-width: 200px;
+  font-size: var(--font-xs);
+  padding: var(--space-1) var(--space-2);
 }
 
 .hand-controls {
   display: flex;
   gap: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .hand-controls .btn-sm {
   white-space: nowrap;
+}
+
+.turn-indicator {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+.targeting-controls.expanded {
+  display: block;
+}
+
+.targeting-header {
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.targeting-header h4 {
+  font-size: var(--font-sm);
+  margin: 0;
+}
+
+.spell-section {
+  padding: var(--space-1);
+}
+
+.section-header {
+  font-size: var(--font-xs);
+  padding: var(--space-1);
+}
+
+.targeting-btn {
+  font-size: var(--font-xs);
+  padding: var(--space-1) var(--space-2);
+  margin: var(--space-1);
 }
 
 /* Stats Grid for Sidebar */
@@ -2988,12 +3061,12 @@ body {
   .play-controls-bar {
     position: relative;
     top: auto;
-    padding: var(--space-4);
-    gap: var(--space-3);
+    padding: var(--space-1);
+    gap: var(--space-1);
     flex-direction: column;
     background: var(--bg-secondary);
     border-radius: var(--border-radius-lg);
-    margin: var(--space-3);
+    margin: var(--space-1);
     box-shadow: var(--shadow-md);
   }
 
