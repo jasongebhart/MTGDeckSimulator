@@ -4976,6 +4976,40 @@ class ModernHandSimulator {
     return scryMap[name] || 1;
   }
 
+  // ===== DELVE MECHANIC =====
+
+  hasDelve(cardName) {
+    const name = cardName.toLowerCase();
+    return name.includes('murktide regent') ||
+           name.includes('gurmag angler') ||
+           name.includes('tasigur') ||
+           name.includes('hooting mandrills') ||
+           name === 'dig through time' ||
+           name === 'treasure cruise' ||
+           name === 'temporal trespass' ||
+           name === 'soul spike' ||
+           name === 'tombstalker';
+  }
+
+  isMurktideRegent(cardName) {
+    const name = cardName.toLowerCase();
+    return name.includes('murktide regent');
+  }
+
+  getMurktidePowerToughness() {
+    // Count instant and sorcery cards in exile
+    const instantsAndSorceriesInExile = this.exile.filter(card => {
+      const type = this.getCardMainType(card.type).toLowerCase();
+      return type === 'instant' || type === 'sorcery';
+    }).length;
+
+    // Base 3/3 + number of instants/sorceries in exile
+    const power = 3 + instantsAndSorceriesInExile;
+    const toughness = 3 + instantsAndSorceriesInExile;
+
+    return { power, toughness };
+  }
+
   // =====================================================
   // MASS SPELL DETECTION
   // =====================================================
@@ -5744,6 +5778,183 @@ class ModernHandSimulator {
 
   closeSurveilUI() {
     document.getElementById('surveilUI')?.remove();
+  }
+
+  // =====================================================
+  // DELVE UI
+  // =====================================================
+
+  showDelveUI(cardId, cardName) {
+    if (this.graveyard.length === 0) {
+      this.showToast('No cards in graveyard to delve', 'warning');
+      return;
+    }
+
+    // Remove any existing delve popup
+    document.getElementById('delveUI')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'delveUI';
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid var(--accent-color);
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 500px;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+    `;
+
+    const cardButtons = this.graveyard.map((card) => {
+      return `
+        <div id="delve-card-${card.id}" style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px; border: 2px solid transparent;" data-card-id="${card.id}" data-will-exile="false">
+          <input type="checkbox" id="delve-check-${card.id}" onchange="window.handSimulator.toggleDelveExile('${this.escapeJs(card.id)}')" style="width: 20px; height: 20px; margin-right: 12px; cursor: pointer;">
+          <div style="flex: 1;">
+            <div style="font-weight: bold; color: var(--text-primary);">${card.name}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">${card.type || 'Unknown'}</div>
+          </div>
+          <button onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')" style="background: var(--accent-color); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 10px;">
+            👁️ View
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    popup.innerHTML = `
+      <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; color: var(--text-primary);">💀 Delve - ${this.escapeHtml(cardName)}</h3>
+      </div>
+
+      <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 14px; text-align: center;">
+        Select cards to exile from graveyard. Each exiled card reduces the cost by {1}.
+      </p>
+
+      <div id="delveCardList" style="margin-bottom: 20px;">
+        ${cardButtons}
+      </div>
+
+      <div style="margin-bottom: 15px; padding: 10px; background: var(--bg-tertiary); border-radius: 6px; text-align: center;">
+        <div style="font-size: 14px; color: var(--text-primary); font-weight: bold;">
+          Cards to exile: <span id="delveCount" style="color: var(--accent-color);">0</span>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 10px;">
+        <button onclick="window.handSimulator.completeDelve('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}')"
+                style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold;">
+          ✓ Cast Spell
+        </button>
+        <button onclick="window.handSimulator.closeDelveUI()"
+                style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+          ❌ Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Add escape key listener
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        this.closeDelveUI();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+  }
+
+  toggleDelveExile(cardId) {
+    const cardDiv = document.querySelector(`#delve-card-${cardId}`);
+    const checkbox = document.getElementById(`delve-check-${cardId}`);
+
+    if (!cardDiv || !checkbox) return;
+
+    const willExile = checkbox.checked;
+    cardDiv.dataset.willExile = willExile;
+
+    // Visual feedback
+    if (willExile) {
+      cardDiv.style.borderColor = '#9333ea';
+      cardDiv.style.background = '#2e1065';
+    } else {
+      cardDiv.style.borderColor = 'transparent';
+      cardDiv.style.background = 'var(--bg-secondary)';
+    }
+
+    // Update count
+    this.updateDelveCount();
+  }
+
+  updateDelveCount() {
+    const cardList = document.getElementById('delveCardList');
+    if (!cardList) return;
+
+    const count = Array.from(cardList.querySelectorAll('[data-will-exile="true"]')).length;
+    const countEl = document.getElementById('delveCount');
+    if (countEl) {
+      countEl.textContent = count;
+    }
+  }
+
+  completeDelve(cardId, cardName) {
+    const cardList = document.getElementById('delveCardList');
+    if (!cardList) return;
+
+    const cardDivs = Array.from(cardList.querySelectorAll('[data-card-id]'));
+    const toExile = [];
+
+    // Collect cards marked for exile
+    cardDivs.forEach(div => {
+      const graveyardCardId = div.dataset.cardId;
+      const shouldExile = div.dataset.willExile === 'true';
+      const card = this.graveyard.find(c => c.id === graveyardCardId);
+
+      if (card && shouldExile) {
+        toExile.push(card);
+      }
+    });
+
+    // Move cards from graveyard to exile
+    toExile.forEach(card => {
+      const index = this.graveyard.findIndex(c => c.id === card.id);
+      if (index !== -1) {
+        this.graveyard.splice(index, 1);
+        this.exile.push(card);
+      }
+    });
+
+    // Now play the card from hand
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    const cardIndex = currentHand.findIndex((c, idx) => {
+      const actualId = c.id || `${c.name}_${idx}`;
+      return actualId === cardId;
+    });
+
+    if (cardIndex !== -1) {
+      const card = currentHand[cardIndex];
+      this.playCard(card);
+      currentHand.splice(cardIndex, 1);
+
+      const exileCount = toExile.length;
+      this.showToast(`Cast ${cardName} with Delve (exiled ${exileCount} cards)`, 'success');
+      this.logAction(`Cast ${cardName} with Delve (exiled ${exileCount} cards)`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateUI();
+    this.closeDelveUI();
+  }
+
+  closeDelveUI() {
+    document.getElementById('delveUI')?.remove();
   }
 
   // =====================================================
@@ -7060,11 +7271,20 @@ class ModernHandSimulator {
     const surveilAmount = hasSurveil ? this.getSurveilAmount(card.name) : 0;
     const hasScryAbility = this.hasScry(card.name);
     const scryAmount = hasScryAbility ? this.getScryAmount(card.name) : 0;
+    const hasDelveAbility = !isLand && this.hasDelve(card.name);
 
     let menuItems = `
       <div class="menu-item" onclick="window.handSimulator.playCardDirectly('${this.escapeJs(cardId)}', event)">
         ⚔️ ${isLand ? 'Play Land' : 'Cast Spell'}
       </div>`;
+
+    // Add delve option for delve cards
+    if (hasDelveAbility && this.graveyard.length > 0) {
+      menuItems += `
+      <div class="menu-item" onclick="window.handSimulator.showDelveUI('${this.escapeJs(cardId)}', '${this.escapeJs(card.name)}')">
+        💀 Cast with Delve
+      </div>`;
+    }
 
     // Add scry option if card has scry
     if (hasScryAbility) {
@@ -8938,6 +9158,14 @@ class ModernHandSimulator {
         deliriumHTML = '<div class=\'delirium-indicator\' style=\'position: absolute; top: 24px; left: 2px; background: rgba(34, 197, 94, 0.95); border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: bold; color: white; z-index: 100; pointer-events: none;\' title=\'Delirium active: +1/+0, Flying\'>🌀</div>';
       }
 
+      // Add Murktide Regent P/T display
+      let murktideHTML = '';
+      const isMurktide = this.isMurktideRegent(card.name);
+      if (isMurktide && isCreature) {
+        const { power, toughness } = this.getMurktidePowerToughness();
+        murktideHTML = `<div class='murktide-pt' style='position: absolute; bottom: 2px; left: 2px; background: rgba(139, 69, 19, 0.95); border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: bold; color: white; z-index: 100; pointer-events: none;' title='Flying. Power/toughness based on instants/sorceries in exile'>${power}/${toughness}</div>`;
+      }
+
       return `
         <div class="zone-card card-played ${isTapped ? 'tapped' : ''} ${isTransformed ? 'transformed' : ''}"
              style="animation-delay: ${index * 0.05}s; cursor: pointer;"
@@ -8952,6 +9180,7 @@ class ModernHandSimulator {
               ${transformHTML}
               ${deliriumHTML}
               ${tapHTML}
+              ${murktideHTML}
               ${damageHTML}
             </div>
             <div class="card-info">

@@ -46,7 +46,7 @@
     <Card>
         <Name>Force Of Will</Name>
         <Quantity>4</Quantity>
-        <Type>Creature</Type>
+        <Type>Instant</Type>
         <Cost>3UU</Cost>
     </Card>
     <Card>
