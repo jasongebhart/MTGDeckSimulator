@@ -8223,7 +8223,72 @@ class ModernHandSimulator {
     if (typeStr.includes('enchantment')) return 'Enchantment';
     if (typeStr.includes('sorcery')) return 'Sorcery';
     if (typeStr.includes('instant')) return 'Instant';
+    if (typeStr.includes('planeswalker')) return 'Planeswalker';
+    if (typeStr.includes('battle')) return 'Battle';
     return 'Other';
+  }
+
+  // ===== DELIRIUM TRACKING (EFFICIENT) =====
+
+  getGraveyardTypes(graveyard) {
+    // Uses Set for O(n) time complexity with early exit
+    const types = new Set();
+
+    for (const card of graveyard) {
+      const mainType = this.getCardMainType(card.type);
+      if (mainType !== 'Other') {
+        types.add(mainType);
+        // Early exit optimization - can't have more than 8 types
+        if (types.size >= 8) break;
+      }
+    }
+
+    return types;
+  }
+
+  checkDelirium(graveyard) {
+    // Fast check: needs at least 4 cards for delirium
+    if (graveyard.length < 4) return false;
+
+    const types = this.getGraveyardTypes(graveyard);
+    return types.size >= 4;
+  }
+
+  getDeliriumCount(graveyard) {
+    const types = this.getGraveyardTypes(graveyard);
+    return types.size;
+  }
+
+  updateDeliriumIndicator() {
+    // Fast early exit if no graveyard
+    if (this.graveyard.length === 0) {
+      const indicator = document.getElementById('deliriumIndicator2');
+      if (indicator) indicator.style.display = 'none';
+      return;
+    }
+
+    const typeCount = this.getDeliriumCount(this.graveyard);
+    const hasDelirium = typeCount >= 4;
+
+    const indicator = document.getElementById('deliriumIndicator2');
+    const typesSpan = document.getElementById('deliriumTypes2');
+
+    if (!indicator || !typesSpan) return;
+
+    // Show indicator and update count
+    indicator.style.display = 'inline-block';
+    typesSpan.textContent = typeCount;
+
+    // Visual styling based on delirium status
+    if (hasDelirium) {
+      indicator.classList.add('btn-success');
+      indicator.classList.remove('btn-warning', 'btn-outline-secondary');
+      indicator.title = 'Delirium active! (4+ card types in graveyard)';
+    } else {
+      indicator.classList.add('btn-outline-secondary');
+      indicator.classList.remove('btn-success', 'btn-warning');
+      indicator.title = `${typeCount}/4 card types for Delirium`;
+    }
   }
 
   parseManaValue(cost) {
@@ -8608,6 +8673,10 @@ class ModernHandSimulator {
       // Instants and sorceries go directly to graveyard after being cast
       graveyard.push(card);
       gameStats.spellsCast++;
+
+      // Trigger: Dragon's Rage Channeler and similar cards
+      this.checkNoncreatureSpellTriggers(isOpponentCard);
+
       this.updateGraveyardDisplay();
       this.updateUI();
       const playerName = isOpponentCard ? 'Opponent' : 'Player';
@@ -8619,6 +8688,29 @@ class ModernHandSimulator {
       // Artifacts, enchantments, planeswalkers, etc. stay on battlefield
       battlefield.others.push(card);
       gameStats.spellsCast++;
+
+      // Trigger for noncreature spells (artifacts/enchantments/planeswalkers)
+      this.checkNoncreatureSpellTriggers(isOpponentCard);
+    }
+  }
+
+  // ===== TRIGGERED ABILITIES =====
+
+  checkNoncreatureSpellTriggers(isOpponent = false) {
+    // Check for Dragon's Rage Channeler
+    const battlefield = isOpponent ? this.opponent.battlefield : this.battlefield;
+    const drcInPlay = battlefield.creatures.some(c =>
+      c.name.toLowerCase().includes("dragon's rage channeler")
+    );
+
+    if (drcInPlay) {
+      const playerName = isOpponent ? 'Opponent' : 'You';
+      this.showToast(`🐉 Dragon's Rage Channeler trigger - Surveil 1`, 'info');
+
+      // Prompt for surveil 1
+      setTimeout(() => {
+        this.showSurveilUI("Dragon's Rage Channeler", 1, isOpponent);
+      }, 500);
     }
   }
 
@@ -8839,6 +8931,13 @@ class ModernHandSimulator {
         transformHTML = '<div class=\'transform-indicator\' style=\'position: absolute; top: 2px; left: 2px; background: rgba(139, 92, 246, 0.9); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 100; pointer-events: none;\' title=\'Transformed\'>🔄</div>';
       }
 
+      // Add delirium indicator for Dragon's Rage Channeler
+      let deliriumHTML = '';
+      const isDRC = card.name.toLowerCase().includes("dragon's rage channeler");
+      if (isDRC && this.checkDelirium(this.graveyard)) {
+        deliriumHTML = '<div class=\'delirium-indicator\' style=\'position: absolute; top: 24px; left: 2px; background: rgba(34, 197, 94, 0.95); border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: bold; color: white; z-index: 100; pointer-events: none;\' title=\'Delirium active: +1/+0, Flying\'>🌀</div>';
+      }
+
       return `
         <div class="zone-card card-played ${isTapped ? 'tapped' : ''} ${isTransformed ? 'transformed' : ''}"
              style="animation-delay: ${index * 0.05}s; cursor: pointer;"
@@ -8851,6 +8950,7 @@ class ModernHandSimulator {
             <div class="card-image-container" style="position: relative;">
               <div class="loading-placeholder">🎴</div>
               ${transformHTML}
+              ${deliriumHTML}
               ${tapHTML}
               ${damageHTML}
             </div>
@@ -9004,6 +9104,9 @@ class ModernHandSimulator {
     if (lifeTotal2El) lifeTotal2El.textContent = this.gameStats.life;
     if (graveyardCount2El) graveyardCount2El.textContent = this.graveyard.length;
     if (exileCount2El) exileCount2El.textContent = this.exile.length;
+
+    // Update delirium indicator (efficient - only if graveyard has cards)
+    this.updateDeliriumIndicator();
 
     // Update opponent info (two-player layout only)
     const opponentLife2El = document.getElementById('opponentLife2');
