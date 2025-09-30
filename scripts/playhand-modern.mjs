@@ -5974,11 +5974,11 @@ class ModernHandSimulator {
 
   showDazeUI(cardId, cardName) {
     const islands = this.battlefield.lands.filter(land =>
-      land.name.toLowerCase().includes('island') && !land.tapped
+      land.name.toLowerCase().includes('island')
     );
 
     if (islands.length === 0) {
-      this.showToast('No untapped Islands to return', 'warning');
+      this.showToast('No Islands to return', 'warning');
       return;
     }
 
@@ -7440,7 +7440,7 @@ class ModernHandSimulator {
     // Add Daze alternative cost option
     if (hasDaze) {
       const islands = this.battlefield.lands.filter(land =>
-        land.name.toLowerCase().includes('island') && !land.tapped
+        land.name.toLowerCase().includes('island')
       );
       if (islands.length > 0) {
         menuItems += `
