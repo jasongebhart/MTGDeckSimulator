@@ -735,13 +735,13 @@
 
     <!-- Library Modal -->
     <div id="libraryModal" class="modal" style="display: none;">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 90vw; width: 1200px; max-height: 90vh;">
             <div class="modal-header">
-                <h3>Library Contents</h3>
+                <h3>📚 Library Contents (<span id="libraryCountDisplay">0</span> cards)</h3>
                 <button id="closeLibraryModal" class="btn btn-secondary btn-sm">✕</button>
             </div>
-            <div class="modal-body">
-                <div id="libraryContents" class="d-flex flex-column gap-2" style="max-height: 400px; overflow-y: auto;">
+            <div class="modal-body" style="padding: var(--space-4);">
+                <div id="libraryContents" class="zone-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--space-3); max-height: 70vh; overflow-y: auto; padding: var(--space-2);">
                     <!-- Library cards will appear here -->
                 </div>
             </div>

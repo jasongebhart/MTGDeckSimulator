@@ -6983,7 +6983,7 @@ class ModernHandSimulator {
       <div class="menu-item" onclick="window.handSimulator.moveHandCardToLibrary('${this.escapeJs(cardId)}')">
         📚 To Library
       </div>
-      <div class="menu-item" onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')">
+      <div class="menu-item" onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')">
         👁️ View Card
       </div>
     `;
@@ -7330,7 +7330,7 @@ class ModernHandSimulator {
       actions.push({
         icon: '👁️',
         text: 'View Card',
-        onclick: `window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')`
+        onclick: `window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')`
       });
     }
 
@@ -7444,7 +7444,7 @@ class ModernHandSimulator {
         </div>
       </div>
       <div class="menu-section">
-        <div class="menu-item" onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')">
+        <div class="menu-item" onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')">
           <span class="action-icon">👁️</span>
           <span class="action-text">View Card</span>
         </div>
@@ -8735,7 +8735,7 @@ class ModernHandSimulator {
              style="animation-delay: ${index * 0.05}s; cursor: pointer;"
              data-card-id="${card.id}"
              data-card-name="${this.escapeHtml(displayName)}"
-             onclick="window.handSimulator.handleBattlefieldCardClick(event, '${this.escapeJs(card.id)}', '${this.escapeHtml(displayName)}')"
+             onclick="window.handSimulator.handleBattlefieldCardClick(event, '${this.escapeJs(card.id)}', '${this.escapeJs(displayName)}')"
              oncontextmenu="window.handSimulator.${menuFunction}(event, '${this.escapeJs(card.id)}'); return false;"
              title="Left-click to view card, Right-click for options">
           <div class="card-content">
@@ -8768,35 +8768,90 @@ class ModernHandSimulator {
   }
 
   showLibraryModal() {
+    console.log('showLibraryModal called');
+    console.log('Library size:', this.library.length);
+    console.log('Library contents:', this.library);
     const modal = document.getElementById('libraryModal');
+    console.log('Modal element:', modal);
     if (modal) {
       modal.style.display = 'flex';
+
+      // Update library count
+      const countDisplay = document.getElementById('libraryCountDisplay');
+      if (countDisplay) {
+        countDisplay.textContent = this.library.length;
+      }
+
       this.updateLibraryDisplay();
+
+      // Add show class for animation
+      const modalContent = modal.querySelector('.modal-content');
+      if (modalContent) {
+        setTimeout(() => modalContent.classList.add('show'), 10);
+      }
+    } else {
+      console.error('Library modal element not found!');
     }
   }
 
   hideLibraryModal() {
     const modal = document.getElementById('libraryModal');
     if (modal) {
-      modal.style.display = 'none';
+      const modalContent = modal.querySelector('.modal-content');
+      if (modalContent) {
+        modalContent.classList.remove('show');
+      }
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 200);
     }
   }
 
   updateLibraryDisplay() {
+    console.log('updateLibraryDisplay called');
     const container = document.getElementById('libraryContents');
-    if (!container) return;
+    console.log('Container element:', container);
+    if (!container) {
+      console.error('libraryContents element not found!');
+      return;
+    }
 
-    container.innerHTML = this.library.map(card => `
-      <div class="card-list-item">
-        <div class="card-info">
-          <div class="card-name">${this.escapeHtml(card.name)}</div>
-          <div class="card-details">
-            <span>Cost: ${this.escapeHtml(card.cost || '0')}</span>
-            <span>Type: ${this.escapeHtml(card.type || '')}</span>
+    console.log('Library array:', this.library);
+    console.log('Library length:', this.library.length);
+
+    if (this.library.length === 0) {
+      console.log('Library is empty, showing message');
+      container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary);">Library is empty</div>';
+      return;
+    }
+
+    // Use card grid display similar to hand display
+    const html = this.library.map((card, index) => {
+      const cardId = card.id || `library-${index}`;
+      return `
+        <div class="zone-card"
+             data-card-id="${cardId}"
+             data-card-name="${this.escapeHtml(card.name)}"
+             style="cursor: pointer; position: relative;"
+             onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')"
+             title="${this.escapeHtml(card.name)} - ${this.escapeHtml(card.cost || '0')}">
+          <div class="card-image-container">
+            <div class="loading-placeholder">🎴</div>
+          </div>
+          <div class="card-overlay">
+            <div class="card-name">${this.escapeHtml(card.name)}</div>
+            <div class="card-cost">${this.escapeHtml(card.cost || '0')}</div>
           </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
+
+    console.log('Generated HTML length:', html.length);
+    container.innerHTML = html;
+    console.log('Container innerHTML set');
+
+    // Load card images
+    this.loadZoneImages(this.library);
   }
 
 
@@ -9375,7 +9430,7 @@ class ModernHandSimulator {
              data-card-id="${card.id}"
              data-card-name="${this.escapeHtml(card.name)}"
              style="cursor: pointer; background: white; border: 1px solid #ccc; padding: 8px; margin: 4px; min-height: 100px;"
-             onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')"
+             onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')"
              title="${this.escapeHtml(card.name)} - ${this.escapeHtml(card.cost || '0')}">
           <div class="card-image-container">
             <div class="loading-placeholder">🎴</div>
@@ -9431,7 +9486,7 @@ class ModernHandSimulator {
           min-width: 120px;
           text-align: center;
           cursor: pointer;
-        " onclick="window.handSimulator.showCardPreview('${this.escapeHtml(card.name)}')">
+        " onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')">
           <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">${this.escapeHtml(card.name)}</div>
           <div style="font-size: 12px; color: #666;">${this.escapeHtml(card.cost || 'N/A')}</div>
           <div style="font-size: 10px; color: #999;">${this.escapeHtml(card.type || '')}</div>
