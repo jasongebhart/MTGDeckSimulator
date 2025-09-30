@@ -4908,13 +4908,16 @@ class ModernHandSimulator {
 
   hasSurveil(cardName) {
     const name = cardName.toLowerCase();
-    // Common surveil cards
+    // Check if card text or name includes surveil
     return name.includes('surveil') ||
            name === 'dimir spybug' ||
            name === 'thoughtbound phantasm' ||
            name === 'doom whisperer' ||
            name === 'nightveil sprite' ||
-           name === 'disinformation campaign';
+           name === 'disinformation campaign' ||
+           name === 'consider' ||
+           name === 'curate' ||
+           name === 'taigam\'s scheming';
   }
 
   getSurveilAmount(cardName) {
@@ -4925,7 +4928,10 @@ class ModernHandSimulator {
       'thoughtbound phantasm': 1,
       'dimir spybug': 1,
       'nightveil sprite': 1,
-      'disinformation campaign': 1
+      'disinformation campaign': 1,
+      'consider': 1,
+      'curate': 2,
+      'taigam\'s scheming': 5
     };
 
     // Check if card name contains "surveil X"
@@ -4935,6 +4941,39 @@ class ModernHandSimulator {
     }
 
     return surveilMap[name] || 1;
+  }
+
+  hasScry(cardName) {
+    const name = cardName.toLowerCase();
+    // Check if card text or name includes scry
+    return name.includes('scry') ||
+           name === 'preordain' ||
+           name === 'serum visions' ||
+           name === 'opt' ||
+           name === 'magma jet' ||
+           name === 'crystal ball';
+  }
+
+  getScryAmount(cardName) {
+    const name = cardName.toLowerCase();
+    // Default amounts for common scry cards
+    const scryMap = {
+      'preordain': 2,
+      'serum visions': 2,
+      'opt': 1,
+      'magma jet': 2,
+      'crystal ball': 2,
+      'condescend': 2,
+      'anticipate': 1
+    };
+
+    // Check if card name contains "scry X"
+    const match = name.match(/scry (\d+)/);
+    if (match) {
+      return parseInt(match[1]);
+    }
+
+    return scryMap[name] || 1;
   }
 
   // =====================================================
@@ -5518,7 +5557,17 @@ class ModernHandSimulator {
     // Create card display with checkboxes for graveyard
     const cardButtons = surveilCards.map((card, index) => {
       return `
-        <div id="surveil-card-${card.id}" style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px; border: 2px solid transparent;" data-card-id="${card.id}" data-to-graveyard="false">
+        <div id="surveil-card-${card.id}"
+             draggable="true"
+             class="surveil-draggable-card"
+             style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px; border: 2px solid transparent; cursor: move;"
+             data-card-id="${card.id}"
+             data-to-graveyard="false"
+             ondragstart="window.handSimulator.handleSurveilDragStart(event, '${this.escapeJs(card.id)}')"
+             ondragover="window.handSimulator.handleSurveilDragOver(event)"
+             ondrop="window.handSimulator.handleSurveilDrop(event, '${this.escapeJs(card.id)}')"
+             ondragend="window.handSimulator.handleSurveilDragEnd(event)">
+          <span style="margin-right: 8px; color: var(--text-muted); cursor: move;">⋮⋮</span>
           <input type="checkbox" id="surveil-check-${card.id}" onchange="window.handSimulator.toggleSurveilGraveyard('${this.escapeJs(card.id)}')" style="width: 20px; height: 20px; margin-right: 12px; cursor: pointer;">
           <div style="flex: 1;">
             <div style="font-weight: bold; color: var(--text-primary);">${card.name}</div>
@@ -5586,10 +5635,60 @@ class ModernHandSimulator {
     if (toGraveyard) {
       cardDiv.style.borderColor = '#dc3545';
       cardDiv.style.background = '#3d1e1e';
+      cardDiv.style.opacity = '0.6';
     } else {
       cardDiv.style.borderColor = 'transparent';
       cardDiv.style.background = 'var(--bg-secondary)';
+      cardDiv.style.opacity = '1';
     }
+  }
+
+  handleSurveilDragStart(event, cardId) {
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', cardId);
+    event.target.style.opacity = '0.5';
+  }
+
+  handleSurveilDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    return false;
+  }
+
+  handleSurveilDrop(event, targetCardId) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const draggedCardId = event.dataTransfer.getData('text/plain');
+    if (draggedCardId === targetCardId) return;
+
+    const container = document.getElementById('surveilCardList');
+    const draggedElement = document.getElementById(`surveil-card-${draggedCardId}`);
+    const targetElement = document.getElementById(`surveil-card-${targetCardId}`);
+
+    if (!draggedElement || !targetElement || !container) return;
+
+    // Get all cards in order
+    const allCards = Array.from(container.children);
+    const draggedIndex = allCards.indexOf(draggedElement);
+    const targetIndex = allCards.indexOf(targetElement);
+
+    // Reorder
+    if (draggedIndex < targetIndex) {
+      targetElement.parentNode.insertBefore(draggedElement, targetElement.nextSibling);
+    } else {
+      targetElement.parentNode.insertBefore(draggedElement, targetElement);
+    }
+
+    return false;
+  }
+
+  handleSurveilDragEnd(event) {
+    event.target.style.opacity = '';
+    // Remove any drag styling from all cards
+    document.querySelectorAll('.surveil-draggable-card').forEach(card => {
+      card.style.opacity = card.dataset.toGraveyard === 'true' ? '0.6' : '1';
+    });
   }
 
   completeSurveil(isOpponent = false) {
@@ -6959,11 +7058,21 @@ class ModernHandSimulator {
     const isLand = cardType === 'land';
     const hasSurveil = this.hasSurveil(card.name);
     const surveilAmount = hasSurveil ? this.getSurveilAmount(card.name) : 0;
+    const hasScryAbility = this.hasScry(card.name);
+    const scryAmount = hasScryAbility ? this.getScryAmount(card.name) : 0;
 
     let menuItems = `
       <div class="menu-item" onclick="window.handSimulator.playCardDirectly('${this.escapeJs(cardId)}', event)">
         ⚔️ ${isLand ? 'Play Land' : 'Cast Spell'}
       </div>`;
+
+    // Add scry option if card has scry
+    if (hasScryAbility) {
+      menuItems += `
+      <div class="menu-item" onclick="window.handSimulator.scry(${scryAmount})">
+        🔮 Scry ${scryAmount}
+      </div>`;
+    }
 
     // Add surveil option if card has surveil
     if (hasSurveil) {
