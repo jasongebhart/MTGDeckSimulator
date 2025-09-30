@@ -5010,6 +5010,17 @@ class ModernHandSimulator {
     return { power, toughness };
   }
 
+  // ===== ALTERNATIVE COST CARDS =====
+
+  isDaze(cardName) {
+    const name = cardName.toLowerCase();
+    return name === 'daze';
+  }
+
+  hasAlternativeCost(cardName) {
+    return this.isDaze(cardName);
+  }
+
   // =====================================================
   // MASS SPELL DETECTION
   // =====================================================
@@ -5955,6 +5966,153 @@ class ModernHandSimulator {
 
   closeDelveUI() {
     document.getElementById('delveUI')?.remove();
+  }
+
+  // =====================================================
+  // DAZE ALTERNATIVE COST
+  // =====================================================
+
+  showDazeUI(cardId, cardName) {
+    const islands = this.battlefield.lands.filter(land =>
+      land.name.toLowerCase().includes('island') && !land.tapped
+    );
+
+    if (islands.length === 0) {
+      this.showToast('No untapped Islands to return', 'warning');
+      return;
+    }
+
+    // Remove any existing modal
+    document.getElementById('dazeUI')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'dazeUI';
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid #3b82f6;
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 400px;
+      max-width: 600px;
+    `;
+
+    const islandButtons = islands.map(island => {
+      return `
+        <div style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s;"
+             onmouseover="this.style.borderColor='#3b82f6'; this.style.background='rgba(59, 130, 246, 0.1)';"
+             onmouseout="this.style.borderColor='transparent'; this.style.background='var(--bg-secondary)';"
+             onclick="window.handSimulator.castDazeWithIsland('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}', '${this.escapeJs(island.id)}')">
+          <div style="flex: 1;">
+            <div style="font-weight: bold; color: var(--text-primary);">${island.name}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">${island.type || 'Land'}</div>
+          </div>
+          <div style="color: #3b82f6; font-size: 20px;">→ 🤲</div>
+        </div>
+      `;
+    }).join('');
+
+    popup.innerHTML = `
+      <div style="text-align: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; color: var(--text-primary);">🌊 Daze - ${this.escapeHtml(cardName)}</h3>
+      </div>
+
+      <p style="margin: 0 0 15px 0; color: var(--text-secondary); font-size: 14px; text-align: center;">
+        Select an Island to return to your hand (free cast), or cancel to pay 1U normally.
+      </p>
+
+      <div style="margin-bottom: 20px;">
+        ${islandButtons}
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 10px;">
+        <button onclick="window.handSimulator.castDazeNormally('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}')"
+                style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+          Pay 1U (Normal Cost)
+        </button>
+        <button onclick="window.handSimulator.closeDazeUI()"
+                style="background: #dc2626; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+          ❌ Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Add escape key listener
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        this.closeDazeUI();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+  }
+
+  castDazeWithIsland(cardId, cardName, islandId) {
+    // Find and return the island to hand
+    const islandIndex = this.battlefield.lands.findIndex(land => land.id === islandId);
+    if (islandIndex === -1) {
+      this.showToast('Island not found', 'error');
+      return;
+    }
+
+    const island = this.battlefield.lands[islandIndex];
+    this.battlefield.lands.splice(islandIndex, 1);
+    this.hand.push(island);
+
+    // Cast Daze from hand
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    const cardIndex = currentHand.findIndex((c, idx) => {
+      const actualId = c.id || `${c.name}_${idx}`;
+      return actualId === cardId;
+    });
+
+    if (cardIndex !== -1) {
+      const card = currentHand[cardIndex];
+      this.playCard(card);
+      currentHand.splice(cardIndex, 1);
+
+      this.showToast(`Cast ${cardName} (returned ${island.name} to hand)`, 'success');
+      this.logAction(`Cast ${cardName} by returning ${island.name}`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateUI();
+    this.closeDazeUI();
+  }
+
+  castDazeNormally(cardId, cardName) {
+    // Just cast normally (no special handling needed - mana is not tracked)
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    const cardIndex = currentHand.findIndex((c, idx) => {
+      const actualId = c.id || `${c.name}_${idx}`;
+      return actualId === cardId;
+    });
+
+    if (cardIndex !== -1) {
+      const card = currentHand[cardIndex];
+      this.playCard(card);
+      currentHand.splice(cardIndex, 1);
+
+      this.showToast(`Cast ${cardName} (paid 1U)`, 'success');
+      this.logAction(`Cast ${cardName} (paid 1U)`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateUI();
+    this.closeDazeUI();
+  }
+
+  closeDazeUI() {
+    document.getElementById('dazeUI')?.remove();
   }
 
   // =====================================================
@@ -7272,11 +7430,25 @@ class ModernHandSimulator {
     const hasScryAbility = this.hasScry(card.name);
     const scryAmount = hasScryAbility ? this.getScryAmount(card.name) : 0;
     const hasDelveAbility = !isLand && this.hasDelve(card.name);
+    const hasDaze = this.isDaze(card.name);
 
     let menuItems = `
       <div class="menu-item" onclick="window.handSimulator.playCardDirectly('${this.escapeJs(cardId)}', event)">
         ⚔️ ${isLand ? 'Play Land' : 'Cast Spell'}
       </div>`;
+
+    // Add Daze alternative cost option
+    if (hasDaze) {
+      const islands = this.battlefield.lands.filter(land =>
+        land.name.toLowerCase().includes('island') && !land.tapped
+      );
+      if (islands.length > 0) {
+        menuItems += `
+        <div class="menu-item" onclick="window.handSimulator.showDazeUI('${this.escapeJs(cardId)}', '${this.escapeJs(card.name)}')">
+          🌊 Cast Daze (Return Island)
+        </div>`;
+      }
+    }
 
     // Add delve option for delve cards
     if (hasDelveAbility && this.graveyard.length > 0) {
