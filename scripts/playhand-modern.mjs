@@ -278,6 +278,7 @@ class ModernHandSimulator {
 
     // Visual debug indicator
     this.setDebugStatus('Constructor called');
+    this.playerTargetClickListener = this.playerTargetClickListener.bind(this);
     this.detectLayoutMode();
     this.init();
   }
@@ -781,6 +782,9 @@ class ModernHandSimulator {
       await this.processDeckXML(xmlDoc, deckPath);
       console.log('Deck processing completed');
 
+      // Analyze deck abilities and update UI
+      this.analyzeDeckAbilities();
+
       // Save as default deck if requested
       if (saveAsDefault) {
         this.saveDefaultDeck(deckPath);
@@ -789,6 +793,152 @@ class ModernHandSimulator {
       console.error('Error loading deck:', error);
       this.setDebugStatus(`Error: ${  error.message}`);
       this.showErrorState('Failed to load deck. Please try again.');
+    }
+  }
+
+  analyzeDeckAbilities() {
+    const abilities = {
+      damage: new Set(),
+      removal: new Set(),
+      discard: new Set(),
+      draw: new Set(),
+      scry: new Set(),
+      ramp: new Set(),
+      fetch: new Set(),
+      counters: new Set(),
+      other: new Set()
+    };
+
+    const allCards = [...this.library, ...this.hand, ...this.graveyard, ...this.exile];
+
+    allCards.forEach(card => {
+      const name = card.name.toLowerCase();
+      const type = card.type ? card.type.toLowerCase() : '';
+
+      // Damage spells
+      if (name.includes('bolt') || name.includes('shock') || name.includes('lava spike')) {
+        abilities.damage.add(card.name);
+      }
+
+      // Removal
+      if (name.includes('murder') || name.includes('terror') || name.includes('swords') ||
+          name.includes('path') || name.includes('doom blade')) {
+        abilities.removal.add(card.name);
+      }
+
+      // Discard
+      if (name.includes('hymn') || name.includes('thoughtseize') || name.includes('inquisition') ||
+          name.includes('specter') || name.includes('rats') || name.includes('liliana')) {
+        abilities.discard.add(card.name);
+      }
+
+      // Draw
+      if (name.includes('brainstorm') || name.includes('ponder') || name.includes('preordain') ||
+          name.includes('ancestral') || name.includes('divination')) {
+        abilities.draw.add(card.name);
+      }
+
+      // Scry
+      if (name.includes('scry') || name.includes('serum visions') || name.includes('opt')) {
+        abilities.scry.add(card.name);
+      }
+
+      // Ramp
+      if (name.includes('cultivate') || name.includes('kodama') || name.includes('rampant') ||
+          name.includes('farseek') || name.includes('three visits') || name.includes('nature\'s lore')) {
+        abilities.ramp.add(card.name);
+      }
+
+      // Fetch lands
+      if (name.includes('evolving wilds') || name.includes('terramorphic') ||
+          name.includes('fetch') || name.includes('tarn') || name.includes('mesa') ||
+          name.includes('catacombs') || name.includes('foothills') || name.includes('heath')) {
+        abilities.fetch.add(card.name);
+      }
+
+      // Counterspells
+      if (name.includes('counterspell') || name.includes('mana leak') || name.includes('daze') ||
+          name.includes('force of will') || name.includes('negate')) {
+        abilities.counters.add(card.name);
+      }
+    });
+
+    this.deckAbilities = abilities;
+    console.log('Deck abilities analyzed:', abilities);
+    this.updateDeckAbilitiesUI();
+  }
+
+  updateDeckAbilitiesUI() {
+    let panel = document.getElementById('deckAbilitiesPanel');
+    if (!panel) {
+      panel = document.createElement('div');
+      panel.id = 'deckAbilitiesPanel';
+      panel.style.cssText = `
+        margin-top: 8px;
+        padding: 8px;
+        background: var(--bg-secondary);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      `;
+
+      // Try multiple insertion points
+      const spellSection = document.querySelector('.spell-targeting');
+      const controlsSection = document.querySelector('.controls-section');
+      const playControls = document.querySelector('.play-controls-bar');
+
+      if (spellSection) {
+        spellSection.appendChild(panel);
+      } else if (playControls) {
+        playControls.appendChild(panel);
+      } else if (controlsSection) {
+        controlsSection.appendChild(panel);
+      } else {
+        // Last resort - add to body
+        document.body.appendChild(panel);
+        console.log('Added deck abilities panel to body (fallback)');
+      }
+    }
+
+    const abilities = this.deckAbilities;
+    const sections = [];
+
+    if (abilities.damage.size > 0) {
+      sections.push(`<span style="color: #e74c3c;">⚡ Damage (${abilities.damage.size})</span>`);
+    }
+    if (abilities.removal.size > 0) {
+      sections.push(`<span style="color: #95a5a6;">🗡️ Removal (${abilities.removal.size})</span>`);
+    }
+    if (abilities.discard.size > 0) {
+      sections.push(`<span style="color: #8e44ad;">💀 Discard (${abilities.discard.size})</span>`);
+    }
+    if (abilities.draw.size > 0) {
+      sections.push(`<span style="color: #3498db;">📖 Draw (${abilities.draw.size})</span>`);
+    }
+    if (abilities.scry.size > 0) {
+      sections.push(`<span style="color: #2ecc71;">🔍 Scry (${abilities.scry.size})</span>`);
+    }
+    if (abilities.ramp.size > 0) {
+      sections.push(`<span style="color: #27ae60;">🌱 Ramp (${abilities.ramp.size})</span>`);
+    }
+    if (abilities.fetch.size > 0) {
+      sections.push(`<span style="color: #16a085;">🌍 Fetch (${abilities.fetch.size})</span>`);
+    }
+    if (abilities.counters.size > 0) {
+      sections.push(`<span style="color: #3498db;">❌ Counters (${abilities.counters.size})</span>`);
+    }
+
+    if (sections.length > 0) {
+      panel.innerHTML = `
+        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">📋 Deck Abilities:</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 0.85rem;">
+          ${sections.join(' • ')}
+        </div>
+      `;
+      panel.style.display = 'block';
+      console.log('Deck abilities panel updated with:', sections.length, 'abilities');
+    } else {
+      panel.style.display = 'none';
+      console.log('No deck abilities found, hiding panel');
     }
   }
 
@@ -1085,6 +1235,7 @@ class ModernHandSimulator {
     this.updateHandDisplay();
     this.updateBattlefieldDisplay();
     this.updateActivePlayerView();
+    this.updateActivePlayerHighlight();
     this.playSound?.('success');
     this.showToast('Now controlling: Player', 'success');
   }
@@ -1112,6 +1263,7 @@ class ModernHandSimulator {
     // Update active player view - this will keep both hands visible
     console.log('About to call updateActivePlayerView...');
     this.updateActivePlayerView();
+    this.updateActivePlayerHighlight();
 
     this.playSound?.('success');
     this.showToast('Now controlling: Opponent', 'warning');
@@ -1121,7 +1273,7 @@ class ModernHandSimulator {
     return this.activePlayer === 'player' ? this : this.opponent;
   }
 
-  updateActivePlayerView() {
+  updateActivePlayerHighlight() {
     // Update visual indicators for active player
     const playerArea = document.getElementById('playerArea');
     const opponentArea = document.getElementById('opponentArea');
@@ -1135,6 +1287,11 @@ class ModernHandSimulator {
         playerArea.classList.remove('active');
       }
     }
+  }
+
+  updateActivePlayerView() {
+    // Update highlight
+    this.updateActivePlayerHighlight();
 
     // ALWAYS keep both hands visible for playtesting
     // Update player hand
@@ -1878,11 +2035,10 @@ class ModernHandSimulator {
     console.log('Turn active player:', this.turnState.activePlayer);
     console.log('Viewing player:', this.activePlayer);
 
-    // Use turnState.activePlayer to determine whose turn it is (not this.activePlayer which is for viewing)
-    const turnPlayer = this.turnState.activePlayer;
-    const library = turnPlayer === 'player' ? this.library : this.opponent.library;
-    const hand = turnPlayer === 'player' ? this.hand : this.opponent.hand;
-    const gameStats = turnPlayer === 'player' ? this.gameStats : this.opponent.gameStats;
+    // Always draw from player's library (this is the player draw button)
+    const library = this.library;
+    const hand = this.hand;
+    const gameStats = this.gameStats;
 
     console.log('library length before draw:', library.length);
 
@@ -1898,15 +2054,10 @@ class ModernHandSimulator {
     gameStats.cardsDrawn++;
 
     // Log the manual draw
-    this.logAction(`Drew ${card.name}`, turnPlayer === 'player' ? 'You' : 'Opponent', false);
+    this.logAction(`Drew ${card.name}`, 'You', false);
 
     if (showAnimation) {
-      // Update the appropriate hand display based on whose turn it is
-      if (turnPlayer === 'player') {
-        this.updateHandDisplay();
-      } else {
-        this.updateOpponentHandDisplayDetailed();
-      }
+      this.updateHandDisplay();
 
       // Add card draw animation to the newest card
       setTimeout(() => {
@@ -1917,8 +2068,7 @@ class ModernHandSimulator {
         }
       }, 100);
 
-      const playerName = turnPlayer === 'player' ? 'You' : 'Opponent';
-      this.showToast(`${playerName} drew ${card.name}`, 'info');
+      this.showToast(`You drew ${card.name}`, 'info');
     }
 
     this.updateUI();
@@ -2136,26 +2286,121 @@ class ModernHandSimulator {
       case 'bounce':
         this.bouncePermanent(spell.targetId, config.source);
         break;
+      case 'discard':
+        this.executeDiscard(spell.targetId, config.discardAmount, config.discardMode);
+        break;
     }
   }
+
+  executeDiscard(targetPlayer, amount = 1, mode = 'random') {
+    console.log('executeDiscard called with:', { targetPlayer, amount, mode });
+    console.log('typeof amount:', typeof amount, 'value:', amount);
+
+    // Ensure amount is a number
+    const discardCount = parseInt(amount) || 1;
+
+    const player = (targetPlayer === 'player') ? this : this.opponent;
+    const playerName = (targetPlayer === 'player') ? 'You' : 'Opponent';
+
+    console.log('Player object:', player);
+    console.log('Player hand:', player.hand);
+    console.log('Hand length:', player.hand?.length);
+    console.log('Will discard:', discardCount, 'cards');
+
+    if (!player.hand || player.hand.length === 0) {
+      this.showToast(`${playerName} has no cards to discard.`, 'warning');
+      return;
+    }
+
+    const cardsToDiscard = [];
+    if (mode === 'random') {
+      for (let i = 0; i < discardCount && player.hand.length > 0; i++) {
+        const randomIndex = Math.floor(Math.random() * player.hand.length);
+        const discarded = player.hand.splice(randomIndex, 1)[0];
+        console.log(`Discarding card ${i + 1}:`, discarded);
+        cardsToDiscard.push(discarded);
+      }
+    } else {
+      // Logic for chosen discard can be added here later
+    }
+
+    console.log('Cards to discard:', cardsToDiscard);
+
+    cardsToDiscard.forEach(card => {
+      player.graveyard.push(card);
+    });
+
+    // Update UI BEFORE showing modal so cards disappear immediately
+    this.updateUI();
+    this.updateHandDisplay();
+    this.updateOpponentHandDisplay();
+
+    // Show modal with discarded cards
+    if (cardsToDiscard.length > 0) {
+      this.showDiscardedCardsModal(cardsToDiscard, playerName);
+    }
+
+    this.showToast(`${playerName} discarded ${cardsToDiscard.length} cards at random.`, 'success');
+  }
+
+  showDiscardedCardsModal(cards, playerName) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    modal.style.zIndex = '10001';
+
+    const cardList = cards.map(card => `
+      <div style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin: 4px; background: rgba(0,0,0,0.05);">
+        <strong>${card.name}</strong>
+        ${card.type ? `<div style="font-size: 0.9em; color: #666;">${card.type}</div>` : ''}
+      </div>
+    `).join('');
+
+    modal.innerHTML = `
+      <div class="modal-content show" style="max-width: 500px; background: white; color: black; padding: 20px;">
+        <h3 style="color: #d63384; margin-top: 0;">💀 Cards Discarded</h3>
+        <p style="margin: 10px 0;"><strong>${playerName}</strong> discarded ${cards.length} card${cards.length > 1 ? 's' : ''} at random:</p>
+        <div style="margin: 15px 0;">
+          ${cardList}
+        </div>
+        <button onclick="this.closest('.modal').remove()"
+                class="btn btn-primary"
+                style="width: 100%; margin-top: 10px;">
+          OK
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Auto-close after 3 seconds
+    setTimeout(() => {
+      if (modal.parentElement) {
+        modal.remove();
+      }
+    }, 3000);
+  }
+
+  // =====================================================
+  // SPELL EFFECT FUNCTIONS
 
   showResponseUI(spell) {
     let responseUI = document.getElementById('responseUI');
     if (!responseUI) {
       responseUI = document.createElement('div');
       responseUI.id = 'responseUI';
+      responseUI.className = 'modal';
       responseUI.style.cssText = `
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: var(--bg-primary);
-        border: 3px solid #ffa502;
-        border-radius: var(--border-radius);
-        padding: 2rem;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
         z-index: 10000;
-        box-shadow: 0 10px 50px rgba(0,0,0,0.5);
-        min-width: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       `;
       document.body.appendChild(responseUI);
     }
@@ -2164,34 +2409,37 @@ class ModernHandSimulator {
     const responderName = this.priorityPlayer === 'player' ? 'You' : 'Opponent';
 
     responseUI.innerHTML = `
-      <div style="text-align: center;">
-        <h3 style="color: #ffa502; margin-bottom: 1rem;">⚡ Spell on the Stack</h3>
-        <div style="margin-bottom: 1.5rem;">
+      <div class="modal-content show" style="background: white; color: black; max-width: 500px; padding: 24px;">
+        <h3 style="color: #ffa502; margin-top: 0; margin-bottom: 1rem;">⚡ Spell on the Stack</h3>
+        <div style="margin-bottom: 1.5rem; padding: 12px; background: rgba(255, 165, 2, 0.1); border-left: 3px solid #ffa502; border-radius: 4px;">
           <strong>${casterName}</strong> cast <strong style="color: #e74c3c;">${spell.name}</strong>
         </div>
-        <div style="margin-bottom: 1rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 4px;">
-          <div style="font-size: 0.9rem; color: var(--text-muted);">Stack (${this.spellStack.length} spells):</div>
+        <div style="margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 4px;">
+          <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">Stack (${this.spellStack.length} spell${this.spellStack.length > 1 ? 's' : ''}):</div>
           ${this.spellStack.map((s, i) => `
-            <div style="margin: 0.5rem 0; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
-              ${i + 1}. ${s.name} <span style="color: var(--text-muted);">(${s.caster})</span>
+            <div style="margin: 0.5rem 0; padding: 0.5rem; background: white; border: 1px solid #ddd; border-radius: 4px;">
+              ${i + 1}. ${s.name} <span style="color: #666; font-size: 0.9em;">(${s.caster === 'player' ? 'You' : 'Opponent'})</span>
             </div>
-          `).join('')}
+          `).reverse().join('')}
         </div>
-        <div style="font-weight: bold; margin-bottom: 1.5rem;">
+        <div style="font-weight: bold; margin-bottom: 1.5rem; color: #2c3e50;">
           ${responderName} have priority - respond or pass?
         </div>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-          <button onclick="window.handSimulator.counterSpell()"
-                  style="background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-            ❌ Counterspell
-          </button>
-          <button onclick="window.handSimulator.castResponseSpell()"
-                  style="background: #9b59b6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-            ⚡ Cast Response
-          </button>
+        <div style="display: flex; gap: 0.75rem; flex-direction: column;">
           <button onclick="window.handSimulator.passResponse()"
-                  style="background: #27ae60; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
-            ✓ Pass Priority
+                  class="btn btn-success"
+                  style="width: 100%; padding: 12px; font-size: 16px; font-weight: bold;">
+            ✓ Let it Resolve (Pass Priority)
+          </button>
+          <button onclick="window.handSimulator.counterSpell()"
+                  class="btn btn-primary"
+                  style="width: 100%; padding: 10px;">
+            ❌ Counter with Counterspell
+          </button>
+          <button onclick="window.handSimulator.castDaze()"
+                  class="btn btn-info"
+                  style="width: 100%; padding: 10px;">
+            🌊 Counter with Daze
           </button>
         </div>
       </div>
@@ -2216,6 +2464,12 @@ class ModernHandSimulator {
   counterSpell() {
     // Add counterspell to stack
     this.respondToSpell('Counterspell', 'counter', null);
+  }
+
+  castDaze() {
+    // Add Daze to stack - will trigger the Daze modal for choosing payment
+    this.hideResponseUI();
+    this.daze();
   }
 
   castResponseSpell() {
@@ -2844,6 +3098,9 @@ class ModernHandSimulator {
 
   executeUpkeepStep() {
     console.log('Upkeep step - checking for upkeep triggers');
+
+    // Check for delayed triggers (e.g., Mishra's Bauble)
+    this.checkDelayedTriggers();
 
     // Check for Delver of Secrets triggers
     this.checkDelverTriggers();
@@ -3630,6 +3887,8 @@ class ModernHandSimulator {
         return `Select a ${options.validTargets.join(' or ')} to exile`;
       case 'bounce':
         return `Select a ${options.validTargets.join(' or ')} to return to hand`;
+      case 'discard':
+        return `Select a player to discard ${options.discardAmount} cards at random`;
       case 'tap':
         return `Select a ${options.validTargets.join(' or ')} to tap`;
       case 'untap':
@@ -3694,20 +3953,41 @@ class ModernHandSimulator {
 
     const validTargets = this.getValidTargets();
 
-    validTargets.forEach(target => {
-      const element = document.querySelector(`[data-card-id="${target.id}"]`);
-      if (element) {
-        element.classList.add('targeting-highlight');
-        element.setAttribute('data-targeting-valid', 'true');
-      }
-    });
+    if (this.targetingMode.validTargets.includes('player')) {
+      validTargets.forEach(target => {
+        const element = document.getElementById(`${target.id}Area`);
+        if (element) {
+          element.classList.add('targeting-highlight');
+          element.setAttribute('data-targeting-valid', 'true');
+          element.addEventListener('click', this.playerTargetClickListener);
+        }
+      });
+    } else {
+      validTargets.forEach(target => {
+        const element = document.querySelector(`[data-card-id="${target.id}"]`);
+        if (element) {
+          element.classList.add('targeting-highlight');
+          element.setAttribute('data-targeting-valid', 'true');
+        }
+      });
+    }
   }
+
+  playerTargetClickListener = (event) => {
+    const targetId = event.currentTarget.id.replace('Area', '');
+    this.executeTargeting(targetId);
+  };
 
   getValidTargets() {
     const targets = [];
     const mode = this.targetingMode;
 
     if (!mode.active) return targets;
+
+    if (mode.validTargets.includes('player')) {
+      targets.push({ id: 'player', name: 'Player', owner: 'player' });
+      targets.push({ id: 'opponent', name: 'Opponent', owner: 'opponent' });
+    }
 
     // Get all battlefield permanents if targeting permanents
     if (mode.validTargets.includes('creature')) {
@@ -3795,6 +4075,7 @@ class ModernHandSimulator {
     document.querySelectorAll('.targeting-highlight').forEach(element => {
       element.classList.remove('targeting-highlight');
       element.removeAttribute('data-targeting-valid');
+      element.removeEventListener('click', this.playerTargetClickListener);
     });
   }
 
@@ -3807,18 +4088,11 @@ class ModernHandSimulator {
     if (!this.targetingMode.active) return;
 
     const mode = this.targetingMode;
-    const target = this.findAnyCard(targetId);
 
     console.log('executeTargeting called with:', targetId);
     console.log('targeting mode:', mode);
-    console.log('found target:', target);
 
-    if (!target) {
-      this.showToast('Invalid target', 'error');
-      return;
-    }
-
-    // Check if target is valid
+    // Check if target is valid FIRST (before trying to find it as a card)
     const validTargets = this.getValidTargets();
     console.log('valid targets:', validTargets);
     console.log('looking for target id:', targetId);
@@ -3828,6 +4102,20 @@ class ModernHandSimulator {
       this.showToast('Invalid target for this spell', 'error');
       console.log('Target not found in valid targets list');
       return;
+    }
+
+    // For player targets, we don't need to find them as cards
+    const isPlayerTarget = mode.validTargets.includes('player') && (targetId === 'player' || targetId === 'opponent');
+
+    if (!isPlayerTarget) {
+      // Only try to find card targets
+      const target = this.findAnyCard(targetId);
+      console.log('found target:', target);
+
+      if (!target) {
+        this.showToast('Invalid target', 'error');
+        return;
+      }
     }
 
     // ADD SPELL TO STACK instead of immediately resolving
@@ -4066,6 +4354,178 @@ class ModernHandSimulator {
     });
   }
 
+  // =====================================================
+  // BOARD WIPE SPELLS
+  // =====================================================
+
+  wrathOfGod() {
+    this.destroyAllCreatures('Wrath of God', false);
+  }
+
+  damnation() {
+    this.destroyAllCreatures('Damnation', false);
+  }
+
+  supremeVerdict() {
+    this.destroyAllCreatures('Supreme Verdict', false);
+    this.showToast('Supreme Verdict - Cannot be countered', 'info');
+  }
+
+  pyroclasm() {
+    this.damageAllCreatures(2, 'Pyroclasm', false);
+  }
+
+  angerOfTheGods() {
+    this.damageAllCreatures(3, 'Anger of the Gods', true);
+  }
+
+  cyclonicRift() {
+    // Bounce all opponent's nonland permanents
+    const opponentPermanents = [
+      ...this.opponent.battlefield.creatures,
+      ...this.opponent.battlefield.others
+    ];
+
+    opponentPermanents.forEach(permanent => {
+      this.opponent.hand.push(permanent);
+    });
+
+    // Clear opponent's battlefield (except lands)
+    this.opponent.battlefield.creatures = [];
+    this.opponent.battlefield.others = [];
+
+    this.logAction('Cyclonic Rift: Bounced all opponent nonland permanents');
+    this.showToast('Cyclonic Rift - Bounced all opponent permanents', 'success');
+    this.updateBattlefieldDisplay();
+    this.updateOpponentBattlefieldDisplay();
+    this.updateOpponentHandDisplay();
+    this.updateUI();
+  }
+
+  armageddon() {
+    // Destroy all lands
+    const playerLands = [...this.battlefield.lands];
+    const opponentLands = [...this.opponent.battlefield.lands];
+
+    // Move lands to graveyards
+    playerLands.forEach(land => this.graveyard.push(land));
+    opponentLands.forEach(land => this.opponent.graveyard.push(land));
+
+    // Clear lands from battlefields
+    this.battlefield.lands = [];
+    this.opponent.battlefield.lands = [];
+
+    this.logAction('Armageddon: Destroyed all lands');
+    this.showToast(`Armageddon - Destroyed ${playerLands.length + opponentLands.length} lands`, 'warning');
+    this.updateBattlefieldDisplay();
+    this.updateOpponentBattlefieldDisplay();
+    this.updateGraveyardDisplay();
+    this.updateUI();
+  }
+
+  destroyAllCreatures(sourceName, exileInstead = false) {
+    // Get all creatures from both players
+    const playerCreatures = [...this.battlefield.creatures];
+    const opponentCreatures = [...this.opponent.battlefield.creatures];
+
+    const totalCreatures = playerCreatures.length + opponentCreatures.length;
+
+    if (totalCreatures === 0) {
+      this.showToast('No creatures to destroy', 'info');
+      return;
+    }
+
+    // Move creatures to appropriate zones
+    if (exileInstead) {
+      playerCreatures.forEach(creature => this.exile.push(creature));
+      opponentCreatures.forEach(creature => this.opponent.exile.push(creature));
+      this.logAction(`${sourceName}: Exiled ${totalCreatures} creatures`);
+    } else {
+      playerCreatures.forEach(creature => this.graveyard.push(creature));
+      opponentCreatures.forEach(creature => this.opponent.graveyard.push(creature));
+      this.logAction(`${sourceName}: Destroyed ${totalCreatures} creatures`);
+    }
+
+    // Clear battlefields
+    this.battlefield.creatures = [];
+    this.opponent.battlefield.creatures = [];
+
+    this.showToast(`${sourceName} - ${exileInstead ? 'Exiled' : 'Destroyed'} ${totalCreatures} creatures`, 'success');
+    this.updateBattlefieldDisplay();
+    this.updateOpponentBattlefieldDisplay();
+    this.updateGraveyardDisplay();
+    if (exileInstead) {
+      this.updateExileDisplay();
+    }
+    this.updateUI();
+  }
+
+  damageAllCreatures(damage, sourceName, exileInstead = false) {
+    // Deal damage to all creatures
+    const allCreatures = [
+      ...this.battlefield.creatures.map(c => ({ creature: c, owner: 'player' })),
+      ...this.opponent.battlefield.creatures.map(c => ({ creature: c, owner: 'opponent' }))
+    ];
+
+    if (allCreatures.length === 0) {
+      this.showToast('No creatures on battlefield', 'info');
+      return;
+    }
+
+    let destroyed = 0;
+    const creaturesDestroyed = [];
+
+    allCreatures.forEach(({ creature, owner }) => {
+      const toughness = this.getCreatureToughness(creature);
+
+      if (damage >= toughness) {
+        // Creature dies
+        destroyed++;
+        creaturesDestroyed.push({ creature, owner });
+      } else {
+        // Mark damage if creature survives
+        if (!creature.damage) creature.damage = 0;
+        creature.damage += damage;
+      }
+    });
+
+    // Remove destroyed creatures
+    creaturesDestroyed.forEach(({ creature, owner }) => {
+      // Remove from battlefield
+      if (owner === 'player') {
+        const index = this.battlefield.creatures.findIndex(c => c.id === creature.id);
+        if (index !== -1) {
+          this.battlefield.creatures.splice(index, 1);
+          if (exileInstead) {
+            this.exile.push(creature);
+          } else {
+            this.graveyard.push(creature);
+          }
+        }
+      } else {
+        const index = this.opponent.battlefield.creatures.findIndex(c => c.id === creature.id);
+        if (index !== -1) {
+          this.opponent.battlefield.creatures.splice(index, 1);
+          if (exileInstead) {
+            this.opponent.exile.push(creature);
+          } else {
+            this.opponent.graveyard.push(creature);
+          }
+        }
+      }
+    });
+
+    this.logAction(`${sourceName}: ${damage} damage to all creatures, ${destroyed} destroyed`);
+    this.showToast(`${sourceName} - ${destroyed} creatures destroyed`, 'success');
+    this.updateBattlefieldDisplay();
+    this.updateOpponentBattlefieldDisplay();
+    this.updateGraveyardDisplay();
+    if (exileInstead) {
+      this.updateExileDisplay();
+    }
+    this.updateUI();
+  }
+
   // Bounce spells
   unsummon() {
     this.enableComprehensiveTargeting({
@@ -4136,9 +4596,12 @@ class ModernHandSimulator {
 
   brainstorm() {
     this.drawCards(3);
-    this.showPutBackInterface(2, 'Brainstorm', {
-      description: 'Draw three cards, then put two cards from your hand on top of your library in any order.'
-    });
+    // Delay to allow UI to update with new cards
+    setTimeout(() => {
+      this.showPutBackInterface(2, 'Brainstorm', {
+        description: 'Draw three cards, then put two cards from your hand on top of your library in any order.'
+      });
+    }, 100);
   }
 
   // Surveil effects
@@ -4220,13 +4683,125 @@ class ModernHandSimulator {
     });
   }
 
-  rampantGrowth() {
-    this.showTutorInterface('land', 'Rampant Growth', {
-      description: 'Search your library for a basic land card and put it onto the battlefield tapped. Then shuffle your library.',
-      destination: 'battlefield',
-      tapped: true,
-      restrictions: ['basic']
+  hymnToTourach() {
+    // Use the comprehensive targeting system which adds to stack
+    this.enableComprehensiveTargeting({
+      type: 'discard',
+      source: 'Hymn to Tourach',
+      validTargets: ['player'],
+      discardAmount: 2,
+      discardMode: 'random',
+      description: 'Target player discards two cards at random'
     });
+  }
+
+  // Generic discard effects
+  discardRandom(amount = 1, sourceName = 'Effect') {
+    this.enableComprehensiveTargeting({
+      type: 'discard',
+      source: sourceName,
+      validTargets: ['player'],
+      discardAmount: amount,
+      discardMode: 'random',
+      description: `Target player discards ${amount} card${amount > 1 ? 's' : ''} at random`
+    });
+  }
+
+  // Specific card implementations
+  hypnoticSpecter() {
+    this.discardRandom(1, 'Hypnotic Specter');
+  }
+
+  wrench_mind() {
+    this.discardRandom(2, 'Wrench Mind');
+  }
+
+  ravenourats() {
+    this.discardRandom(1, 'Ravenous Rats');
+  }
+
+  mindRot() {
+    this.discardRandom(2, 'Mind Rot');
+  }
+
+  explore() {
+    // Explore: Reveal the top card of your library. If it's a land, put it into your hand.
+    // Otherwise, put a +1/+1 counter on the creature and you may put that card into your graveyard.
+    if (this.library.length === 0) {
+      this.showToast('Library is empty', 'warning');
+      return;
+    }
+
+    const topCard = this.library[0];
+    const isLand = this.getCardMainType(topCard.type).toLowerCase() === 'land';
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    modal.style.zIndex = '10001';
+
+    modal.innerHTML = `
+      <div class="modal-content show" style="max-width: 500px; background: white; color: black; padding: 20px;">
+        <h3 style="color: #2c3e50; margin-top: 0;">🗺️ Explore</h3>
+        <p style="margin: 15px 0;">Revealed top card of library:</p>
+        <div style="padding: 12px; border: 2px solid ${isLand ? '#27ae60' : '#3498db'}; border-radius: 8px; margin: 15px 0; background: ${isLand ? 'rgba(39, 174, 96, 0.1)' : 'rgba(52, 152, 219, 0.1)'};">
+          <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 4px;">${topCard.name}</div>
+          <div style="color: #666; font-size: 0.9em;">${topCard.type}</div>
+        </div>
+        ${isLand ? `
+          <p style="color: #27ae60; font-weight: bold;">It's a land! Put it into your hand.</p>
+          <button onclick="window.handSimulator.exploreResolveLand(); this.closest('.modal').remove();"
+                  class="btn btn-success"
+                  style="width: 100%; padding: 12px; margin-top: 10px;">
+            Put Land in Hand
+          </button>
+        ` : `
+          <p style="color: #3498db; font-weight: bold;">Not a land. Put a +1/+1 counter on the creature.</p>
+          <div style="display: flex; gap: 10px; flex-direction: column; margin-top: 10px;">
+            <button onclick="window.handSimulator.exploreResolveNonLand(true); this.closest('.modal').remove();"
+                    class="btn btn-primary"
+                    style="width: 100%; padding: 12px;">
+              Put in Graveyard (+1/+1 counter on creature)
+            </button>
+            <button onclick="window.handSimulator.exploreResolveNonLand(false); this.closest('.modal').remove();"
+                    class="btn btn-secondary"
+                    style="width: 100%; padding: 12px;">
+              Leave on Top (+1/+1 counter on creature)
+            </button>
+          </div>
+        `}
+        <button onclick="this.closest('.modal').remove()"
+                class="btn btn-outline-secondary"
+                style="width: 100%; padding: 8px; margin-top: 10px;">
+          Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+  }
+
+  exploreResolveLand() {
+    // Move top card to hand
+    const card = this.library.shift();
+    this.hand.push(card);
+    this.logAction(`Explored: ${card.name} (land) moved to hand`);
+    this.showToast(`${card.name} added to hand`, 'success');
+    this.updateUI();
+  }
+
+  exploreResolveNonLand(putInGraveyard) {
+    const card = this.library.shift();
+    if (putInGraveyard) {
+      this.graveyard.push(card);
+      this.logAction(`Explored: ${card.name} put in graveyard (+1/+1 counter)`);
+      this.showToast(`${card.name} put in graveyard, +1/+1 counter on creature`, 'success');
+    } else {
+      this.library.unshift(card);
+      this.logAction(`Explored: ${card.name} left on top (+1/+1 counter)`);
+      this.showToast(`${card.name} left on top, +1/+1 counter on creature`, 'success');
+    }
+    this.updateUI();
   }
 
   cultivate() {
@@ -4236,6 +4811,118 @@ class ModernHandSimulator {
       amount: 2,
       restrictions: ['basic']
     });
+  }
+
+  kodamasReach() {
+    // Same as Cultivate
+    this.showTutorInterface('land', "Kodama's Reach", {
+      description: "Search your library for up to two basic land cards. Put one onto the battlefield tapped and the other into your hand. Then shuffle your library.",
+      destination: 'both',
+      amount: 2,
+      restrictions: ['basic']
+    });
+  }
+
+  rampantGrowth() {
+    this.showTutorInterface('land', 'Rampant Growth', {
+      description: 'Search your library for a basic land card and put it onto the battlefield tapped. Then shuffle your library.',
+      destination: 'battlefield',
+      amount: 1,
+      restrictions: ['basic'],
+      tapped: true
+    });
+  }
+
+  threeVisits() {
+    // Three Visits / Nature's Lore - fetch a Forest (including dual lands with Forest type)
+    this.showTutorInterface('land', 'Three Visits', {
+      description: 'Search your library for a Forest card and put it onto the battlefield. Then shuffle your library.',
+      destination: 'battlefield',
+      amount: 1,
+      restrictions: ['forest'], // This should match any card with "Forest" in its type
+      tapped: false
+    });
+  }
+
+  naturesLore() {
+    // Alias for Three Visits
+    this.threeVisits();
+  }
+
+  async createToken(name, type, owner = 'player', options = {}) {
+    // Create a token card object
+    const token = {
+      id: `token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      name: name,
+      type: type,
+      cost: '0',
+      isToken: true,
+      tapped: options.tapped || false,
+      power: options.power,
+      toughness: options.toughness
+    };
+
+    // Parse P/T from name if it's a creature token
+    const ptMatch = name.match(/(\d+)\/(\d+)/);
+    if (ptMatch) {
+      token.power = ptMatch[1];
+      token.toughness = ptMatch[2];
+    }
+
+    // Fetch token image from Scryfall
+    try {
+      const imageUrl = await this.fetchTokenImage(name);
+      if (imageUrl) {
+        token.imageUrl = imageUrl;
+      }
+    } catch (error) {
+      console.warn(`Failed to fetch token image for ${name}:`, error);
+    }
+
+    // Determine where to put the token
+    const targetPlayer = (owner === 'player') ? this : this.opponent;
+
+    if (type.toLowerCase().includes('creature')) {
+      targetPlayer.battlefield.creatures.push(token);
+    } else {
+      targetPlayer.battlefield.others.push(token);
+    }
+
+    this.logAction(`Created ${name} token for ${owner}`);
+    this.showToast(`Created ${name} token`, 'success');
+
+    // Force immediate battlefield update
+    this.updateBattlefieldDisplay();
+    if (owner === 'opponent') {
+      this.updateOpponentBattlefieldDisplay();
+    }
+    this.updateUI();
+  }
+
+  sacrificeToken(tokenId, owner = 'player') {
+    const player = (owner === 'player') ? this : this.opponent;
+
+    // Find and remove the token
+    let found = false;
+    const zones = [player.battlefield.creatures, player.battlefield.others];
+
+    for (const zone of zones) {
+      const index = zone.findIndex(card => card.id === tokenId);
+      if (index !== -1) {
+        const token = zone[index];
+        zone.splice(index, 1);
+        this.logAction(`Sacrificed ${token.name} token`);
+        this.showToast(`Sacrificed ${token.name}`, 'info');
+        found = true;
+        break;
+      }
+    }
+
+    if (found) {
+      this.updateUI();
+    }
+
+    return found;
   }
 
   // Alias for evolvingWilds to match HTML button calls
@@ -4301,7 +4988,7 @@ class ModernHandSimulator {
 
     const modalContent = `
       <div style="background: var(--bg-primary); border-radius: var(--border-radius); padding: var(--space-4); max-width: 800px; width: 90%;">
-        <h3>${source} ${amount}</h3>
+        <h3 style="color: var(--text-primary); margin-top: 0;">${source} ${amount}</h3>
         <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
           ${options.description || `Look at the top ${amount} card${amount > 1 ? 's' : ''} of your library. Put any number on the bottom and the rest on top in any order.`}
         </p>
@@ -4317,11 +5004,11 @@ class ModernHandSimulator {
               min-width: 120px;
               text-align: center;
             ">
-              <div style="font-weight: bold; margin-bottom: 4px;">${card.name}</div>
+              <div style="font-weight: bold; margin-bottom: 4px; color: var(--text-primary);">${card.name}</div>
               <div style="font-size: 12px; color: var(--text-secondary);">${card.cost || ''}</div>
               <div style="font-size: 11px; color: var(--text-muted);">${this.getCardMainType(card.type)}</div>
               <div style="margin-top: 8px;">
-                <button onclick="window.handSimulator.scryCardToBottom(${index})" style="background: var(--error); color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px;">Bottom</button>
+                <button onclick="window.handSimulator.scryCardToBottom(${index})" style="background: var(--error); color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;">Bottom</button>
               </div>
             </div>
           `).join('')}
@@ -4329,7 +5016,7 @@ class ModernHandSimulator {
 
         <div style="display: flex; gap: var(--space-2); justify-content: flex-end;">
           <button onclick="window.handSimulator.finishScry('${source}')"
-                  style="background: var(--accent-color); color: white; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius);">
+                  style="background: #007bff; color: #ffffff; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius); cursor: pointer; font-weight: 500;">
             Finish
           </button>
         </div>
@@ -4434,13 +5121,13 @@ class ModernHandSimulator {
 
     const modalContent = `
       <div style="background: var(--bg-primary); border-radius: var(--border-radius); padding: var(--space-4); max-width: 900px; width: 95%;">
-        <h3>${source}</h3>
+        <h3 style="color: var(--text-primary); margin-top: 0;">${source}</h3>
         <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
           ${options.description}
         </p>
 
         <div style="margin-bottom: var(--space-3);">
-          <h4 style="margin-bottom: var(--space-2);">Top ${amount} cards of your library:</h4>
+          <h4 style="margin-bottom: var(--space-2); color: var(--text-primary);">Top ${amount} cards of your library:</h4>
           <div id="ponderCards" style="display: flex; gap: var(--space-2); margin-bottom: var(--space-3); flex-wrap: wrap;">
             ${cards.map((card, index) => `
               <div class="ponder-card" data-card-index="${index}" style="
@@ -4453,16 +5140,16 @@ class ModernHandSimulator {
                 text-align: center;
                 position: relative;
               ">
-                <div style="font-weight: bold; margin-bottom: 4px;">${card.name}</div>
+                <div style="font-weight: bold; margin-bottom: 4px; color: var(--text-primary);">${card.name}</div>
                 <div style="font-size: 12px; color: var(--text-secondary);">${card.cost || ''}</div>
                 <div style="font-size: 11px; color: var(--text-muted);">${this.getCardMainType(card.type)}</div>
                 <div style="margin-top: 8px; display: flex; gap: 4px; justify-content: center;">
                   <button onclick="window.handSimulator.setPonderCardPosition(${index}, 1)"
-                          style="background: var(--success); color: white; border: none; padding: 2px 6px; border-radius: 3px; font-size: 10px;">1st</button>
+                          style="background: #28a745; color: #ffffff; border: none; padding: 2px 6px; border-radius: 3px; font-size: 10px; cursor: pointer;">1st</button>
                   <button onclick="window.handSimulator.setPonderCardPosition(${index}, 2)"
-                          style="background: var(--warning); color: white; border: none; padding: 2px 6px; border-radius: 3px; font-size: 10px;">2nd</button>
+                          style="background: #ffc107; color: #000000; border: none; padding: 2px 6px; border-radius: 3px; font-size: 10px; cursor: pointer;">2nd</button>
                   <button onclick="window.handSimulator.setPonderCardPosition(${index}, 3)"
-                          style="background: var(--error); color: white; border: none; padding: 2px 6px; border-radius: 3px; font-size: 10px;">3rd</button>
+                          style="background: #dc3545; color: #ffffff; border: none; padding: 2px 6px; border-radius: 3px; font-size: 10px; cursor: pointer;">3rd</button>
                 </div>
                 <div class="position-indicator" style="position: absolute; top: 4px; right: 4px; background: var(--accent-color); color: white; border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;"></div>
               </div>
@@ -4481,11 +5168,11 @@ class ModernHandSimulator {
           </div>
           <div style="display: flex; gap: var(--space-2);">
             <button onclick="window.handSimulator.cancelPonder()"
-                    style="background: var(--error); color: white; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius);">
+                    style="background: #dc3545; color: #ffffff; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius); cursor: pointer; font-weight: 500;">
               Cancel
             </button>
             <button onclick="window.handSimulator.finishPonder('${source}')"
-                    style="background: var(--accent-color); color: white; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius);">
+                    style="background: #007bff; color: #ffffff; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius); cursor: pointer; font-weight: 500;">
               Finish
             </button>
           </div>
@@ -4635,7 +5322,7 @@ class ModernHandSimulator {
 
     const modalContent = `
       <div style="background: var(--bg-primary); border-radius: var(--border-radius); padding: var(--space-4); max-width: 800px; width: 90%;">
-        <h3>Surveil ${amount}</h3>
+        <h3 style="color: var(--text-primary); margin-top: 0;">Surveil ${amount}</h3>
         <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
           Look at the top ${amount} card${amount > 1 ? 's' : ''} of your library. Put any number into your graveyard and the rest on top in any order.
         </p>
@@ -4651,11 +5338,11 @@ class ModernHandSimulator {
               min-width: 120px;
               text-align: center;
             ">
-              <div style="font-weight: bold; margin-bottom: 4px;">${card.name}</div>
+              <div style="font-weight: bold; margin-bottom: 4px; color: var(--text-primary);">${card.name}</div>
               <div style="font-size: 12px; color: var(--text-secondary);">${card.cost || ''}</div>
               <div style="font-size: 11px; color: var(--text-muted);">${this.getCardMainType(card.type)}</div>
               <div style="margin-top: 8px;">
-                <button onclick="window.handSimulator.surveilCardToGraveyard(${index})" style="background: var(--warning); color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px;">Graveyard</button>
+                <button onclick="window.handSimulator.surveilCardToGraveyard(${index})" style="background: #ffc107; color: #000000; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: 500;">Graveyard</button>
               </div>
             </div>
           `).join('')}
@@ -4663,7 +5350,7 @@ class ModernHandSimulator {
 
         <div style="display: flex; gap: var(--space-2); justify-content: flex-end;">
           <button onclick="window.handSimulator.finishSurveil('${source}')"
-                  style="background: var(--accent-color); color: white; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius);">
+                  style="background: #007bff; color: #ffffff; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius); cursor: pointer; font-weight: 500;">
             Finish
           </button>
         </div>
@@ -4732,6 +5419,174 @@ class ModernHandSimulator {
     for (let i = 0; i < amount; i++) {
       this.drawCard();
     }
+  }
+
+  // Put back interface (for Brainstorm, etc.)
+  showPutBackInterface(amount, source, options = {}) {
+    const currentPlayer = this.getCurrentPlayer();
+    const hand = currentPlayer.hand;
+
+    if (hand.length < amount) {
+      this.showToast(`Not enough cards in hand (need ${amount}, have ${hand.length})`, 'warning');
+      return;
+    }
+
+    this.createPutBackModal(hand, amount, source, options);
+  }
+
+  createPutBackModal(hand, amount, source, options = {}) {
+    let modal = document.getElementById('putBackModal');
+    if (modal) modal.remove();
+
+    modal = document.createElement('div');
+    modal.id = 'putBackModal';
+    modal.className = 'modal-overlay';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    `;
+
+    const modalContent = `
+      <div style="background: var(--bg-primary); border-radius: var(--border-radius); padding: var(--space-4); max-width: 900px; width: 95%;">
+        <h3 style="color: var(--text-primary); margin-top: 0;">${source}</h3>
+        <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+          ${options.description || `Choose ${amount} card${amount > 1 ? 's' : ''} to put back on top of your library.`}
+        </p>
+
+        <div style="margin-bottom: var(--space-3);">
+          <h4 style="margin-bottom: var(--space-2); color: var(--text-primary);">Your hand (click to select ${amount}):</h4>
+          <div id="putBackCards" style="display: flex; gap: var(--space-2); margin-bottom: var(--space-3); flex-wrap: wrap;">
+            ${hand.map((card, index) => `
+              <div class="putback-card" data-card-index="${index}"
+                   onclick="window.handSimulator.togglePutBackCard(${index})"
+                   style="
+                border: 2px solid var(--border-color);
+                border-radius: var(--border-radius);
+                padding: var(--space-2);
+                background: var(--bg-secondary);
+                cursor: pointer;
+                min-width: 120px;
+                text-align: center;
+                position: relative;
+                transition: all 0.2s;
+              ">
+                <div style="font-weight: bold; margin-bottom: 4px; color: var(--text-primary);">${card.name}</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">${card.cost || ''}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">${this.getCardMainType(card.type)}</div>
+                <div class="selected-indicator" style="position: absolute; top: 4px; right: 4px; background: #28a745; color: white; border-radius: 50%; width: 24px; height: 24px; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">✓</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div style="margin-bottom: var(--space-3);">
+          <p style="color: var(--text-secondary); font-size: 14px;">Selected: <span id="selectedCount">0</span> / ${amount}</p>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); justify-content: flex-end;">
+          <button onclick="window.handSimulator.finishPutBack('${source}', ${amount})"
+                  style="background: #007bff; color: #ffffff; border: none; padding: var(--space-2) var(--space-3); border-radius: var(--border-radius); cursor: pointer; font-weight: 500;">
+            Put Back on Top
+          </button>
+        </div>
+      </div>
+    `;
+
+    modal.innerHTML = modalContent;
+    document.body.appendChild(modal);
+
+    // Store put back state
+    this.putBackState = {
+      selectedIndices: [],
+      amount: amount,
+      source: source,
+      options: options
+    };
+  }
+
+  togglePutBackCard(cardIndex) {
+    if (!this.putBackState) return;
+
+    const selectedIndices = this.putBackState.selectedIndices;
+    const indexPos = selectedIndices.indexOf(cardIndex);
+
+    if (indexPos >= 0) {
+      // Deselect
+      selectedIndices.splice(indexPos, 1);
+    } else {
+      // Select (if not at limit)
+      if (selectedIndices.length < this.putBackState.amount) {
+        selectedIndices.push(cardIndex);
+      } else {
+        this.showToast(`Can only select ${this.putBackState.amount} cards`, 'warning');
+        return;
+      }
+    }
+
+    // Update UI
+    const cardElement = document.querySelector(`[data-card-index="${cardIndex}"]`);
+    const indicator = cardElement?.querySelector('.selected-indicator');
+
+    if (indicator) {
+      indicator.style.display = selectedIndices.includes(cardIndex) ? 'flex' : 'none';
+    }
+
+    if (selectedIndices.includes(cardIndex)) {
+      cardElement.style.border = '2px solid #28a745';
+      cardElement.style.transform = 'translateY(-4px)';
+    } else {
+      cardElement.style.border = '2px solid var(--border-color)';
+      cardElement.style.transform = 'translateY(0)';
+    }
+
+    // Update count
+    document.getElementById('selectedCount').textContent = selectedIndices.length;
+  }
+
+  finishPutBack(source, amount) {
+    if (!this.putBackState) return;
+
+    const selectedIndices = this.putBackState.selectedIndices;
+
+    if (selectedIndices.length !== amount) {
+      this.showToast(`Please select exactly ${amount} card${amount > 1 ? 's' : ''}`, 'error');
+      return;
+    }
+
+    const currentPlayer = this.getCurrentPlayer();
+    const hand = currentPlayer.hand;
+    const library = currentPlayer.library;
+
+    // Sort indices in descending order to remove from hand correctly
+    const sortedIndices = [...selectedIndices].sort((a, b) => b - a);
+    const cardsToReturn = [];
+
+    // Remove selected cards from hand
+    sortedIndices.forEach(index => {
+      cardsToReturn.unshift(hand.splice(index, 1)[0]);
+    });
+
+    // Put cards on top of library (first selected = top of library)
+    cardsToReturn.reverse().forEach(card => {
+      library.push(card);
+    });
+
+    this.logAction(`${source}: Put ${amount} cards back on top of library`);
+
+    // Clean up
+    document.getElementById('putBackModal')?.remove();
+    this.putBackState = null;
+
+    this.updateHandDisplay();
+    this.showToast(`${source} complete - ${amount} cards returned to library`, 'success');
   }
 
   enableGraveyardTargeting(options) {
@@ -5156,6 +6011,24 @@ class ModernHandSimulator {
       'terramorphic expanse': ['plains', 'island', 'swamp', 'mountain', 'forest']
     };
     return fetchlandMap[name] || [];
+  }
+
+  autoFetchDualOrPrompt(fetchlandCard) {
+    const types = this.getFetchlandTypes(fetchlandCard.name);
+    if (types.length === 0) return;
+
+    const currentPlayer = this.getCurrentPlayer();
+    const dualLands = this.getAvailableDualLands(currentPlayer.library, types);
+
+    // If a dual land is available, auto-fetch it
+    if (dualLands.length > 0) {
+      const dualLand = dualLands[0]; // Take first dual land
+      this.quickFetchSpecificLand(dualLand.id, fetchlandCard.name, true); // true = silent mode
+      this.showToast(`Auto-fetched ${dualLand.name} (right-click fetchland for other options)`, 'success');
+    } else {
+      // No dual land available, show normal fetchland selection
+      this.showFetchlandQuickSelect(fetchlandCard, { fromPlay: true });
+    }
   }
 
   showFetchlandQuickSelect(fetchlandCard, options = {}) {
@@ -6113,6 +6986,949 @@ class ModernHandSimulator {
 
   closeDazeUI() {
     document.getElementById('dazeUI')?.remove();
+  }
+
+  // =====================================================
+  // FORCE OF WILL ALTERNATIVE COST
+  // =====================================================
+
+  isForceOfWill(cardName) {
+    const name = cardName.toLowerCase();
+    return name === 'force of will';
+  }
+
+  isForceOfNegation(cardName) {
+    const name = cardName.toLowerCase();
+    return name === 'force of negation';
+  }
+
+  showForceOfNegationUI(cardId, cardName) {
+    // Force of Negation can only be cast for free on opponent's turn
+    const isOpponentTurn = this.activePlayer === 'opponent';
+
+    if (!isOpponentTurn) {
+      this.showToast('Force of Negation alternative cost only works on opponent\'s turn', 'warning');
+      // Still allow normal casting
+      return;
+    }
+
+    const blueCards = this.hand.filter(card => {
+      const cost = (card.cost || '').toUpperCase();
+      const type = (card.type || '').toLowerCase();
+      // Check for U in mana cost (but exclude the Force of Negation itself)
+      return card.id !== cardId && cost.includes('U') && !type.includes('land');
+    });
+
+    if (blueCards.length === 0) {
+      this.showToast('No blue cards to exile', 'warning');
+      return;
+    }
+
+    // Remove any existing modal
+    document.getElementById('forceOfNegationUI')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'forceOfNegationUI';
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid #8b5cf6;
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 400px;
+      max-width: 600px;
+    `;
+
+    const blueCardButtons = blueCards.map(card => {
+      return `
+        <div style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s;"
+             onmouseover="this.style.borderColor='#8b5cf6'; this.style.background='rgba(139, 92, 246, 0.1)';"
+             onmouseout="this.style.borderColor='transparent'; this.style.background='var(--bg-secondary)';"
+             onclick="window.handSimulator.castForceOfNegationWithBlueCard('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}', '${this.escapeJs(card.id)}')">
+          <div style="flex: 1;">
+            <div style="font-weight: bold; color: var(--text-primary);">${card.name}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">${card.type || 'Card'} - ${card.cost || '0'}</div>
+          </div>
+          <div style="color: #8b5cf6; font-size: 20px;">💨 Exile</div>
+        </div>
+      `;
+    }).join('');
+
+    popup.innerHTML = `
+      <div style="margin-bottom: var(--space-3);">
+        <h3 style="margin: 0 0 var(--space-2) 0; color: var(--text-primary);">
+          💜 Force of Negation - Alternative Cost
+        </h3>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">
+          If it's not your turn, you may exile a blue card from your hand rather than pay this spell's mana cost.
+        </p>
+      </div>
+
+      <div style="margin-bottom: var(--space-3);">
+        <div style="font-weight: bold; margin-bottom: var(--space-2); color: var(--text-primary);">
+          Select a blue card to exile:
+        </div>
+        <div style="max-height: 300px; overflow-y: auto;">
+          ${blueCardButtons}
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-2); justify-content: flex-end;">
+        <button onclick="window.handSimulator.castForceOfNegationNormally('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}')"
+                class="btn btn-secondary">
+          Pay 1UU
+        </button>
+        <button onclick="window.handSimulator.closeForceOfNegationUI()" class="btn btn-secondary">
+          Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Add escape key handler
+    const escapeHandler = (e) => {
+      if (e.key === 'Escape') {
+        this.closeForceOfNegationUI();
+        document.removeEventListener('keydown', escapeHandler);
+      }
+    };
+    document.addEventListener('keydown', escapeHandler);
+  }
+
+  castForceOfNegationWithBlueCard(cardId, cardName, blueCardId) {
+    // Find and remove the blue card from hand
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const blueCardIndex = currentHand.findIndex(c => c.id === blueCardId);
+
+    if (blueCardIndex === -1) {
+      this.showToast('Blue card not found', 'error');
+      return;
+    }
+
+    const blueCard = currentHand[blueCardIndex];
+
+    // Exile the blue card
+    this.exile.push(blueCard);
+    currentHand.splice(blueCardIndex, 1);
+
+    // Find and play Force of Negation
+    const cardIndex = currentHand.findIndex(c => c.id === cardId);
+    if (cardIndex !== -1) {
+      const card = currentHand[cardIndex];
+      this.playCard(card);
+      currentHand.splice(cardIndex, 1);
+
+      this.showToast(`Cast ${cardName} (exiled ${blueCard.name})`, 'success');
+      this.logAction(`Cast ${cardName} (exiled ${blueCard.name})`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateExileDisplay();
+    this.updateUI();
+    this.closeForceOfNegationUI();
+  }
+
+  castForceOfNegationNormally(cardId, cardName) {
+    // Handle normal casting (pay 1UU)
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const cardIndex = currentHand.findIndex(c => c.id === cardId);
+
+    if (cardIndex !== -1) {
+      const card = currentHand[cardIndex];
+      this.playCard(card);
+      currentHand.splice(cardIndex, 1);
+
+      this.showToast(`Cast ${cardName} (paid 1UU)`, 'success');
+      this.logAction(`Cast ${cardName} (paid 1UU)`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateUI();
+    this.closeForceOfNegationUI();
+  }
+
+  closeForceOfNegationUI() {
+    document.getElementById('forceOfNegationUI')?.remove();
+  }
+
+  showForceOfWillUI(cardId, cardName) {
+    const blueCards = this.hand.filter(card => {
+      const cost = (card.cost || '').toUpperCase();
+      const type = (card.type || '').toLowerCase();
+      // Check for U in mana cost (but exclude the Force of Will itself)
+      return card.id !== cardId && cost.includes('U') && !type.includes('land');
+    });
+
+    if (blueCards.length === 0) {
+      this.showToast('No blue cards to exile', 'warning');
+      return;
+    }
+
+    // Remove any existing modal
+    document.getElementById('forceOfWillUI')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'forceOfWillUI';
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid #60a5fa;
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 400px;
+      max-width: 600px;
+    `;
+
+    const blueCardButtons = blueCards.map(card => {
+      return `
+        <div style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s;"
+             onmouseover="this.style.borderColor='#60a5fa'; this.style.background='rgba(96, 165, 250, 0.1)';"
+             onmouseout="this.style.borderColor='transparent'; this.style.background='var(--bg-secondary)';"
+             onclick="window.handSimulator.castForceOfWillWithBlueCard('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}', '${this.escapeJs(card.id)}')">
+          <div style="flex: 1;">
+            <div style="font-weight: bold; color: var(--text-primary);">${card.name}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">${card.type || 'Card'} - ${card.cost || '0'}</div>
+          </div>
+          <div style="color: #60a5fa; font-size: 20px;">💨 Exile</div>
+        </div>
+      `;
+    }).join('');
+
+    popup.innerHTML = `
+      <div style="margin-bottom: var(--space-3);">
+        <h3 style="margin: 0 0 var(--space-2) 0; color: var(--text-primary);">
+          💙 Force of Will - Alternative Cost
+        </h3>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">
+          You may exile a blue card from your hand and pay 1 life rather than pay this spell's mana cost.
+        </p>
+      </div>
+
+      <div style="margin-bottom: var(--space-3);">
+        <div style="font-weight: bold; margin-bottom: var(--space-2); color: var(--text-primary);">
+          Select a blue card to exile:
+        </div>
+        <div style="max-height: 300px; overflow-y: auto;">
+          ${blueCardButtons}
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-2); justify-content: flex-end;">
+        <button onclick="window.handSimulator.castForceOfWillNormally('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}')"
+                class="btn btn-secondary">
+          Pay 3UU
+        </button>
+        <button onclick="window.handSimulator.closeForceOfWillUI()" class="btn btn-secondary">
+          Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Add escape key handler
+    const escapeHandler = (e) => {
+      if (e.key === 'Escape') {
+        this.closeForceOfWillUI();
+        document.removeEventListener('keydown', escapeHandler);
+      }
+    };
+    document.addEventListener('keydown', escapeHandler);
+  }
+
+  castForceOfWillWithBlueCard(cardId, cardName, blueCardId) {
+    // Find and remove the blue card from hand
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const blueCardIndex = currentHand.findIndex(c => c.id === blueCardId);
+
+    if (blueCardIndex === -1) {
+      this.showToast('Blue card not found', 'error');
+      return;
+    }
+
+    const blueCard = currentHand[blueCardIndex];
+
+    // Exile the blue card
+    this.exile.push(blueCard);
+    currentHand.splice(blueCardIndex, 1);
+
+    // Pay 1 life
+    if (this.activePlayer === 'player') {
+      this.life = Math.max(0, this.life - 1);
+    } else {
+      this.opponent.life = Math.max(0, this.opponent.life - 1);
+    }
+
+    // Find and play Force of Will
+    const cardIndex = currentHand.findIndex(c => c.id === cardId);
+    if (cardIndex !== -1) {
+      const card = currentHand[cardIndex];
+      this.playCard(card);
+      currentHand.splice(cardIndex, 1);
+
+      this.showToast(`Cast ${cardName} (exiled ${blueCard.name}, paid 1 life)`, 'success');
+      this.logAction(`Cast ${cardName} (exiled ${blueCard.name}, paid 1 life)`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateExileDisplay();
+    this.updateUI();
+    this.closeForceOfWillUI();
+  }
+
+  castForceOfWillNormally(cardId, cardName) {
+    // Handle normal casting (pay 3UU)
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const cardIndex = currentHand.findIndex(c => c.id === cardId);
+
+    if (cardIndex !== -1) {
+      const card = currentHand[cardIndex];
+      this.playCard(card);
+      currentHand.splice(cardIndex, 1);
+
+      this.showToast(`Cast ${cardName} (paid 3UU)`, 'success');
+      this.logAction(`Cast ${cardName} (paid 3UU)`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateUI();
+    this.closeForceOfWillUI();
+  }
+
+  closeForceOfWillUI() {
+    document.getElementById('forceOfWillUI')?.remove();
+  }
+
+  // =====================================================
+  // BRAINSTORM MECHANIC
+  // =====================================================
+
+  isBrainstorm(cardName) {
+    const name = cardName.toLowerCase();
+    return name === 'brainstorm';
+  }
+
+  showBrainstormUI(cardId, cardName) {
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const currentLibrary = this.activePlayer === 'player' ? this.library : this.opponent.library;
+
+    if (currentLibrary.length < 3) {
+      this.showToast('Not enough cards in library to Brainstorm', 'warning');
+      return;
+    }
+
+    // Remove any existing modal
+    document.getElementById('brainstormUI')?.remove();
+
+    // Draw 3 cards first
+    const drawnCards = [];
+    for (let i = 0; i < 3; i++) {
+      if (currentLibrary.length > 0) {
+        const card = currentLibrary.shift();
+        drawnCards.push(card);
+        currentHand.push(card);
+      }
+    }
+
+    // Remove Brainstorm from hand (it's been cast)
+    const brainstormIndex = currentHand.findIndex(c => c.id === cardId);
+    if (brainstormIndex !== -1) {
+      currentHand.splice(brainstormIndex, 1);
+    }
+
+    this.updateHandDisplay();
+    this.updateUI();
+
+    this.showToast(`Drew 3 cards from Brainstorm. Select 2 cards to put back on top of library.`, 'info');
+    this.logAction(`Cast ${cardName} - Drew 3 cards`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+
+    // Now show UI to select 2 cards to put back
+    this.showBrainstormReturnUI(drawnCards);
+  }
+
+  showBrainstormReturnUI(drawnCards) {
+    // Remove any existing modal
+    document.getElementById('brainstormReturnUI')?.remove();
+
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+
+    const popup = document.createElement('div');
+    popup.id = 'brainstormReturnUI';
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid #3b82f6;
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 500px;
+      max-width: 800px;
+    `;
+
+    // Track selected cards
+    const selectedCards = [];
+
+    const cardButtons = currentHand.map(card => {
+      const cardId = card.id || `${card.name}_${Math.random()}`;
+      return `
+        <div class="brainstorm-card" data-card-id="${cardId}" style="display: flex; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px; border: 2px solid transparent; cursor: pointer; transition: all 0.2s;"
+             onmouseover="this.style.borderColor='#3b82f6';"
+             onmouseout="if(!this.classList.contains('selected')) this.style.borderColor='transparent';"
+             onclick="window.handSimulator.toggleBrainstormCardSelection('${this.escapeJs(cardId)}', this)">
+          <div style="flex: 1;">
+            <div style="font-weight: bold; color: var(--text-primary);">${card.name}</div>
+            <div style="font-size: 12px; color: var(--text-secondary);">${card.type || 'Card'} - ${card.cost || '0'}</div>
+          </div>
+          <div class="selection-indicator" style="color: #3b82f6; font-size: 20px; opacity: 0;">✓</div>
+        </div>
+      `;
+    }).join('');
+
+    popup.innerHTML = `
+      <div style="margin-bottom: var(--space-3);">
+        <h3 style="margin: 0 0 var(--space-2) 0; color: var(--text-primary);">
+          🌊 Brainstorm - Put 2 Cards Back
+        </h3>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">
+          Select 2 cards from your hand to put back on top of your library (in any order).
+        </p>
+        <div id="brainstormCounter" style="margin-top: var(--space-2); font-weight: bold; color: #3b82f6;">
+          Selected: <span id="brainstormSelectedCount">0</span> / 2
+        </div>
+      </div>
+
+      <div style="margin-bottom: var(--space-3);">
+        <div style="font-weight: bold; margin-bottom: var(--space-2); color: var(--text-primary);">
+          Your Hand:
+        </div>
+        <div style="max-height: 400px; overflow-y: auto;">
+          ${cardButtons}
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-2); justify-content: flex-end;">
+        <button id="brainstormConfirmBtn" onclick="window.handSimulator.confirmBrainstormReturn()"
+                class="btn btn-primary" disabled style="opacity: 0.5;">
+          Confirm Selection
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Store selected cards in a temporary array
+    this.brainstormSelectedCards = [];
+
+    // Add escape key handler (disabled until 2 cards selected)
+    const escapeHandler = (e) => {
+      if (e.key === 'Escape' && this.brainstormSelectedCards.length === 2) {
+        this.confirmBrainstormReturn();
+        document.removeEventListener('keydown', escapeHandler);
+      }
+    };
+    document.addEventListener('keydown', escapeHandler);
+  }
+
+  toggleBrainstormCardSelection(cardId, element) {
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const card = currentHand.find(c => c.id === cardId);
+
+    if (!card) return;
+
+    const cardElement = element;
+    const indicator = cardElement.querySelector('.selection-indicator');
+    const isSelected = cardElement.classList.contains('selected');
+
+    if (isSelected) {
+      // Deselect
+      cardElement.classList.remove('selected');
+      cardElement.style.borderColor = 'transparent';
+      cardElement.style.background = 'var(--bg-secondary)';
+      indicator.style.opacity = '0';
+
+      const index = this.brainstormSelectedCards.findIndex(c => c.id === cardId);
+      if (index > -1) {
+        this.brainstormSelectedCards.splice(index, 1);
+      }
+    } else {
+      // Select (if less than 2 already selected)
+      if (this.brainstormSelectedCards.length < 2) {
+        cardElement.classList.add('selected');
+        cardElement.style.borderColor = '#3b82f6';
+        cardElement.style.background = 'rgba(59, 130, 246, 0.1)';
+        indicator.style.opacity = '1';
+
+        this.brainstormSelectedCards.push(card);
+      } else {
+        this.showToast('You can only select 2 cards', 'warning');
+      }
+    }
+
+    // Update counter
+    const counter = document.getElementById('brainstormSelectedCount');
+    if (counter) {
+      counter.textContent = this.brainstormSelectedCards.length;
+    }
+
+    // Enable/disable confirm button
+    const confirmBtn = document.getElementById('brainstormConfirmBtn');
+    if (confirmBtn) {
+      if (this.brainstormSelectedCards.length === 2) {
+        confirmBtn.disabled = false;
+        confirmBtn.style.opacity = '1';
+      } else {
+        confirmBtn.disabled = true;
+        confirmBtn.style.opacity = '0.5';
+      }
+    }
+  }
+
+  confirmBrainstormReturn() {
+    if (this.brainstormSelectedCards.length !== 2) {
+      this.showToast('You must select exactly 2 cards', 'warning');
+      return;
+    }
+
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const currentLibrary = this.activePlayer === 'player' ? this.library : this.opponent.library;
+
+    // Remove selected cards from hand and put them on top of library
+    this.brainstormSelectedCards.forEach(card => {
+      const index = currentHand.findIndex(c => c.id === card.id);
+      if (index > -1) {
+        currentHand.splice(index, 1);
+        currentLibrary.unshift(card); // Put on top of library
+      }
+    });
+
+    this.showToast(`Put 2 cards back on top of library`, 'success');
+    this.logAction(`Brainstorm: Put 2 cards back on top of library`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+
+    // Clean up
+    this.brainstormSelectedCards = [];
+    this.updateHandDisplay();
+    this.updateUI();
+    this.closeBrainstormReturnUI();
+  }
+
+  closeBrainstormReturnUI() {
+    document.getElementById('brainstormReturnUI')?.remove();
+  }
+
+  // =====================================================
+  // MISHRA'S BAUBLE MECHANIC
+  // =====================================================
+
+  isMishrasBauble(cardName) {
+    const name = cardName.toLowerCase();
+    return name.includes("mishra's bauble");
+  }
+
+  activateMishrasBauble(cardId, cardName) {
+    const card = this.battlefield.others.find(c => c.id === cardId);
+
+    if (!card) {
+      this.showToast('Card not found on battlefield', 'error');
+      return;
+    }
+
+    // Sacrifice the Bauble
+    const index = this.battlefield.others.findIndex(c => c.id === cardId);
+    if (index > -1) {
+      this.battlefield.others.splice(index, 1);
+      this.graveyard.push(card);
+    }
+
+    // Create delayed draw trigger for next upkeep
+    if (!this.delayedTriggers) {
+      this.delayedTriggers = [];
+    }
+
+    this.delayedTriggers.push({
+      type: 'mishra-bauble-draw',
+      cardName: cardName,
+      player: this.activePlayer,
+      triggerPhase: 'upkeep',
+      description: 'Draw a card from Mishra\'s Bauble'
+    });
+
+    this.showToast(`Activated ${cardName} - Draw a card at the beginning of next upkeep`, 'success');
+    this.logAction(`Activated ${cardName} (sacrificed) - Draw trigger set for next upkeep`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+
+    this.updateBattlefieldDisplay();
+    this.updateGraveyardDisplay();
+    this.updateUI();
+    this.updateDelayedTriggersDisplay();
+  }
+
+  checkDelayedTriggers() {
+    if (!this.delayedTriggers || this.delayedTriggers.length === 0) {
+      this.updateDelayedTriggersDisplay();
+      return;
+    }
+
+    const currentPhase = this.turnState.phase;
+    const triggersToExecute = [];
+    const remainingTriggers = [];
+
+    for (const trigger of this.delayedTriggers) {
+      if (trigger.triggerPhase === currentPhase) {
+        triggersToExecute.push(trigger);
+      } else {
+        remainingTriggers.push(trigger);
+      }
+    }
+
+    // Execute triggers
+    for (const trigger of triggersToExecute) {
+      if (trigger.type === 'mishra-bauble-draw') {
+        // Draw a card for the player who activated it
+        const targetHand = trigger.player === 'player' ? this.hand : this.opponent.hand;
+        const targetLibrary = trigger.player === 'player' ? this.library : this.opponent.library;
+
+        if (targetLibrary.length > 0) {
+          const card = targetLibrary.shift();
+          targetHand.push(card);
+
+          this.showToast(`${trigger.cardName} trigger - Drew a card`, 'info');
+          this.logAction(`${trigger.cardName} delayed trigger - Drew a card`, trigger.player === 'player' ? 'You' : 'Opponent', false);
+        } else {
+          this.showToast(`${trigger.cardName} trigger - No cards in library`, 'warning');
+        }
+      }
+    }
+
+    // Update triggers list
+    this.delayedTriggers = remainingTriggers;
+
+    if (triggersToExecute.length > 0) {
+      this.updateHandDisplay();
+      this.updateUI();
+    }
+
+    // Update display to show remaining triggers
+    this.updateDelayedTriggersDisplay();
+  }
+
+  updateDelayedTriggersDisplay() {
+    const container = document.getElementById('delayedTriggersIndicator');
+    if (!container) return;
+
+    if (!this.delayedTriggers || this.delayedTriggers.length === 0) {
+      container.style.display = 'none';
+      return;
+    }
+
+    // Show indicator with count and details
+    const triggerList = this.delayedTriggers.map(t =>
+      `${t.cardName} (${t.triggerPhase})`
+    ).join(', ');
+
+    container.innerHTML = `
+      <span style="cursor: help;" title="${triggerList}">
+        ⏰ ${this.delayedTriggers.length} pending trigger${this.delayedTriggers.length > 1 ? 's' : ''}
+      </span>
+      <button onclick="window.handSimulator.showDelayedTriggersModal()"
+              class="btn btn-xs btn-warning"
+              style="margin-left: 8px; padding: 2px 6px;">
+        View
+      </button>
+    `;
+    container.style.display = 'inline-block';
+  }
+
+  showDelayedTriggersModal() {
+    if (!this.delayedTriggers || this.delayedTriggers.length === 0) {
+      this.showToast('No pending triggers', 'info');
+      return;
+    }
+
+    // Remove any existing modal
+    document.getElementById('delayedTriggersModal')?.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'delayedTriggersModal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid #f59e0b;
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 400px;
+      max-width: 600px;
+    `;
+
+    const triggerItems = this.delayedTriggers.map((trigger, index) => `
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; margin: 5px 0; background: var(--bg-secondary); border-radius: 6px;">
+        <div>
+          <div style="font-weight: bold; color: var(--text-primary);">${trigger.cardName}</div>
+          <div style="font-size: 12px; color: var(--text-secondary);">
+            ${trigger.description} - Triggers on: ${trigger.triggerPhase}
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted);">
+            Player: ${trigger.player === 'player' ? 'You' : 'Opponent'}
+          </div>
+        </div>
+        <button onclick="window.handSimulator.executeDelayedTriggerManually(${index})"
+                class="btn btn-sm btn-primary">
+          Execute Now
+        </button>
+      </div>
+    `).join('');
+
+    modal.innerHTML = `
+      <div style="margin-bottom: var(--space-3);">
+        <h3 style="margin: 0 0 var(--space-2) 0; color: var(--text-primary);">
+          ⏰ Pending Delayed Triggers
+        </h3>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">
+          These triggers are waiting to execute. They should trigger automatically during their specified phase.
+        </p>
+      </div>
+
+      <div style="max-height: 400px; overflow-y: auto;">
+        ${triggerItems}
+      </div>
+
+      <div style="display: flex; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-3);">
+        <button onclick="window.handSimulator.closeDelayedTriggersModal()" class="btn btn-secondary">
+          Close
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Add escape key handler
+    const escapeHandler = (e) => {
+      if (e.key === 'Escape') {
+        this.closeDelayedTriggersModal();
+        document.removeEventListener('keydown', escapeHandler);
+      }
+    };
+    document.addEventListener('keydown', escapeHandler);
+  }
+
+  executeDelayedTriggerManually(index) {
+    if (!this.delayedTriggers || index >= this.delayedTriggers.length) {
+      this.showToast('Trigger not found', 'error');
+      return;
+    }
+
+    const trigger = this.delayedTriggers[index];
+
+    // Execute the trigger
+    if (trigger.type === 'mishra-bauble-draw') {
+      const targetHand = trigger.player === 'player' ? this.hand : this.opponent.hand;
+      const targetLibrary = trigger.player === 'player' ? this.library : this.opponent.library;
+
+      if (targetLibrary.length > 0) {
+        const card = targetLibrary.shift();
+        targetHand.push(card);
+
+        this.showToast(`${trigger.cardName} trigger - Drew a card (manual)`, 'success');
+        this.logAction(`${trigger.cardName} delayed trigger - Drew a card (manually executed)`, trigger.player === 'player' ? 'You' : 'Opponent', false);
+      } else {
+        this.showToast(`${trigger.cardName} trigger - No cards in library`, 'warning');
+      }
+    }
+
+    // Remove the trigger
+    this.delayedTriggers.splice(index, 1);
+
+    // Update displays
+    this.updateHandDisplay();
+    this.updateUI();
+    this.updateDelayedTriggersDisplay();
+
+    // Close modal if no more triggers
+    if (this.delayedTriggers.length === 0) {
+      this.closeDelayedTriggersModal();
+    } else {
+      // Refresh modal
+      this.closeDelayedTriggersModal();
+      this.showDelayedTriggersModal();
+    }
+  }
+
+  closeDelayedTriggersModal() {
+    document.getElementById('delayedTriggersModal')?.remove();
+  }
+
+  // =====================================================
+  // BRAZEN BORROWER ADVENTURE MECHANIC
+  // =====================================================
+
+  isBrazenBorrower(cardName) {
+    const name = cardName.toLowerCase();
+    return name.includes('brazen borrower');
+  }
+
+  hasAdventure(cardName) {
+    const name = cardName.toLowerCase();
+    // Adventure cards database
+    return name.includes('brazen borrower') ||
+           name.includes('bonecrusher giant') ||
+           name.includes('murderous rider') ||
+           name.includes('lovestruck beast') ||
+           name.includes('foulmire knight');
+  }
+
+  showAdventureUI(cardId, cardName) {
+    // Remove any existing modal
+    document.getElementById('adventureUI')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'adventureUI';
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--bg-primary);
+      border: 2px solid #f59e0b;
+      border-radius: var(--border-radius);
+      padding: var(--space-4);
+      z-index: 3000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      min-width: 400px;
+      max-width: 600px;
+    `;
+
+    // Adventure details based on card name
+    let adventureName = '';
+    let adventureEffect = '';
+
+    if (cardName.toLowerCase().includes('brazen borrower')) {
+      adventureName = 'Petty Theft';
+      adventureEffect = 'Return target nonland permanent an opponent controls to its owner\'s hand';
+    } else if (cardName.toLowerCase().includes('bonecrusher giant')) {
+      adventureName = 'Stomp';
+      adventureEffect = 'Deal 2 damage to any target. Damage can\'t be prevented this turn';
+    } else if (cardName.toLowerCase().includes('murderous rider')) {
+      adventureName = 'Swift End';
+      adventureEffect = 'Destroy target creature or planeswalker. You lose 2 life';
+    } else {
+      adventureName = 'Adventure';
+      adventureEffect = 'Cast the adventure portion of this card';
+    }
+
+    popup.innerHTML = `
+      <div style="margin-bottom: var(--space-3);">
+        <h3 style="margin: 0 0 var(--space-2) 0; color: var(--text-primary);">
+          🗺️ ${cardName} - Adventure
+        </h3>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">
+          Adventure cards can be cast as the creature or as the adventure spell (which exiles the card, allowing you to cast the creature later).
+        </p>
+      </div>
+
+      <div style="margin-bottom: var(--space-3); padding: var(--space-3); background: rgba(245, 158, 11, 0.1); border-radius: 6px; border-left: 3px solid #f59e0b;">
+        <div style="font-weight: bold; color: #f59e0b; margin-bottom: var(--space-2);">
+          ${adventureName}
+        </div>
+        <div style="font-size: 13px; color: var(--text-secondary);">
+          ${adventureEffect}
+        </div>
+      </div>
+
+      <div style="display: flex; gap: var(--space-2); justify-content: flex-end;">
+        <button onclick="window.handSimulator.castAdventure('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}', '${this.escapeJs(adventureName)}')"
+                class="btn btn-primary"
+                style="background: #f59e0b; border-color: #f59e0b;">
+          🗺️ Cast ${adventureName}
+        </button>
+        <button onclick="window.handSimulator.castCreatureFromHand('${this.escapeJs(cardId)}', '${this.escapeJs(cardName)}')"
+                class="btn btn-secondary">
+          Cast Creature
+        </button>
+        <button onclick="window.handSimulator.closeAdventureUI()" class="btn btn-secondary">
+          Cancel
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Add escape key handler
+    const escapeHandler = (e) => {
+      if (e.key === 'Escape') {
+        this.closeAdventureUI();
+        document.removeEventListener('keydown', escapeHandler);
+      }
+    };
+    document.addEventListener('keydown', escapeHandler);
+  }
+
+  castAdventure(cardId, cardName, adventureName) {
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const cardIndex = currentHand.findIndex(c => c.id === cardId);
+
+    if (cardIndex === -1) {
+      this.showToast('Card not found', 'error');
+      return;
+    }
+
+    const card = currentHand[cardIndex];
+
+    // Remove from hand and exile
+    currentHand.splice(cardIndex, 1);
+    this.exile.push(card);
+
+    this.showToast(`Cast ${adventureName} (${cardName} exiled)`, 'success');
+    this.logAction(`Cast ${adventureName} (${cardName} exiled as adventure)`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+
+    this.updateHandDisplay();
+    this.updateExileDisplay();
+    this.updateUI();
+    this.closeAdventureUI();
+  }
+
+  castCreatureFromHand(cardId, cardName) {
+    const currentHand = this.activePlayer === 'player' ? this.hand : this.opponent.hand;
+    const cardIndex = currentHand.findIndex(c => c.id === cardId);
+
+    if (cardIndex !== -1) {
+      const card = currentHand[cardIndex];
+      this.playCard(card);
+      currentHand.splice(cardIndex, 1);
+
+      this.showToast(`Cast ${cardName} as creature`, 'success');
+      this.logAction(`Cast ${cardName} as creature`, this.activePlayer === 'player' ? 'You' : 'Opponent', false);
+    }
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateUI();
+    this.closeAdventureUI();
+  }
+
+  closeAdventureUI() {
+    document.getElementById('adventureUI')?.remove();
   }
 
   // =====================================================
@@ -7097,52 +8913,11 @@ class ModernHandSimulator {
   }
 
   updateGameLogDisplay() {
-    let gameLogPanel = document.getElementById('gameLogPanel');
+    const gameLogPanel = document.getElementById('gameLogPanel');
 
     if (!gameLogPanel) {
-      gameLogPanel = document.createElement('div');
-      gameLogPanel.id = 'gameLogPanel';
-      gameLogPanel.className = 'game-log-panel';
-      gameLogPanel.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: 280px;
-        max-height: 200px;
-        background: var(--bg-primary);
-        border: 1px solid var(--border-color);
-        border-radius: var(--border-radius);
-        padding: var(--space-3);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        z-index: 999;
-        overflow-y: auto;
-        font-size: 12px;
-      `;
-
-      // Add toggle button
-      const toggleButton = document.createElement('button');
-      toggleButton.textContent = '📜 Log';
-      toggleButton.style.cssText = `
-        position: fixed;
-        bottom: 230px;
-        left: 20px;
-        background: var(--accent-color);
-        color: white;
-        border: none;
-        border-radius: var(--border-radius);
-        padding: 8px 12px;
-        cursor: pointer;
-        z-index: 1000;
-        font-size: 12px;
-      `;
-      toggleButton.onclick = () => {
-        const isVisible = gameLogPanel.style.display !== 'none';
-        gameLogPanel.style.display = isVisible ? 'none' : 'block';
-        toggleButton.textContent = isVisible ? '📜 Log' : '📜 Hide';
-      };
-
-      document.body.appendChild(toggleButton);
-      document.body.appendChild(gameLogPanel);
+      console.warn('Game log panel not found in sidebar');
+      return;
     }
 
     // Update log content
@@ -7392,17 +9167,24 @@ class ModernHandSimulator {
 
     event.preventDefault();
 
-    // Determine which hand to search based on active player
-    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
-
-    // Find the card
-    const cardIndex = currentHand.findIndex((card, idx) => {
+    // Search both hands to find the card (enables viewing cards even when it's not your turn)
+    let currentHand = this.hand;
+    let cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
 
+    // If not found in player hand, try opponent hand
     if (cardIndex === -1) {
-      console.log('Card not found in hand');
+      currentHand = this.opponent.hand;
+      cardIndex = currentHand.findIndex((card, idx) => {
+        const actualCardId = card.id || `${card.name}_${idx}`;
+        return actualCardId === cardId;
+      });
+    }
+
+    if (cardIndex === -1) {
+      console.log('Card not found in either hand');
       return;
     }
 
@@ -7431,11 +9213,64 @@ class ModernHandSimulator {
     const scryAmount = hasScryAbility ? this.getScryAmount(card.name) : 0;
     const hasDelveAbility = !isLand && this.hasDelve(card.name);
     const hasDaze = this.isDaze(card.name);
+    const hasForceOfWill = this.isForceOfWill(card.name);
+    const hasForceOfNegation = this.isForceOfNegation(card.name);
+    const hasAdventureAbility = this.hasAdventure(card.name);
+    const hasBrainstorm = this.isBrainstorm(card.name);
 
     let menuItems = `
       <div class="menu-item" onclick="window.handSimulator.playCardDirectly('${this.escapeJs(cardId)}', event)">
         ⚔️ ${isLand ? 'Play Land' : 'Cast Spell'}
       </div>`;
+
+    // Add Brainstorm option
+    if (hasBrainstorm) {
+      const currentLibrary = this.activePlayer === 'player' ? this.library : this.opponent.library;
+      if (currentLibrary.length >= 3) {
+        menuItems += `
+        <div class="menu-item" onclick="window.handSimulator.showBrainstormUI('${this.escapeJs(cardId)}', '${this.escapeJs(card.name)}')">
+          🌊 Cast Brainstorm (Draw 3, Put 2 Back)
+        </div>`;
+      }
+    }
+
+    // Add Adventure option for adventure cards
+    if (hasAdventureAbility) {
+      menuItems += `
+      <div class="menu-item" onclick="window.handSimulator.showAdventureUI('${this.escapeJs(cardId)}', '${this.escapeJs(card.name)}')">
+        🗺️ Cast Adventure
+      </div>`;
+    }
+
+    // Add Force of Negation alternative cost option (only on opponent's turn)
+    if (hasForceOfNegation && this.activePlayer === 'opponent') {
+      const blueCards = this.hand.filter(c => {
+        const cost = (c.cost || '').toUpperCase();
+        const type = (c.type || '').toLowerCase();
+        return c.id !== cardId && cost.includes('U') && !type.includes('land');
+      });
+      if (blueCards.length > 0) {
+        menuItems += `
+        <div class="menu-item" onclick="window.handSimulator.showForceOfNegationUI('${this.escapeJs(cardId)}', '${this.escapeJs(card.name)}')">
+          💜 Cast Force of Negation (Exile Blue Card)
+        </div>`;
+      }
+    }
+
+    // Add Force of Will alternative cost option
+    if (hasForceOfWill) {
+      const blueCards = this.hand.filter(c => {
+        const cost = (c.cost || '').toUpperCase();
+        const type = (c.type || '').toLowerCase();
+        return c.id !== cardId && cost.includes('U') && !type.includes('land');
+      });
+      if (blueCards.length > 0) {
+        menuItems += `
+        <div class="menu-item" onclick="window.handSimulator.showForceOfWillUI('${this.escapeJs(cardId)}', '${this.escapeJs(card.name)}')">
+          💙 Cast Force of Will (Exile Blue Card)
+        </div>`;
+      }
+    }
 
     // Add Daze alternative cost option
     if (hasDaze) {
@@ -7510,13 +9345,16 @@ class ModernHandSimulator {
 
     event.preventDefault();
 
-    // Find the card
-    const card = this.findBattlefieldCard(cardId);
-    console.log('Found card:', card);
-    if (!card) {
-      console.error('Card not found in battlefield');
+    // Find the card in ANY player's battlefield
+    const result = this.findBattlefieldCardAnyPlayer(cardId);
+    console.log('Found card result:', result);
+    if (!result) {
+      console.error('Card not found in any battlefield');
       return;
     }
+
+    const { card, owner } = result;
+    console.log('Card:', card, 'Owner:', owner);
 
     // Create context menu
     const menu = document.createElement('div');
@@ -7535,10 +9373,78 @@ class ModernHandSimulator {
 
     // Use the new smart context menu system instead of the old menu
     this.removeExistingMenus();
-    this.createSmartContextMenu(event, card, cardId, 'battlefield');
+    this.createSmartContextMenuWithOwner(event, card, cardId, owner, 'battlefield');
   }
 
   // New Smart Context Menu System
+  createSmartContextMenuWithOwner(event, card, cardId, owner, zone) {
+    const menu = document.createElement('div');
+    menu.className = 'smart-context-menu';
+    menu.style.cssText = `
+      position: fixed;
+      top: ${event.clientY}px;
+      left: ${event.clientX}px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000000;
+      min-width: 180px;
+      overflow: hidden;
+    `;
+
+    const cardType = this.getCardMainType(card.type || '').toLowerCase();
+    const isTapped = card.tapped;
+    const currentCounters = card.counters || {};
+
+    // Get context-sensitive primary actions with owner context
+    const primaryActions = this.getPrimaryActionsWithOwner(cardType, isTapped, cardId, zone, card, owner);
+
+    // Create menu structure
+    let menuHTML = '<div class="menu-section primary-actions">';
+
+    // Add owner indicator
+    const ownerLabel = owner === 'opponent' ? '👤 Opponent' : '🎮 You';
+    menuHTML += `<div class="menu-header" style="padding: 6px 12px; background: var(--bg-secondary); font-size: 11px; font-weight: bold; color: var(--text-secondary); border-bottom: 1px solid var(--border-color);">${ownerLabel}'s ${card.name}</div>`;
+
+    // Primary actions (always visible)
+    primaryActions.forEach(action => {
+      menuHTML += `<div class="menu-item primary" onclick="${action.onclick}">
+        <span class="action-icon">${action.icon}</span>
+        <span class="action-text">${action.text}</span>
+        ${action.badge ? `<span class="action-badge">${action.badge}</span>` : ''}
+      </div>`;
+    });
+
+    // +1/+1 Counter section (special treatment)
+    if (zone === 'battlefield' && (cardType === 'creature' || cardType === 'planeswalker')) {
+      const current = currentCounters['+1/+1'] || 0;
+      menuHTML += `<div class="menu-item counter-quick" onclick="window.handSimulator.addCounterByOwner('${this.escapeJs(cardId)}', '+1/+1', '${owner}')">
+        <span class="action-icon">➕</span>
+        <span class="action-text">+1/+1 Counter</span>
+        ${current > 0 ? `<span class="counter-count">${current}</span>` : ''}
+      </div>`;
+
+      if (current > 0) {
+        menuHTML += `<div class="menu-item counter-quick remove" onclick="window.handSimulator.removeCounterByOwner('${this.escapeJs(cardId)}', '+1/+1', '${owner}')">
+          <span class="action-icon">➖</span>
+          <span class="action-text">Remove +1/+1</span>
+        </div>`;
+      }
+    }
+
+    menuHTML += '</div>';
+
+    menu.innerHTML = menuHTML;
+    document.body.appendChild(menu);
+
+    // Position adjustment if menu goes off screen
+    this.adjustMenuPosition(menu, event);
+
+    // Add click outside listener
+    this.addMenuClickOutsideListener(menu);
+  }
+
   createSmartContextMenu(event, card, cardId, zone) {
     const menu = document.createElement('div');
     menu.className = 'smart-context-menu';
@@ -7612,6 +9518,97 @@ class ModernHandSimulator {
     this.addMenuClickOutsideListener(menu);
   }
 
+  getPrimaryActionsWithOwner(cardType, isTapped, cardId, zone, card, owner) {
+    const actions = [];
+
+    // Context-sensitive primary actions based on realistic game flow
+    switch (cardType) {
+      case 'creature':
+        // Check if this is a DFC and add transform option first
+        if (card && this.isDFC(card.name)) {
+          const dfcData = this.getDFCData(card.name);
+          const currentFace = card.currentFace || card.name;
+          const isOnFront = currentFace === dfcData.frontFace;
+
+          actions.push({
+            icon: '🔄',
+            text: isOnFront ? `Transform → ${dfcData.backFace.split(' ')[0]}` : `Transform → ${dfcData.frontFace.split(' ')[0]}`,
+            onclick: `window.handSimulator.transformCardByOwner('${this.escapeJs(cardId)}', '${owner}')`,
+            badge: 'DFC'
+          });
+        }
+
+        // Creatures: Tap -> Die/Graveyard -> Counters
+        actions.push({
+          icon: isTapped ? '↺' : '⤵️',
+          text: isTapped ? 'Untap' : 'Tap',
+          onclick: `window.handSimulator.toggleTapByOwner('${this.escapeJs(cardId)}', '${owner}')`
+        });
+        if (zone === 'battlefield') {
+          // Damage options for creatures
+          actions.push({
+            icon: '💔',
+            text: '1 Damage',
+            onclick: `window.handSimulator.dealDamageByOwner('${this.escapeJs(cardId)}', 1, '${owner}')`
+          });
+          actions.push({
+            icon: '⚡',
+            text: '3 Damage (Bolt)',
+            onclick: `window.handSimulator.dealDamageByOwner('${this.escapeJs(cardId)}', 3, '${owner}')`
+          });
+          actions.push({
+            icon: '⚰️',
+            text: 'Dies → Graveyard',
+            onclick: `window.handSimulator.moveToGraveyardByOwner('${this.escapeJs(cardId)}', '${owner}')`
+          });
+          actions.push({
+            icon: '🚫',
+            text: 'Exile',
+            onclick: `window.handSimulator.moveToExileByOwner('${this.escapeJs(cardId)}', '${owner}')`
+          });
+        }
+        break;
+
+      case 'land':
+        actions.push({
+          icon: isTapped ? '↺' : '⤵️',
+          text: isTapped ? 'Untap' : 'Tap',
+          onclick: `window.handSimulator.toggleTapByOwner('${this.escapeJs(cardId)}', '${owner}')`
+        });
+        if (zone === 'battlefield') {
+          actions.push({
+            icon: '💀',
+            text: 'Destroy → Graveyard',
+            onclick: `window.handSimulator.moveToGraveyardByOwner('${this.escapeJs(cardId)}', '${owner}')`
+          });
+        }
+        break;
+
+      default:
+        // Other permanents (artifacts, enchantments, planeswalkers)
+        actions.push({
+          icon: isTapped ? '↺' : '⤵️',
+          text: isTapped ? 'Untap' : 'Tap',
+          onclick: `window.handSimulator.toggleTapByOwner('${this.escapeJs(cardId)}', '${owner}')`
+        });
+        if (zone === 'battlefield') {
+          actions.push({
+            icon: '💀',
+            text: 'Destroy → Graveyard',
+            onclick: `window.handSimulator.moveToGraveyardByOwner('${this.escapeJs(cardId)}', '${owner}')`
+          });
+          actions.push({
+            icon: '🚫',
+            text: 'Exile',
+            onclick: `window.handSimulator.moveToExileByOwner('${this.escapeJs(cardId)}', '${owner}')`
+          });
+        }
+        break;
+    }
+
+    return actions;
+  }
+
   getPrimaryActions(cardType, isTapped, cardId, zone, card = null) {
     const actions = [];
 
@@ -7673,7 +9670,7 @@ class ModernHandSimulator {
           // Fetchland-specific actions
           actions.push({
             icon: '🏞️',
-            text: 'Fetch Land',
+            text: 'Choose Land to Fetch',
             onclick: `window.handSimulator.showFetchlandQuickSelectById('${this.escapeJs(cardId)}', true)`
           });
           actions.push({
@@ -7756,6 +9753,15 @@ class ModernHandSimulator {
 
       case 'artifact':
       case 'enchantment':
+        // Check for Mishra's Bauble special activation
+        if (zone === 'battlefield' && card && this.isMishrasBauble(card.name)) {
+          actions.push({
+            icon: '🔮',
+            text: 'Activate Bauble (Draw next upkeep)',
+            onclick: `window.handSimulator.activateMishrasBauble('${this.escapeJs(cardId)}', '${this.escapeJs(card.name)}')`
+          });
+        }
+
         // Artifacts/Enchantments: Tap (if applicable) -> Destroy
         actions.push({
           icon: isTapped ? '↺' : '⤵️',
@@ -8810,6 +10816,121 @@ class ModernHandSimulator {
     }
   }
 
+  // Pre-defined token image URLs for common tokens (curated for consistency)
+  // These are actual Scryfall image URLs for the most commonly used token versions
+  getStaticTokenImage(tokenName) {
+    const staticTokens = {
+      // Artifact Tokens
+      'Blood': 'https://cards.scryfall.io/normal/front/f/9/f9ed3uter-crimson-vow.jpg',
+      'Clue': 'https://cards.scryfall.io/normal/front/3/9/39da4c95-167d-4536-bb16-70f8d2dabc80.jpg',
+      'Treasure': 'https://cards.scryfall.io/normal/front/5/f/5f95c6e6-c6ac-4d85-aa4c-d4d60cdcc797.jpg',
+      'Food': 'https://cards.scryfall.io/normal/front/b/0/b0a9b01f-21e8-4f89-a24b-ca5b6a85d87d.jpg',
+      'Map': 'https://cards.scryfall.io/normal/front/f/4/f484e3f7-3846-4f96-8bdb-47c6c8b75e5d.jpg',
+      'Powerstone': 'https://cards.scryfall.io/normal/front/0/4/04c8f2a9-0986-4e8a-9a57-c9548fefbf58.jpg',
+
+      // Common Creature Tokens - using most iconic/clean art versions
+      '1/1 Soldier': null, // Will fetch dynamically
+      '2/2 Zombie': null,
+      '1/1 Goblin': null,
+      '1/1 Elf': null,
+      '3/3 Beast': null,
+      '4/4 Angel': null,
+      '5/5 Dragon': null,
+      '1/1 Spirit': null,
+      '2/2 Knight': null,
+      '1/1 Insect': null
+    };
+
+    return staticTokens[tokenName] || null;
+  }
+
+  async fetchTokenImage(tokenName) {
+    // Cache for token images to avoid repeated API calls
+    if (!this.tokenImageCache) {
+      this.tokenImageCache = new Map();
+    }
+
+    // Check cache first
+    if (this.tokenImageCache.has(tokenName)) {
+      return this.tokenImageCache.get(tokenName);
+    }
+
+    // Check static token library first (for common tokens with curated images)
+    const staticImage = this.getStaticTokenImage(tokenName);
+    if (staticImage) {
+      this.tokenImageCache.set(tokenName, staticImage);
+      return staticImage;
+    }
+
+    try {
+      // Extract creature type from token name (e.g., "1/1 Soldier" -> "Soldier")
+      // Also handle names like "Blood", "Clue", etc.
+      let searchTerm = tokenName;
+      let colors = '';
+      const creatureMatch = tokenName.match(/\d+\/\d+\s+(.+)/);
+      if (creatureMatch) {
+        searchTerm = creatureMatch[1]; // Just the creature type
+
+        // Add color context for better matching
+        if (searchTerm.toLowerCase().includes('soldier') || searchTerm.toLowerCase().includes('angel')) {
+          colors = 'white';
+        } else if (searchTerm.toLowerCase().includes('zombie') || searchTerm.toLowerCase().includes('demon')) {
+          colors = 'black';
+        } else if (searchTerm.toLowerCase().includes('goblin') || searchTerm.toLowerCase().includes('dragon')) {
+          colors = 'red';
+        } else if (searchTerm.toLowerCase().includes('elf') || searchTerm.toLowerCase().includes('beast')) {
+          colors = 'green';
+        } else if (searchTerm.toLowerCase().includes('spirit')) {
+          colors = 'blue OR white'; // Spirits can be blue or white
+        }
+      }
+
+      // Query Scryfall for token images with color context
+      const colorQuery = colors ? `c:${colors}` : '';
+      const searchQuery = encodeURIComponent(`${searchTerm} is:token ${colorQuery}`.trim());
+      const response = await fetch(`https://api.scryfall.com/cards/search?q=${searchQuery}&order=released&dir=desc`);
+
+      if (!response.ok) {
+        throw new Error(`Scryfall token search failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.data && data.data.length > 0) {
+        // Try to find a token that matches the power/toughness if specified
+        let bestMatch = null;
+
+        if (creatureMatch) {
+          const [fullMatch] = tokenName.match(/(\d+)\/(\d+)/);
+          bestMatch = data.data.find(card => {
+            // Check if power/toughness matches
+            const ptMatch = card.power && card.toughness &&
+                           `${card.power}/${card.toughness}` === fullMatch;
+            return ptMatch;
+          });
+        }
+
+        // If no P/T match found, use the most recent result (better art quality usually)
+        const tokenCard = bestMatch || data.data[0];
+        const imageUrl = tokenCard.image_uris?.normal || tokenCard.image_uris?.small || tokenCard.image_uris?.large;
+
+        if (imageUrl) {
+          // Cache the result
+          this.tokenImageCache.set(tokenName, imageUrl);
+          console.log(`Fetched token image for ${tokenName}: ${tokenCard.name} (${tokenCard.set_name})`);
+          return imageUrl;
+        }
+      }
+
+      // If no token found, return null
+      console.warn(`No token image found for ${tokenName}`);
+      return null;
+    } catch (error) {
+      console.warn(`Failed to fetch token image for ${tokenName}:`, error);
+      return null;
+    }
+  }
+
   async loadZoneImages(cards) {
     // Create a map of card names to their original/front face for DFC support
     const cardNameMap = new Map();
@@ -9057,9 +11178,9 @@ class ModernHandSimulator {
       battlefield.lands.push(card);
       gameStats.landsPlayed++;
 
-      // Check if this is a fetchland and show quick-select popup
+      // Check if this is a fetchland and auto-fetch dual land if available
       if (this.isFetchland(card.name)) {
-        setTimeout(() => this.showFetchlandQuickSelect(card, { fromPlay: true }), 100);
+        setTimeout(() => this.autoFetchDualOrPrompt(card), 100);
       }
     } else if (cardType === 'Instant' || cardType === 'Sorcery') {
       // Instants and sorceries go directly to graveyard after being cast
@@ -9073,6 +11194,20 @@ class ModernHandSimulator {
       this.updateUI();
       const playerName = isOpponentCard ? 'Opponent' : 'Player';
       this.showToast(`${playerName}'s ${card.name} resolves and goes to graveyard`, 'info');
+
+      // Execute library manipulation effects
+      if (!isOpponentCard) {
+        const cardName = card.name.toLowerCase();
+        setTimeout(() => {
+          if (cardName.includes('ponder')) {
+            this.ponder();
+          } else if (cardName.includes('brainstorm')) {
+            this.brainstorm();
+          } else if (cardName.includes('preordain')) {
+            this.preordain();
+          }
+        }, 500);
+      }
     } else if (cardType === 'Creature') {
       battlefield.creatures.push(card);
       gameStats.spellsCast++;
@@ -9129,24 +11264,8 @@ class ModernHandSimulator {
   }
 
   updateOpponentHandDisplay() {
-    // Check if we're actively controlling the opponent
-    if (this.activePlayer === 'opponent') {
-      // When controlling opponent, show detailed cards
-      this.updateOpponentHandDisplayDetailed();
-    } else {
-      // When not controlling opponent, show card backs or count
-      const container2 = document.getElementById('opponentHandContainer2');
-
-      const cardBacks = this.opponent.hand.map((_, index) =>
-        `<div class="card-back">Card ${index + 1}</div>`
-      ).join('');
-
-      if (container2) {
-        container2.innerHTML = cardBacks;
-      } else {
-        console.warn('opponentHandContainer2 not found');
-      }
-    }
+    // Always show detailed cards for playtesting (no hidden information)
+    this.updateOpponentHandDisplayDetailed();
   }
 
   updateHandDisplay() {
@@ -9224,10 +11343,14 @@ class ModernHandSimulator {
           <div class="card-hand ${cardType} ${isSelected ? 'selected' : ''} card-dealt"
                data-card-id="${cardId}"
                data-card-name="${this.escapeHtml(card.name)}"
-               style="animation-delay: ${index * 0.1}s; position: relative;"
+               data-card-type="${cardType}"
+               draggable="true"
+               style="animation-delay: ${index * 0.1}s; position: relative; cursor: grab;"
                onclick="window.handSimulator.playCardDirectly('${this.escapeJs(cardId)}', event)"
                oncontextmenu="window.handSimulator.showHandCardMenu(event, '${this.escapeJs(cardId)}'); return false;"
-               title="${this.escapeHtml(card.name)} - ${this.escapeHtml(card.cost || '0')} (Press ${index + 1} or Left-click to play, Right-click for options)">
+               ondragstart="window.handSimulator.handleDragStart(event, '${this.escapeJs(cardId)}')"
+               ondragend="window.handSimulator.handleDragEnd(event)"
+               title="${this.escapeHtml(card.name)} - ${this.escapeHtml(card.cost || '0')} (Drag to target, Left-click to play, Right-click for options)">
             ${index < 9 ? `<div class="card-number" style="position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.8); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; z-index: 10;">${index + 1}</div>` : ''}
             <div class="card-content">
               <div class="card-image-container">
@@ -9338,6 +11461,12 @@ class ModernHandSimulator {
         murktideHTML = `<div class='murktide-pt' style='position: absolute; bottom: 2px; left: 2px; background: rgba(139, 69, 19, 0.95); border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: bold; color: white; z-index: 100; pointer-events: none;' title='Flying. Power/toughness based on instants/sorceries in exile'>${power}/${toughness}</div>`;
       }
 
+      // Add token indicator
+      let tokenHTML = '';
+      if (card.isToken) {
+        tokenHTML = '<div class=\'token-indicator\' style=\'position: absolute; top: 2px; left: 24px; background: rgba(255, 193, 7, 0.95); border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: bold; color: black; z-index: 100; pointer-events: none;\' title=\'Token\'>🪙</div>';
+      }
+
       return `
         <div class="zone-card card-played ${isTapped ? 'tapped' : ''} ${isTransformed ? 'transformed' : ''}"
              style="animation-delay: ${index * 0.05}s; cursor: pointer;"
@@ -9345,12 +11474,18 @@ class ModernHandSimulator {
              data-card-name="${this.escapeHtml(displayName)}"
              onclick="window.handSimulator.handleBattlefieldCardClick(event, '${this.escapeJs(card.id)}', '${this.escapeJs(displayName)}')"
              oncontextmenu="window.handSimulator.${menuFunction}(event, '${this.escapeJs(card.id)}'); return false;"
-             title="Left-click to view card, Right-click for options">
+             ondragover="window.handSimulator.handleDragOver(event)"
+             ondrop="window.handSimulator.handleDrop(event, '${this.escapeJs(card.id)}')"
+             title="Left-click to view card, Right-click for options, Drop spell to target">
           <div class="card-content">
             <div class="card-image-container" style="position: relative;">
-              <div class="loading-placeholder">🎴</div>
+              ${card.isToken && card.imageUrl ?
+                `<img src="${card.imageUrl}" alt="${this.escapeHtml(displayName)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                 <div class="loading-placeholder" style="display: none;">🎴</div>` :
+                `<div class="loading-placeholder">🎴</div>`}
               ${transformHTML}
               ${deliriumHTML}
+              ${tokenHTML}
               ${tapHTML}
               ${murktideHTML}
               ${damageHTML}
@@ -9377,22 +11512,29 @@ class ModernHandSimulator {
     this.loadZoneImages(cards);
   }
 
-  showLibraryModal() {
-    console.log('showLibraryModal called');
-    console.log('Library size:', this.library.length);
-    console.log('Library contents:', this.library);
+  showLibraryModal(player = 'player') {
+    console.log('showLibraryModal called for:', player);
+
+    // Determine which library to show
+    const library = player === 'opponent' ? this.opponent.library : this.library;
+    console.log('Library size:', library.length);
+    console.log('Library contents:', library);
+
     const modal = document.getElementById('libraryModal');
     console.log('Modal element:', modal);
     if (modal) {
       modal.style.display = 'flex';
 
+      // Store which player's library we're viewing
+      modal.dataset.viewingPlayer = player;
+
       // Update library count
       const countDisplay = document.getElementById('libraryCountDisplay');
       if (countDisplay) {
-        countDisplay.textContent = this.library.length;
+        countDisplay.textContent = library.length;
       }
 
-      this.updateLibraryDisplay();
+      this.updateLibraryDisplay(player);
 
       // Add show class for animation
       const modalContent = modal.querySelector('.modal-content');
@@ -9417,8 +11559,8 @@ class ModernHandSimulator {
     }
   }
 
-  updateLibraryDisplay() {
-    console.log('updateLibraryDisplay called');
+  updateLibraryDisplay(player = 'player') {
+    console.log('updateLibraryDisplay called for:', player);
     const container = document.getElementById('libraryContents');
     console.log('Container element:', container);
     if (!container) {
@@ -9426,18 +11568,20 @@ class ModernHandSimulator {
       return;
     }
 
-    console.log('Library array:', this.library);
-    console.log('Library length:', this.library.length);
+    // Get the correct library based on player
+    const library = player === 'opponent' ? this.opponent.library : this.library;
+    console.log('Library array:', library);
+    console.log('Library length:', library.length);
 
-    if (this.library.length === 0) {
+    if (library.length === 0) {
       console.log('Library is empty, showing message');
       container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary);">Library is empty</div>';
       return;
     }
 
     // Use card grid display similar to hand display
-    const html = this.library.map((card, index) => {
-      const cardId = card.id || `library-${index}`;
+    const html = library.map((card, index) => {
+      const cardId = card.id || `library-${player}-${index}`;
       return `
         <div class="zone-card"
              data-card-id="${cardId}"
@@ -9461,7 +11605,7 @@ class ModernHandSimulator {
     console.log('Container innerHTML set');
 
     // Load card images
-    this.loadZoneImages(this.library);
+    this.loadZoneImages(library);
   }
 
 
@@ -9503,8 +11647,18 @@ class ModernHandSimulator {
     if (handCount2El) handCount2El.textContent = `${this.hand.length} cards`;
     if (mulliganCount2El) mulliganCount2El.textContent = `${this.gameStats.mulligans} mulligans`;
     if (lifeTotal2El) lifeTotal2El.textContent = this.gameStats.life;
+
+    // Update player deck name
+    const playerDeckName2El = document.getElementById('playerDeckName2');
+    if (playerDeckName2El && this.currentDeck) {
+      playerDeckName2El.textContent = this.currentDeck.name || 'No Deck';
+    }
     if (graveyardCount2El) graveyardCount2El.textContent = this.graveyard.length;
     if (exileCount2El) exileCount2El.textContent = this.exile.length;
+
+    // Update library count
+    const playerLibraryCount2El = document.getElementById('playerLibraryCount2');
+    if (playerLibraryCount2El) playerLibraryCount2El.textContent = this.library.length;
 
     // Update delirium indicator (efficient - only if graveyard has cards)
     this.updateDeliriumIndicator();
@@ -9514,11 +11668,13 @@ class ModernHandSimulator {
     const opponentHandCount2El = document.getElementById('opponentHandCount2');
     const opponentGraveyardCount2El = document.getElementById('opponentGraveyardCount2');
     const opponentExileCount2El = document.getElementById('opponentExileCount2');
+    const opponentLibraryCount2El = document.getElementById('opponentLibraryCount2');
 
     if (opponentLife2El) opponentLife2El.textContent = this.opponent.gameStats.life;
     if (opponentHandCount2El) opponentHandCount2El.textContent = this.opponent.hand.length;
     if (opponentGraveyardCount2El) opponentGraveyardCount2El.textContent = this.opponent.graveyard.length;
     if (opponentExileCount2El) opponentExileCount2El.textContent = this.opponent.exile.length;
+    if (opponentLibraryCount2El) opponentLibraryCount2El.textContent = this.opponent.library.length;
 
     // Update opponent deck name
     const opponentDeckNameEl = document.getElementById('opponentDeckName');
@@ -10186,56 +12342,94 @@ class ModernHandSimulator {
 
   // Hand card movement functions
   moveHandCardToGraveyard(cardId) {
-    // Determine which player's hand and graveyard to use
-    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
-    const currentGraveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+    // Search both hands to find the card
+    let currentHand = this.hand;
+    let currentGraveyard = this.graveyard;
+    let isOpponentCard = false;
 
-    const cardIndex = currentHand.findIndex((card, idx) => {
+    let cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
+
+    // If not found in player hand, try opponent hand
+    if (cardIndex === -1) {
+      currentHand = this.opponent.hand;
+      currentGraveyard = this.opponent.graveyard;
+      isOpponentCard = true;
+      cardIndex = currentHand.findIndex((card, idx) => {
+        const actualCardId = card.id || `${card.name}_${idx}`;
+        return actualCardId === cardId;
+      });
+    }
 
     if (cardIndex !== -1) {
       const card = currentHand.splice(cardIndex, 1)[0];
       currentGraveyard.push(card);
       this.updateHandDisplay();
+      this.updateOpponentHandDisplay();
       this.updateGraveyardDisplay();
       this.updateUI();
-      const playerName = this.activePlayer === 'opponent' ? 'Opponent\'s' : '';
+      const playerName = isOpponentCard ? 'Opponent\'s' : '';
       this.showToast(`${playerName} ${card.name} moved to graveyard`, 'info');
     }
   }
 
   moveHandCardToExile(cardId) {
-    // Determine which player's hand and exile to use
-    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
-    const currentExile = this.activePlayer === 'opponent' ? this.opponent.exile : this.exile;
+    // Search both hands to find the card
+    let currentHand = this.hand;
+    let currentExile = this.exile;
+    let isOpponentCard = false;
 
-    const cardIndex = currentHand.findIndex((card, idx) => {
+    let cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
+
+    // If not found in player hand, try opponent hand
+    if (cardIndex === -1) {
+      currentHand = this.opponent.hand;
+      currentExile = this.opponent.exile;
+      isOpponentCard = true;
+      cardIndex = currentHand.findIndex((card, idx) => {
+        const actualCardId = card.id || `${card.name}_${idx}`;
+        return actualCardId === cardId;
+      });
+    }
 
     if (cardIndex !== -1) {
       const card = currentHand.splice(cardIndex, 1)[0];
       currentExile.push(card);
       this.updateHandDisplay();
+      this.updateOpponentHandDisplay();
       this.updateExileDisplay();
       this.updateUI();
-      const playerName = this.activePlayer === 'opponent' ? 'Opponent\'s' : '';
+      const playerName = isOpponentCard ? 'Opponent\'s' : '';
       this.showToast(`${playerName} ${card.name} exiled`, 'info');
     }
   }
 
   moveHandCardToLibrary(cardId) {
-    // Determine which player's hand and library to use
-    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
-    const currentLibrary = this.activePlayer === 'opponent' ? this.opponent.library : this.library;
+    // Search both hands to find the card
+    let currentHand = this.hand;
+    let currentLibrary = this.library;
+    let isOpponentCard = false;
 
-    const cardIndex = currentHand.findIndex((card, idx) => {
+    let cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
+
+    // If not found in player hand, try opponent hand
+    if (cardIndex === -1) {
+      currentHand = this.opponent.hand;
+      currentLibrary = this.opponent.library;
+      isOpponentCard = true;
+      cardIndex = currentHand.findIndex((card, idx) => {
+        const actualCardId = card.id || `${card.name}_${idx}`;
+        return actualCardId === cardId;
+      });
+    }
 
     if (cardIndex !== -1) {
       const card = currentHand.splice(cardIndex, 1)[0];
@@ -10248,7 +12442,7 @@ class ModernHandSimulator {
         return;
       }
 
-      const playerName = this.activePlayer === 'opponent' ? 'Opponent\'s ' : '';
+      const playerName = isOpponentCard ? 'Opponent\'s ' : '';
       if (position.toLowerCase() === 'b' || position.toLowerCase() === 'bottom') {
         currentLibrary.unshift(card); // Bottom of library
         this.showToast(`${playerName}${card.name} put on bottom of library`, 'info');
@@ -10258,6 +12452,7 @@ class ModernHandSimulator {
       }
 
       this.updateHandDisplay();
+      this.updateOpponentHandDisplay();
       this.updateUI();
     }
   }
@@ -10270,6 +12465,344 @@ class ModernHandSimulator {
       this.updateBattlefieldDisplay();
       this.showToast(`${card.name} ${card.tapped ? 'tapped' : 'untapped'}`, 'info');
     }
+  }
+
+  // ===== OWNER-AWARE HELPER FUNCTIONS =====
+  // These functions work with cards from either player's battlefield
+
+  toggleTapByOwner(cardId, owner) {
+    const battlefield = owner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+    const allCards = [...battlefield.lands, ...battlefield.creatures, ...battlefield.others];
+    const card = allCards.find(c => c.id === cardId);
+
+    if (card) {
+      card.tapped = !card.tapped;
+      this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
+      const ownerLabel = owner === 'opponent' ? 'Opponent' : 'Your';
+      this.showToast(`${ownerLabel} ${card.name} ${card.tapped ? 'tapped' : 'untapped'}`, 'info');
+    }
+  }
+
+  showZonePreview(zone, event) {
+    const cards = zone === 'graveyard' ? this.graveyard : this.exile;
+    const previewId = zone === 'graveyard' ? 'graveyardPreview' : 'exilePreview';
+    const preview = document.getElementById(previewId);
+
+    if (!preview || cards.length === 0 || cards.length > 2) {
+      return;
+    }
+
+    preview.innerHTML = cards.map(card => `
+      <div class="zone-preview-card" onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')">
+        <strong>${this.escapeHtml(card.name)}</strong><br>
+        <small>${this.escapeHtml(card.cost || '0')}</small>
+      </div>
+    `).join('');
+
+    preview.style.display = 'flex';
+  }
+
+  hideZonePreview() {
+    const graveyardPreview = document.getElementById('graveyardPreview');
+    const exilePreview = document.getElementById('exilePreview');
+
+    if (graveyardPreview) graveyardPreview.style.display = 'none';
+    if (exilePreview) exilePreview.style.display = 'none';
+  }
+
+  dealDamageByOwner(cardId, damage, owner) {
+    const battlefield = owner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+    const creature = battlefield.creatures.find(c => c.id === cardId);
+
+    if (creature) {
+      if (!creature.damage) creature.damage = 0;
+      creature.damage += damage;
+
+      const toughness = this.getCreatureToughness(creature);
+      const ownerLabel = owner === 'opponent' ? 'Opponent\'s' : 'Your';
+
+      if (creature.damage >= toughness) {
+        // Creature dies
+        const graveyard = owner === 'opponent' ? this.opponent.graveyard : this.graveyard;
+        const index = battlefield.creatures.findIndex(c => c.id === cardId);
+        if (index !== -1) {
+          battlefield.creatures.splice(index, 1);
+          graveyard.push(creature);
+          this.showToast(`${ownerLabel} ${creature.name} destroyed (${creature.damage}/${toughness})`, 'warning');
+        }
+      } else {
+        this.showToast(`${ownerLabel} ${creature.name} takes ${damage} damage (${creature.damage}/${toughness})`, 'info');
+      }
+
+      this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
+      this.updateGraveyardDisplay();
+      this.updateUI();
+    }
+  }
+
+  moveToGraveyardByOwner(cardId, owner) {
+    const battlefield = owner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+    const graveyard = owner === 'opponent' ? this.opponent.graveyard : this.graveyard;
+
+    const zones = [battlefield.lands, battlefield.creatures, battlefield.others];
+    let cardFound = false;
+
+    for (const zone of zones) {
+      const index = zone.findIndex(c => c.id === cardId);
+      if (index !== -1) {
+        const card = zone.splice(index, 1)[0];
+        graveyard.push(card);
+        cardFound = true;
+        const ownerLabel = owner === 'opponent' ? 'Opponent\'s' : 'Your';
+        this.showToast(`${ownerLabel} ${card.name} moved to graveyard`, 'info');
+        break;
+      }
+    }
+
+    if (cardFound) {
+      this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
+      this.updateGraveyardDisplay();
+      this.updateUI();
+    }
+  }
+
+  moveToExileByOwner(cardId, owner) {
+    const battlefield = owner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+    const exile = owner === 'opponent' ? this.opponent.exile : this.exile;
+
+    const zones = [battlefield.lands, battlefield.creatures, battlefield.others];
+    let cardFound = false;
+
+    for (const zone of zones) {
+      const index = zone.findIndex(c => c.id === cardId);
+      if (index !== -1) {
+        const card = zone.splice(index, 1)[0];
+        exile.push(card);
+        cardFound = true;
+        const ownerLabel = owner === 'opponent' ? 'Opponent\'s' : 'Your';
+        this.showToast(`${ownerLabel} ${card.name} exiled`, 'info');
+        break;
+      }
+    }
+
+    if (cardFound) {
+      this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
+      this.updateExileDisplay();
+      this.updateUI();
+    }
+  }
+
+  addCounterByOwner(cardId, counterType, owner) {
+    const battlefield = owner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+    const allCards = [...battlefield.lands, ...battlefield.creatures, ...battlefield.others];
+    const card = allCards.find(c => c.id === cardId);
+
+    if (card) {
+      if (!card.counters) card.counters = {};
+      if (!card.counters[counterType]) card.counters[counterType] = 0;
+      card.counters[counterType]++;
+
+      this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
+      const ownerLabel = owner === 'opponent' ? 'Opponent\'s' : 'Your';
+      this.showToast(`Added ${counterType} counter to ${ownerLabel} ${card.name}`, 'success');
+    }
+  }
+
+  removeCounterByOwner(cardId, counterType, owner) {
+    const battlefield = owner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+    const allCards = [...battlefield.lands, ...battlefield.creatures, ...battlefield.others];
+    const card = allCards.find(c => c.id === cardId);
+
+    if (card && card.counters && card.counters[counterType] > 0) {
+      card.counters[counterType]--;
+
+      this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
+      const ownerLabel = owner === 'opponent' ? 'Opponent\'s' : 'Your';
+      this.showToast(`Removed ${counterType} counter from ${ownerLabel} ${card.name}`, 'info');
+    }
+  }
+
+  transformCardByOwner(cardId, owner) {
+    const battlefield = owner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+    const allCards = [...battlefield.lands, ...battlefield.creatures, ...battlefield.others];
+    const card = allCards.find(c => c.id === cardId);
+
+    if (card && this.isDFC(card.name)) {
+      const dfcData = this.getDFCData(card.name);
+      const currentFace = card.currentFace || card.name;
+      const isOnFront = currentFace === dfcData.frontFace;
+
+      card.currentFace = isOnFront ? dfcData.backFace : dfcData.frontFace;
+      card.transformed = !isOnFront;
+
+      this.updateBattlefieldDisplay();
+      this.updateOpponentBattlefieldDisplay();
+      const ownerLabel = owner === 'opponent' ? 'Opponent\'s' : 'Your';
+      this.showToast(`${ownerLabel} ${card.name} transformed to ${card.currentFace}`, 'success');
+    }
+  }
+
+  // ===== DRAG AND DROP TARGETING =====
+
+  handleDragStart(event, cardId) {
+    // Store the card being dragged
+    this.draggedCard = {
+      cardId: cardId,
+      element: event.target
+    };
+
+    // Get the card from hand
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    const card = currentHand.find(c => c.id === cardId);
+
+    if (card) {
+      this.draggedCard.card = card;
+      this.draggedCard.cardType = this.getCardMainType(card.type).toLowerCase();
+    }
+
+    // Add visual feedback
+    event.target.style.opacity = '0.5';
+    event.dataTransfer.effectAllowed = 'move';
+
+    // Show valid drop targets
+    this.highlightValidTargets(card);
+  }
+
+  handleDragEnd(event) {
+    // Clean up visual feedback
+    event.target.style.opacity = '1';
+    this.removeTargetHighlights();
+    this.draggedCard = null;
+  }
+
+  handleDragOver(event) {
+    // Prevent default to allow drop
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+
+    // Visual feedback on hover
+    event.currentTarget.style.outline = '2px solid #007bff';
+  }
+
+  handleDrop(event, targetCardId) {
+    event.preventDefault();
+    event.currentTarget.style.outline = '';
+
+    if (!this.draggedCard) return;
+
+    const sourceCard = this.draggedCard.card;
+    const sourceCardId = this.draggedCard.cardId;
+    const cardType = this.draggedCard.cardType;
+
+    // Find the target card
+    const targetResult = this.findBattlefieldCardAnyPlayer(targetCardId);
+    if (!targetResult) return;
+
+    const { card: targetCard, owner: targetOwner } = targetResult;
+
+    // Determine the appropriate action based on card type
+    if (cardType === 'instant' || cardType === 'sorcery') {
+      // Spell targeting
+      this.handleSpellDropOnTarget(sourceCard, sourceCardId, targetCard, targetCardId, targetOwner);
+    } else {
+      // For other cards, just play them normally
+      this.playCardDirectly(sourceCardId);
+    }
+
+    this.draggedCard = null;
+    this.removeTargetHighlights();
+  }
+
+  handleSpellDropOnTarget(sourceCard, sourceCardId, targetCard, targetCardId, targetOwner) {
+    const spellName = sourceCard.name.toLowerCase();
+
+    // Remove the spell from hand
+    const currentHand = this.activePlayer === 'opponent' ? this.opponent.hand : this.hand;
+    const cardIndex = currentHand.findIndex(c => c.id === sourceCardId);
+    if (cardIndex === -1) return;
+
+    currentHand.splice(cardIndex, 1);
+
+    // Determine the spell effect and apply it
+    if (spellName.includes('bolt') || spellName.includes('shock') || spellName.includes('burst')) {
+      // Damage spell
+      const damage = spellName.includes('bolt') ? 3 : spellName.includes('shock') ? 2 : 1;
+      this.dealDamageByOwner(targetCardId, damage, targetOwner);
+      this.showToast(`${sourceCard.name} deals ${damage} damage to ${targetCard.name}`, 'success');
+    } else if (spellName.includes('murder') || spellName.includes('terror') || spellName.includes('doom blade')) {
+      // Destroy spell
+      this.moveToGraveyardByOwner(targetCardId, targetOwner);
+      this.showToast(`${sourceCard.name} destroys ${targetCard.name}`, 'success');
+    } else if (spellName.includes('swords to plowshares') || spellName.includes('path to exile')) {
+      // Exile spell
+      this.moveToExileByOwner(targetCardId, targetOwner);
+      this.showToast(`${sourceCard.name} exiles ${targetCard.name}`, 'success');
+    } else if (spellName.includes('unsummon') || spellName.includes('vapor snag')) {
+      // Bounce spell
+      const battlefield = targetOwner === 'opponent' ? this.opponent.battlefield : this.battlefield;
+      const hand = targetOwner === 'opponent' ? this.opponent.hand : this.hand;
+
+      const zones = [battlefield.lands, battlefield.creatures, battlefield.others];
+      for (const zone of zones) {
+        const index = zone.findIndex(c => c.id === targetCardId);
+        if (index !== -1) {
+          const card = zone.splice(index, 1)[0];
+          hand.push(card);
+          this.showToast(`${sourceCard.name} bounces ${targetCard.name}`, 'success');
+          break;
+        }
+      }
+      this.updateOpponentHandDisplay();
+    } else {
+      // Generic targeting - just destroy for now
+      this.moveToGraveyardByOwner(targetCardId, targetOwner);
+      this.showToast(`${sourceCard.name} targets ${targetCard.name}`, 'success');
+    }
+
+    // Move spell to graveyard
+    const graveyard = this.activePlayer === 'opponent' ? this.opponent.graveyard : this.graveyard;
+    graveyard.push(sourceCard);
+
+    this.updateHandDisplay();
+    this.updateBattlefieldDisplay();
+    this.updateOpponentBattlefieldDisplay();
+    this.updateGraveyardDisplay();
+    this.updateUI();
+  }
+
+  highlightValidTargets(card) {
+    if (!card) return;
+
+    const cardType = this.getCardMainType(card.type).toLowerCase();
+
+    // For spells, highlight creatures and planeswalkers as valid targets
+    if (cardType === 'instant' || cardType === 'sorcery') {
+      const allBattlefieldCards = document.querySelectorAll('.zone-card');
+      allBattlefieldCards.forEach(el => {
+        const cardId = el.getAttribute('data-card-id');
+        const result = this.findBattlefieldCardAnyPlayer(cardId);
+        if (result) {
+          const targetType = this.getCardMainType(result.card.type).toLowerCase();
+          if (targetType === 'creature' || targetType === 'planeswalker') {
+            el.style.boxShadow = '0 0 10px 2px rgba(0, 123, 255, 0.6)';
+          }
+        }
+      });
+    }
+  }
+
+  removeTargetHighlights() {
+    const allBattlefieldCards = document.querySelectorAll('.zone-card');
+    allBattlefieldCards.forEach(el => {
+      el.style.boxShadow = '';
+      el.style.outline = '';
+    });
   }
 
   // Counter functionality
@@ -10568,6 +13101,9 @@ class ModernHandSimulator {
   playSound(soundName) {
     // Check if user has enabled sounds (respect accessibility)
     if (!this.soundsEnabled) return;
+
+    // Check if sounds are initialized
+    if (!this.sounds) return;
 
     const sound = this.sounds[soundName];
     if (!sound) return;

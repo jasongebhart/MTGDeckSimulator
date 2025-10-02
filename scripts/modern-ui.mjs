@@ -692,19 +692,33 @@ class ModernUI {
       </div>
     `).join('');
 
-    // Add staggered animation class and click handlers
+    // Add staggered animation class and click/hover handlers
     setTimeout(() => {
       container.querySelectorAll('.card-list-item').forEach(item => {
         item.classList.add('slide-in-up');
 
-        // Add click handler for card preview
+        const cardName = item.getAttribute('data-card-name');
         const imageContainer = item.querySelector('.card-image-container');
+
         if (imageContainer) {
+          // Click handler for card preview modal
           imageContainer.addEventListener('click', () => {
-            const cardName = item.getAttribute('data-card-name');
             this.showCardPreview(cardName);
           });
           imageContainer.style.cursor = 'pointer';
+
+          // Hover handler for quick preview
+          let hoverTimeout;
+          imageContainer.addEventListener('mouseenter', (e) => {
+            hoverTimeout = setTimeout(() => {
+              this.showHoverPreview(cardName, e.target);
+            }, 300); // 300ms delay before showing
+          });
+
+          imageContainer.addEventListener('mouseleave', () => {
+            clearTimeout(hoverTimeout);
+            this.hideHoverPreview();
+          });
         }
       });
     }, 100);
@@ -1179,6 +1193,115 @@ class ModernUI {
       setTimeout(() => {
         modal.style.display = 'none';
       }, 200);
+    }
+  }
+
+  async showHoverPreview(cardName, targetElement) {
+    // Remove any existing hover preview
+    this.hideHoverPreview();
+
+    // Create hover preview container
+    const hoverPreview = document.createElement('div');
+    hoverPreview.id = 'hoverCardPreview';
+    hoverPreview.style.cssText = `
+      position: fixed;
+      z-index: 10000;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      opacity: 0;
+    `;
+
+    // Get target position
+    const rect = targetElement.getBoundingClientRect();
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Determine positioning - show on right if there's space, otherwise left
+    const previewWidth = 300;
+    const previewHeight = 420;
+    let left, top;
+
+    if (rect.right + previewWidth + 20 < windowWidth) {
+      // Show on right
+      left = rect.right + 10;
+    } else {
+      // Show on left
+      left = rect.left - previewWidth - 10;
+    }
+
+    // Center vertically around the card, but keep within viewport
+    top = rect.top + (rect.height / 2) - (previewHeight / 2);
+    top = Math.max(10, Math.min(top, windowHeight - previewHeight - 10));
+
+    hoverPreview.style.left = `${left}px`;
+    hoverPreview.style.top = `${top}px`;
+
+    // Add content with loading placeholder
+    hoverPreview.innerHTML = `
+      <div style="
+        background: var(--bg-primary);
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 8px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        width: ${previewWidth}px;
+      ">
+        <div style="
+          width: 100%;
+          height: ${previewHeight - 16}px;
+          background: var(--bg-secondary);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--text-muted);
+        ">
+          Loading...
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(hoverPreview);
+
+    // Fade in
+    setTimeout(() => {
+      hoverPreview.style.opacity = '1';
+    }, 10);
+
+    // Load the card image
+    try {
+      const imageUrl = await CardImageService.getCardImageUrl(cardName, 'normal');
+
+      // Check if preview still exists (user might have moved mouse away)
+      const currentPreview = document.getElementById('hoverCardPreview');
+      if (currentPreview) {
+        currentPreview.innerHTML = `
+          <div style="
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            width: ${previewWidth}px;
+          ">
+            <img src="${imageUrl}" alt="${cardName}" style="
+              width: 100%;
+              border-radius: 8px;
+              display: block;
+            ">
+          </div>
+        `;
+      }
+    } catch (error) {
+      console.error('Error loading hover preview:', error);
+      this.hideHoverPreview();
+    }
+  }
+
+  hideHoverPreview() {
+    const existing = document.getElementById('hoverCardPreview');
+    if (existing) {
+      existing.remove();
     }
   }
 }

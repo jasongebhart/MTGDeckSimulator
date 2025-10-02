@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Decklist Deck="BlackRack">
+<Decklist Deck="BlackRack Active">
     <DesignGoal>a</DesignGoal>
-    <Card>
+    <Card> 
         <Name>Vicious Conquistador</Name>
         <Quantity>1</Quantity>
         <Type>Creature</Type>
@@ -14,10 +14,10 @@
         <Cost>B</Cost>
     </Card>
     <Card>
-        <Name>Wight of Precinct Six</Name>
+        <Name>Deadeye Tracker</Name>
         <Quantity>1</Quantity>
         <Type>Creature</Type>
-        <Cost>1B</Cost>
+        <Cost>1</Cost>
     </Card>
     <Card>
         <Name>Black Knight</Name>

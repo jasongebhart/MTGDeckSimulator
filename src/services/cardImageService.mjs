@@ -11,7 +11,7 @@ export class CardImageService {
   static REQUEST_DELAY = 75; // Delay between requests to respect rate limits
 
   static async getCardImageUrl(cardName, size = 'normal', dfcFrontFace = null) {
-    if (!cardName) return this.getPlaceholderImageUrl('Unknown Card');
+    if (!cardName || typeof cardName !== 'string') return this.getPlaceholderImageUrl('Unknown Card');
 
     const cacheKey = `${cardName}-${size}`;
     const cached = this.CARD_CACHE.get(cacheKey);
@@ -65,7 +65,7 @@ export class CardImageService {
       if (cardData.card_faces && cardData.card_faces.length > 0) {
         // Find the matching face by name
         const matchingFace = cardData.card_faces.find(face =>
-          face.name.toLowerCase() === cardName.toLowerCase()
+          face.name && cardName && face.name.toLowerCase() === cardName.toLowerCase()
         );
 
         if (matchingFace) {
@@ -215,10 +215,11 @@ export class CardImageService {
     return imageUrls;
   }
 
-  static getPlaceholderImageUrl(cardName) {
+  static getPlaceholderImageUrl(cardName = 'Unknown Card') {
     // Generate a simple placeholder based on card name
     const colors = ['#1e3a8a', '#7c3aed', '#10b981', '#f59e0b', '#ef4444'];
-    const hash = cardName.split('').reduce((a, b) => {
+    const safeName = String(cardName || 'Unknown Card');
+    const hash = safeName.split('').reduce((a, b) => {
       a = ((a << 5) - a) + b.charCodeAt(0);
       return a & a;
     }, 0);
@@ -232,7 +233,7 @@ export class CardImageService {
           <tspan x="73" dy="20">Card</tspan>
         </text>
         <text x="73" y="160" text-anchor="middle" fill="white" font-family="Arial" font-size="8" opacity="0.8">
-          ${cardName.length > 20 ? cardName.substring(0, 17) + '...' : cardName}
+          ${safeName.length > 20 ? safeName.substring(0, 17) + '...' : safeName}
         </text>
       </svg>
     `;

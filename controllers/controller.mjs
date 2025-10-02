@@ -68,8 +68,12 @@ export function setupRoutes(app) {
     { path: '/logout', template: 'logout' },
   ];
 
+  const testRoutes = [
+    { path: '/test-images', template: 'test-images' },
+  ];
+
   // Combine all routes
-  const routes = [...modernRoutes, ...legacyRoutes, ...authRoutes];
+  const routes = [...modernRoutes, ...legacyRoutes, ...authRoutes, ...testRoutes];
 
   // Set up the routes using a loop
   routes.forEach(route => {

@@ -16,11 +16,11 @@
     <RulesText>Sacrifice Fume Spitter: Put a -1/-1 counter on target creature.</RulesText>
   </Card>
   <Card>
-    <Name>Wight of Precinct Six</Name>
+    <Name>Deadeye Tracker</Name>
     <Quantity>1</Quantity>
-    <Type>Creature — Zombie</Type>
-    <Cost>{1}{B}</Cost>
-    <RulesText>Wight of Precinct Six gets +1/+1 for each creature card in your opponents' graveyards.</RulesText>
+    <Type>Creature — Human Pirate</Type>
+    <Cost>{B}</Cost>
+    <RulesText>{1}{B}, {T}: Exile two target cards from an opponent's graveyard. Deadeye Tracker explores.</RulesText>
   </Card>
   <Card>
     <Name>Black Knight</Name>
