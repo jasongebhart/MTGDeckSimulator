@@ -8,7 +8,6 @@ export const ContextMenus = {
    * Show context menu for battlefield cards
    */
   showBattlefieldCardMenu(event, cardId) {
-    console.log('showBattlefieldCardMenu:', cardId);
     event.preventDefault();
 
     // Find the card in any player's battlefield
@@ -61,7 +60,7 @@ export const ContextMenus = {
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       z-index: 1000000;
       min-width: 180px;
-      overflow: hidden;
+      overflow: visible;
     `;
 
     const cardType = this.uiManager.getCardMainType(card.type || '').toLowerCase();
@@ -108,8 +107,8 @@ export const ContextMenus = {
       <div class="submenu" style="
         display: none;
         position: absolute;
-        left: 100%;
-        top: 0;
+        left: calc(100% - 1px);
+        top: -1px;
         background: #ffffff;
         border: 1px solid #ddd;
         border-radius: 6px;
@@ -134,8 +133,8 @@ export const ContextMenus = {
         <div class="submenu" style="
           display: none;
           position: absolute;
-          left: 100%;
-          top: 0;
+          left: calc(100% - 1px);
+          top: -1px;
           background: #ffffff;
           border: 1px solid #ddd;
           border-radius: 6px;
@@ -176,8 +175,17 @@ export const ContextMenus = {
     // Add click outside listener
     this.addMenuClickOutsideListener(menu);
 
+    // Add event listeners for menu items
+    this.addMenuEventListeners(menu);
+  },
+
+  /**
+   * Add event listeners to menu items
+   */
+  addMenuEventListeners(menu) {
     // Add hover styles
-    menu.querySelectorAll('.menu-item').forEach(item => {
+    // Add hover styles to regular menu items (not submenus)
+    menu.querySelectorAll('.menu-item:not(.menu-item-submenu)').forEach(item => {
       item.addEventListener('mouseenter', () => {
         item.style.background = '#f0f0f0';
       });
@@ -187,14 +195,44 @@ export const ContextMenus = {
     });
 
     // Add submenu hover functionality
-    menu.querySelectorAll('.menu-item-submenu').forEach(item => {
+    const submenuItems = menu.querySelectorAll('.menu-item-submenu');
+
+    submenuItems.forEach(item => {
       const submenu = item.querySelector('.submenu');
+
       if (submenu) {
+        let hideTimeout;
+
+        // Show submenu on parent hover
         item.addEventListener('mouseenter', () => {
+          clearTimeout(hideTimeout);
+          item.style.background = '#f0f0f0';
+          // Hide all other submenus first
+          menu.querySelectorAll('.submenu').forEach(s => {
+            if (s !== submenu) s.style.display = 'none';
+          });
           submenu.style.display = 'block';
         });
+
+        // Hide submenu when leaving the entire parent item (with delay)
         item.addEventListener('mouseleave', () => {
-          submenu.style.display = 'none';
+          item.style.background = '';
+          hideTimeout = setTimeout(() => {
+            submenu.style.display = 'none';
+          }, 300);
+        });
+
+        // Keep submenu visible when hovering over it
+        submenu.addEventListener('mouseenter', () => {
+          clearTimeout(hideTimeout);
+          submenu.style.display = 'block';
+        });
+
+        // Hide when leaving submenu
+        submenu.addEventListener('mouseleave', () => {
+          hideTimeout = setTimeout(() => {
+            submenu.style.display = 'none';
+          }, 100);
         });
 
         // Add hover styles to submenu items
