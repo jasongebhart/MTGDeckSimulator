@@ -2165,7 +2165,7 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   grid-template-rows: repeat(2, auto);
   grid-auto-flow: row;
-  gap: 8px;
+  gap: 4px;
   padding: var(--space-2);
   min-height: 340px;
   max-height: none;
@@ -8576,4 +8576,47 @@ body {
 .zone-preview-card:hover {
   transform: scale(1.05);
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Enhanced Button States */
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--gray-100);
+  border-color: var(--gray-400);
+}
+
+[data-theme="dark"] .btn-outline-secondary:hover {
+  background-color: var(--gray-700);
+  border-color: var(--gray-500);
+}
+
+.dropdown-toggle::after {
+  transition: transform 0.2s ease;
+}
+
+.dropdown-toggle[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.dropdown-item:hover {
+  background-color: var(--primary-light);
+  color: white;
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+  background-color: var(--primary);
+  color: white;
 }

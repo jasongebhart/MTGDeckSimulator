@@ -11309,19 +11309,40 @@ class ModernHandSimulator {
       console.trace('Call stack for enhanced template rendering');
 
       try {
-        // Sort cards with lands first, then by type
+        // Sort cards with lands first, then by type and mana cost
         const sortedCards = [...cards].sort((a, b) => {
-          const aType = this.getCardMainType(a.type || '').toLowerCase();
-          const bType = this.getCardMainType(b.type || '').toLowerCase();
+          const aType = this.getCardMainType(a.type || a.type_line || '').toLowerCase();
+          const bType = this.getCardMainType(b.type || b.type_line || '').toLowerCase();
+
+          console.log('Sorting:', a.name, '('+aType+')', 'vs', b.name, '('+bType+')');
 
           // Lands first
-          if (aType === 'land' && bType !== 'land') return -1;
-          if (bType === 'land' && aType !== 'land') return 1;
+          if (aType === 'land' && bType !== 'land') {
+            console.log('  -> Land first:', a.name);
+            return -1;
+          }
+          if (bType === 'land' && aType !== 'land') {
+            console.log('  -> Land first:', b.name);
+            return 1;
+          }
 
-          // Then sort alphabetically by type
+          // For lands, sort by name
+          if (aType === 'land' && bType === 'land') {
+            return a.name.localeCompare(b.name);
+          }
+
+          // Then sort by type
           if (aType !== bType) return aType.localeCompare(bType);
 
-          // Finally sort by name within same type
+          // Within same type, sort by mana cost (converted mana cost)
+          const aCMC = this.parseManaValue(a.cost || a.mana_cost || '');
+          const bCMC = this.parseManaValue(b.cost || b.mana_cost || '');
+
+          if (aCMC !== bCMC) {
+            return aCMC - bCMC;
+          }
+
+          // Finally sort by name if same CMC
           return a.name.localeCompare(b.name);
         });
 
