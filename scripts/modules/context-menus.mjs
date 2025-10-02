@@ -91,18 +91,69 @@ export const ContextMenus = {
       ${isTapped ? '↺ Untap' : '⤵️ Tap'}
     </div>`;
 
-    // Creature-specific options
-    if (cardType === 'creature') {
-      menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.addCounterByOwner('${this.escapeJs(cardId)}', '+1/+1', '${owner}')">
-        ➕ Add +1/+1 Counter
-      </div>`;
+    // Counter management
+    const counterTypes = [
+      { type: '+1/+1', emoji: '💪', applicable: cardType === 'creature' },
+      { type: '-1/-1', emoji: '💀', applicable: cardType === 'creature' },
+      { type: 'charge', emoji: '⚡', applicable: true },
+      { type: 'loyalty', emoji: '💎', applicable: cardType === 'planeswalker' || cardType === 'other' },
+      { type: 'time', emoji: '⏱️', applicable: true },
+      { type: 'ice', emoji: '❄️', applicable: true }
+    ];
 
-      const counters = card.counters?.['+1/+1'] || 0;
-      if (counters > 0) {
-        menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.removeCounterByOwner('${this.escapeJs(cardId)}', '+1/+1', '${owner}')">
-          ➖ Remove +1/+1 (${counters})
-        </div>`;
-      }
+    // Show add counter submenu
+    menuHTML += `<div class="menu-item menu-item-submenu" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee; position: relative;">
+      ➕ Add Counter
+      <span style="float: right;">▶</span>
+      <div class="submenu" style="
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        min-width: 160px;
+        z-index: 1000001;
+      ">
+        ${counterTypes.filter(ct => ct.applicable).map(ct => `
+          <div class="submenu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;"
+               onclick="window.handSimulator.addCounterByOwner('${this.escapeJs(cardId)}', '${ct.type}', '${owner}'); event.stopPropagation();">
+            ${ct.emoji} ${ct.type}
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+
+    // Show remove counter options for existing counters
+    if (card.counters && Object.keys(card.counters).length > 0) {
+      menuHTML += `<div class="menu-item menu-item-submenu" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee; position: relative;">
+        ➖ Remove Counter
+        <span style="float: right;">▶</span>
+        <div class="submenu" style="
+          display: none;
+          position: absolute;
+          left: 100%;
+          top: 0;
+          background: #ffffff;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          min-width: 160px;
+          z-index: 1000001;
+        ">
+          ${Object.entries(card.counters).map(([type, count]) => {
+            const emoji = counterTypes.find(ct => ct.type === type)?.emoji || '🔵';
+            return `
+              <div class="submenu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;"
+                   onclick="window.handSimulator.removeCounterByOwner('${this.escapeJs(cardId)}', '${type}', '${owner}'); event.stopPropagation();">
+                ${emoji} ${type} (${count})
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>`;
     }
 
     // Zone movement
@@ -133,6 +184,29 @@ export const ContextMenus = {
       item.addEventListener('mouseleave', () => {
         item.style.background = '';
       });
+    });
+
+    // Add submenu hover functionality
+    menu.querySelectorAll('.menu-item-submenu').forEach(item => {
+      const submenu = item.querySelector('.submenu');
+      if (submenu) {
+        item.addEventListener('mouseenter', () => {
+          submenu.style.display = 'block';
+        });
+        item.addEventListener('mouseleave', () => {
+          submenu.style.display = 'none';
+        });
+
+        // Add hover styles to submenu items
+        submenu.querySelectorAll('.submenu-item').forEach(subItem => {
+          subItem.addEventListener('mouseenter', () => {
+            subItem.style.background = '#f0f0f0';
+          });
+          subItem.addEventListener('mouseleave', () => {
+            subItem.style.background = '';
+          });
+        });
+      }
     });
   },
 

@@ -290,6 +290,7 @@ export class UIManager {
             <div class="card-details">
               <div class="card-cost">${this.escapeHtml(card.cost || '0')}</div>
               <div class="card-type">${this.escapeHtml(this.getCardMainType(card.type || 'Unknown'))}</div>
+              ${this.renderPowerToughness(card)}
               ${card.counters && Object.keys(card.counters).length > 0 ? this.renderCounters(card.counters) : ''}
             </div>
           </div>
@@ -460,12 +461,101 @@ export class UIManager {
     return 'Other';
   }
 
-  renderCounters(counters) {
+  renderPowerToughness(card) {
+    // Only show P/T for creatures
+    if (!card.type || !card.type.toLowerCase().includes('creature')) {
+      return '';
+    }
+
+    const basePT = this.extractBasePowerToughness(card);
+    if (!basePT) return '';
+
+    const { power, toughness } = this.calculateModifiedPT(card, basePT);
+    const isModified = power !== basePT.power || toughness !== basePT.toughness;
+
     return `
-      <div class="card-counters">
-        ${Object.entries(counters).map(([type, count]) => `
-          <span class="counter-badge" data-type="${type}">${count} ${type}</span>
-        `).join('')}
+      <div class="card-pt" style="
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 2px;
+        ${isModified ? 'color: #27ae60;' : 'color: #555;'}
+      ">
+        ${isModified ? `${power}/${toughness} <span style="font-size: 10px; color: #7f8c8d;">(${basePT.power}/${basePT.toughness})</span>` : `${power}/${toughness}`}
+      </div>
+    `;
+  }
+
+  extractBasePowerToughness(card) {
+    if (card.power !== undefined && card.toughness !== undefined) {
+      return { power: parseInt(card.power), toughness: parseInt(card.toughness) };
+    }
+
+    const ptString = card.powerToughness || card.pt;
+    if (!ptString) return null;
+
+    const match = ptString.match(/^(\d+|\*)\/(\d+|\*)$/);
+    if (match) {
+      return {
+        power: match[1] === '*' ? 0 : parseInt(match[1]),
+        toughness: match[2] === '*' ? 0 : parseInt(match[2])
+      };
+    }
+
+    return null;
+  }
+
+  calculateModifiedPT(card, basePT) {
+    let power = basePT.power;
+    let toughness = basePT.toughness;
+
+    if (card.counters) {
+      // Apply +1/+1 counters
+      if (card.counters['+1/+1']) {
+        power += card.counters['+1/+1'];
+        toughness += card.counters['+1/+1'];
+      }
+
+      // Apply -1/-1 counters
+      if (card.counters['-1/-1']) {
+        power -= card.counters['-1/-1'];
+        toughness -= card.counters['-1/-1'];
+      }
+    }
+
+    return { power: Math.max(0, power), toughness: Math.max(0, toughness) };
+  }
+
+  renderCounters(counters) {
+    const counterStyles = {
+      '+1/+1': { color: '#27ae60', emoji: '💪', bg: '#e8f8f5' },
+      '-1/-1': { color: '#e74c3c', emoji: '💀', bg: '#fadbd8' },
+      'charge': { color: '#3498db', emoji: '⚡', bg: '#d6eaf8' },
+      'loyalty': { color: '#9b59b6', emoji: '💎', bg: '#ebdef0' },
+      'time': { color: '#f39c12', emoji: '⏱️', bg: '#fef5e7' },
+      'ice': { color: '#5dade2', emoji: '❄️', bg: '#d4e6f1' }
+    };
+
+    return `
+      <div class="card-counters" style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px;">
+        ${Object.entries(counters).map(([type, count]) => {
+          const style = counterStyles[type] || { color: '#7f8c8d', emoji: '🔵', bg: '#ecf0f1' };
+          return `
+            <span class="counter-badge" data-type="${type}" style="
+              background: ${style.bg};
+              color: ${style.color};
+              padding: 2px 6px;
+              border-radius: 4px;
+              font-size: 11px;
+              font-weight: bold;
+              display: inline-flex;
+              align-items: center;
+              gap: 2px;
+              border: 1px solid ${style.color}40;
+            ">
+              ${style.emoji} ${count}
+            </span>
+          `;
+        }).join('')}
       </div>
     `;
   }
