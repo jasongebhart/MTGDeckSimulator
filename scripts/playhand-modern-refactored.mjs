@@ -1040,7 +1040,13 @@ class ModernHandSimulator {
     previewCardName.textContent = cardName;
     previewCardImage.src = '';
     previewCardImage.style.display = 'none';
-    previewCardInfo.innerHTML = '<div class="text-center text-muted">Loading card details...</div>';
+
+    // Clear and set loading message (XSS-safe)
+    previewCardInfo.innerHTML = '';
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'text-center text-muted';
+    loadingDiv.textContent = 'Loading card details...';
+    previewCardInfo.appendChild(loadingDiv);
 
     // Ensure modal is visible with high z-index
     modal.style.display = 'flex';
@@ -1069,34 +1075,55 @@ class ModernHandSimulator {
       previewCardImage.src = imageUrl;
       previewCardImage.style.display = 'block';
 
-      // Update card info
+      // Update card info (XSS-safe)
+      previewCardInfo.innerHTML = '';
+
       if (cached?.cardData) {
         const cardData = cached.cardData;
-        previewCardInfo.innerHTML = `
-          <div class="mb-2">
-            <strong>Type:</strong> ${this.escapeHtml(cardData.type_line || 'Unknown')}
-          </div>
-          ${cardData.mana_cost ? `
-            <div class="mb-2">
-              <strong>Mana Cost:</strong> ${this.escapeHtml(cardData.mana_cost)}
-            </div>
-          ` : ''}
-          ${cardData.colors && cardData.colors.length > 0 ? `
-            <div class="mb-2">
-              <strong>Colors:</strong> ${cardData.colors.join(', ')}
-            </div>
-          ` : ''}
-        `;
+
+        // Type line
+        const typeDiv = document.createElement('div');
+        typeDiv.className = 'mb-2';
+        const typeStrong = document.createElement('strong');
+        typeStrong.textContent = 'Type: ';
+        typeDiv.appendChild(typeStrong);
+        typeDiv.appendChild(document.createTextNode(cardData.type_line || 'Unknown'));
+        previewCardInfo.appendChild(typeDiv);
+
+        // Mana cost
+        if (cardData.mana_cost) {
+          const costDiv = document.createElement('div');
+          costDiv.className = 'mb-2';
+          const costStrong = document.createElement('strong');
+          costStrong.textContent = 'Mana Cost: ';
+          costDiv.appendChild(costStrong);
+          costDiv.appendChild(document.createTextNode(cardData.mana_cost));
+          previewCardInfo.appendChild(costDiv);
+        }
+
+        // Colors
+        if (cardData.colors && cardData.colors.length > 0) {
+          const colorsDiv = document.createElement('div');
+          colorsDiv.className = 'mb-2';
+          const colorsStrong = document.createElement('strong');
+          colorsStrong.textContent = 'Colors: ';
+          colorsDiv.appendChild(colorsStrong);
+          colorsDiv.appendChild(document.createTextNode(cardData.colors.join(', ')));
+          previewCardInfo.appendChild(colorsDiv);
+        }
       } else {
-        previewCardInfo.innerHTML = `
-          <div class="text-muted">
-            Card details will be available after the image loads.
-          </div>
-        `;
+        const mutedDiv = document.createElement('div');
+        mutedDiv.className = 'text-muted';
+        mutedDiv.textContent = 'Card details will be available after the image loads.';
+        previewCardInfo.appendChild(mutedDiv);
       }
     } catch (error) {
       console.error('Error showing card preview:', error);
-      previewCardInfo.innerHTML = '<div class="text-danger">Failed to load card details</div>';
+      previewCardInfo.innerHTML = '';
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'text-danger';
+      errorDiv.textContent = 'Failed to load card details';
+      previewCardInfo.appendChild(errorDiv);
     }
   }
 
@@ -1156,25 +1183,25 @@ class ModernHandSimulator {
     const cardType = this.uiManager.getCardMainType(card.type || '').toLowerCase();
     const isLand = cardType === 'land';
 
-    let menuItems = `
-      <div class="menu-item" onclick="window.handSimulator.playCardDirectly('${this.escapeJs(cardId)}', event)">
-        ⚔️ ${isLand ? 'Play Land' : 'Cast Spell'}
-      </div>
-      <div class="menu-item" onclick="window.handSimulator.moveHandCardToGraveyard('${this.escapeJs(cardId)}')">
-        🪦 To Graveyard
-      </div>
-      <div class="menu-item" onclick="window.handSimulator.moveHandCardToExile('${this.escapeJs(cardId)}')">
-        🚫 Exile
-      </div>
-      <div class="menu-item" onclick="window.handSimulator.moveHandCardToLibrary('${this.escapeJs(cardId)}')">
-        📚 To Library
-      </div>
-      <div class="menu-item" onclick="window.handSimulator.showCardPreview('${this.escapeJs(card.name)}')">
-        👁️ View Card
-      </div>
-    `;
+    // Create menu items using DOM methods (XSS-safe)
+    const playItem = this.createHandMenuItem(
+      `⚔️ ${isLand ? 'Play Land' : 'Cast Spell'}`,
+      () => this.playCardDirectly(cardId, event)
+    );
+    menu.appendChild(playItem);
 
-    menu.innerHTML = menuItems;
+    const graveyardItem = this.createHandMenuItem('🪦 To Graveyard', () => this.moveHandCardToGraveyard(cardId));
+    menu.appendChild(graveyardItem);
+
+    const exileItem = this.createHandMenuItem('🚫 Exile', () => this.moveHandCardToExile(cardId));
+    menu.appendChild(exileItem);
+
+    const libraryItem = this.createHandMenuItem('📚 To Library', () => this.moveHandCardToLibrary(cardId));
+    menu.appendChild(libraryItem);
+
+    const viewItem = this.createHandMenuItem('👁️ View Card', () => this.showCardPreview(card.name));
+    menu.appendChild(viewItem);
+
     document.body.appendChild(menu);
 
     // Remove menu when clicking elsewhere
@@ -1186,6 +1213,27 @@ class ModernHandSimulator {
     };
 
     setTimeout(() => document.addEventListener('click', removeMenu), 100);
+  }
+
+  /**
+   * Create hand menu item element (XSS-safe)
+   */
+  createHandMenuItem(text, clickHandler) {
+    const div = document.createElement('div');
+    div.className = 'menu-item';
+    div.textContent = text;
+
+    if (clickHandler) {
+      div.addEventListener('click', (e) => {
+        e.stopPropagation();
+        clickHandler();
+        // Remove menu
+        const menu = div.closest('.hand-context-menu');
+        if (menu) menu.remove();
+      });
+    }
+
+    return div;
   }
 
   moveHandCardToGraveyard(cardId) {
@@ -1815,29 +1863,61 @@ class ModernHandSimulator {
       z-index: 10001;
     `;
 
-    const cardList = cards.map(card => `
-      <div style="padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; margin: 4px; background: var(--bg-secondary);">
-        <strong>${this.escapeHtml(card.name)}</strong>
-        ${card.type ? `<div style="font-size: 0.9em; color: var(--text-secondary);">${this.escapeHtml(card.type)}</div>` : ''}
-        ${card.cost ? `<div style="font-size: 0.85em; color: var(--primary);">${this.escapeHtml(card.cost)}</div>` : ''}
-      </div>
-    `).join('');
+    // Create modal content using DOM methods (XSS-safe)
+    const contentDiv = document.createElement('div');
+    contentDiv.style.cssText = 'max-width: 500px; background: var(--bg-primary); color: var(--text-primary); padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
 
-    modal.innerHTML = `
-      <div style="max-width: 500px; background: var(--bg-primary); color: var(--text-primary); padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-        <h3 style="color: var(--error); margin-top: 0;">💀 Cards Discarded</h3>
-        <p style="margin: 10px 0;"><strong>${this.escapeHtml(playerName)}</strong> discarded ${cards.length} card${cards.length > 1 ? 's' : ''} at random:</p>
-        <div style="margin: 15px 0;">
-          ${cardList}
-        </div>
-        <button onclick="this.closest('div[style*=\"position: fixed\"]').remove()"
-                class="btn btn-primary"
-                style="width: 100%; margin-top: 10px;">
-          OK
-        </button>
-      </div>
-    `;
+    const title = document.createElement('h3');
+    title.style.cssText = 'color: var(--error); margin-top: 0;';
+    title.textContent = '💀 Cards Discarded';
+    contentDiv.appendChild(title);
 
+    const description = document.createElement('p');
+    description.style.cssText = 'margin: 10px 0;';
+    const playerStrong = document.createElement('strong');
+    playerStrong.textContent = playerName;
+    description.appendChild(playerStrong);
+    description.appendChild(document.createTextNode(` discarded ${cards.length} card${cards.length > 1 ? 's' : ''} at random:`));
+    contentDiv.appendChild(description);
+
+    const cardListDiv = document.createElement('div');
+    cardListDiv.style.cssText = 'margin: 15px 0;';
+
+    cards.forEach(card => {
+      const cardDiv = document.createElement('div');
+      cardDiv.style.cssText = 'padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; margin: 4px; background: var(--bg-secondary);';
+
+      const cardName = document.createElement('strong');
+      cardName.textContent = card.name;
+      cardDiv.appendChild(cardName);
+
+      if (card.type) {
+        const typeDiv = document.createElement('div');
+        typeDiv.style.cssText = 'font-size: 0.9em; color: var(--text-secondary);';
+        typeDiv.textContent = card.type;
+        cardDiv.appendChild(typeDiv);
+      }
+
+      if (card.cost) {
+        const costDiv = document.createElement('div');
+        costDiv.style.cssText = 'font-size: 0.85em; color: var(--primary);';
+        costDiv.textContent = card.cost;
+        cardDiv.appendChild(costDiv);
+      }
+
+      cardListDiv.appendChild(cardDiv);
+    });
+
+    contentDiv.appendChild(cardListDiv);
+
+    const okButton = document.createElement('button');
+    okButton.className = 'btn btn-primary';
+    okButton.style.cssText = 'width: 100%; margin-top: 10px;';
+    okButton.textContent = 'OK';
+    okButton.addEventListener('click', () => modal.remove());
+    contentDiv.appendChild(okButton);
+
+    modal.appendChild(contentDiv);
     document.body.appendChild(modal);
 
     // Auto-close after 4 seconds
@@ -1916,7 +1996,7 @@ class ModernHandSimulator {
       box-shadow: 0 8px 32px rgba(0,0,0,0.5);
     `;
 
-    // Header
+    // Header (XSS-safe)
     const header = document.createElement('div');
     header.style.cssText = `
       display: flex;
@@ -1926,10 +2006,18 @@ class ModernHandSimulator {
       border-bottom: 2px solid #ddd;
       padding-bottom: 10px;
     `;
-    header.innerHTML = `
-      <h3 style="margin: 0; color: #000;">${title} (${cards.length} cards)</h3>
-      <button class="btn btn-secondary" onclick="document.getElementById('simple-modal-${modalId}').remove()" style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 18px; font-weight: bold;">✕</button>
-    `;
+
+    const titleH3 = document.createElement('h3');
+    titleH3.style.cssText = 'margin: 0; color: #000;';
+    titleH3.textContent = `${title} (${cards.length} cards)`;
+    header.appendChild(titleH3);
+
+    const closeButton = document.createElement('button');
+    closeButton.className = 'btn btn-secondary';
+    closeButton.style.cssText = 'background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 18px; font-weight: bold;';
+    closeButton.textContent = '✕';
+    closeButton.addEventListener('click', () => modal.remove());
+    header.appendChild(closeButton);
 
     // Cards container
     const cardsContainer = document.createElement('div');
@@ -1942,45 +2030,22 @@ class ModernHandSimulator {
     `;
 
     if (cards.length === 0) {
-      cardsContainer.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 40px; grid-column: 1 / -1;">No cards in this zone</div>';
+      const emptyDiv = document.createElement('div');
+      emptyDiv.style.cssText = 'text-align: center; color: var(--text-secondary); padding: 40px; grid-column: 1 / -1;';
+      emptyDiv.textContent = 'No cards in this zone';
+      cardsContainer.appendChild(emptyDiv);
     } else {
       // Show cards in reverse order (most recent first)
       const orderedCards = [...cards].reverse();
 
-      cardsContainer.innerHTML = orderedCards.map((card, index) => {
+      orderedCards.forEach((card, index) => {
         const originalIndex = cards.findIndex(c => c === card);
         const cardId = card.id || `${card.name}_${originalIndex}`;
         const orderNumber = cards.length - index;
 
-        return `
-          <div class="zone-card"
-               data-card-id="${cardId}"
-               data-card-name="${this.escapeHtml(card.name)}"
-               draggable="true"
-               style="position: relative; cursor: grab; width: 100px; min-width: 100px; flex-shrink: 0;">
-            <div style="position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.8); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; z-index: 10;">
-              ${orderNumber}
-            </div>
-            <div class="card-content">
-              <div class="card-image-container" style="width: 100%; height: 140px;">
-                <img class="card-image-lazy"
-                     data-card-name="${this.escapeHtml(card.name)}"
-                     alt="${this.escapeHtml(card.name)}"
-                     loading="lazy"
-                     style="width: 100%; height: 100%; object-fit: contain;">
-                <div class="loading-placeholder" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">🎴</div>
-              </div>
-              <div class="card-info" style="padding: 4px;">
-                <div class="card-name" style="font-size: 0.75rem; font-weight: 600;">${this.escapeHtml(card.name)}</div>
-                <div class="card-details" style="font-size: 0.7rem;">
-                  <div class="card-cost">${this.escapeHtml(card.cost || '0')}</div>
-                  <div class="card-type">${this.escapeHtml(this.uiManager.getCardMainType(card.type || 'Unknown'))}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
+        const zoneCard = this.createZoneCardElement(card, cardId, orderNumber);
+        cardsContainer.appendChild(zoneCard);
+      });
 
       // Load images for modal cards
       setTimeout(() => {
@@ -2000,6 +2065,82 @@ class ModernHandSimulator {
         modal.remove();
       }
     });
+  }
+
+  /**
+   * Create a zone card element (XSS-safe)
+   */
+  createZoneCardElement(card, cardId, orderNumber) {
+    const zoneCard = document.createElement('div');
+    zoneCard.className = 'zone-card';
+    zoneCard.setAttribute('data-card-id', cardId);
+    zoneCard.setAttribute('data-card-name', card.name);
+    zoneCard.draggable = true;
+    zoneCard.style.cssText = 'position: relative; cursor: grab; width: 100px; min-width: 100px; flex-shrink: 0;';
+
+    // Order number badge
+    if (orderNumber) {
+      const orderBadge = document.createElement('div');
+      orderBadge.style.cssText = 'position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.8); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; z-index: 10;';
+      orderBadge.textContent = orderNumber;
+      zoneCard.appendChild(orderBadge);
+    }
+
+    // Card content
+    const cardContent = document.createElement('div');
+    cardContent.className = 'card-content';
+
+    // Image container
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'card-image-container';
+    imageContainer.style.cssText = 'width: 100%; height: 140px;';
+
+    const img = document.createElement('img');
+    img.className = 'card-image-lazy';
+    img.setAttribute('data-card-name', card.name);
+    img.alt = card.name;
+    img.loading = 'lazy';
+    img.style.cssText = 'width: 100%; height: 100%; object-fit: contain;';
+    imageContainer.appendChild(img);
+
+    const placeholder = document.createElement('div');
+    placeholder.className = 'loading-placeholder';
+    placeholder.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);';
+    placeholder.textContent = '🎴';
+    imageContainer.appendChild(placeholder);
+
+    cardContent.appendChild(imageContainer);
+
+    // Card info
+    const cardInfo = document.createElement('div');
+    cardInfo.className = 'card-info';
+    cardInfo.style.cssText = 'padding: 4px;';
+
+    const cardName = document.createElement('div');
+    cardName.className = 'card-name';
+    cardName.style.cssText = 'font-size: 0.75rem; font-weight: 600;';
+    cardName.textContent = card.name;
+    cardInfo.appendChild(cardName);
+
+    const cardDetails = document.createElement('div');
+    cardDetails.className = 'card-details';
+    cardDetails.style.cssText = 'font-size: 0.7rem;';
+
+    const cardCost = document.createElement('div');
+    cardCost.className = 'card-cost';
+    cardCost.textContent = card.cost || '0';
+    cardDetails.appendChild(cardCost);
+
+    const cardType = document.createElement('div');
+    cardType.className = 'card-type';
+    cardType.textContent = this.uiManager.getCardMainType(card.type || 'Unknown');
+    cardDetails.appendChild(cardType);
+
+    cardInfo.appendChild(cardDetails);
+    cardContent.appendChild(cardInfo);
+    zoneCard.appendChild(cardContent);
+
+    return zoneCard;
   }
 
   escapeHtml(text) {

@@ -66,41 +66,38 @@ export const ContextMenus = {
     const cardType = this.uiManager.getCardMainType(card.type || '').toLowerCase();
     const isTapped = card.tapped;
 
-    // Create menu HTML
-    let menuHTML = '';
-
-    // Owner header
+    // Owner header (using textContent for safety)
     const ownerLabel = owner === 'opponent' ? '👤 Opponent' : '🎮 You';
-    menuHTML += `<div style="padding: 6px 12px; background: #f5f5f5; font-size: 11px; font-weight: bold; color: #666; border-bottom: 1px solid #ddd;">${ownerLabel}'s ${card.name}</div>`;
+    const headerDiv = this.createMenuHeader(`${ownerLabel}'s ${card.name}`);
+    menu.appendChild(headerDiv);
 
     // Planeswalker loyalty abilities
     if (cardType === 'planeswalker') {
       const loyalty = card.counters?.loyalty || 0;
-      menuHTML += `<div style="padding: 6px 12px; background: #ebdef0; font-size: 12px; font-weight: bold; color: #9b59b6; border-bottom: 1px solid #ddd;">
-        💎 Loyalty: ${loyalty}
-      </div>`;
+      const loyaltyHeader = this.createLoyaltyHeader(loyalty);
+      menu.appendChild(loyaltyHeader);
 
       // Loyalty ability options
-      menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer('${this.escapeJs(cardId)}').card, 1)">
-        ➕ +1 Loyalty Ability
-      </div>`;
+      menu.appendChild(this.createMenuItem('➕ +1 Loyalty Ability', () => {
+        window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer(cardId).card, 1);
+      }));
 
       if (loyalty >= 1) {
-        menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer('${this.escapeJs(cardId)}').card, -1)">
-          ➖ -1 Loyalty Ability
-        </div>`;
+        menu.appendChild(this.createMenuItem('➖ -1 Loyalty Ability', () => {
+          window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer(cardId).card, -1);
+        }));
       }
 
       if (loyalty >= 2) {
-        menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer('${this.escapeJs(cardId)}').card, -2)">
-          ➖➖ -2 Loyalty Ability
-        </div>`;
+        menu.appendChild(this.createMenuItem('➖➖ -2 Loyalty Ability', () => {
+          window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer(cardId).card, -2);
+        }));
       }
 
       if (loyalty >= 3) {
-        menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer('${this.escapeJs(cardId)}').card, -3)">
-          ➖➖➖ -3 Loyalty Ability
-        </div>`;
+        menu.appendChild(this.createMenuItem('➖➖➖ -3 Loyalty Ability', () => {
+          window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer(cardId).card, -3);
+        }));
       }
     }
 
@@ -111,15 +108,15 @@ export const ContextMenus = {
       const isOnFront = currentFace.toLowerCase() === dfcData.frontFace.toLowerCase();
       const transformTo = isOnFront ? dfcData.backFace : dfcData.frontFace;
 
-      menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.transformCard('${this.escapeJs(cardId)}')">
-        🔄 Transform → ${transformTo.split(' ')[0]}
-      </div>`;
+      menu.appendChild(this.createMenuItem(`🔄 Transform → ${transformTo.split(' ')[0]}`, () => {
+        window.handSimulator.transformCard(cardId);
+      }));
     }
 
     // Tap/Untap
-    menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.toggleTapByOwner('${this.escapeJs(cardId)}', '${owner}')">
-      ${isTapped ? '↺ Untap' : '⤵️ Tap'}
-    </div>`;
+    menu.appendChild(this.createMenuItem(isTapped ? '↺ Untap' : '⤵️ Tap', () => {
+      window.handSimulator.toggleTapByOwner(cardId, owner);
+    }));
 
     // Counter management
     const counterTypes = [
@@ -131,73 +128,45 @@ export const ContextMenus = {
       { type: 'ice', emoji: '❄️', applicable: true }
     ];
 
-    // Show add counter submenu
-    menuHTML += `<div class="menu-item menu-item-submenu" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee; position: relative;">
-      ➕ Add Counter
-      <span style="float: right;">▶</span>
-      <div class="submenu" style="
-        display: none;
-        position: absolute;
-        left: calc(100% - 1px);
-        top: -1px;
-        background: #ffffff;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        min-width: 160px;
-        z-index: 1000001;
-      ">
-        ${counterTypes.filter(ct => ct.applicable).map(ct => `
-          <div class="submenu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;"
-               onclick="window.handSimulator.addCounterByOwner('${this.escapeJs(cardId)}', '${ct.type}', '${owner}'); event.stopPropagation();">
-            ${ct.emoji} ${ct.type}
-          </div>
-        `).join('')}
-      </div>
-    </div>`;
+    // Add counter submenu
+    const addCounterSubmenu = this.createSubmenu('➕ Add Counter',
+      counterTypes.filter(ct => ct.applicable).map(ct => ({
+        text: `${ct.emoji} ${ct.type}`,
+        action: () => {
+          window.handSimulator.addCounterByOwner(cardId, ct.type, owner);
+        }
+      }))
+    );
+    menu.appendChild(addCounterSubmenu);
 
-    // Show remove counter options for existing counters
+    // Remove counter submenu (only if counters exist)
     if (card.counters && Object.keys(card.counters).length > 0) {
-      menuHTML += `<div class="menu-item menu-item-submenu" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee; position: relative;">
-        ➖ Remove Counter
-        <span style="float: right;">▶</span>
-        <div class="submenu" style="
-          display: none;
-          position: absolute;
-          left: calc(100% - 1px);
-          top: -1px;
-          background: #ffffff;
-          border: 1px solid #ddd;
-          border-radius: 6px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-          min-width: 160px;
-          z-index: 1000001;
-        ">
-          ${Object.entries(card.counters).map(([type, count]) => {
-            const emoji = counterTypes.find(ct => ct.type === type)?.emoji || '🔵';
-            return `
-              <div class="submenu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;"
-                   onclick="window.handSimulator.removeCounterByOwner('${this.escapeJs(cardId)}', '${type}', '${owner}'); event.stopPropagation();">
-                ${emoji} ${type} (${count})
-              </div>
-            `;
-          }).join('')}
-        </div>
-      </div>`;
+      const removeCounterItems = Object.entries(card.counters).map(([type, count]) => {
+        const emoji = counterTypes.find(ct => ct.type === type)?.emoji || '🔵';
+        return {
+          text: `${emoji} ${type} (${count})`,
+          action: () => {
+            window.handSimulator.removeCounterByOwner(cardId, type, owner);
+          }
+        };
+      });
+      const removeCounterSubmenu = this.createSubmenu('➖ Remove Counter', removeCounterItems);
+      menu.appendChild(removeCounterSubmenu);
     }
 
     // Zone movement
-    menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.moveToGraveyardByOwner('${this.escapeJs(cardId)}', '${owner}')">
-      🪦 To Graveyard
-    </div>`;
-    menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.moveToExileByOwner('${this.escapeJs(cardId)}', '${owner}')">
-      🚫 Exile
-    </div>`;
-    menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer;" onclick="window.handSimulator.moveToHandByOwner('${this.escapeJs(cardId)}', '${owner}')">
-      🃏 Return to Hand
-    </div>`;
+    menu.appendChild(this.createMenuItem('🪦 To Graveyard', () => {
+      window.handSimulator.moveToGraveyardByOwner(cardId, owner);
+    }));
 
-    menu.innerHTML = menuHTML;
+    menu.appendChild(this.createMenuItem('🚫 Exile', () => {
+      window.handSimulator.moveToExileByOwner(cardId, owner);
+    }));
+
+    menu.appendChild(this.createMenuItem('🃏 Return to Hand', () => {
+      window.handSimulator.moveToHandByOwner(cardId, owner);
+    }, false)); // No border bottom for last item
+
     document.body.appendChild(menu);
 
     // Adjust position if off-screen
@@ -208,6 +177,97 @@ export const ContextMenus = {
 
     // Add event listeners for menu items
     this.addMenuEventListeners(menu);
+  },
+
+  /**
+   * Create menu header element (XSS-safe)
+   */
+  createMenuHeader(text) {
+    const div = document.createElement('div');
+    div.style.cssText = 'padding: 6px 12px; background: #f5f5f5; font-size: 11px; font-weight: bold; color: #666; border-bottom: 1px solid #ddd;';
+    div.textContent = text;
+    return div;
+  },
+
+  /**
+   * Create loyalty header (XSS-safe)
+   */
+  createLoyaltyHeader(loyalty) {
+    const div = document.createElement('div');
+    div.style.cssText = 'padding: 6px 12px; background: #ebdef0; font-size: 12px; font-weight: bold; color: #9b59b6; border-bottom: 1px solid #ddd;';
+    div.textContent = `💎 Loyalty: ${loyalty}`;
+    return div;
+  },
+
+  /**
+   * Create menu item element (XSS-safe)
+   */
+  createMenuItem(text, clickHandler, hasBorderBottom = true) {
+    const div = document.createElement('div');
+    div.className = 'menu-item';
+    div.style.cssText = `padding: 8px 12px; cursor: pointer;${hasBorderBottom ? ' border-bottom: 1px solid #eee;' : ''}`;
+    div.textContent = text;
+
+    if (clickHandler) {
+      div.addEventListener('click', (e) => {
+        e.stopPropagation();
+        clickHandler();
+        this.removeExistingMenus();
+      });
+    }
+
+    return div;
+  },
+
+  /**
+   * Create submenu with items (XSS-safe)
+   */
+  createSubmenu(parentText, items) {
+    const parentDiv = document.createElement('div');
+    parentDiv.className = 'menu-item menu-item-submenu';
+    parentDiv.style.cssText = 'padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee; position: relative;';
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = parentText;
+    parentDiv.appendChild(textSpan);
+
+    const arrow = document.createElement('span');
+    arrow.style.cssText = 'float: right;';
+    arrow.textContent = '▶';
+    parentDiv.appendChild(arrow);
+
+    const submenu = document.createElement('div');
+    submenu.className = 'submenu';
+    submenu.style.cssText = `
+      display: none;
+      position: absolute;
+      left: calc(100% - 1px);
+      top: -1px;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      min-width: 160px;
+      z-index: 1000001;
+    `;
+
+    items.forEach((item, index) => {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'submenu-item';
+      itemDiv.style.cssText = `padding: 8px 12px; cursor: pointer;${index < items.length - 1 ? ' border-bottom: 1px solid #eee;' : ''}`;
+      itemDiv.textContent = item.text;
+
+      itemDiv.addEventListener('click', (e) => {
+        e.stopPropagation();
+        item.action();
+        this.removeExistingMenus();
+      });
+
+      submenu.appendChild(itemDiv);
+    });
+
+    parentDiv.appendChild(submenu);
+    return parentDiv;
   },
 
   /**

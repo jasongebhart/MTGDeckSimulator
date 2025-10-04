@@ -148,13 +148,27 @@ export class UIManager {
       end: 'End Phase'
     };
 
-    turnIndicator.innerHTML = `
-      <div class="turn-info">
-        <span class="turn-player">${playerName}</span>
-        <span class="turn-number">Turn ${turnNumber}</span>
-        <span class="turn-phase">${phaseNames[phase] || phase}</span>
-      </div>
-    `;
+    // Create turn info (XSS-safe)
+    turnIndicator.innerHTML = '';
+    const turnInfoDiv = document.createElement('div');
+    turnInfoDiv.className = 'turn-info';
+
+    const playerSpan = document.createElement('span');
+    playerSpan.className = 'turn-player';
+    playerSpan.textContent = playerName;
+    turnInfoDiv.appendChild(playerSpan);
+
+    const turnNumSpan = document.createElement('span');
+    turnNumSpan.className = 'turn-number';
+    turnNumSpan.textContent = `Turn ${turnNumber}`;
+    turnInfoDiv.appendChild(turnNumSpan);
+
+    const phaseSpan = document.createElement('span');
+    phaseSpan.className = 'turn-phase';
+    phaseSpan.textContent = phaseNames[phase] || phase;
+    turnInfoDiv.appendChild(phaseSpan);
+
+    turnIndicator.appendChild(turnInfoDiv);
 
     // Update End Turn button state
     this.updateEndTurnButtonState();
@@ -245,26 +259,36 @@ export class UIManager {
     }
   }
 
-  // Game log
+  // Game log (XSS-safe)
   updateGameLog() {
     const logPanel = document.getElementById('gameLogPanel');
     if (!logPanel) return;
 
-    logPanel.innerHTML = this.gameState.gameLog.map(entry => `
-      <div class="log-entry log-${entry.type}" style="
+    logPanel.innerHTML = '';
+
+    this.gameState.gameLog.forEach(entry => {
+      const logEntry = document.createElement('div');
+      logEntry.className = `log-entry log-${entry.type}`;
+      logEntry.style.cssText = `
         padding: 8px 10px;
         margin-bottom: 6px;
         border-left: 3px solid var(--${entry.type === 'error' ? 'error' : 'primary'});
         background: var(--bg-secondary);
         border-radius: 4px;
         font-size: 14px;
-      ">
-        <div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 3px;">
-          Turn ${entry.turn} - ${entry.phase}
-        </div>
-        <div>${this.escapeHtml(entry.message)}</div>
-      </div>
-    `).join('');
+      `;
+
+      const metaDiv = document.createElement('div');
+      metaDiv.style.cssText = 'color: var(--text-secondary); font-size: 12px; margin-bottom: 3px;';
+      metaDiv.textContent = `Turn ${entry.turn} - ${entry.phase}`;
+      logEntry.appendChild(metaDiv);
+
+      const messageDiv = document.createElement('div');
+      messageDiv.textContent = entry.message;
+      logEntry.appendChild(messageDiv);
+
+      logPanel.appendChild(logEntry);
+    });
   }
 
   // Zone displays
