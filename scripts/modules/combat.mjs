@@ -26,6 +26,7 @@ export class CombatManager {
 
     this.gameState.addToGameLog('Entering combat phase', 'combat');
     this.uiManager.updateTurnDisplay();
+    this.updateCombatUI();
   }
 
   // Combat step progression
@@ -76,6 +77,15 @@ export class CombatManager {
         const element = document.querySelector(`[data-card-id="${creature.id}"]`);
         if (element) {
           element.classList.add('attackable');
+          element.style.cursor = 'pointer';
+
+          // Add click handler for selecting attackers
+          const clickHandler = (e) => {
+            e.stopPropagation();
+            this.toggleAttacker(creature.id);
+          };
+          element.addEventListener('click', clickHandler);
+          element._combatClickHandler = clickHandler; // Store for cleanup
         }
       }
     });
@@ -362,6 +372,13 @@ export class CombatManager {
   clearCombatHighlights() {
     document.querySelectorAll('.attackable, .attacking, .can-block, .blocking').forEach(el => {
       el.classList.remove('attackable', 'attacking', 'can-block', 'blocking');
+      el.style.cursor = '';
+
+      // Remove combat click handlers
+      if (el._combatClickHandler) {
+        el.removeEventListener('click', el._combatClickHandler);
+        delete el._combatClickHandler;
+      }
     });
   }
 }

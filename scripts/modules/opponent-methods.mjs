@@ -58,8 +58,8 @@ export const OpponentMethods = {
       // Check if this is the default opponent deck
       const isDefault = localStorage.getItem('mtg_default_opponent_deck') === deckPath;
       const message = isDefault
-        ? `Opponent loaded: ${this.gameState.opponent.deckName} ⭐ (Default)`
-        : `Opponent loaded: ${this.gameState.opponent.deckName}`;
+        ? `Player 2 loaded: ${this.gameState.opponent.deckName} ⭐ (Default)`
+        : `Player 2 loaded: ${this.gameState.opponent.deckName}`;
 
       this.uiManager.showToast(message, 'success');
 
@@ -101,9 +101,9 @@ export const OpponentMethods = {
       cardsDrawn: 0,
       landsPlayed: 0,
       spellsCast: 0,
-      mulligans: 0
+      mulligans: 0,
+      life: 20
     };
-    opponent.life = 20;
     opponent.selectedCards.clear();
     opponent.manaPool = { W: 0, U: 0, B: 0, R: 0, G: 0, C: 0 };
   },
@@ -125,12 +125,12 @@ export const OpponentMethods = {
    */
   setOpponentDeckAsDefault() {
     if (!this.gameState.opponent.deckPath) {
-      this.uiManager.showToast('No opponent deck loaded to set as default', 'warning');
+      this.uiManager.showToast('No Player 2 deck loaded to set as default', 'warning');
       return;
     }
 
     localStorage.setItem('mtg_default_opponent_deck', this.gameState.opponent.deckPath);
-    this.uiManager.showToast(`${this.gameState.opponent.deckName} set as default opponent deck ⭐`, 'success');
+    this.uiManager.showToast(`${this.gameState.opponent.deckName} set as default Player 2 deck ⭐`, 'success');
     this.updateOpponentDeckSelectorLabels();
   },
 
@@ -142,7 +142,7 @@ export const OpponentMethods = {
     localStorage.removeItem('mtg_default_opponent_deck');
 
     if (hadDefault) {
-      this.uiManager.showToast('Default opponent deck cleared', 'info');
+      this.uiManager.showToast('Default Player 2 deck cleared', 'info');
       // Remove star from opponent deck selector options
       const opponentDeckSelect = document.getElementById('opponentDeckSelectTop');
       if (opponentDeckSelect) {
@@ -151,7 +151,7 @@ export const OpponentMethods = {
         });
       }
     } else {
-      this.uiManager.showToast('No default opponent deck set', 'warning');
+      this.uiManager.showToast('No default Player 2 deck set', 'warning');
     }
   },
 
@@ -210,12 +210,12 @@ export const OpponentMethods = {
     try {
       console.log('Starting quick two-player setup...');
 
-      // Get selected decks
-      const playerDeckSelect = document.getElementById('quickDeckSelect');
-      const opponentDeckSelect = document.getElementById('opponentDeckSelectTop');
+      // Get selected decks from modal selectors (fallback to old selectors)
+      const playerDeckSelect = document.getElementById('deckSelectModal') || document.getElementById('quickDeckSelect');
+      const opponentDeckSelect = document.getElementById('opponentDeckSelectModal') || document.getElementById('opponentDeckSelectTop');
 
       if (!playerDeckSelect || !opponentDeckSelect) {
-        this.uiManager.showToast('Deck selectors not found', 'error');
+        this.uiManager.showToast('Please select decks using the 🎴 Decks button first', 'warning');
         return;
       }
 
@@ -223,12 +223,12 @@ export const OpponentMethods = {
       const opponentDeck = opponentDeckSelect.value;
 
       if (!playerDeck) {
-        this.uiManager.showToast('Please select a deck for the player first', 'warning');
+        this.uiManager.showToast('Please select a deck for the player using the 🎴 Decks button', 'warning');
         return;
       }
 
       if (!opponentDeck) {
-        this.uiManager.showToast('Please select a deck for the opponent first', 'warning');
+        this.uiManager.showToast('Please select a deck for the opponent using the 🎴 Decks button', 'warning');
         return;
       }
 
@@ -251,5 +251,14 @@ export const OpponentMethods = {
       console.error('Error during quick setup:', error);
       this.uiManager.showToast('Error setting up two-player game. Please try manual setup.', 'error');
     }
+  },
+
+  resetAndDrawOpponent7() {
+    // Reset opponent and draw 7 cards (like New Game button)
+    this.gameState.opponent.life = 20;
+    this.gameState.opponent.gameStats.mulligans = 0;
+    this.shuffleOpponentLibrary();
+    this.drawOpponentHand(7);
+    this.uiManager.showToast('Player 2: New game started!', 'success');
   }
 };

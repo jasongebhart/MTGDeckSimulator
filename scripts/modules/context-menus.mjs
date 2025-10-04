@@ -73,6 +73,37 @@ export const ContextMenus = {
     const ownerLabel = owner === 'opponent' ? '👤 Opponent' : '🎮 You';
     menuHTML += `<div style="padding: 6px 12px; background: #f5f5f5; font-size: 11px; font-weight: bold; color: #666; border-bottom: 1px solid #ddd;">${ownerLabel}'s ${card.name}</div>`;
 
+    // Planeswalker loyalty abilities
+    if (cardType === 'planeswalker') {
+      const loyalty = card.counters?.loyalty || 0;
+      menuHTML += `<div style="padding: 6px 12px; background: #ebdef0; font-size: 12px; font-weight: bold; color: #9b59b6; border-bottom: 1px solid #ddd;">
+        💎 Loyalty: ${loyalty}
+      </div>`;
+
+      // Loyalty ability options
+      menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer('${this.escapeJs(cardId)}').card, 1)">
+        ➕ +1 Loyalty Ability
+      </div>`;
+
+      if (loyalty >= 1) {
+        menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer('${this.escapeJs(cardId)}').card, -1)">
+          ➖ -1 Loyalty Ability
+        </div>`;
+      }
+
+      if (loyalty >= 2) {
+        menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer('${this.escapeJs(cardId)}').card, -2)">
+          ➖➖ -2 Loyalty Ability
+        </div>`;
+      }
+
+      if (loyalty >= 3) {
+        menuHTML += `<div class="menu-item" style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;" onclick="window.handSimulator.activateLoyaltyAbility(window.handSimulator.findBattlefieldCardAnyPlayer('${this.escapeJs(cardId)}').card, -3)">
+          ➖➖➖ -3 Loyalty Ability
+        </div>`;
+      }
+    }
+
     // Check if DFC
     if (this.getDFCData && this.getDFCData(card.name)) {
       const dfcData = this.getDFCData(card.name);
@@ -304,28 +335,41 @@ export const ContextMenus = {
     if (!result) return;
 
     result.card.tapped = !result.card.tapped;
-    this.uiManager.updateZoneDisplay('battlefield', owner);
+    this.uiManager.updateAll();
     this.uiManager.showToast(`${result.card.name} ${result.card.tapped ? 'tapped' : 'untapped'}`, 'info');
     this.removeExistingMenus();
   },
 
   moveToGraveyardByOwner(cardId, owner) {
+    console.log('moveToGraveyardByOwner called:', cardId, owner);
     const result = this.findBattlefieldCardAnyPlayer(cardId);
-    if (!result) return;
+    if (!result) {
+      console.log('Card not found on battlefield');
+      return;
+    }
 
     // Remove from battlefield
     const playerState = this.gameState[owner];
+    console.log('Player state:', playerState, 'Owner:', owner);
+
+    if (!playerState) {
+      console.error('Player state not found for owner:', owner);
+      return;
+    }
+
     for (const zone of ['lands', 'creatures', 'others']) {
       const index = playerState.battlefield[zone].findIndex(c => c.id === cardId);
       if (index !== -1) {
         const card = playerState.battlefield[zone].splice(index, 1)[0];
         playerState.graveyard.push(card);
+        console.log('Card moved to graveyard:', card.name);
         this.uiManager.updateAll();
         this.uiManager.showToast(`${card.name} moved to graveyard`, 'info');
         this.removeExistingMenus();
         return;
       }
     }
+    console.log('Card not found in any battlefield zone');
   },
 
   moveToExileByOwner(cardId, owner) {

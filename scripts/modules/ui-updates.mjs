@@ -6,9 +6,10 @@
 import { CardImageService } from '/src/services/cardImageService.mjs';
 
 export class UIManager {
-  constructor(gameState, cardMechanics) {
+  constructor(gameState, cardMechanics, delirium = null) {
     this.gameState = gameState;
     this.cardMechanics = cardMechanics;
+    this.delirium = delirium;
   }
 
   // Toast notifications
@@ -137,7 +138,7 @@ export class UIManager {
     if (!turnIndicator) return;
 
     const { activePlayer, phase, turnNumber } = this.gameState.turnState;
-    const playerName = activePlayer === 'player' ? 'Your Turn' : 'Opponent\'s Turn';
+    const playerName = activePlayer === 'player' ? 'Player 1' : 'Player 2';
 
     const phaseNames = {
       beginning: 'Beginning Phase',
@@ -154,16 +155,82 @@ export class UIManager {
         <span class="turn-phase">${phaseNames[phase] || phase}</span>
       </div>
     `;
+
+    // Update End Turn button state
+    this.updateEndTurnButtonState();
+  }
+
+  updateEndTurnButtonState() {
+    const endTurnButton = document.getElementById('endTurnButton');
+    if (!endTurnButton) return;
+
+    // Check if there are cards with upkeep triggers on the battlefield
+    const hasUpkeepTriggers = this.checkForUpkeepTriggers();
+
+    if (hasUpkeepTriggers) {
+      endTurnButton.classList.add('has-triggers');
+      endTurnButton.title = '⏭️ End Turn (Triggers Delver/Upkeep effects)';
+    } else {
+      endTurnButton.classList.remove('has-triggers');
+      endTurnButton.title = '⏭️ End Turn';
+    }
+  }
+
+  checkForUpkeepTriggers() {
+    // Cards that have upkeep triggers
+    const upkeepCards = [
+      'delver of secrets',
+      'huntmaster of the fells',
+      'garruk relentless',
+      'jace, vryn\'s prodigy',
+      'thing in the ice',
+      'pyromancer ascension',
+      'dark depths'
+    ];
+
+    // Check both players' battlefields
+    const players = [this.gameState.player, this.gameState.opponent];
+
+    for (const player of players) {
+      const allPermanents = [
+        ...player.battlefield.creatures,
+        ...player.battlefield.lands,
+        ...player.battlefield.others
+      ];
+
+      for (const card of allPermanents) {
+        const cardName = (card.name || '').toLowerCase();
+        const currentFace = (card.currentFace || card.name || '').toLowerCase();
+
+        // Check if this is a card with upkeep triggers in its untransformed state
+        if (upkeepCards.some(trigger => cardName.includes(trigger) || currentFace.includes(trigger))) {
+          // For Delver, only trigger if it's still untransformed
+          if (cardName.includes('delver of secrets') && currentFace === 'delver of secrets') {
+            return true;
+          }
+          // For Huntmaster, only if untransformed
+          if (cardName.includes('huntmaster') && currentFace.includes('huntmaster')) {
+            return true;
+          }
+          // For other transform cards
+          if (!cardName.includes('delver') && !cardName.includes('huntmaster')) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
   }
 
   // Life total displays
   updateLifeDisplay(playerName = 'player') {
-    const lifeId = playerName === 'player' ? 'playerLifeTotal' : 'opponentLifeTotal';
+    const lifeId = playerName === 'player' ? 'lifeTotal2' : 'opponentLife2';
     const lifeElement = document.getElementById(lifeId);
 
     if (lifeElement) {
       const playerState = this.gameState.getPlayerState(playerName);
-      lifeElement.textContent = playerState.life;
+      lifeElement.textContent = playerState.gameStats.life;
     }
   }
 
@@ -245,6 +312,11 @@ export class UIManager {
       if (container && playerState[zoneName]) {
         console.log('Rendering', playerState[zoneName].length, 'cards to', containerId);
         this.renderCards(container, playerState[zoneName], `${playerName}-${zoneName}`);
+
+        // Update delirium indicator when player graveyard changes
+        if (zoneName === 'graveyard' && playerName === 'player' && this.delirium) {
+          this.delirium.updateDeliriumIndicator();
+        }
       } else {
         console.warn('Cannot render zone - container:', !!container, 'zone data:', !!playerState[zoneName]);
       }
@@ -261,11 +333,21 @@ export class UIManager {
 
     // Determine if this is a hand zone or battlefield/other zone
     const isHandZone = zoneId.includes('hand') || container.id.includes('hand') || container.id.includes('Hand');
+    const isBattlefieldZone = zoneId.includes('battlefield');
     const cardClass = isHandZone ? 'card-hand' : 'zone-card';
 
     container.innerHTML = cards.map((card, index) => {
       const isRecentlyDrawn = card.recentlyDrawn || false;
       const highlightStyle = isRecentlyDrawn ? 'box-shadow: 0 0 15px 3px #fbbf24; border: 2px solid #fbbf24;' : '';
+
+      // Use currentFace if card is transformed, otherwise use name
+      const displayName = card.currentFace || card.name;
+
+      // Check for Dragon's Rage Channeler delirium indicator
+      const isDRC = isBattlefieldZone && card.name.toLowerCase().includes("dragon's rage channeler");
+      const hasDelirium = this.delirium && this.delirium.checkDelirium(this.gameState.player.graveyard);
+      const deliriumBadge = isDRC && hasDelirium ?
+        `<div class="delirium-indicator" style="position: absolute; top: 24px; left: 2px; background: rgba(34, 197, 94, 0.95); border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: bold; color: white; z-index: 100; pointer-events: none;" title="Delirium active: +1/+0, Flying">🌀</div>` : '';
 
       return `
       <div class="${cardClass} ${isRecentlyDrawn ? 'recently-drawn' : ''}"
@@ -277,16 +359,17 @@ export class UIManager {
         ${index < 9 && isHandZone ? `<div class="card-number" style="position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.8); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; z-index: 10;">${index + 1}</div>` : ''}
         ${isRecentlyDrawn && isHandZone ? `<div class="recently-drawn-badge" style="position: absolute; top: 5px; right: 5px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: bold; z-index: 10;">NEW</div>` : ''}
         <div class="card-content">
-          <div class="card-image-container">
+          <div class="card-image-container" style="position: relative;">
             <img class="card-image-lazy"
-                 data-card-name="${this.escapeHtml(card.name)}"
+                 data-card-name="${this.escapeHtml(displayName)}"
                  ${card.imageUrl ? `data-image-url="${this.escapeHtml(card.imageUrl)}"` : ''}
-                 alt="${this.escapeHtml(card.name)}"
+                 alt="${this.escapeHtml(displayName)}"
                  loading="lazy">
             <div class="loading-placeholder">🎴</div>
+            ${deliriumBadge}
           </div>
           <div class="card-info">
-            <div class="card-name">${this.escapeHtml(card.name)}</div>
+            <div class="card-name">${this.escapeHtml(displayName)}</div>
             <div class="card-details">
               <div class="card-cost">${this.escapeHtml(card.cost || '0')}</div>
               <div class="card-type">${this.escapeHtml(this.getCardMainType(card.type || 'Unknown'))}</div>
@@ -355,6 +438,13 @@ export class UIManager {
 
   playCardFromHand(cardId, cardName) {
     console.log('playCardFromHand:', cardId, cardName);
+
+    // Check if this is an adventure card
+    if (window.handSimulator && window.handSimulator.hasAdventure && window.handSimulator.hasAdventure(cardName)) {
+      window.handSimulator.showAdventureUI(cardId, cardName);
+      return;
+    }
+
     // Try to call the main simulator's method if available
     if (window.handSimulator && typeof window.handSimulator.playCardDirectly === 'function') {
       window.handSimulator.playCardDirectly(cardId);
@@ -562,11 +652,21 @@ export class UIManager {
 
   // Deck selector updates
   updateDeckSelector(deckPath, deckName) {
+    // Update both the old selector (if exists) and modal selector
     const quickDeckSelect = document.getElementById('quickDeckSelect');
+    const deckSelectModal = document.getElementById('deckSelectModal');
+
     if (quickDeckSelect) {
       const option = Array.from(quickDeckSelect.options).find(opt => opt.value === deckPath);
       if (option) {
         quickDeckSelect.value = deckPath;
+      }
+    }
+
+    if (deckSelectModal) {
+      const option = Array.from(deckSelectModal.options).find(opt => opt.value === deckPath);
+      if (option) {
+        deckSelectModal.value = deckPath;
       }
     }
 
@@ -580,11 +680,21 @@ export class UIManager {
   }
 
   updateOpponentDeckSelector(deckPath, deckName) {
+    // Update both the old selector (if exists) and modal selector
     const opponentDeckSelect = document.getElementById('opponentDeckSelectTop');
+    const opponentDeckSelectModal = document.getElementById('opponentDeckSelectModal');
+
     if (opponentDeckSelect) {
       const option = Array.from(opponentDeckSelect.options).find(opt => opt.value === deckPath);
       if (option) {
         opponentDeckSelect.value = deckPath;
+      }
+    }
+
+    if (opponentDeckSelectModal) {
+      const option = Array.from(opponentDeckSelectModal.options).find(opt => opt.value === deckPath);
+      if (option) {
+        opponentDeckSelectModal.value = deckPath;
       }
     }
 
@@ -646,10 +756,14 @@ export class UIManager {
     const playerLibraryCount2 = document.getElementById('playerLibraryCount2');
     const opponentLibraryCount2 = document.getElementById('opponentLibraryCount2');
     const libraryCountDisplay = document.getElementById('libraryCountDisplay');
+    const playerLibraryButtonCount = document.getElementById('playerLibraryButtonCount');
+    const opponentLibraryButtonCount = document.getElementById('opponentLibraryButtonCount');
 
     if (playerLibraryCount2) playerLibraryCount2.textContent = playerState.library.length;
     if (opponentLibraryCount2) opponentLibraryCount2.textContent = opponentState.library.length;
     if (libraryCountDisplay) libraryCountDisplay.textContent = playerState.library.length;
+    if (playerLibraryButtonCount) playerLibraryButtonCount.textContent = playerState.library.length;
+    if (opponentLibraryButtonCount) opponentLibraryButtonCount.textContent = opponentState.library.length;
 
     // Update graveyard counts
     const graveyardCount = document.getElementById('graveyardCount');

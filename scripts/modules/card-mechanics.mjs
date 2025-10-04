@@ -235,6 +235,38 @@ export class CardMechanics {
     return totalCost;
   }
 
+  // Get generic mana cost (for delve)
+  getGenericManaCost(cost) {
+    if (!cost) return 0;
+
+    // Handle simple numeric costs first
+    const simpleNumber = parseInt(cost);
+    if (!isNaN(simpleNumber)) {
+      return simpleNumber;
+    }
+
+    let genericCost = 0;
+
+    // Handle MTG format with curly braces like {2}{U} - only count the {2} part
+    const numbers = cost.match(/\{(\d+)\}/g);
+    if (numbers) {
+      numbers.forEach(num => {
+        const value = parseInt(num.replace(/[{}]/g, ''));
+        if (!isNaN(value)) genericCost += value;
+      });
+    }
+
+    // Handle simple letter format with numeric prefix (like "2U")
+    if (genericCost === 0) {
+      const numericPart = cost.match(/^(\d+)/);
+      if (numericPart) {
+        genericCost += parseInt(numericPart[1]);
+      }
+    }
+
+    return genericCost;
+  }
+
   // Card type checking
   isCreature(card) {
     return card.type && card.type.toLowerCase().includes('creature');
@@ -338,5 +370,11 @@ export class CardMechanics {
   // Get DFC data from the database
   getDFCData(cardName) {
     return DFC_DATABASE[cardName.toLowerCase()];
+  }
+
+  // Cascade detection
+  hasCascade(card) {
+    if (!card.text) return false;
+    return card.text.toLowerCase().includes('cascade');
   }
 }

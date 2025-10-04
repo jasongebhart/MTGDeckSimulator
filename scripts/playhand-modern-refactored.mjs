@@ -10,13 +10,16 @@ import { loadXMLDoc, getCardNameXML } from './config.mjs';
 import { GameState } from './modules/game-state.mjs';
 import { CardMechanics, DFC_DATABASE } from './modules/card-mechanics.mjs';
 import { UIManager } from './modules/ui-updates.mjs';
-import { CombatManager } from './modules/combat.mjs';
+import { EnhancedCombatManager } from './modules/combat-enhanced.mjs';
 import { CoreMethods } from './modules/core-methods.mjs';
 import { LibraryModals } from './modules/library-modals.mjs';
 import { TriggeredAbilities } from './modules/triggered-abilities.mjs';
 import { Fetchlands } from './modules/fetchlands.mjs';
 import { OpponentMethods } from './modules/opponent-methods.mjs';
 import { ContextMenus } from './modules/context-menus.mjs';
+import { Planeswalker } from './modules/planeswalker.mjs';
+import { Adventure } from './modules/adventure.mjs';
+import { Delirium } from './modules/delirium.mjs';
 
 class ModernHandSimulator {
   constructor() {
@@ -28,8 +31,9 @@ class ModernHandSimulator {
     // Initialize modular systems
     this.gameState = new GameState();
     this.cardMechanics = new CardMechanics(this.gameState);
-    this.uiManager = new UIManager(this.gameState, this.cardMechanics);
-    this.combatManager = new CombatManager(this.gameState, this.cardMechanics, this.uiManager);
+    this.delirium = new Delirium(this.gameState);
+    this.uiManager = new UIManager(this.gameState, this.cardMechanics, this.delirium);
+    this.combatManager = new EnhancedCombatManager(this.gameState, this.cardMechanics, this.uiManager);
 
     // Connect uiManager back to gameState for game log updates
     this.gameState.uiManager = this.uiManager;
@@ -167,59 +171,35 @@ class ModernHandSimulator {
       this.setupKeyboardShortcuts();
       this.populatePredefinedDecks();
       this.setupZoneTabs();
-      this.uiManager.showEmptyState();
-      this.waitForDeckSelector();
+      // Don't show empty state - default deck will load automatically
+      this.loadDefaultDeck();
     }, 500);
   }
 
-  async waitForDeckSelector() {
-    let attempts = 0;
-    const maxAttempts = 20;
-
-    const checkDeckSelector = () => {
-      attempts++;
-
-      if (window.getSelectedDeck && typeof window.getSelectedDeck === 'function') {
-        this.loadDefaultDeck();
-      } else if (attempts < maxAttempts) {
-        setTimeout(checkDeckSelector, 100);
-      } else {
-        this.loadPredefinedDeck('./decks/classic/affinity.xml');
-      }
-    };
-
-    checkDeckSelector();
-  }
-
   async loadDefaultDeck() {
-    setTimeout(() => {
-      this.loadDefaultOpponentDeckFromStorage();
+    // Load opponent deck after a delay to ensure proper initialization
+    setTimeout(async () => {
+      await this.loadDefaultOpponentDeckFromStorage();
       this.updateOpponentDeckSelectorLabels();
     }, 1500);
 
+    // Don't load if already loaded
     if (this.currentDeck) return;
 
+    // Try to load saved default deck from localStorage
     const savedDefault = localStorage.getItem('mtg_default_deck');
+
     if (savedDefault) {
       try {
-        await this.loadPredefinedDeck(savedDefault);
+        await this.loadDeck(savedDefault);
         return;
       } catch (error) {
         console.error('Failed to load saved default:', error);
       }
     }
 
-    try {
-      const selectedDeck = window.getSelectedDeck();
-      if (selectedDeck && selectedDeck !== '') {
-        this.loadPredefinedDeck(selectedDeck);
-      } else {
-        this.loadPredefinedDeck('./decks/classic/affinity.xml');
-      }
-    } catch (error) {
-      console.error('Error getting selected deck:', error);
-      this.loadPredefinedDeck('./decks/classic/affinity.xml');
-    }
+    // Fallback: load affinity if no default was saved or loading failed
+    this.loadDeck('./decks/classic/affinity.xml');
   }
 
   setupTheme() {
@@ -449,6 +429,13 @@ class ModernHandSimulator {
     document.addEventListener('keydown', (e) => {
       // Prevent shortcuts when typing in inputs
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      // Number keys (1-7) - Play card from hand by position
+      if (e.key >= '1' && e.key <= '7') {
+        const position = parseInt(e.key) - 1; // Convert to 0-indexed
+        this.playCardByPosition(position);
+        return;
+      }
 
       // D - Draw card
       if (e.key === 'd' || e.key === 'D') {
@@ -1007,14 +994,30 @@ class ModernHandSimulator {
     console.log('Enhanced UI initialized');
   }
 
-  loadDefaultOpponentDeckFromStorage() {
-    console.log('loadDefaultOpponentDeckFromStorage - stub method, needs implementation from original');
-    // TODO: Copy implementation from original file
+  async loadDefaultOpponentDeckFromStorage() {
+    return await this.tryLoadDefaultOpponentDeck();
   }
 
   updateOpponentDeckSelectorLabels() {
-    console.log('updateOpponentDeckSelectorLabels - stub method, needs implementation from original');
-    // TODO: Copy implementation from original file
+    const defaultDeck = localStorage.getItem('mtg_default_opponent_deck');
+    if (!defaultDeck) return;
+
+    const opponentDeckSelect = document.getElementById('opponentDeckSelectTop');
+    const opponentDeckSelectModal = document.getElementById('opponentDeckSelectModal');
+
+    [opponentDeckSelect, opponentDeckSelectModal].forEach(select => {
+      if (select) {
+        Array.from(select.options).forEach(option => {
+          if (option.value === defaultDeck) {
+            if (!option.textContent.includes('⭐')) {
+              option.textContent = `⭐ ${option.textContent}`;
+            }
+          } else {
+            option.textContent = option.textContent.replace('⭐ ', '');
+          }
+        });
+      }
+    });
   }
 
   playerTargetClickListener(event) {
@@ -1301,18 +1304,82 @@ class ModernHandSimulator {
     const card = this.hand[cardIndex];
     console.log('Found card:', card);
 
-    // Play the card
-    this.playCard(card);
+    // Check for delve
+    if (this.delirium.hasDelve(card)) {
+      const genericCost = this.cardMechanics.getGenericManaCost(card.cost);
 
-    // Remove from hand
-    this.hand.splice(cardIndex, 1);
+      this.delirium.startDelveSelection(card, genericCost, (reduction, exiledCards) => {
+        // After delve selection, play the card
+        this.playCard(card);
 
-    // Update displays
-    this.uiManager.updateZoneDisplay('hand', 'player');
-    this.uiManager.updateZoneDisplay('battlefield', 'player');
-    this.updateUI();
+        // Remove from hand
+        this.hand.splice(cardIndex, 1);
 
-    this.uiManager.showToast(`Played ${card.name}`, 'success');
+        // Update displays
+        this.uiManager.updateZoneDisplay('hand', 'player');
+        this.uiManager.updateZoneDisplay('battlefield', 'player');
+        this.uiManager.updateZoneDisplay('graveyard', 'player');
+        this.uiManager.updateZoneDisplay('exile', 'player');
+        this.updateUI();
+
+        if (reduction > 0) {
+          this.uiManager.showToast(`Played ${card.name} (Delved ${reduction} cards)`, 'success');
+        } else {
+          this.uiManager.showToast(`Played ${card.name}`, 'success');
+        }
+
+        // Check for cascade AFTER playing the card
+        if (this.cardMechanics.hasCascade(card)) {
+          setTimeout(() => this.showCascadeInterface(card, 'player'), 100);
+        }
+      });
+    } else {
+      // Play the card normally
+      this.playCard(card);
+
+      // Remove from hand
+      this.hand.splice(cardIndex, 1);
+
+      // Update displays
+      this.uiManager.updateZoneDisplay('hand', 'player');
+      this.uiManager.updateZoneDisplay('battlefield', 'player');
+      this.updateUI();
+
+      this.uiManager.showToast(`Played ${card.name}`, 'success');
+
+      // Check for cascade AFTER playing the card
+      if (this.cardMechanics.hasCascade(card)) {
+        setTimeout(() => this.showCascadeInterface(card, 'player'), 100);
+      }
+    }
+  }
+
+  playCardByPosition(position) {
+    // Play card from hand by its visual position (number in corner)
+    // Use active player from turn state
+    const activePlayer = this.gameState.turnState?.activePlayer || 'player';
+    const hand = activePlayer === 'player' ? this.gameState.player.hand : this.gameState.opponent.hand;
+    const playerLabel = activePlayer === 'player' ? 'Player 1' : 'Player 2';
+
+    if (position < 0 || position >= hand.length) {
+      this.uiManager.showToast(`${playerLabel}: No card at position ${position + 1}`, 'warning');
+      return;
+    }
+
+    const card = hand[position];
+    if (!card) {
+      this.uiManager.showToast(`${playerLabel}: No card at position ${position + 1}`, 'warning');
+      return;
+    }
+
+    // Get the card's ID for the appropriate play function
+    const cardId = card.id || `${card.name}_${position}`;
+
+    if (activePlayer === 'player') {
+      this.playCardDirectly(cardId);
+    } else {
+      this.playOpponentCardDirectly(cardId);
+    }
   }
 
   playOpponentCardDirectly(cardId, _event) {
@@ -1364,6 +1431,11 @@ class ModernHandSimulator {
       // Artifacts, enchantments, planeswalkers, etc. stay on battlefield
       battlefield.others.push(card);
       if (playerState.gameStats) playerState.gameStats.spellsCast++;
+
+      // Initialize planeswalker with loyalty counters
+      if (this.cardMechanics.isPlaneswalker(card)) {
+        this.initializePlaneswalker(card);
+      }
     }
   }
 
@@ -1953,6 +2025,8 @@ Object.assign(ModernHandSimulator.prototype, TriggeredAbilities);
 Object.assign(ModernHandSimulator.prototype, Fetchlands);
 Object.assign(ModernHandSimulator.prototype, OpponentMethods);
 Object.assign(ModernHandSimulator.prototype, ContextMenus);
+Object.assign(ModernHandSimulator.prototype, Planeswalker);
+Object.assign(ModernHandSimulator.prototype, Adventure);
 
 // Initialize when DOM is loaded
 if (document.readyState === 'loading') {

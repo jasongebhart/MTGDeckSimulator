@@ -171,6 +171,37 @@ class ModernUI {
       }
     });
 
+    // Edit mode buttons
+    const editDeckButton = document.getElementById('editDeckButton');
+    const cancelEditButton = document.getElementById('cancelEditButton');
+    const saveDeckButton = document.getElementById('saveDeckButton');
+    const addCardButton = document.getElementById('addCardButton');
+    const closeSearchButton = document.getElementById('closeSearchButton');
+    const cardSearchInput = document.getElementById('cardSearchInput');
+
+    if (editDeckButton) {
+      editDeckButton.addEventListener('click', () => this.enterEditMode());
+    }
+    if (cancelEditButton) {
+      cancelEditButton.addEventListener('click', () => this.exitEditMode());
+    }
+    if (saveDeckButton) {
+      saveDeckButton.addEventListener('click', () => this.saveDeckChanges());
+    }
+    if (addCardButton) {
+      addCardButton.addEventListener('click', () => this.toggleAddCardPanel());
+    }
+    if (closeSearchButton) {
+      closeSearchButton.addEventListener('click', () => this.toggleAddCardPanel());
+    }
+    if (cardSearchInput) {
+      let searchTimeout;
+      cardSearchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => this.searchCards(e.target.value), 300);
+      });
+    }
+
     // FAB button
     const fabButton = document.getElementById('fabButton');
     if (fabButton) {
@@ -674,7 +705,23 @@ class ModernUI {
     const sortedCards = [...deck.cards].sort((a, b) => a.name.localeCompare(b.name));
 
     // Create initial layout without images
-    container.innerHTML = sortedCards.map((card, index) => `
+    container.innerHTML = sortedCards.map((card, index) => {
+      const quantity = card.quantity || 1;
+
+      // Edit mode controls
+      const quantityDisplay = this.isEditMode ? `
+        <div class="card-quantity-controls" style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn btn-sm btn-secondary" onclick="window.modernUI.changeCardQuantity('${this.escapeHtml(card.name).replace(/'/g, "\\'")}', -1)" style="padding: 4px 8px;">−</button>
+          <span style="min-width: 30px; text-align: center; font-weight: 600;">${quantity}x</span>
+          <button class="btn btn-sm btn-secondary" onclick="window.modernUI.changeCardQuantity('${this.escapeHtml(card.name).replace(/'/g, "\\'")}', 1)" style="padding: 4px 8px;">+</button>
+        </div>
+      ` : `
+        <div class="card-quantity">
+          ${quantity}x
+        </div>
+      `;
+
+      return `
       <div class="card-list-item" style="animation-delay: ${index * 0.05}s" data-card-name="${this.escapeHtml(card.name)}">
         <div class="card-image-container" style="width: 100px; height: 140px; background: var(--bg-tertiary); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; margin-right: var(--space-4); flex-shrink: 0;">
           <div class="loading-placeholder" style="font-size: 0.75rem; color: var(--text-muted);">📷</div>
@@ -686,11 +733,10 @@ class ModernUI {
             ${card.type ? `<span>Type: ${this.escapeHtml(card.type)}</span>` : ''}
           </div>
         </div>
-        <div class="card-quantity">
-          ${card.quantity || 1}x
-        </div>
+        ${quantityDisplay}
       </div>
-    `).join('');
+      `;
+    }).join('');
 
     // Add staggered animation class and click/hover handlers
     setTimeout(() => {
@@ -700,7 +746,7 @@ class ModernUI {
         const cardName = item.getAttribute('data-card-name');
         const imageContainer = item.querySelector('.card-image-container');
 
-        if (imageContainer) {
+        if (imageContainer && !imageContainer.dataset.listenersAttached) {
           // Click handler for card preview modal
           imageContainer.addEventListener('click', () => {
             this.showCardPreview(cardName);
@@ -719,6 +765,9 @@ class ModernUI {
             clearTimeout(hoverTimeout);
             this.hideHoverPreview();
           });
+
+          // Mark as having listeners to prevent duplicates
+          imageContainer.dataset.listenersAttached = 'true';
         }
       });
     }, 100);
@@ -1131,7 +1180,10 @@ class ModernUI {
     const previewCardImage = document.getElementById('previewCardImage');
     const previewCardInfo = document.getElementById('previewCardInfo');
 
-    if (!modal || !previewCardName || !previewCardImage || !previewCardInfo) return;
+    if (!modal || !previewCardName || !previewCardImage || !previewCardInfo) {
+      console.warn('Card preview modal elements not found');
+      return;
+    }
 
     // Show modal with loading state
     previewCardName.textContent = cardName;
@@ -1141,18 +1193,49 @@ class ModernUI {
     modal.style.display = 'flex';
     modal.classList.add('fade-in');
 
+    // Add show class to modal-content to make it visible
+    const modalContent = modal.querySelector('.modal-content');
+    if (modalContent) {
+      setTimeout(() => {
+        modalContent.classList.add('show');
+      }, 10); // Small delay to trigger animation
+    }
+
+    // Ensure close handlers are attached (re-attach each time to be safe)
+    this.attachModalCloseHandlers();
+
     try {
       // Get high-quality image and card data
+      console.log('Fetching large image for:', cardName);
       const imageUrl = await CardImageService.getCardImageUrl(cardName, 'large');
+      console.log('Image URL received:', imageUrl ? imageUrl.substring(0, 100) : 'null');
+
       const cached = CardImageService.CARD_CACHE.get(`${cardName}-large`);
 
       // Update image
-      if (imageUrl && !imageUrl.startsWith('data:')) {
+      if (imageUrl) {
+        // Set image source first
         previewCardImage.src = imageUrl;
-        previewCardImage.style.display = 'block';
+
+        // Force display with !important-like inline styling
+        previewCardImage.setAttribute('style', 'display: block !important; max-width: 100%; width: auto; height: auto; border-radius: var(--border-radius); margin: 0 auto;');
+
+        // Add load handler to check if image loads
+        previewCardImage.onload = () => {
+          console.log('Card image loaded successfully');
+          console.log('Image dimensions:', previewCardImage.naturalWidth, 'x', previewCardImage.naturalHeight);
+          console.log('Image display style:', window.getComputedStyle(previewCardImage).display);
+          console.log('Image visibility:', window.getComputedStyle(previewCardImage).visibility);
+        };
+
+        previewCardImage.onerror = (err) => {
+          console.error('Failed to load card image:', err);
+          previewCardInfo.innerHTML = '<div class="text-danger">Failed to load card image</div>';
+        };
       } else {
-        previewCardImage.src = imageUrl;
-        previewCardImage.style.display = 'block';
+        console.warn('No image URL received');
+        previewCardImage.style.display = 'none';
+        previewCardInfo.innerHTML = '<div class="text-warning">No image available for this card</div>';
       }
 
       // Update card info
@@ -1176,19 +1259,60 @@ class ModernUI {
       } else {
         previewCardInfo.innerHTML = `
           <div class="text-muted">
-            Card details will be available after the image loads.
+            ${imageUrl ? 'Image loading...' : 'Searching for card...'}
           </div>
         `;
       }
     } catch (error) {
       console.error('Error showing card preview:', error);
-      previewCardInfo.innerHTML = '<div class="text-danger">Failed to load card details</div>';
+      previewCardImage.style.display = 'none';
+      previewCardInfo.innerHTML = `<div class="text-danger">Failed to load card: ${error.message}</div>`;
     }
+  }
+
+  attachModalCloseHandlers() {
+    const modal = document.getElementById('cardPreviewModal');
+    const closeButton = document.getElementById('closeCardPreview');
+
+    if (closeButton && !closeButton.dataset.listenerAttached) {
+      closeButton.addEventListener('click', () => {
+        console.log('Close button clicked');
+        this.hideCardPreview();
+      });
+      closeButton.dataset.listenerAttached = 'true';
+    }
+
+    if (modal && !modal.dataset.listenerAttached) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          console.log('Modal overlay clicked');
+          this.hideCardPreview();
+        }
+      });
+      modal.dataset.listenerAttached = 'true';
+    }
+
+    // Add Escape key handler
+    const escapeHandler = (e) => {
+      if (e.key === 'Escape') {
+        this.hideCardPreview();
+        document.removeEventListener('keydown', escapeHandler);
+      }
+    };
+    document.addEventListener('keydown', escapeHandler);
   }
 
   hideCardPreview() {
     const modal = document.getElementById('cardPreviewModal');
     if (modal) {
+      console.log('Hiding card preview modal');
+      const modalContent = modal.querySelector('.modal-content');
+
+      // Remove show class for hide animation
+      if (modalContent) {
+        modalContent.classList.remove('show');
+      }
+
       modal.classList.remove('fade-in');
       setTimeout(() => {
         modal.style.display = 'none';
@@ -1304,11 +1428,226 @@ class ModernUI {
       existing.remove();
     }
   }
+
+  // ===== DECK EDITING METHODS =====
+
+  enterEditMode() {
+    this.isEditMode = true;
+    this.originalDeck = JSON.parse(JSON.stringify(this.currentDeck)); // Deep clone for cancel
+
+    // Toggle button visibility
+    document.getElementById('viewModeControls').style.display = 'none';
+    document.getElementById('editModeControls').style.display = 'flex';
+
+    // Update subtitle
+    document.getElementById('cardListSubtitle').textContent = 'Edit mode - Add, remove, or change quantities';
+
+    // Re-render card list with edit controls
+    this.renderCardList();
+
+    this.showToast('Edit mode activated', 'info');
+  }
+
+  exitEditMode() {
+    this.isEditMode = false;
+
+    // Restore original deck
+    this.currentDeck = this.originalDeck;
+
+    // Toggle button visibility
+    document.getElementById('viewModeControls').style.display = 'flex';
+    document.getElementById('editModeControls').style.display = 'none';
+
+    // Hide add card panel
+    document.getElementById('addCardPanel').style.display = 'none';
+
+    // Update subtitle
+    document.getElementById('cardListSubtitle').textContent = 'All cards in your deck';
+
+    // Re-render card list without edit controls
+    this.renderCardList();
+
+    this.showToast('Changes cancelled', 'info');
+  }
+
+  toggleAddCardPanel() {
+    const panel = document.getElementById('addCardPanel');
+    const searchInput = document.getElementById('cardSearchInput');
+
+    if (panel.style.display === 'none') {
+      panel.style.display = 'block';
+      searchInput.focus();
+    } else {
+      panel.style.display = 'none';
+      searchInput.value = '';
+      document.getElementById('searchResults').innerHTML = '';
+    }
+  }
+
+  async searchCards(query) {
+    if (!query || query.length < 2) {
+      document.getElementById('searchResults').innerHTML = '';
+      return;
+    }
+
+    const resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = '<div style="padding: 8px; color: var(--text-muted);">Searching...</div>';
+
+    try {
+      // Use Scryfall autocomplete API
+      const response = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
+
+      if (data.data && data.data.length > 0) {
+        const resultsHTML = data.data.slice(0, 10).map(cardName => `
+          <div class="search-result-item"
+               style="padding: 8px; cursor: pointer; border-bottom: 1px solid var(--border-color); transition: background 0.2s;"
+               onmouseover="this.style.background='var(--bg-secondary)'"
+               onmouseout="this.style.background='transparent'"
+               onclick="window.modernUI.addCardToDeck('${cardName.replace(/'/g, "\\'")}')">
+            ${cardName}
+          </div>
+        `).join('');
+        resultsContainer.innerHTML = resultsHTML;
+      } else {
+        resultsContainer.innerHTML = '<div style="padding: 8px; color: var(--text-muted);">No cards found</div>';
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+      resultsContainer.innerHTML = '<div style="padding: 8px; color: var(--error);">Search failed</div>';
+    }
+  }
+
+  async addCardToDeck(cardName) {
+    // Find if card already exists
+    const existingCard = this.currentDeck.cards.find(c => c.name === cardName);
+
+    if (existingCard) {
+      existingCard.quantity = (existingCard.quantity || 1) + 1;
+      this.showToast(`Added another ${cardName} (now ${existingCard.quantity}x)`, 'success');
+    } else {
+      // Fetch card details from Scryfall
+      try {
+        const response = await fetch(`https://api.scryfall.com/cards/named?exact=${encodeURIComponent(cardName)}`);
+        const cardData = await response.json();
+
+        this.currentDeck.cards.push({
+          name: cardName,
+          quantity: 1,
+          cost: cardData.mana_cost || '0',
+          type: cardData.type_line || 'Unknown',
+          colors: cardData.colors || [],
+          cmc: cardData.cmc || 0
+        });
+
+        this.showToast(`Added ${cardName} to deck`, 'success');
+      } catch (error) {
+        console.error('Error fetching card details:', error);
+        // Add with minimal info
+        this.currentDeck.cards.push({
+          name: cardName,
+          quantity: 1,
+          cost: '0',
+          type: 'Unknown',
+          colors: [],
+          cmc: 0
+        });
+        this.showToast(`Added ${cardName} (details unavailable)`, 'warning');
+      }
+    }
+
+    // Update displays
+    this.renderCardList();
+    this.updateDeckStats();
+
+    // Clear search
+    document.getElementById('cardSearchInput').value = '';
+    document.getElementById('searchResults').innerHTML = '';
+  }
+
+  changeCardQuantity(cardName, delta) {
+    const card = this.currentDeck.cards.find(c => c.name === cardName);
+    if (!card) return;
+
+    card.quantity = (card.quantity || 1) + delta;
+
+    if (card.quantity <= 0) {
+      // Remove card from deck
+      this.currentDeck.cards = this.currentDeck.cards.filter(c => c.name !== cardName);
+      this.showToast(`Removed ${cardName} from deck`, 'info');
+    } else if (card.quantity > 4) {
+      // Warn about 4-of limit
+      card.quantity = 4;
+      this.showToast(`Maximum 4 copies of ${cardName}`, 'warning');
+    }
+
+    // Update displays
+    this.renderCardList();
+    this.updateDeckStats();
+  }
+
+  saveDeckChanges() {
+    // Generate XML from current deck
+    const xml = this.generateDeckXML();
+
+    // Download as file
+    const blob = new Blob([xml], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${this.currentDeck.name.replace(/\s+/g, '_')}_edited.xml`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    this.showToast('Deck saved! Check your downloads.', 'success');
+
+    // Exit edit mode
+    this.exitEditMode();
+  }
+
+  generateDeckXML() {
+    const deckName = this.currentDeck.name || 'Custom Deck';
+
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    xml += '<deck>\n';
+    xml += `  <deckname>${this.escapeXml(deckName)}</deckname>\n`;
+    xml += '  <cards>\n';
+
+    this.currentDeck.cards.forEach(card => {
+      const quantity = card.quantity || 1;
+      for (let i = 0; i < quantity; i++) {
+        xml += `    <card>\n`;
+        xml += `      <cardname>${this.escapeXml(card.name)}</cardname>\n`;
+        xml += `      <cost>${this.escapeXml(card.cost)}</cost>\n`;
+        xml += `      <type>${this.escapeXml(card.type)}</type>\n`;
+        xml += `    </card>\n`;
+      }
+    });
+
+    xml += '  </cards>\n';
+    xml += '</deck>';
+
+    return xml;
+  }
+
+  escapeXml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
 }
+
+// Make instance globally accessible for onclick handlers
+window.modernUI = null;
 
 // Initialize when DOM is loaded
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => new ModernUI());
+  document.addEventListener('DOMContentLoaded', () => {
+    window.modernUI = new ModernUI();
+  });
 } else {
-  new ModernUI();
+  window.modernUI = new ModernUI();
 }

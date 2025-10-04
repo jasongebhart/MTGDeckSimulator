@@ -64,7 +64,7 @@
     <Card>
         <Name>Ponder</Name>
         <Quantity>4</Quantity>
-        <Type>Instant</Type>
+        <Type>Sorcery</Type>
         <Cost>U</Cost>
     </Card>
     <Card>

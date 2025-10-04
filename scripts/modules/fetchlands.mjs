@@ -180,7 +180,8 @@ export const Fetchlands = {
     // Pay life cost for fetchlands
     const lifeCost = this.getFetchlandLifeCost(fetchlandName);
     if (lifeCost > 0) {
-      currentPlayer.life -= lifeCost;
+      currentPlayer.gameStats.life -= lifeCost;
+      this.uiManager.updateLifeDisplay(this.gameState.turnState.activePlayer);
       this.gameState.addToGameLog(`Pay ${lifeCost} life for ${fetchlandName}`, 'info');
     }
 
@@ -246,7 +247,8 @@ export const Fetchlands = {
     // Pay the life cost
     const lifeCost = this.getFetchlandLifeCost(fetchlandName);
     if (lifeCost > 0) {
-      currentPlayer.life -= lifeCost;
+      currentPlayer.gameStats.life -= lifeCost;
+      this.uiManager.updateLifeDisplay(this.gameState.turnState.activePlayer);
       this.gameState.addToGameLog(`Pay ${lifeCost} life for ${fetchlandName}`, 'info');
     }
 

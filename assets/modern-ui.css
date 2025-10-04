@@ -124,7 +124,7 @@
 }
 
 /* Light theme variables */
-[data-theme="light"], :root {
+[data-theme="light"] {
   --bg-primary: var(--gray-50);
   --bg-secondary: white;
   --bg-tertiary: var(--gray-100);
@@ -132,6 +132,124 @@
   --text-secondary: var(--gray-700);
   --text-muted: var(--gray-500);
   --border-color: var(--gray-200);
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] .btn-success {
+  background: var(--success);
+  color: white;
+}
+
+[data-theme="dark"] .btn-danger {
+  background: var(--error);
+  color: white;
+}
+
+[data-theme="dark"] .btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+[data-theme="dark"] .btn-warning {
+  background: #d97706;
+  color: white;
+}
+
+[data-theme="dark"] .btn-info {
+  background: #0891b2;
+  color: white;
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .btn-outline-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .btn-outline-secondary:hover {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .btn-outline-primary {
+  background: transparent;
+  color: var(--primary-light);
+  border: 1px solid var(--primary);
+}
+
+[data-theme="dark"] .btn-outline-primary:hover {
+  background: var(--primary);
+  color: white;
+}
+
+[data-theme="dark"] .btn-outline-info {
+  background: transparent;
+  color: #22d3ee;
+  border: 1px solid #0891b2;
+}
+
+[data-theme="dark"] .btn-outline-info:hover {
+  background: #0891b2;
+  color: white;
+}
+
+[data-theme="dark"] .btn-outline-success {
+  background: transparent;
+  color: #4ade80;
+  border: 1px solid var(--success);
+}
+
+[data-theme="dark"] .btn-outline-success:hover {
+  background: var(--success);
+  color: white;
+}
+
+[data-theme="dark"] .card-cost,
+[data-theme="dark"] .card-type,
+[data-theme="dark"] .card-details {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .card {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .card-header {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .zone-counter {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .life-display,
+[data-theme="dark"] .life-total {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .deck-name,
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .card-subtitle {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: var(--text-primary) !important;
 }
 
 /* Reset & Base Styles */
@@ -176,13 +294,8 @@ body {
 .app-container:has(.play-controls-bar) {
   grid-template-areas:
     "header header"
-    "controls controls"
     "sidebar main";
-  grid-template-rows: var(--header-height) auto 1fr;
-}
-
-.play-controls-bar {
-  grid-area: controls;
+  grid-template-rows: var(--header-height) 1fr;
 }
 
 @media (max-width: 768px) {
@@ -249,7 +362,7 @@ body {
 /* Adjust main content when using play controls bar */
 .play-controls-bar + .app-sidebar ~ .app-main,
 .app-container:has(.play-controls-bar) .app-main {
-  padding-top: var(--space-4);
+  padding-top: 110px;
 }
 
 /* Modern Navigation */
@@ -886,6 +999,39 @@ body {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 193, 7, 0);
+  }
+}
+
+/* End Turn Button with Trigger Reminder */
+#endTurnButton.has-triggers {
+  animation: pulse-glow 2s infinite;
+  background: linear-gradient(135deg, var(--warning), #ff9800) !important;
+  border-color: var(--warning) !important;
+  position: relative;
+}
+
+#endTurnButton.has-triggers::after {
+  content: "🔄";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 0.75rem;
+  background: var(--warning);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-primary);
 }
 
 /* Ripple Effect */
@@ -3020,17 +3166,20 @@ body {
    ========================== */
 
 .play-controls-bar {
-  position: sticky;
+  position: fixed;
   top: var(--header-height);
-  z-index: 20;
+  left: 0;
+  right: 0;
+  z-index: 50;
   background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--primary);
   padding: var(--space-3) var(--space-4);
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: var(--space-3);
   flex-wrap: wrap;
   min-height: 48px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .controls-section {
@@ -5687,7 +5836,8 @@ body {
 }
 
 /* Tapped card styles */
-.zone-card.tapped {
+.zone-card.tapped,
+.zone-card[data-tapped="true"] {
   transform: rotate(90deg);
   opacity: 0.7;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -8620,3 +8770,77 @@ body {
   background-color: var(--primary);
   color: white;
 }
+
+/* Dropdown menus and advanced actions panels */
+.dropdown-menu,
+.advanced-actions-panel {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .dropdown-menu,
+[data-theme="dark"] .advanced-actions-panel {
+  background: var(--gray-800);
+  border-color: var(--gray-600);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .dropdown-menu .btn,
+[data-theme="dark"] .advanced-actions-panel .btn {
+  color: var(--text-primary);
+}
+
+/* ==============================================
+   Combat System Styles
+   ============================================== */
+
+/* Attackable creatures */
+.attackable {
+  border: 2px solid #10b981 !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.6) !important;
+  transform: translateY(-2px);
+  transition: all 0.2s ease;
+}
+
+.attackable:hover {
+  border-color: #059669 !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.8) !important;
+  transform: translateY(-4px);
+}
+
+/* Attacking creatures */
+.attacking {
+  border: 3px solid #ef4444 !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.8) !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Blocking creatures */
+.can-block {
+  border: 2px solid #3b82f6 !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.6) !important;
+  transition: all 0.2s ease;
+}
+
+.blocking {
+  border: 3px solid #1e40af !important;
+  box-shadow: 0 0 16px rgba(30, 64, 175, 0.8) !important;
+  background: rgba(30, 64, 175, 0.1) !important;
+}
+
+/* Combat panel */
+#combatPanel {
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

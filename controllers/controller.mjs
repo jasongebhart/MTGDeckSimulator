@@ -82,6 +82,20 @@ export function setupRoutes(app) {
     });
   });
 
+  // API endpoint to list all deck files dynamically
+  // MUST come before /api/v1/decks/:filename route
+  app.get('/api/v1/decks/list', async (req, res) => {
+    console.log('[API] /api/v1/decks/list endpoint hit');
+    try {
+      const decks = await scanDeckFiles();
+      console.log(`[API] Found ${decks.length} decks`);
+      res.json(decks);
+    } catch (error) {
+      console.error('[API] Error scanning deck files:', error);
+      res.status(500).json({ error: 'Failed to scan deck files' });
+    }
+  });
+
   const storage = multer.memoryStorage(); // Store the uploaded file in memory
   const upload = multer({
     storage: storage,
@@ -309,7 +323,8 @@ function processDeckData(parsedData, filename) {
     name: card.Name || card.name || card['@name'] || 'Unknown',
     quantity: parseInt(card.Quantity || card.quantity || card['@quantity'] || 1),
     cost: card.Cost || card.cost || card.manacost || card['@cost'] || '',
-    type: card.Type || card.type || card.cardtype || card['@type'] || ''
+    type: card.Type || card.type || card.cardtype || card['@type'] || '',
+    text: card.RulesText || card.rulestext || card.text || card['@text'] || ''
   }));
 
   const statistics = calculateDeckStatistics(processedCards);
@@ -454,4 +469,98 @@ function updateColorDistribution(colorDist, cost, quantity) {
       colorDist[color] = (colorDist[color] || 0) + (matches * quantity);
     }
   }
+}
+
+// Scan deck directories and return list of all decks
+async function scanDeckFiles() {
+  const decks = [];
+
+  // Directories to scan
+  const deckDirs = [
+    { path: './xml', folder: 'xml', category: 'Main' },
+    { path: './xml/legacy', folder: 'legacy', category: 'Legacy' },
+    { path: './decks/classic', folder: 'classic', category: 'Classic' },
+    { path: './xml/crimson_vow', folder: 'crimson_vow', category: 'Limited' },
+    { path: './xml/Brothers_War', folder: 'Brothers_War', category: 'Limited' },
+    { path: './decks/xml', folder: 'decks-xml', category: 'Main' }
+  ];
+
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: ''
+  });
+
+  for (const dir of deckDirs) {
+    try {
+      if (!fs.existsSync(dir.path)) continue;
+
+      const files = fs.readdirSync(dir.path);
+      const xmlFiles = files.filter(f => f.endsWith('.xml'));
+
+      for (const file of xmlFiles) {
+        const filePath = path.join(dir.path, file);
+        const relativePath = `./${path.relative('.', filePath).replace(/\\/g, '/')}`;
+
+        try {
+          // Extract deck name and metadata from XML
+          const xmlContent = fs.readFileSync(filePath, 'utf8');
+          const parsed = parser.parse(xmlContent);
+
+          // Try to extract deck name from XML
+          let deckName = file.replace('.xml', '');
+          let deckType = 'Unknown';
+
+          if (parsed.Decklist) {
+            deckName = parsed.Decklist.Deck || deckName;
+            deckType = parsed.Decklist.DesignGoal || deckType;
+          } else if (parsed.deck) {
+            deckName = parsed.deck.deckname || deckName;
+          }
+
+          // Clean up deck name
+          deckName = deckName.replace(/([A-Z])/g, ' $1').trim();
+
+          // Infer deck type from folder if not set
+          if (deckType === 'Unknown' || deckType === 'a') {
+            if (dir.folder.includes('legacy')) deckType = 'Legacy';
+            else if (dir.folder.includes('classic')) deckType = 'Classic';
+            else if (dir.folder.includes('Limited')) deckType = 'Limited';
+            else deckType = 'Constructed';
+          }
+
+          decks.push({
+            name: deckName,
+            path: relativePath,
+            type: deckType,
+            folder: dir.folder,
+            category: dir.category,
+            filename: file
+          });
+        } catch (parseError) {
+          console.warn(`Error parsing ${filePath}:`, parseError.message);
+          // Still add the deck with basic info
+          decks.push({
+            name: file.replace('.xml', '').replace(/([A-Z])/g, ' $1').trim(),
+            path: relativePath,
+            type: 'Unknown',
+            folder: dir.folder,
+            category: dir.category,
+            filename: file
+          });
+        }
+      }
+    } catch (error) {
+      console.warn(`Error scanning directory ${dir.path}:`, error.message);
+    }
+  }
+
+  // Sort by category then name
+  decks.sort((a, b) => {
+    if (a.category !== b.category) {
+      return a.category.localeCompare(b.category);
+    }
+    return a.name.localeCompare(b.name);
+  });
+
+  return decks;
 }

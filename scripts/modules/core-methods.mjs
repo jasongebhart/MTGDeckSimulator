@@ -115,6 +115,12 @@ export const CoreMethods = {
       this.updateDeckSize();
       this.updateDeckSelector(source);
 
+      // Enable default deck buttons
+      const setBtn = document.getElementById('setPlayer1DefaultBtnModal');
+      const clearBtn = document.getElementById('clearPlayer1DefaultBtnModal');
+      if (setBtn) setBtn.disabled = false;
+      if (clearBtn) clearBtn.disabled = false;
+
       // Check if default deck
       const isDefault = this.isDefaultDeck(source);
       const message = isDefault
@@ -181,6 +187,49 @@ export const CoreMethods = {
 
   // ===== CARD DRAWING =====
 
+  resetAndDraw7() {
+    // Full reset: shuffle, reset life, clear zones, draw 7
+    if (!this.currentDeck) {
+      this.uiManager.showToast('No deck loaded. Please select a deck first.', 'warning');
+      return;
+    }
+
+    // Reset life
+    this.gameState.player.gameStats.life = 20;
+
+    // Clear all zones
+    this.gameState.player.hand = [];
+    this.gameState.player.battlefield = { lands: [], creatures: [], others: [] };
+    this.gameState.player.graveyard = [];
+    this.gameState.player.exile = [];
+
+    // Rebuild library from deck with full card objects
+    this.gameState.player.library = this.currentDeck.cards.map((cardName, index) => ({
+      name: cardName,
+      id: `${cardName}_${index}_${Date.now()}`,
+      cost: this.currentDeck.cardInfo[cardName]?.cost || '0',
+      type: this.currentDeck.cardInfo[cardName]?.type || 'Unknown',
+      rulesText: this.currentDeck.cardInfo[cardName]?.rulesText || '',
+      text: this.currentDeck.cardInfo[cardName]?.rulesText || '',
+      tapped: false,
+      counters: {}
+    }));
+
+    this.gameState.shuffleLibrary('player');
+
+    // Reset stats
+    this.gameState.player.gameStats.cardsDrawn = 0;
+    this.gameState.player.gameStats.mulligans = 0;
+    this.gameState.player.gameStats.landsPlayed = 0;
+    this.gameState.player.gameStats.spellsCast = 0;
+
+    // Draw 7
+    this.drawHand(7);
+
+    this.uiManager.showToast('New game started - shuffled and drew 7 cards', 'success');
+    this.playSound('shuffle');
+  },
+
   drawHand(handSize = 7) {
     console.log('=== drawHand called ===', 'handSize:', handSize);
 
@@ -229,12 +278,12 @@ export const CoreMethods = {
 
     const card = library.pop();
 
-    // Mark as recently drawn and auto-clear after 5 seconds
+    // Mark as recently drawn and auto-clear after 7 seconds
     card.recentlyDrawn = true;
     setTimeout(() => {
       card.recentlyDrawn = false;
       this.updateHandDisplay();
-    }, 5000);
+    }, 7000);
 
     hand.push(card);
     gameStats.cardsDrawn++;
@@ -267,12 +316,12 @@ export const CoreMethods = {
 
     const card = this.gameState.opponent.library.pop();
 
-    // Mark as recently drawn and auto-clear after 5 seconds
+    // Mark as recently drawn and auto-clear after 7 seconds
     card.recentlyDrawn = true;
     setTimeout(() => {
       card.recentlyDrawn = false;
       this.updateOpponentHandDisplay();
-    }, 5000);
+    }, 7000);
 
     this.gameState.opponent.hand.push(card);
     this.gameState.opponent.gameStats.cardsDrawn++;
@@ -550,6 +599,33 @@ export const CoreMethods = {
     return localStorage.getItem('mtg_default_deck') === deckPath;
   },
 
+  setPlayer1DeckAsDefault() {
+    if (!this.currentDeck || !this.currentDeck.source) {
+      this.uiManager.showToast('No Player 1 deck loaded to set as default', 'warning');
+      return;
+    }
+
+    localStorage.setItem('mtg_default_deck', this.currentDeck.source);
+    this.uiManager.showToast(`${this.currentDeck.name} set as default Player 1 deck ⭐`, 'success');
+
+    // Enable/disable buttons
+    const setBtn = document.getElementById('setPlayer1DefaultBtnModal');
+    const clearBtn = document.getElementById('clearPlayer1DefaultBtnModal');
+    if (setBtn) setBtn.disabled = false;
+    if (clearBtn) clearBtn.disabled = false;
+  },
+
+  clearDefaultPlayer1Deck() {
+    const hadDefault = localStorage.getItem('mtg_default_deck');
+    localStorage.removeItem('mtg_default_deck');
+
+    if (hadDefault) {
+      this.uiManager.showToast('Default Player 1 deck cleared', 'info');
+    } else {
+      this.uiManager.showToast('No default Player 1 deck set', 'warning');
+    }
+  },
+
   analyzeDeckAbilities() {
     // Stub for deck ability analysis
     console.log('Analyzing deck abilities...');
@@ -786,5 +862,29 @@ export const CoreMethods = {
   // Get DFC data from card-mechanics module
   getDFCData(cardName) {
     return DFC_DATABASE[cardName.toLowerCase()];
+  },
+
+  // ===== QUICK ACTIONS =====
+
+  untapAll() {
+    const currentPlayer = this.gameState.getCurrentPlayer();
+    let untappedCount = 0;
+
+    ['lands', 'creatures', 'others'].forEach(zone => {
+      currentPlayer.battlefield[zone].forEach(card => {
+        if (this.cardMechanics.isTapped(card)) {
+          this.cardMechanics.untap(card);
+          untappedCount++;
+        }
+      });
+    });
+
+    if (untappedCount > 0) {
+      this.uiManager.showToast(`Untapped ${untappedCount} permanent${untappedCount !== 1 ? 's' : ''}`, 'success');
+      this.updateBattlefieldDisplay();
+      this.gameState.addToGameLog(`Untapped all permanents (${untappedCount})`, 'manual');
+    } else {
+      this.uiManager.showToast('No tapped permanents to untap', 'info');
+    }
   }
 };

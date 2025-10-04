@@ -635,5 +635,204 @@ export const LibraryModals = {
     document.getElementById('putBackModal').remove();
     this.uiManager.showToast(`Put ${amount} card(s) back on top of library.`, 'success');
     this.uiManager.updateAll();
+  },
+
+  // ===== CASCADE INTERFACE =====
+
+  showCascadeInterface(cascadeCard, playerName = 'player') {
+    const library = this.gameState[playerName].library;
+
+    if (library.length === 0) {
+      this.uiManager.showToast('Library is empty, cascade fizzles', 'warning');
+      return;
+    }
+
+    // Get mana value of cascade card
+    const cascadeManaValue = this.cardMechanics.parseManaValue(cascadeCard.cost);
+
+    // Exile cards from top of library until we find a nonland card with lesser mana value
+    const exiledCards = [];
+    let foundCard = null;
+
+    for (let i = library.length - 1; i >= 0; i--) {
+      const card = library[i];
+      const cardManaValue = this.cardMechanics.parseManaValue(card.cost);
+      const isLand = this.cardMechanics.isLand(card);
+
+      exiledCards.push(card);
+
+      // Check if this is a nonland card with lesser mana value
+      if (!isLand && cardManaValue < cascadeManaValue) {
+        foundCard = card;
+        break;
+      }
+    }
+
+    // Remove exiled cards from library
+    library.splice(library.length - exiledCards.length, exiledCards.length);
+
+    // Show cascade modal
+    this.createCascadeModal(cascadeCard, exiledCards, foundCard, playerName);
+  },
+
+  createCascadeModal(cascadeCard, exiledCards, foundCard, playerName) {
+    let modal = document.getElementById('cascadeModal');
+    if (modal) modal.remove();
+
+    modal = document.createElement('div');
+    modal.id = 'cascadeModal';
+    modal.className = 'modal-overlay';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    `;
+
+    const cascadeManaValue = this.cardMechanics.parseManaValue(cascadeCard.cost);
+
+    const modalContent = `
+      <div style="background: #ffffff; color: #000000; border-radius: 8px; padding: 24px; max-width: 900px; width: 90%;">
+        <h3 style="color: #000000; margin-top: 0;">⚡ Cascade from ${cascadeCard.name}</h3>
+        <p style="color: #333333; margin-bottom: 16px;">
+          ${foundCard ?
+            `Found <strong>${foundCard.name}</strong> (CMC ${this.cardMechanics.parseManaValue(foundCard.cost)} < ${cascadeManaValue}). You may cast it without paying its mana cost.` :
+            `No nonland card with mana value less than ${cascadeManaValue} found. All exiled cards will be placed on the bottom of your library.`
+          }
+        </p>
+
+        <div style="margin-bottom: 16px;">
+          <h4 style="color: #666; font-size: 14px; margin-bottom: 8px;">Exiled Cards (${exiledCards.length}):</h4>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            ${exiledCards.map((card, index) => {
+              const isFound = card === foundCard;
+              const manaValue = this.cardMechanics.parseManaValue(card.cost);
+              return `
+                <div style="
+                  border: 2px solid ${isFound ? '#10b981' : '#e5e7eb'};
+                  border-radius: 8px;
+                  padding: 8px;
+                  background: ${isFound ? '#d1fae5' : '#f3f4f6'};
+                  min-width: 120px;
+                  text-align: center;
+                ">
+                  <div style="font-weight: 500; color: #000000;">${card.name}</div>
+                  <div style="margin-top: 4px; font-size: 12px; color: #6b7280;">
+                    ${card.type}
+                  </div>
+                  <div style="margin-top: 2px; font-size: 11px; color: #6b7280;">
+                    CMC: ${manaValue}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+          ${foundCard ? `
+            <button onclick="window.handSimulator.castCascadeCard('${this.escapeJs(foundCard.name)}', '${playerName}')"
+                    style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+              Cast ${foundCard.name}
+            </button>
+            <button onclick="window.handSimulator.declineCascadeCard('${playerName}')"
+                    style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+              Don't Cast
+            </button>
+          ` : `
+            <button onclick="window.handSimulator.finalizeCascade('${playerName}')"
+                    style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+              Continue
+            </button>
+          `}
+        </div>
+      </div>
+    `;
+
+    modal.innerHTML = modalContent;
+    document.body.appendChild(modal);
+
+    // Store cascade state
+    this.cascadeState = {
+      exiledCards,
+      foundCard,
+      playerName
+    };
+  },
+
+  escapeJs(str) {
+    return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
+  },
+
+  castCascadeCard(cardName, playerName) {
+    if (!this.cascadeState) return;
+
+    const { exiledCards, foundCard } = this.cascadeState;
+
+    if (!foundCard || foundCard.name !== cardName) {
+      console.error('Cascade card mismatch');
+      return;
+    }
+
+    // Play the cascade card
+    this.playCard(foundCard);
+
+    // Remove the found card from exiled cards
+    const remainingExiled = exiledCards.filter(c => c !== foundCard);
+
+    // Put remaining exiled cards on bottom of library in random order
+    this.putCardsOnBottomOfLibrary(remainingExiled, playerName);
+
+    // Close modal and update UI
+    document.getElementById('cascadeModal')?.remove();
+    this.uiManager.showToast(`Cast ${foundCard.name} via Cascade!`, 'success');
+    this.uiManager.updateAll();
+    this.cascadeState = null;
+  },
+
+  declineCascadeCard(playerName) {
+    if (!this.cascadeState) return;
+
+    const { exiledCards } = this.cascadeState;
+
+    // Put all exiled cards on bottom of library in random order
+    this.putCardsOnBottomOfLibrary(exiledCards, playerName);
+
+    // Close modal and update UI
+    document.getElementById('cascadeModal')?.remove();
+    this.uiManager.showToast('Cascade declined, exiled cards placed on bottom of library', 'info');
+    this.uiManager.updateAll();
+    this.cascadeState = null;
+  },
+
+  finalizeCascade(playerName) {
+    if (!this.cascadeState) return;
+
+    const { exiledCards } = this.cascadeState;
+
+    // Put all exiled cards on bottom of library in random order
+    this.putCardsOnBottomOfLibrary(exiledCards, playerName);
+
+    // Close modal and update UI
+    document.getElementById('cascadeModal')?.remove();
+    this.uiManager.showToast('Cascade complete, exiled cards placed on bottom of library', 'info');
+    this.uiManager.updateAll();
+    this.cascadeState = null;
+  },
+
+  putCardsOnBottomOfLibrary(cards, playerName) {
+    const library = this.gameState[playerName].library;
+
+    // Shuffle the cards (random order on bottom)
+    const shuffled = [...cards].sort(() => Math.random() - 0.5);
+
+    // Add to bottom of library (beginning of array)
+    library.unshift(...shuffled);
   }
 };

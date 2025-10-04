@@ -203,14 +203,34 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div>
                             <h2 class="card-title">Card List</h2>
-                            <div class="card-subtitle">All cards in your deck</div>
+                            <div class="card-subtitle" id="cardListSubtitle">All cards in your deck</div>
                         </div>
-                        <div class="d-flex gap-2">
-                            <button id="sortByName" class="btn btn-secondary btn-sm">Sort by Name</button>
-                            <button id="sortByCost" class="btn btn-secondary btn-sm">Sort by Cost</button>
-                            <button id="sortByType" class="btn btn-secondary btn-sm">Sort by Type</button>
+                        <div class="d-flex gap-2 align-items-center">
+                            <div id="viewModeControls" style="display: flex; gap: 8px;">
+                                <button id="sortByName" class="btn btn-secondary btn-sm">Sort by Name</button>
+                                <button id="sortByCost" class="btn btn-secondary btn-sm">Sort by Cost</button>
+                                <button id="sortByType" class="btn btn-secondary btn-sm">Sort by Type</button>
+                                <button id="editDeckButton" class="btn btn-primary btn-sm">✏️ Edit Deck</button>
+                            </div>
+                            <div id="editModeControls" style="display: none; gap: 8px;">
+                                <button id="addCardButton" class="btn btn-success btn-sm">➕ Add Card</button>
+                                <button id="saveDeckButton" class="btn btn-primary btn-sm">💾 Save Changes</button>
+                                <button id="cancelEditButton" class="btn btn-secondary btn-sm">✕ Cancel</button>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Add Card Search Panel (hidden by default) -->
+                    <div id="addCardPanel" class="card-body" style="display: none; border-bottom: 1px solid var(--border-color); background: var(--bg-tertiary);">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" id="cardSearchInput" class="form-control" placeholder="Search for a card to add..." style="flex: 1;">
+                            <button id="closeSearchButton" class="btn btn-secondary btn-sm">✕</button>
+                        </div>
+                        <div id="searchResults" style="margin-top: 8px; max-height: 300px; overflow-y: auto;">
+                            <!-- Search results will appear here -->
+                        </div>
+                    </div>
+
                     <div class="card-body p-0">
                         <div id="cardList">
                             <!-- Card list items will be inserted here -->
@@ -254,15 +274,15 @@
     </button>
 
     <!-- Card Preview Modal -->
-    <div id="cardPreviewModal" class="modal" style="display: none;">
-        <div class="modal-content" style="max-width: 400px;">
-            <div class="modal-header">
-                <h3 id="previewCardName">Card Preview</h3>
-                <button id="closeCardPreview" class="btn btn-secondary btn-sm">✕</button>
+    <div id="cardPreviewModal" class="modal" style="display: none; z-index: 99999; background: rgba(0, 0, 0, 0.85);">
+        <div class="modal-content" style="max-width: 500px; position: relative; z-index: 100000; background: var(--bg-primary); padding: 20px; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
+                <h3 id="previewCardName" style="margin: 0; font-size: 1.25rem; color: var(--text-primary);">Card Preview</h3>
+                <button id="closeCardPreview" class="btn btn-secondary btn-sm" style="min-width: 32px; padding: 4px 8px;">✕</button>
             </div>
-            <div class="modal-body" style="text-align: center;">
-                <img id="previewCardImage" src="" alt="Card Preview" style="max-width: 100%; border-radius: var(--border-radius);">
-                <div id="previewCardInfo" style="margin-top: var(--space-4); text-align: left;">
+            <div class="modal-body" style="text-align: center; padding: 0;">
+                <img id="previewCardImage" src="" alt="Card Preview" style="display: none; max-width: 100%; width: auto; height: auto; max-height: 600px; border-radius: 8px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                <div id="previewCardInfo" style="margin-top: 16px; text-align: left; min-height: 50px; color: var(--text-primary);">
                     <!-- Card details will be populated here -->
                 </div>
             </div>
