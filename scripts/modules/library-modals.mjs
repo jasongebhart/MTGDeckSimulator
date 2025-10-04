@@ -697,65 +697,99 @@ export const LibraryModals = {
 
     const cascadeManaValue = this.cardMechanics.parseManaValue(cascadeCard.cost);
 
-    const modalContent = `
-      <div style="background: #ffffff; color: #000000; border-radius: 8px; padding: 24px; max-width: 900px; width: 90%;">
-        <h3 style="color: #000000; margin-top: 0;">⚡ Cascade from ${cascadeCard.name}</h3>
-        <p style="color: #333333; margin-bottom: 16px;">
-          ${foundCard ?
-            `Found <strong>${foundCard.name}</strong> (CMC ${this.cardMechanics.parseManaValue(foundCard.cost)} < ${cascadeManaValue}). You may cast it without paying its mana cost.` :
-            `No nonland card with mana value less than ${cascadeManaValue} found. All exiled cards will be placed on the bottom of your library.`
-          }
-        </p>
+    // Create modal content (XSS-safe)
+    const contentDiv = document.createElement('div');
+    contentDiv.style.cssText = 'background: #ffffff; color: #000000; border-radius: 8px; padding: 24px; max-width: 900px; width: 90%;';
 
-        <div style="margin-bottom: 16px;">
-          <h4 style="color: #666; font-size: 14px; margin-bottom: 8px;">Exiled Cards (${exiledCards.length}):</h4>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            ${exiledCards.map((card, index) => {
-              const isFound = card === foundCard;
-              const manaValue = this.cardMechanics.parseManaValue(card.cost);
-              return `
-                <div style="
-                  border: 2px solid ${isFound ? '#10b981' : '#e5e7eb'};
-                  border-radius: 8px;
-                  padding: 8px;
-                  background: ${isFound ? '#d1fae5' : '#f3f4f6'};
-                  min-width: 120px;
-                  text-align: center;
-                ">
-                  <div style="font-weight: 500; color: #000000;">${card.name}</div>
-                  <div style="margin-top: 4px; font-size: 12px; color: #6b7280;">
-                    ${card.type}
-                  </div>
-                  <div style="margin-top: 2px; font-size: 11px; color: #6b7280;">
-                    CMC: ${manaValue}
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
+    const title = document.createElement('h3');
+    title.style.cssText = 'color: #000000; margin-top: 0;';
+    title.textContent = `⚡ Cascade from ${cascadeCard.name}`;
+    contentDiv.appendChild(title);
 
-        <div style="display: flex; gap: 8px; justify-content: flex-end;">
-          ${foundCard ? `
-            <button onclick="window.handSimulator.castCascadeCard('${this.escapeJs(foundCard.name)}', '${playerName}')"
-                    style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-              Cast ${foundCard.name}
-            </button>
-            <button onclick="window.handSimulator.declineCascadeCard('${playerName}')"
-                    style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-              Don't Cast
-            </button>
-          ` : `
-            <button onclick="window.handSimulator.finalizeCascade('${playerName}')"
-                    style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;">
-              Continue
-            </button>
-          `}
-        </div>
-      </div>
-    `;
+    const description = document.createElement('p');
+    description.style.cssText = 'color: #333333; margin-bottom: 16px;';
+    if (foundCard) {
+      const foundStrong = document.createElement('strong');
+      foundStrong.textContent = foundCard.name;
+      description.appendChild(document.createTextNode('Found '));
+      description.appendChild(foundStrong);
+      description.appendChild(document.createTextNode(` (CMC ${this.cardMechanics.parseManaValue(foundCard.cost)} < ${cascadeManaValue}). You may cast it without paying its mana cost.`));
+    } else {
+      description.textContent = `No nonland card with mana value less than ${cascadeManaValue} found. All exiled cards will be placed on the bottom of your library.`;
+    }
+    contentDiv.appendChild(description);
 
-    modal.innerHTML = modalContent;
+    const exiledSection = document.createElement('div');
+    exiledSection.style.cssText = 'margin-bottom: 16px;';
+
+    const exiledTitle = document.createElement('h4');
+    exiledTitle.style.cssText = 'color: #666; font-size: 14px; margin-bottom: 8px;';
+    exiledTitle.textContent = `Exiled Cards (${exiledCards.length}):`;
+    exiledSection.appendChild(exiledTitle);
+
+    const cardsContainer = document.createElement('div');
+    cardsContainer.style.cssText = 'display: flex; gap: 8px; flex-wrap: wrap;';
+
+    exiledCards.forEach(card => {
+      const isFound = card === foundCard;
+      const manaValue = this.cardMechanics.parseManaValue(card.cost);
+
+      const cardDiv = document.createElement('div');
+      cardDiv.style.cssText = `
+        border: 2px solid ${isFound ? '#10b981' : '#e5e7eb'};
+        border-radius: 8px;
+        padding: 8px;
+        background: ${isFound ? '#d1fae5' : '#f3f4f6'};
+        min-width: 120px;
+        text-align: center;
+      `;
+
+      const cardName = document.createElement('div');
+      cardName.style.cssText = 'font-weight: 500; color: #000000;';
+      cardName.textContent = card.name;
+      cardDiv.appendChild(cardName);
+
+      const cardType = document.createElement('div');
+      cardType.style.cssText = 'margin-top: 4px; font-size: 12px; color: #6b7280;';
+      cardType.textContent = card.type;
+      cardDiv.appendChild(cardType);
+
+      const cardCmc = document.createElement('div');
+      cardCmc.style.cssText = 'margin-top: 2px; font-size: 11px; color: #6b7280;';
+      cardCmc.textContent = `CMC: ${manaValue}`;
+      cardDiv.appendChild(cardCmc);
+
+      cardsContainer.appendChild(cardDiv);
+    });
+
+    exiledSection.appendChild(cardsContainer);
+    contentDiv.appendChild(exiledSection);
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = 'display: flex; gap: 8px; justify-content: flex-end;';
+
+    if (foundCard) {
+      const castButton = document.createElement('button');
+      castButton.style.cssText = 'background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;';
+      castButton.textContent = `Cast ${foundCard.name}`;
+      castButton.addEventListener('click', () => this.castCascadeCard(foundCard.name, playerName));
+      buttonContainer.appendChild(castButton);
+
+      const declineButton = document.createElement('button');
+      declineButton.style.cssText = 'background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;';
+      declineButton.textContent = "Don't Cast";
+      declineButton.addEventListener('click', () => this.declineCascadeCard(playerName));
+      buttonContainer.appendChild(declineButton);
+    } else {
+      const continueButton = document.createElement('button');
+      continueButton.style.cssText = 'background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;';
+      continueButton.textContent = 'Continue';
+      continueButton.addEventListener('click', () => this.finalizeCascade(playerName));
+      buttonContainer.appendChild(continueButton);
+    }
+
+    contentDiv.appendChild(buttonContainer);
+    modal.appendChild(contentDiv);
     document.body.appendChild(modal);
 
     // Store cascade state

@@ -68,6 +68,8 @@ export function extractCardInfo(deckList) {
     const type = card.getElementsByTagName('Type')[0].textContent.toLowerCase();
     const costElement = card.getElementsByTagName('Cost')[0];
     const cost = costElement ? costElement.textContent : '';
+    const rulesTextElement = card.getElementsByTagName('RulesText')[0];
+    const rulesText = rulesTextElement ? rulesTextElement.textContent : '';
 
     //console.log("Name:", name);
     // console.log("Quantity:", quantity);
@@ -81,6 +83,10 @@ export function extractCardInfo(deckList) {
       // Only include cost if it has a value
       if (cost && cost.trim() !== '') {
         cardInfo[name].cost = cost;
+      }
+      // Include rules text if it has a value
+      if (rulesText && rulesText.trim() !== '') {
+        cardInfo[name].rulesText = rulesText;
       }
     }
     cardInfo[name].quantity += quantity;
