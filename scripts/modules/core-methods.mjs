@@ -444,8 +444,17 @@ export const CoreMethods = {
     currentPlayer.gameStats.landsPlayed = 0;
 
     // Switch active player
+    const wasPlayer = this.gameState.turnState.activePlayer === 'player';
     this.gameState.switchActivePlayer();
-    this.gameState.turnState.turnNumber++;
+
+    // Only increment turn when it returns to player (MTG convention: 1 turn = both players)
+    if (wasPlayer) {
+      // Player just ended, opponent's turn - don't increment
+    } else {
+      // Opponent just ended, returning to player - increment turn
+      this.gameState.turnState.turnNumber++;
+    }
+
     this.gameState.turnState.phase = 'beginning';
     this.gameState.turnState.step = 'untap';
     this.gameState.turnState.isFirstTurn = false;

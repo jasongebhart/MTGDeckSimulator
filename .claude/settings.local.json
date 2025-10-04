@@ -34,7 +34,17 @@
       "Bash(npm update)",
       "Bash(npm ls:*)",
       "Bash(npm update:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(npm:*)",
+      "Bash(cat:*)",
+      "Bash(del views/playhand-modern-sidebar.html)",
+      "Bash(del test-image-loading.mjs)",
+      "Bash(start http://localhost:3001/playhand-modern)",
+      "Bash(start cmd /c \"npm start\")",
+      "Bash(del nul)",
+      "Bash(rm:*)",
+      "Bash(start http://localhost:3001/decks-modern)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []

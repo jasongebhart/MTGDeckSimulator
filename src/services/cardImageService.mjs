@@ -9,6 +9,8 @@ export class CardImageService {
   static CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
   static MAX_CACHE_SIZE = 1000; // Limit cache size for memory management
   static REQUEST_DELAY = 75; // Delay between requests to respect rate limits
+  static LOCAL_IMAGE_INDEX = null; // Lazy-loaded index of local images
+  static INDEX_LOAD_PROMISE = null; // Promise to prevent duplicate loads
 
   static async getCardImageUrl(cardName, size = 'normal', dfcFrontFace = null) {
     if (!cardName || typeof cardName !== 'string') return this.getPlaceholderImageUrl('Unknown Card');
@@ -124,8 +126,40 @@ export class CardImageService {
     }
   }
 
+  static async loadLocalImageIndex() {
+    // Prevent duplicate loads
+    if (this.INDEX_LOAD_PROMISE) {
+      return this.INDEX_LOAD_PROMISE;
+    }
+
+    this.INDEX_LOAD_PROMISE = (async () => {
+      try {
+        const response = await fetch('/assets/MagicImages/index.json');
+        if (response.ok) {
+          this.LOCAL_IMAGE_INDEX = await response.json();
+          return this.LOCAL_IMAGE_INDEX;
+        }
+      } catch (error) {
+        console.warn('Failed to load local image index, falling back to extension checks:', error.message);
+      }
+      return null;
+    })();
+
+    return this.INDEX_LOAD_PROMISE;
+  }
+
   static async checkLocalImage(cardName) {
-    // Try different extensions for local images
+    // Load index on first call
+    if (this.LOCAL_IMAGE_INDEX === null && this.INDEX_LOAD_PROMISE === null) {
+      await this.loadLocalImageIndex();
+    }
+
+    // Use index if available
+    if (this.LOCAL_IMAGE_INDEX && this.LOCAL_IMAGE_INDEX[cardName]) {
+      return `/assets/MagicImages/${cardName}.${this.LOCAL_IMAGE_INDEX[cardName]}`;
+    }
+
+    // Fallback: Try different extensions for local images
     const extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     for (const ext of extensions) {
