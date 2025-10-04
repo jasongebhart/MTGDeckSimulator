@@ -639,6 +639,16 @@ export const LibraryModals = {
 
   // ===== CASCADE INTERFACE =====
 
+  triggerManualCascade(playerName = 'player') {
+    // Create a dummy cascade card with CMC 4 (typical Bloodbraid Elf)
+    const cascadeCard = {
+      name: 'Manual Cascade',
+      cost: '{2}{R}{G}', // CMC 4
+      type: 'Cascade Trigger'
+    };
+    this.showCascadeInterface(cascadeCard, playerName);
+  },
+
   showCascadeInterface(cascadeCard, playerName = 'player') {
     const library = this.gameState[playerName].library;
 
