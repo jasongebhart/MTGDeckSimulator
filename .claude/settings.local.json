@@ -44,7 +44,11 @@
       "Bash(del nul)",
       "Bash(rm:*)",
       "Bash(start http://localhost:3001/decks-modern)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(git check-ignore:*)",
+      "Read(//c/**)",
+      "Bash(test:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": []

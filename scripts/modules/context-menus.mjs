@@ -43,7 +43,7 @@ export const ContextMenus = {
   /**
    * Create smart context menu with owner awareness
    */
-  createSmartContextMenu(event, card, cardId, owner, zone) {
+  createSmartContextMenu(event, card, cardId, owner, _zone) {
     // Remove existing menus
     this.removeExistingMenus();
 
@@ -350,7 +350,7 @@ export const ContextMenus = {
   /**
    * Adjust menu position if off-screen
    */
-  adjustMenuPosition(menu, event) {
+  adjustMenuPosition(menu, _event) {
     const rect = menu.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
@@ -390,7 +390,7 @@ export const ContextMenus = {
 
   // === Owner-aware card movement methods ===
 
-  toggleTapByOwner(cardId, owner) {
+  toggleTapByOwner(cardId, _owner) {
     const result = this.findBattlefieldCardAnyPlayer(cardId);
     if (!result) return;
 
@@ -422,6 +422,7 @@ export const ContextMenus = {
       if (index !== -1) {
         const card = playerState.battlefield[zone].splice(index, 1)[0];
         playerState.graveyard.push(card);
+        this.onGraveyardChange(); // Update Tarmogoyf stats
         console.log('Card moved to graveyard:', card.name);
         this.uiManager.updateAll();
         this.uiManager.showToast(`${card.name} moved to graveyard`, 'info');
@@ -494,5 +495,203 @@ export const ContextMenus = {
     this.uiManager.updateZoneDisplay('battlefield', owner);
     this.uiManager.showToast(`Removed ${counterType} counter from ${result.card.name}`, 'info');
     this.removeExistingMenus();
+  },
+
+  /**
+   * Show context menu for graveyard cards
+   */
+  showGraveyardCardMenu(event, cardId) {
+    event.preventDefault();
+
+    // Find the card in player's graveyard (only player's graveyard is shown)
+    const card = this.gameState.player.graveyard.find(c => c.id === cardId);
+    if (!card) {
+      console.error('Card not found in graveyard');
+      return;
+    }
+
+    this.removeExistingMenus();
+
+    const menu = document.createElement('div');
+    menu.className = 'smart-context-menu';
+    menu.style.cssText = `
+      position: fixed;
+      top: ${event.clientY}px;
+      left: ${event.clientX}px;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000000;
+      min-width: 180px;
+    `;
+
+    const headerDiv = this.createMenuHeader(`🪦 ${card.name}`);
+    menu.appendChild(headerDiv);
+
+    // Return to hand
+    menu.appendChild(this.createMenuItem('↩️ Return to Hand', () => {
+      const cardIndex = this.gameState.player.graveyard.findIndex(c => c.id === cardId);
+      if (cardIndex !== -1) {
+        const [returnedCard] = this.gameState.player.graveyard.splice(cardIndex, 1);
+        this.gameState.player.hand.push(returnedCard);
+        this.onGraveyardChange(); // Update Tarmogoyf stats
+        this.uiManager.updateZoneDisplay('graveyard', 'player');
+        this.uiManager.updateZoneDisplay('hand', 'player');
+        this.uiManager.showToast(`Returned ${card.name} to hand`, 'success');
+      }
+      this.removeExistingMenus();
+    }));
+
+    // Return to battlefield
+    menu.appendChild(this.createMenuItem('🎴 Return to Battlefield', () => {
+      const cardIndex = this.gameState.player.graveyard.findIndex(c => c.id === cardId);
+      if (cardIndex !== -1) {
+        const [returnedCard] = this.gameState.player.graveyard.splice(cardIndex, 1);
+        returnedCard.tapped = false;
+
+        const cardType = this.uiManager.getCardMainType(returnedCard.type || '').toLowerCase();
+        if (cardType === 'land') {
+          this.gameState.player.battlefield.lands.push(returnedCard);
+        } else if (cardType === 'creature') {
+          this.gameState.player.battlefield.creatures.push(returnedCard);
+        } else {
+          this.gameState.player.battlefield.others.push(returnedCard);
+        }
+
+        this.onGraveyardChange(); // Update Tarmogoyf stats
+        this.uiManager.updateZoneDisplay('graveyard', 'player');
+        this.uiManager.updateZoneDisplay('battlefield', 'player');
+        this.uiManager.showToast(`Returned ${card.name} to battlefield`, 'success');
+      }
+      this.removeExistingMenus();
+    }));
+
+    // Exile from graveyard
+    menu.appendChild(this.createMenuItem('🚫 Exile', () => {
+      const cardIndex = this.gameState.player.graveyard.findIndex(c => c.id === cardId);
+      if (cardIndex !== -1) {
+        const [exiledCard] = this.gameState.player.graveyard.splice(cardIndex, 1);
+        this.gameState.player.exile.push(exiledCard);
+        this.onGraveyardChange(); // Update Tarmogoyf stats
+        this.uiManager.updateZoneDisplay('graveyard', 'player');
+        this.uiManager.updateZoneDisplay('exile', 'player');
+        this.uiManager.showToast(`Exiled ${card.name}`, 'info');
+      }
+      this.removeExistingMenus();
+    }));
+
+    // Return to library
+    menu.appendChild(this.createMenuItem('📚 Return to Library (Top)', () => {
+      const cardIndex = this.gameState.player.graveyard.findIndex(c => c.id === cardId);
+      if (cardIndex !== -1) {
+        const [returnedCard] = this.gameState.player.graveyard.splice(cardIndex, 1);
+        this.gameState.player.library.unshift(returnedCard);
+        this.onGraveyardChange(); // Update Tarmogoyf stats
+        this.uiManager.updateZoneDisplay('graveyard', 'player');
+        this.uiManager.updateZoneCounts();
+        this.uiManager.showToast(`Returned ${card.name} to top of library`, 'success');
+      }
+      this.removeExistingMenus();
+    }));
+
+    document.body.appendChild(menu);
+
+    // Close menu on click outside
+    setTimeout(() => {
+      document.addEventListener('click', () => this.removeExistingMenus(), { once: true });
+    }, 0);
+  },
+
+  /**
+   * Show context menu for exile cards
+   */
+  showExileCardMenu(event, cardId) {
+    event.preventDefault();
+
+    // Find the card in player's exile (only player's exile is shown)
+    const card = this.gameState.player.exile.find(c => c.id === cardId);
+    if (!card) {
+      console.error('Card not found in exile');
+      return;
+    }
+
+    this.removeExistingMenus();
+
+    const menu = document.createElement('div');
+    menu.className = 'smart-context-menu';
+    menu.style.cssText = `
+      position: fixed;
+      top: ${event.clientY}px;
+      left: ${event.clientX}px;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000000;
+      min-width: 180px;
+    `;
+
+    const headerDiv = this.createMenuHeader(`🚫 ${card.name}`);
+    menu.appendChild(headerDiv);
+
+    // Return to hand
+    menu.appendChild(this.createMenuItem('↩️ Return to Hand', () => {
+      const cardIndex = this.gameState.player.exile.findIndex(c => c.id === cardId);
+      if (cardIndex !== -1) {
+        const [returnedCard] = this.gameState.player.exile.splice(cardIndex, 1);
+        this.gameState.player.hand.push(returnedCard);
+        this.uiManager.updateZoneDisplay('exile', 'player');
+        this.uiManager.updateZoneDisplay('hand', 'player');
+        this.uiManager.showToast(`Returned ${card.name} to hand from exile`, 'success');
+      }
+      this.removeExistingMenus();
+    }));
+
+    // Return to battlefield
+    menu.appendChild(this.createMenuItem('🎴 Return to Battlefield', () => {
+      const cardIndex = this.gameState.player.exile.findIndex(c => c.id === cardId);
+      if (cardIndex !== -1) {
+        const [returnedCard] = this.gameState.player.exile.splice(cardIndex, 1);
+        returnedCard.tapped = false;
+
+        const cardType = this.uiManager.getCardMainType(returnedCard.type || '').toLowerCase();
+        if (cardType === 'land') {
+          this.gameState.player.battlefield.lands.push(returnedCard);
+        } else if (cardType === 'creature') {
+          this.gameState.player.battlefield.creatures.push(returnedCard);
+        } else {
+          this.gameState.player.battlefield.others.push(returnedCard);
+        }
+
+        this.uiManager.updateZoneDisplay('exile', 'player');
+        this.uiManager.updateZoneDisplay('battlefield', 'player');
+        this.uiManager.showToast(`Returned ${card.name} to battlefield from exile`, 'success');
+      }
+      this.removeExistingMenus();
+    }));
+
+    // Return to graveyard
+    menu.appendChild(this.createMenuItem('🪦 Move to Graveyard', () => {
+      const cardIndex = this.gameState.player.exile.findIndex(c => c.id === cardId);
+      if (cardIndex !== -1) {
+        const [movedCard] = this.gameState.player.exile.splice(cardIndex, 1);
+        this.gameState.player.graveyard.push(movedCard);
+        this.onGraveyardChange(); // Update Tarmogoyf stats
+        this.uiManager.updateZoneDisplay('exile', 'player');
+        this.uiManager.updateZoneDisplay('graveyard', 'player');
+        this.uiManager.showToast(`Moved ${card.name} to graveyard`, 'info');
+      }
+      this.removeExistingMenus();
+    }));
+
+    document.body.appendChild(menu);
+
+    // Close menu on click outside
+    setTimeout(() => {
+      document.addEventListener('click', () => this.removeExistingMenus(), { once: true });
+    }, 0);
   }
 };

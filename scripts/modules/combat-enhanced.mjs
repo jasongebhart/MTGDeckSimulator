@@ -215,7 +215,7 @@ export class EnhancedCombatManager {
     `;
   }
 
-  renderAttackingCreatures(playerState, owner) {
+  renderAttackingCreatures(playerState, _owner) {
     if (!playerState.battlefield.creatures || playerState.battlefield.creatures.length === 0) {
       return '<p style="opacity: 0.5; margin: 0;">No creatures available</p>';
     }
@@ -253,7 +253,7 @@ export class EnhancedCombatManager {
     }).join('');
   }
 
-  renderDefendingCreatures(playerState, owner) {
+  renderDefendingCreatures(playerState, _owner) {
     if (!playerState.battlefield.creatures || playerState.battlefield.creatures.length === 0) {
       return '<p style="opacity: 0.5; margin: 0;">No creatures to block with</p>';
     }
@@ -555,7 +555,7 @@ export class EnhancedCombatManager {
     }
 
     // Tap all attackers
-    this.combatState.attackers.forEach((data, cardId) => {
+    this.combatState.attackers.forEach((data, _cardId) => {
       this.cardMechanics.tap(data.creature);
     });
 
@@ -604,7 +604,7 @@ export class EnhancedCombatManager {
     const defendingState = this.gameState.getPlayerState(defendingPlayer);
     const creaturesToDestroy = [];
 
-    this.combatState.attackers.forEach((attackerData, attackerId) => {
+    this.combatState.attackers.forEach((attackerData, _attackerId) => {
       const attacker = attackerData.creature;
       const attackerPower = this.getCreaturePower(attacker);
       const attackerToughness = this.getCreatureToughness(attacker);
@@ -658,7 +658,7 @@ export class EnhancedCombatManager {
       creaturesDestroyed: []
     };
 
-    this.combatState.attackers.forEach((attackerData, attackerId) => {
+    this.combatState.attackers.forEach((attackerData, _attackerId) => {
       const attacker = attackerData.creature;
       const attackerPower = this.getCreaturePower(attacker);
       const attackerToughness = this.getCreatureToughness(attacker);
@@ -722,6 +722,7 @@ export class EnhancedCombatManager {
     if (index >= 0) {
       const destroyed = playerState.battlefield.creatures.splice(index, 1)[0];
       playerState.graveyard.push(destroyed);
+      this.onGraveyardChange(); // Update Tarmogoyf stats
       this.gameState.addToGameLog(`${creature.name} was destroyed`, 'combat');
     }
   }

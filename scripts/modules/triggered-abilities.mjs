@@ -30,7 +30,7 @@ export const TriggeredAbilities = {
     });
   },
 
-  triggerDelverReveal(delver, index = 0) {
+  triggerDelverReveal(delver, _index = 0) {
     const activePlayer = this.gameState.turnState.activePlayer === 'player'
       ? this.gameState.player
       : this.gameState.opponent;

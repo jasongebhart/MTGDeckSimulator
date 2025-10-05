@@ -38,6 +38,7 @@ export default [
         btoa: 'readonly',
         atob: 'readonly',
         Image: 'readonly',
+        CustomEvent: 'readonly',
         // Test globals
         describe: 'readonly',
         test: 'readonly',

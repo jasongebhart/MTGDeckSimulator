@@ -2,7 +2,7 @@ import { describe, test, expect, beforeEach, jest } from '@jest/globals';
 import { JSDOM } from 'jsdom';
 
 // Setup minimal DOM
-const dom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`, {
+const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>', {
   url: 'http://localhost'
 });
 

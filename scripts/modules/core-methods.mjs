@@ -204,16 +204,20 @@ export const CoreMethods = {
     this.gameState.player.exile = [];
 
     // Rebuild library from deck with full card objects
-    this.gameState.player.library = this.currentDeck.cards.map((cardName, index) => ({
-      name: cardName,
-      id: `${cardName}_${index}_${Date.now()}`,
-      cost: this.currentDeck.cardInfo[cardName]?.cost || '0',
-      type: this.currentDeck.cardInfo[cardName]?.type || 'Unknown',
-      rulesText: this.currentDeck.cardInfo[cardName]?.rulesText || '',
-      text: this.currentDeck.cardInfo[cardName]?.rulesText || '',
-      tapped: false,
-      counters: {}
-    }));
+    this.gameState.player.library = [];
+    this.currentDeck.cards.forEach(card => {
+      for (let i = 0; i < card.quantity; i++) {
+        this.gameState.player.library.push({
+          id: `${card.name}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          name: card.name,
+          cost: card.cost,
+          type: card.type,
+          text: card.text,
+          tapped: false,
+          counters: {}
+        });
+      }
+    });
 
     this.gameState.shuffleLibrary('player');
 
@@ -804,7 +808,6 @@ export const CoreMethods = {
 
     // Find the card in all zones
     let card = null;
-    let zone = null;
     let playerName = null;
 
     // Check player battlefield
@@ -812,7 +815,6 @@ export const CoreMethods = {
       const found = this.gameState.player.battlefield[zoneType].find(c => (c.id || `${c.name}_0`) === cardId);
       if (found) {
         card = found;
-        zone = 'player_battlefield';
         playerName = 'player';
         break;
       }
@@ -824,7 +826,6 @@ export const CoreMethods = {
         const found = this.gameState.opponent.battlefield[zoneType].find(c => (c.id || `${c.name}_0`) === cardId);
         if (found) {
           card = found;
-          zone = 'opponent_battlefield';
           playerName = 'opponent';
           break;
         }

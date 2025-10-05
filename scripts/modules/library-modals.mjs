@@ -253,7 +253,7 @@ export const LibraryModals = {
         el.style.opacity = '0.5';
       });
 
-      el.addEventListener('dragend', (e) => {
+      el.addEventListener('dragend', (_e) => {
         el.style.opacity = '1';
       });
 
@@ -308,7 +308,7 @@ export const LibraryModals = {
         el.style.opacity = '0.5';
       });
 
-      el.addEventListener('dragend', (e) => {
+      el.addEventListener('dragend', (_e) => {
         el.style.opacity = '1';
       });
 
@@ -382,7 +382,7 @@ export const LibraryModals = {
     this.createSurveilModal(cardsToSurveil, amount, source);
   },
 
-  createSurveilModal(cards, amount, source) {
+  createSurveilModal(cards, amount, _source) {
     let modal = document.getElementById('surveilModal');
     if (modal) modal.remove();
 
@@ -493,6 +493,7 @@ export const LibraryModals = {
       library.push(card);
     });
 
+    this.onGraveyardChange(); // Update Tarmogoyf stats
     document.getElementById('surveilModal').remove();
     this.uiManager.showToast(`Surveil ${amount} complete. ${graveyardCards.length} card(s) to graveyard.`, 'success');
     this.uiManager.updateAll();

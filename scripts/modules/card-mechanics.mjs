@@ -301,7 +301,7 @@ export class CardMechanics {
     if (!card.powerToughness && !card.pt) return null;
 
     const pt = card.powerToughness || card.pt;
-    const match = pt.match(/(\d+|[\*\+\-\d]+)\s*\/\s*(\d+|[\*\+\-\d]+)/);
+    const match = pt.match(/(\d+|[*+\-\d]+)\s*\/\s*(\d+|[*+\-\d]+)/);
 
     if (match) {
       return {

@@ -1,0 +1,1079 @@
+
+> mtg@1.0.2 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --verbose
+
+  console.log
+    Total Card Objects: 23
+
+      at log (scripts/config.mjs:95:11)
+
+  console.log
+    Total Lands: 0
+
+      at log (scripts/config.mjs:101:11)
+
+  console.log
+    Deck Size: 60
+
+      at log (scripts/config.mjs:119:11)
+
+  console.log
+    Found 1 Delver(s) of Secrets
+
+      at Object.log (scripts/modules/triggered-abilities.mjs:25:13)
+
+(node:23236) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS __tests__/cardMovement.test.mjs
+  Card Movement Mechanics
+    Card Categorization
+      √ should categorize cards by type correctly (18 ms)
+    Card Creation and Movement
+      √ should create card elements in correct sections (32 ms)
+      √ should move cards between sections (5 ms)
+    Game State Management
+      √ should track cards in different zones (7 ms)
+      √ should handle card visibility toggles (13 ms)
+
+  console.log
+    No Delver of Secrets found on battlefield
+
+      at Object.log (scripts/modules/triggered-abilities.mjs:21:15)
+
+  console.log
+    Total Card Objects: 5
+
+      at log (scripts/config.mjs:95:11)
+
+  console.log
+    Total Lands: 4
+
+      at log (scripts/config.mjs:101:11)
+
+  console.log
+    No Delver of Secrets found on battlefield
+
+      at Object.log (scripts/modules/triggered-abilities.mjs:21:15)
+
+  console.log
+    Deck Size: 15
+
+      at log (scripts/config.mjs:119:11)
+
+  console.log
+    Delver trigger: Lightning Bolt Type: instant Transform? true
+
+      at Object.log (scripts/modules/triggered-abilities.mjs:50:13)
+
+  console.log
+    Total Card Objects: 1
+
+      at log (scripts/config.mjs:95:11)
+
+  console.log
+    Total Lands: 0
+
+      at log (scripts/config.mjs:101:11)
+
+  console.log
+    Delver trigger: Lightning Bolt Type: instant Transform? true
+
+      at Object.log (scripts/modules/triggered-abilities.mjs:50:13)
+
+  console.log
+    Delver trigger: Tarmogoyf Type: creature Transform? false
+
+      at Object.log (scripts/modules/triggered-abilities.mjs:50:13)
+
+(node:20632) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS __tests__/refactored/zones.test.mjs
+  Zone and Modal Functionality
+    Card Movement to Zones
+      √ should move card from hand to graveyard (11 ms)
+      √ should move card from hand to exile (2 ms)
+      √ should move card from hand to library (2 ms)
+    Modal Generation
+      √ should create graveyard modal with correct structure (16 ms)
+      √ should show empty message when zone is empty (4 ms)
+      √ should display cards in reverse order (most recent first) (2 ms)
+    Card ID Generation
+      √ should generate consistent card IDs (3 ms)
+      √ should find cards by generated ID (1 ms)
+    Modal Interactions
+      √ should close modal on backdrop click (28 ms)
+      √ should not close modal on content click (10 ms)
+    Library Modal
+      √ should display library with correct card count (2 ms)
+      √ should handle player and opponent libraries separately (2 ms)
+    Zone Count Updates
+      √ should reflect graveyard count changes (2 ms)
+      √ should reflect exile count changes (1 ms)
+
+  console.log
+    Total Card Objects: 18
+
+      at log (scripts/config.mjs:95:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Lands: 5
+
+      at log (scripts/config.mjs:101:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Deck Size: 60
+
+      at log (scripts/config.mjs:119:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Card Objects: 17
+
+      at log (scripts/config.mjs:95:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Lands: 0
+
+      at log (scripts/config.mjs:101:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Deck Size: 60
+
+      at log (scripts/config.mjs:119:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Card Objects: 30
+
+      at log (scripts/config.mjs:95:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Lands: 10
+
+      at log (scripts/config.mjs:101:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Deck Size: 60
+
+      at log (scripts/config.mjs:119:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Card Objects: 28
+
+      at log (scripts/config.mjs:95:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Lands: 3
+
+      at log (scripts/config.mjs:101:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Deck Size: 61
+
+      at log (scripts/config.mjs:119:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Card Objects: 19
+
+      at log (scripts/config.mjs:95:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Total Lands: 4
+
+      at log (scripts/config.mjs:101:11)
+          at Array.forEach (<anonymous>)
+
+  console.log
+    Deck Size: 60
+
+      at log (scripts/config.mjs:119:11)
+          at Array.forEach (<anonymous>)
+
+(node:3620) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL __tests__/integration.test.mjs
+  XML Integration Tests
+    Real Deck XML Parsing
+      × should parse BlackRack.xml correctly (98 ms)
+      √ should handle XML with various card types (17 ms)
+      √ should handle malformed XML gracefully (31 ms)
+    File System Integration
+      √ should list available deck files (2 ms)
+      √ should parse multiple deck files without errors (125 ms)
+
+  ● XML Integration Tests › Real Deck XML Parsing › should parse BlackRack.xml correctly
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Object {
+        "cost": "{B}",
+        "quantity": 4,
+    +   "rulesText": "Add {B}{B}{B}.",
+        "type": "instant",
+      }
+
+    [0m [90m 41 |[39m       [36mconst[39m cardInfo [33m=[39m deckInformation[33m.[39mcardInfo[33m;[39m
+     [90m 42 |[39m       expect(cardInfo)[33m.[39mtoHaveProperty([32m'Dark Ritual'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 43 |[39m       expect(cardInfo[[32m'Dark Ritual'[39m])[33m.[39mtoEqual({
+     [90m    |[39m                                       [31m[1m^[22m[39m
+     [90m 44 |[39m         quantity[33m:[39m [35m4[39m[33m,[39m
+     [90m 45 |[39m         type[33m:[39m [32m'instant'[39m[33m,[39m
+     [90m 46 |[39m         cost[33m:[39m [32m'{B}'[39m[33m,[39m[0m
+
+      at Object.<anonymous> (__tests__/integration.test.mjs:43:39)
+
+  console.log
+    updateZoneDisplay called: graveyard opponent
+
+      at UIManager.log [as updateZoneDisplay] (scripts/modules/ui-updates.mjs:296:13)
+
+  console.log
+    Player state for opponent : {
+      life: 20,
+      hand: [
+        { name: 'Lightning Bolt', cost: 'R', type: 'Instant' },
+        { name: 'Mountain', cost: '', type: 'Land' }
+      ],
+      library: [
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' }
+      ],
+      graveyard: [ { name: 'Dead Card', cost: '2', type: 'Creature' } ],
+      exile: [],
+      battlefield: { lands: [], creatures: [], others: [] }
+    }
+
+      at UIManager.log [as updateZoneDisplay] (scripts/modules/ui-updates.mjs:311:13)
+
+  console.log
+    Skipping graveyard for opponent - no container in this layout
+
+      at UIManager.log [as updateZoneDisplay] (scripts/modules/ui-updates.mjs:329:17)
+
+  console.log
+    updateZoneDisplay called: graveyard player
+
+      at UIManager.log [as updateZoneDisplay] (scripts/modules/ui-updates.mjs:296:13)
+
+  console.log
+    Player state for player : {
+      life: 20,
+      hand: [
+        { name: 'Lightning Bolt', cost: 'R', type: 'Instant' },
+        { name: 'Mountain', cost: '', type: 'Land' }
+      ],
+      library: [
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' },
+        { name: 'Card', cost: '1', type: 'Creature' }
+      ],
+      graveyard: [ { name: 'Dead Card', cost: '2', type: 'Creature' } ],
+      exile: [],
+      battlefield: { lands: [], creatures: [], others: [] }
+    }
+
+      at UIManager.log [as updateZoneDisplay] (scripts/modules/ui-updates.mjs:311:13)
+
+  console.log
+    Looking for container: graveyardZone
+
+      at UIManager.log [as updateZoneDisplay] (scripts/modules/ui-updates.mjs:333:15)
+
+  console.log
+    Container found: true
+
+      at UIManager.log [as updateZoneDisplay] (scripts/modules/ui-updates.mjs:335:15)
+
+  console.log
+    Rendering 1 cards to graveyardZone
+
+      at UIManager.log [as updateZoneDisplay] (scripts/modules/ui-updates.mjs:337:17)
+
+  console.log
+    renderCards: Rendering 1 cards to container graveyardZone
+
+      at UIManager.log [as renderCards] (scripts/modules/ui-updates.mjs:356:13)
+
+  console.log
+    renderCards: HTML set, innerHTML length: 796
+
+      at UIManager.log [as renderCards] (scripts/modules/ui-updates.mjs:408:13)
+
+  console.log
+    Loading images for 1 cards
+
+      at UIManager.log [as loadCardImages] (scripts/modules/ui-updates.mjs:534:13)
+
+  console.log
+    CardImageService available: function [class CardImageService] {
+      SCRYFALL_API: 'https://api.scryfall.com/cards/named',
+      CARD_CACHE: Map(0) {},
+      CACHE_DURATION: 86400000,
+      MAX_CACHE_SIZE: 1000,
+      REQUEST_DELAY: 75,
+      LOCAL_IMAGE_INDEX: null,
+      INDEX_LOAD_PROMISE: null
+    }
+
+      at UIManager.log [as loadCardImages] (scripts/modules/ui-updates.mjs:535:13)
+
+  console.log
+    Fetching image for: Dead Card
+
+      at UIManager.log [as loadCardImages] (scripts/modules/ui-updates.mjs:550:19)
+
+  console.warn
+    Failed to load local image index, falling back to extension checks: Failed to parse URL from /assets/MagicImages/index.json
+
+    [0m [90m 141 |[39m         }
+     [90m 142 |[39m       } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 143 |[39m         console[33m.[39mwarn([32m'Failed to load local image index, falling back to extension checks:'[39m[33m,[39m error[33m.[39mmessage)[33m;[39m
+     [90m     |[39m                 [31m[1m^[22m[39m
+     [90m 144 |[39m       }
+     [90m 145 |[39m       [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 146 |[39m     })()[33m;[39m[0m
+
+      at src/services/cardImageService.mjs:143:17
+      at Function.checkLocalImage (src/services/cardImageService.mjs:154:7)
+      at Function.getCardImageUrl (src/services/cardImageService.mjs:30:27)
+      at UIManager.loadCardImages (scripts/modules/ui-updates.mjs:551:22)
+
+(node:15228) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL __tests__/modules/ui-updates.test.mjs
+  UIManager
+    Turn Display
+      √ should update turn number (19 ms)
+      √ should update phase name (2 ms)
+    Life Display
+      × should update player life total (5 ms)
+      × should update opponent life total (2 ms)
+    Hand Count Display
+      √ should update player hand count (2 ms)
+      √ should update opponent hand count (1 ms)
+    Zone Counts
+      √ should update graveyard counts (2 ms)
+      √ should update exile counts (5 ms)
+      √ should update library counts (2 ms)
+    Game Log
+      √ should render game log entries (122 ms)
+      √ should display turn and phase in log entry (6 ms)
+    Card Main Type Detection
+      √ should identify land cards (1 ms)
+      √ should identify creature cards
+      √ should identify instant cards (3 ms)
+      √ should identify sorcery cards (1 ms)
+      √ should identify artifact cards
+      √ should identify enchantment cards
+      √ should handle unknown types
+    HTML Escaping
+      √ should escape HTML entities (10 ms)
+      √ should escape quotes
+    Zone Display
+      √ should skip zones without containers (154 ms)
+      √ should render player graveyard zone (47 ms)
+
+  ● UIManager › Life Display › should update player life total
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "20"
+    Received: ""
+
+    [0m [90m 92 |[39m     test([32m'should update player life total'[39m[33m,[39m () [33m=>[39m {
+     [90m 93 |[39m       uiManager[33m.[39mupdateLifeDisplay([32m'player'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 94 |[39m       expect(document[33m.[39mgetElementById([32m'playerLifeTotal'[39m)[33m.[39mtextContent)[33m.[39mtoBe([32m'20'[39m)[33m;[39m
+     [90m    |[39m                                                                      [31m[1m^[22m[39m
+     [90m 95 |[39m     })[33m;[39m
+     [90m 96 |[39m
+     [90m 97 |[39m     test([32m'should update opponent life total'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at Object.<anonymous> (__tests__/modules/ui-updates.test.mjs:94:70)
+
+  ● UIManager › Life Display › should update opponent life total
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "20"
+    Received: ""
+
+    [0m [90m  97 |[39m     test([32m'should update opponent life total'[39m[33m,[39m () [33m=>[39m {
+     [90m  98 |[39m       uiManager[33m.[39mupdateLifeDisplay([32m'opponent'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m  99 |[39m       expect(document[33m.[39mgetElementById([32m'opponentLifeTotal'[39m)[33m.[39mtextContent)[33m.[39mtoBe([32m'20'[39m)[33m;[39m
+     [90m     |[39m                                                                        [31m[1m^[22m[39m
+     [90m 100 |[39m     })[33m;[39m
+     [90m 101 |[39m   })[33m;[39m
+     [90m 102 |[39m[0m
+
+      at Object.<anonymous> (__tests__/modules/ui-updates.test.mjs:99:72)
+
+(node:35148) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS __tests__/modules/triggered-abilities.test.mjs
+  TriggeredAbilities Module
+    checkDelverTriggers
+      √ should find Delver of Secrets on battlefield (66 ms)
+      √ should not trigger if Delver is already transformed (5 ms)
+      √ should not trigger if no Delvers on battlefield (16 ms)
+    triggerDelverReveal
+      √ should show modal if library has cards (3 ms)
+      √ should show toast if library is empty (3 ms)
+      √ should determine if card is instant or sorcery correctly (3 ms)
+      √ should not transform on creature reveal (4 ms)
+    showDelverRevealModal
+      √ should create modal with correct content (280 ms)
+      √ should show "does not transform" for non-instant/sorcery (102 ms)
+      √ should store pending trigger (110 ms)
+    resolveDelverTrigger
+      √ should transform Delver if shouldTransform is true (3 ms)
+      √ should not transform if shouldTransform is false (1 ms)
+      √ should remove modal from DOM (1 ms)
+      √ should handle missing pendingDelverTrigger (2 ms)
+
+PASS __tests__/decks.test.mjs
+  Deck Management
+    Mana Cost Conversion
+      √ should calculate converted mana cost correctly (4 ms)
+    Card Type Categorization
+      √ should correctly categorize card types (2 ms)
+    XML Generation
+      √ should generate valid XML from deck data (10 ms)
+
+  console.warn
+    Failed to load local image index, falling back to extension checks: response.json is not a function
+
+    [0m [90m 141 |[39m         }
+     [90m 142 |[39m       } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 143 |[39m         console[33m.[39mwarn([32m'Failed to load local image index, falling back to extension checks:'[39m[33m,[39m error[33m.[39mmessage)[33m;[39m
+     [90m     |[39m                 [31m[1m^[22m[39m
+     [90m 144 |[39m       }
+     [90m 145 |[39m       [36mreturn[39m [36mnull[39m[33m;[39m
+     [90m 146 |[39m     })()[33m;[39m[0m
+
+      at src/services/cardImageService.mjs:143:17
+
+  console.log
+    Total Card Objects: 2
+
+      at log (scripts/config.mjs:95:11)
+
+  console.log
+    Total Lands: 0
+
+      at log (scripts/config.mjs:101:11)
+
+  console.log
+    Deck Size: 6
+
+      at log (scripts/config.mjs:119:11)
+
+  console.log
+    card To Draw: 7
+
+      at log (scripts/config.mjs:145:11)
+
+  console.log
+    initialDeckSize in cardDraw: 8
+
+      at log (scripts/config.mjs:146:11)
+
+PASS __tests__/config.test.mjs
+  Config Module
+    extractCardInfo
+      √ should extract card information from deck XML (27 ms)
+    buildCardNamesArray
+      √ should create array with proper card quantities (2 ms)
+    cardDraw
+      √ should draw correct number of cards and separate lands from spells (4 ms)
+
+  console.warn
+    Failed to fetch image for Error Card: Network error
+
+    [0m [90m 114 |[39m
+     [90m 115 |[39m     } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 116 |[39m       console[33m.[39mwarn([32m`Failed to fetch image for ${cardName}:`[39m[33m,[39m error[33m.[39mmessage)[33m;[39m
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 117 |[39m
+     [90m 118 |[39m       [90m// Cache failed result to avoid repeated requests[39m
+     [90m 119 |[39m       [36mthis[39m[33m.[39m[33mCARD_CACHE[39m[33m.[39m[36mset[39m(cacheKey[33m,[39m {[0m
+
+      at Function.getCardImageUrl (src/services/cardImageService.mjs:116:15)
+      at Object.<anonymous> (__tests__/services/cardImageService.test.mjs:211:22)
+
+PASS __tests__/services/cardImageService.test.mjs
+  CardImageService
+    Local Image Checking
+      √ should check for local images with multiple extensions (73 ms)
+      √ should try different extensions until one succeeds (2 ms)
+      √ should return null if no local image exists (2 ms)
+    Scryfall API Integration
+      √ should fetch card image from Scryfall API (1 ms)
+      √ should try fuzzy search if exact match fails (1 ms)
+      √ should handle double-faced cards
+    Caching
+      √ should cache image URLs
+      √ should return cached results within duration (1 ms)
+      √ should manage cache size (34 ms)
+      √ should clear cache (1 ms)
+    Image Size Fallbacks
+      √ should fall back to other sizes if requested size unavailable (1 ms)
+    Error Handling
+      √ should return placeholder on API error (8 ms)
+      √ should handle invalid card names gracefully
+    Cache Statistics
+      √ should provide cache statistics
+
+PASS __tests__/services/securityService.test.mjs
+  SecurityService
+    isValidXML
+      √ should validate proper XML with declaration (3 ms)
+      √ should validate XML without declaration (1 ms)
+      √ should reject non-XML content
+      √ should reject empty string (1 ms)
+      √ should reject null/undefined
+    containsXXEPatterns
+      √ should detect ENTITY declarations
+      √ should detect external file references
+      √ should detect external HTTP references
+      √ should not flag safe XML (1 ms)
+    validateXMLSecurity
+      √ should return valid for safe XML
+      √ should return invalid for XXE patterns (1 ms)
+      √ should return invalid for malformed XML
+
+  console.warn
+    Buttons with icons only (need aria-label): 6
+
+    [0m [90m 153 |[39m
+     [90m 154 |[39m       [36mif[39m (iconOnlyButtons[33m.[39mlength [33m>[39m [35m0[39m) {
+    [31m[1m>[22m[39m[90m 155 |[39m         console[33m.[39mwarn([32m'Buttons with icons only (need aria-label):'[39m[33m,[39m iconOnlyButtons[33m.[39mlength)[33m;[39m
+     [90m     |[39m                 [31m[1m^[22m[39m
+     [90m 156 |[39m       }
+     [90m 157 |[39m
+     [90m 158 |[39m       [90m// Will be fixed in template migration[39m[0m
+
+      at Object.<anonymous> (__tests__/accessibility.test.mjs:155:17)
+
+PASS __tests__/security.test.mjs
+  Security Functions
+    isValidXML
+      √ should accept valid XML with XML declaration (6 ms)
+      √ should accept valid XML without XML declaration
+      √ should reject non-XML content (1 ms)
+      √ should reject malformed XML
+      √ should handle empty string (1 ms)
+      √ should handle whitespace
+    containsXXEPatterns
+      √ should detect ENTITY declarations (1 ms)
+      √ should detect DOCTYPE with internal subset
+      √ should detect external file references (1 ms)
+      √ should detect external HTTP references (1 ms)
+      √ should detect external FTP references
+      √ should detect PUBLIC external references (1 ms)
+      √ should detect hex character references
+      √ should detect decimal character references
+      √ should allow safe XML content (1 ms)
+      √ should handle case insensitive patterns
+    Combined Security Validation
+      √ should validate typical MTG deck XML
+      √ should reject malicious XML attempts (1 ms)
+
+  console.warn
+    Heading hierarchy violations: [ 'Skipped from h0 to h3', 'Skipped from h2 to h4' ]
+
+    [0m [90m 243 |[39m
+     [90m 244 |[39m       [36mif[39m (violations[33m.[39mlength [33m>[39m [35m0[39m) {
+    [31m[1m>[22m[39m[90m 245 |[39m         console[33m.[39mwarn([32m'Heading hierarchy violations:'[39m[33m,[39m violations)[33m;[39m
+     [90m     |[39m                 [31m[1m^[22m[39m
+     [90m 246 |[39m       }
+     [90m 247 |[39m
+     [90m 248 |[39m       [90m// Most violations will be fixed in template migration[39m[0m
+
+      at Object.<anonymous> (__tests__/accessibility.test.mjs:245:17)
+
+PASS __tests__/server.test.mjs
+  Server Tests
+    Static Routes
+      √ should serve static XML files (3 ms)
+    File Upload Validation
+      √ should validate file extensions (1 ms)
+      √ should validate file size limits
+    Authentication Logic
+      √ should validate credentials (1 ms)
+      √ should require authentication for protected routes (1 ms)
+
+(node:14280) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS __tests__/accessibility.test.mjs
+  Accessibility - WCAG 2.1 AA Compliance
+    ARIA Landmarks
+      √ has main landmark (17 ms)
+      √ main landmark has accessible name (6 ms)
+      √ has navigation landmark (41 ms)
+      √ has complementary landmark for sidebar (18 ms)
+      √ sidebar has accessible name (2 ms)
+    Skip Links
+      √ has skip link elements in template structure (1 ms)
+      √ skip links should be first focusable elements (20 ms)
+    Live Regions
+      √ has live region for announcements (29 ms)
+      √ has alert region for urgent messages (50 ms)
+      √ game log is marked as live region
+    Button Accessibility
+      √ all buttons have accessible names (14 ms)
+      √ no buttons have only icon content without label (57 ms)
+      √ dropdown toggles have aria-haspopup (4 ms)
+      √ dropdown toggles have aria-expanded (2 ms)
+    Form Controls
+      √ all inputs have labels (3 ms)
+      √ radio buttons are in fieldsets with legends (3 ms)
+    Heading Hierarchy
+      √ has h1 heading (5 ms)
+      √ headings are in logical order (35 ms)
+      √ section headings exist for major areas (13 ms)
+    Keyboard Navigation
+      √ interactive elements are keyboard accessible (4 ms)
+      √ no positive tabindex values (3 ms)
+      √ keyboard shortcuts are documented (2 ms)
+    Focus Management
+      √ modals have focus trap elements (5 ms)
+      √ no elements have outline:none without :focus-visible (1 ms)
+    Color and Contrast
+      √ CSS includes color-fixes component
+      √ color-fixes.css contains WCAG compliance comments
+      √ accessibility.css includes focus indicators (1 ms)
+      √ no reliance on color alone for information
+    Images and Media
+      √ images have alt text (1 ms)
+      √ decorative images have empty alt (1 ms)
+    Progressive Disclosure
+      √ expertise level system is defined (26 ms)
+      √ actions are tagged with expertise levels (18 ms)
+      √ expertise level stored in body data attribute
+    Error Prevention
+      √ destructive actions have confirmation (6 ms)
+      √ forms have clear error messages (2 ms)
+    Mobile Accessibility
+      √ touch targets are minimum 44x44px (1 ms)
+      √ responsive design supports zoom (2 ms)
+      √ long-press alternative for right-click exists
+    Screen Reader Support
+      √ sr-only class exists in CSS (1 ms)
+      √ sr-only-focusable class exists in CSS
+      √ live regions have correct politeness levels (5 ms)
+    Reduced Motion Support
+      √ CSS respects prefers-reduced-motion (1 ms)
+      √ transitions are disabled for reduced motion
+    High Contrast Mode
+      √ CSS supports high contrast mode
+      √ focus indicators are stronger in high contrast (1 ms)
+    Language and Content
+      √ HTML has lang attribute
+      √ no use of deprecated HTML elements (2 ms)
+      √ semantic HTML5 elements used (1 ms)
+    Documentation
+      √ implementation guide exists (1 ms)
+      √ implementation guide contains ARIA examples
+      √ accessibility CSS is documented
+  Accessibility - Component Integration
+    √ modern-ui.css imports accessibility components (1 ms)
+    √ button component includes accessibility states
+    √ dropdown component is keyboard accessible
+  Accessibility - Phase 1 Requirements
+    √ all Phase 1 CSS components exist
+    √ EventManager supports keyboard navigation (1 ms)
+    √ accessibility documentation is complete
+
+PASS __tests__/modules/fetchlands.test.mjs
+  Fetchlands Module
+    isFetchland
+      √ should identify true fetchlands (8 ms)
+      √ should identify slow fetchlands (3 ms)
+      √ should return false for non-fetchlands (1 ms)
+    getFetchlandTypes
+      √ should return correct land types for Scalding Tarn (3 ms)
+      √ should return all basic land types for Evolving Wilds (2 ms)
+      √ should return empty array for non-fetchlands (1 ms)
+    getFetchlandLifeCost
+      √ should return 1 life for true fetchlands (1 ms)
+      √ should return 0 life for slow fetchlands (1 ms)
+    fetchlandProducesTaskedLands
+      √ should return false for true fetchlands (lands enter untapped) (2 ms)
+      √ should return true for slow fetchlands (lands enter tapped) (2 ms)
+    isBasicLand
+      √ should identify basic lands (1 ms)
+      √ should return false for non-basic lands (1 ms)
+    getAvailableDualLands
+      √ should find dual lands that match fetchland types (1 ms)
+      √ should return empty array if no dual lands match (1 ms)
+    getAvailableLandsInLibrary
+      √ should count available lands by type (3 ms)
+    analyzeManaBase
+      √ should analyze mana base correctly (1 ms)
+    getFetchSuggestions
+      √ should suggest land type if color has no sources (1 ms)
+      √ should return null if mana base is balanced (1 ms)
+    closeFetchlandQuickSelect
+      √ should remove fetchland popup if it exists (1 ms)
+      √ should not error if popup does not exist (2 ms)
+
+
+  ●  Cannot log after tests are done. Did you forget to wait for something async in your test?
+    Attempted to log "Got image URL for Dead Card: https://cards.scryfall.io/normal/front/3/a/3a14d6c5-cfd1-4860-834a-5a0dc9df0320.jpg?1743765756".
+
+    [0m [90m 550 |[39m           console[33m.[39mlog([32m`Fetching image for: ${cardName}`[39m)[33m;[39m
+     [90m 551 |[39m           imageUrl [33m=[39m [36mawait[39m [33mCardImageService[39m[33m.[39mgetCardImageUrl(cardName[33m,[39m [32m'normal'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 552 |[39m           console[33m.[39mlog([32m`Got image URL for ${cardName}:`[39m[33m,[39m imageUrl)[33m;[39m
+     [90m     |[39m                   [31m[1m^[22m[39m
+     [90m 553 |[39m         }
+     [90m 554 |[39m
+     [90m 555 |[39m         [36mif[39m (imageUrl) {[0m
+
+      at console.log (node_modules/@jest/console/build/index.js:311:10)
+      at UIManager.log [as loadCardImages] (scripts/modules/ui-updates.mjs:552:19)
+
+  console.error
+    TypeError: this.simulator?.initializeCombat is not a function
+        at HTMLButtonElement.initializeCombat (C:\dev\repos\personal\MTGDeckSimulator\scripts\modules\event-manager.mjs:58:25)
+        at HTMLButtonElement.callTheUserObjectsOperation (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+        at innerInvokeEventListeners (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+        at invokeEventListeners (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+        at HTMLButtonElementImpl._dispatch (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+        at fireAnEvent (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\helpers\events.js:18:36)
+        at HTMLButtonElementImpl.click (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\nodes\HTMLElement-impl.js:85:5)
+        at HTMLButtonElement.click (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\generated\HTMLElement.js:108:34)
+        at C:\dev\repos\personal\MTGDeckSimulator\__tests__\modules\event-manager.test.mjs:788:13
+        at Object.<anonymous> (C:\dev\repos\personal\MTGDeckSimulator\node_modules\expect\build\index.js:1824:9)
+        at Object.throwingMatcher [as toThrow] (C:\dev\repos\personal\MTGDeckSimulator\node_modules\expect\build\index.js:2235:93)
+        at Object.<anonymous> (C:\dev\repos\personal\MTGDeckSimulator\__tests__\modules\event-manager.test.mjs:789:14)
+        at Promise.finally.completed (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusTest (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:1007:40)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at _runTest (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:947:3)
+        at C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-runner\build\testWorker.js:497:12)
+
+    [0m [90m 786 |[39m       expect(() [33m=>[39m {
+     [90m 787 |[39m         [36mconst[39m btn [33m=[39m document[33m.[39mquerySelector([32m'[data-action="combat"]'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 788 |[39m         btn[33m.[39mclick()[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 789 |[39m       })[33m.[39mnot[33m.[39mtoThrow()[33m;[39m
+     [90m 790 |[39m     })[33m;[39m
+     [90m 791 |[39m[0m
+
+      at VirtualConsole.forward (node_modules/jsdom/lib/jsdom/virtual-console.js:26:20)
+      at reportException (node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:69:28)
+      at innerInvokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:363:9)
+      at invokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:296:3)
+      at HTMLButtonElementImpl._dispatch (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:243:9)
+      at fireAnEvent (node_modules/jsdom/lib/jsdom/living/helpers/events.js:18:36)
+      at HTMLButtonElementImpl.click (node_modules/jsdom/lib/jsdom/living/nodes/HTMLElement-impl.js:85:5)
+      at HTMLButtonElement.click (node_modules/jsdom/lib/jsdom/living/generated/HTMLElement.js:108:34)
+      at __tests__/modules/event-manager.test.mjs:788:13
+      at Object.<anonymous> (node_modules/expect/build/index.js:1824:9)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:2235:93)
+      at Object.<anonymous> (__tests__/modules/event-manager.test.mjs:789:14)
+
+  console.error
+    TypeError: this.simulator?.initializeCombat is not a function
+        at HTMLButtonElement.initializeCombat (C:\dev\repos\personal\MTGDeckSimulator\scripts\modules\event-manager.mjs:58:25)
+        at HTMLButtonElement.callTheUserObjectsOperation (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+        at innerInvokeEventListeners (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+        at invokeEventListeners (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+        at HTMLButtonElementImpl._dispatch (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+        at fireAnEvent (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\helpers\events.js:18:36)
+        at HTMLButtonElementImpl.click (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\nodes\HTMLElement-impl.js:85:5)
+        at HTMLButtonElement.click (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jsdom\lib\jsdom\living\generated\HTMLElement.js:108:34)
+        at C:\dev\repos\personal\MTGDeckSimulator\__tests__\modules\event-manager.test.mjs:788:13
+        at Object.<anonymous> (C:\dev\repos\personal\MTGDeckSimulator\node_modules\expect\build\index.js:1824:9)
+        at Object.throwingMatcher [as toThrow] (C:\dev\repos\personal\MTGDeckSimulator\node_modules\expect\build\index.js:2235:93)
+        at Object.<anonymous> (C:\dev\repos\personal\MTGDeckSimulator\__tests__\modules\event-manager.test.mjs:789:14)
+        at Promise.finally.completed (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusTest (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:1007:40)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at _runTest (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:947:3)
+        at C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\dev\repos\personal\MTGDeckSimulator\node_modules\jest-runner\build\testWorker.js:497:12)
+
+    [0m [90m 786 |[39m       expect(() [33m=>[39m {
+     [90m 787 |[39m         [36mconst[39m btn [33m=[39m document[33m.[39mquerySelector([32m'[data-action="combat"]'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 788 |[39m         btn[33m.[39mclick()[33m;[39m
+     [90m     |[39m             [31m[1m^[22m[39m
+     [90m 789 |[39m       })[33m.[39mnot[33m.[39mtoThrow()[33m;[39m
+     [90m 790 |[39m     })[33m;[39m
+     [90m 791 |[39m[0m
+
+      at VirtualConsole.forward (node_modules/jsdom/lib/jsdom/virtual-console.js:26:20)
+      at reportException (node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:69:28)
+      at innerInvokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:363:9)
+      at invokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:296:3)
+      at HTMLButtonElementImpl._dispatch (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:243:9)
+      at fireAnEvent (node_modules/jsdom/lib/jsdom/living/helpers/events.js:18:36)
+      at HTMLButtonElementImpl.click (node_modules/jsdom/lib/jsdom/living/nodes/HTMLElement-impl.js:85:5)
+      at HTMLButtonElement.click (node_modules/jsdom/lib/jsdom/living/generated/HTMLElement.js:108:34)
+      at __tests__/modules/event-manager.test.mjs:788:13
+      at Object.<anonymous> (node_modules/expect/build/index.js:1824:9)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:2235:93)
+      at Object.<anonymous> (__tests__/modules/event-manager.test.mjs:789:14)
+
+(node:36368) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS __tests__/modules/event-manager.test.mjs (5.984 s)
+  EventManager
+    Initialization
+      √ initializes without errors (347 ms)
+      √ stores simulator reference (216 ms)
+    Top Bar Events
+      √ opens deck selection modal (145 ms)
+      √ triggers quick setup (153 ms)
+      √ triggers end turn (132 ms)
+      √ triggers combat (166 ms)
+    Overflow Menu
+      √ overflow menu button exists (141 ms)
+      √ triggers start game from overflow menu (145 ms)
+      √ toggles sound from overflow menu (138 ms)
+    Player Actions
+      √ triggers new game for player (134 ms)
+      √ triggers draw card for player (79 ms)
+      √ triggers mulligan for player (79 ms)
+      √ triggers pass turn for player (57 ms)
+      √ triggers untap all for player (43 ms)
+      √ triggers discard with correct amount (46 ms)
+      √ triggers fetch land for player (37 ms)
+      √ triggers ramp for player (41 ms)
+    Opponent Actions
+      √ triggers new game for opponent (42 ms)
+      √ triggers draw card for opponent (38 ms)
+      √ triggers mulligan for opponent (52 ms)
+      √ triggers untap all for opponent (45 ms)
+    Library Actions
+      √ toggles player library menu (42 ms)
+      √ triggers view library for player (45 ms)
+      √ triggers scry for player (37 ms)
+      √ triggers ponder for player (44 ms)
+      √ triggers brainstorm for player (45 ms)
+      √ triggers surveil with correct amount (40 ms)
+      √ triggers cascade for player (37 ms)
+      √ triggers shuffle for player (39 ms)
+      √ triggers shuffle for opponent (38 ms)
+      √ closes library menu after action (40 ms)
+    Token Creation
+      √ token menu elements exist (39 ms)
+      √ creates Treasure token for player (44 ms)
+      √ creates Clue token for player (40 ms)
+      √ creates Soldier token for player (39 ms)
+      √ closes token menu after creating token (36 ms)
+    Board Wipes
+      √ board wipes panel elements exist (37 ms)
+      √ triggers Wrath of God (37 ms)
+      √ triggers Damnation (40 ms)
+      √ triggers Supreme Verdict (36 ms)
+    Life Counter Events
+      √ changes player life by +1 (39 ms)
+      √ changes player life by -1 (41 ms)
+      √ changes player life by +3 (37 ms)
+      √ changes player life by -3 (45 ms)
+      √ changes player life by -2 (49 ms)
+      √ changes opponent life by +1 (46 ms)
+      √ changes opponent life by -1 (39 ms)
+      √ prompts to set player life on click (37 ms)
+      √ prompts to set opponent life on click (41 ms)
+      √ does not set life if prompt is cancelled (41 ms)
+    Dropdown Management
+      √ closes all dropdowns when clicking outside (38 ms)
+      √ does not close dropdown when clicking inside it (40 ms)
+      √ closes dropdown with Escape key (38 ms)
+    Modal Management
+      √ opens deck selection modal and updates deck names (39 ms)
+      √ shows "No Deck" when no deck loaded (38 ms)
+      √ has close button event handler (39 ms)
+      √ has backdrop click handler (35 ms)
+      √ Escape key closes modals (39 ms)
+    Helper Methods
+      √ closeDropdown removes show class (38 ms)
+      √ closeAllDropdowns removes all show classes (41 ms)
+    Edge Cases
+      √ handles missing simulator methods gracefully (114 ms)
+      √ handles missing DOM elements gracefully (66 ms)
+      √ handles multiple clicks without errors (39 ms)
+      √ handles rapid dropdown toggling (38 ms)
+    Data Attribute Parsing
+      √ parses integer data-amount correctly (41 ms)
+      √ parses string data-token correctly (35 ms)
+      √ parses data-player correctly (40 ms)
+      √ parses data-spell correctly (40 ms)
+
+-----------------------------------|---------|----------|---------|---------|----------------------------------------------------------------------------------------------------------------------------------------
+File                               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                      
+-----------------------------------|---------|----------|---------|---------|----------------------------------------------------------------------------------------------------------------------------------------
+All files                          |    7.63 |     8.44 |    8.57 |    7.77 |                                                                                                                                        
+ controllers                       |       0 |        0 |       0 |       0 |                                                                                                                                        
+  controller.mjs                   |       0 |        0 |       0 |       0 | 11-586                                                                                                                                 
+  deckController.mjs               |       0 |        0 |       0 |       0 | 8-122                                                                                                                                  
+ scripts                           |    1.39 |     1.21 |     0.9 |    1.43 |                                                                                                                                        
+  alldecks.mjs                     |       0 |        0 |       0 |       0 | 5-425                                                                                                                                  
+  config.mjs                       |   24.87 |    24.05 |   16.12 |   24.87 | 8-48,106-109,124-138,169-459,464-473,478-481,486-487                                                                                   
+  createDeckFormEventListeners.mjs |       0 |        0 |       0 |       0 | 13-321                                                                                                                                 
+  deck-selector-dynamic.mjs        |       0 |        0 |       0 |       0 | 8-142                                                                                                                                  
+  deck-selector.mjs                |       0 |        0 |       0 |       0 | 3-235                                                                                                                                  
+  decks.mjs                        |       0 |        0 |       0 |       0 | 9-704                                                                                                                                  
+  handsimulation.mjs               |       0 |        0 |       0 |       0 | 13-808                                                                                                                                 
+  modern-ui.mjs                    |       0 |        0 |       0 |       0 | 11-1652                                                                                                                                
+  playhand-modern-refactored.mjs   |       0 |        0 |       0 |       0 | 31-2154                                                                                                                                
+  playhand.mjs                     |       0 |        0 |       0 |       0 | 10-901                                                                                                                                 
+ scripts/modules                   |   14.08 |    14.93 |   15.78 |   14.44 |                                                                                                                                        
+  adventure.mjs                    |       0 |        0 |       0 |       0 | 6-245                                                                                                                                  
+  card-actions.mjs                 |       0 |        0 |       0 |       0 | 6-416                                                                                                                                  
+  card-mechanics.mjs               |       0 |        0 |       0 |       0 | 7-378                                                                                                                                  
+  combat-enhanced.mjs              |       0 |        0 |       0 |       0 | 8-783                                                                                                                                  
+  combat.mjs                       |       0 |        0 |       0 |       0 | 8-381                                                                                                                                  
+  context-menus.mjs                |       0 |        0 |       0 |       0 | 6-694                                                                                                                                  
+  core-methods.mjs                 |       0 |        0 |       0 |       0 | 10-897                                                                                                                                 
+  deck-loader.mjs                  |       0 |        0 |       0 |       0 | 6-325                                                                                                                                  
+  delirium.mjs                     |       0 |        0 |       0 |       0 | 9-327                                                                                                                                  
+  dynamic-stats.mjs                |       0 |        0 |       0 |       0 | 6-115                                                                                                                                  
+  event-manager.mjs                |   85.07 |    57.69 |      75 |   86.06 | 66-68,85-87,149-151,163-165,176-179,246-247,268-269,275-276,283-284,290-291,433-435,518-519,525-526,532-533,597,605-606,616,696-704    
+  fetchlands.mjs                   |   33.17 |    33.91 |      50 |   33.33 | 9-157,167-294,350,376,421-470,484,488,492,522-530                                                                                      
+  game-state.mjs                   |       0 |        0 |       0 |       0 | 8-205                                                                                                                                  
+  hand-sorting.mjs                 |       0 |        0 |       0 |       0 | 6-202                                                                                                                                  
+  library-modals.mjs               |       0 |        0 |       0 |       0 | 6-881                                                                                                                                  
+  modal-manager.mjs                |       0 |        0 |       0 |       0 | 6-354                                                                                                                                  
+  opponent-methods.mjs             |       0 |        0 |       0 |       0 | 8-287                                                                                                                                  
+  planeswalker.mjs                 |       0 |        0 |       0 |       0 | 6-133                                                                                                                                  
+  triggered-abilities.mjs          |     100 |    82.92 |     100 |     100 | 8-16,34,47,73,170                                                                                                                      
+  ui-updates.mjs                   |   36.61 |    33.11 |   32.07 |   35.71 | 17-117,140-237,246-247,315-321,342-345,352-353,427-440,448-449,456-458,463-464,468-528,547-548,552-577,599,605-608,622,628-746,762-790 
+-----------------------------------|---------|----------|---------|---------|----------------------------------------------------------------------------------------------------------------------------------------
+Test Suites: 2 failed, 12 passed, 14 total
+Tests:       3 failed, 257 passed, 260 total
+Snapshots:   0 total
+Time:        8.404 s
+Ran all test suites.

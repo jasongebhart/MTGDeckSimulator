@@ -270,6 +270,7 @@ export class CombatManager {
     if (index >= 0) {
       const destroyed = playerState.battlefield.creatures.splice(index, 1)[0];
       playerState.graveyard.push(destroyed);
+      this.onGraveyardChange(); // Update Tarmogoyf stats
 
       this.gameState.addToGameLog(
         `${creature.name} was destroyed`,

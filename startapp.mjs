@@ -11,7 +11,8 @@ import { loadXMLDoc, xmlDoc } from './scripts/config.mjs';
 // Create an instance of Express
 const app = express();
 
-// Secure CSP policy
+// Secure CSP policy - allow unsafe-inline temporarily due to EJS inline styles/scripts
+// TODO: Refactor to remove inline styles and onclick handlers, then tighten CSP
 const cspHeader =
   "default-src 'self'; connect-src 'self' https://api.scryfall.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';";
 app.use((req, res, next) => {
@@ -41,8 +42,15 @@ app.use(
 
 // Setup template engine
 app.set('view engine', 'ejs');
-// Set the port number
-app.set('port', process.env.PORT || 3001);
+
+// Set the port number with validation
+const PORT = parseInt(process.env.PORT, 10) || 3001;
+if (PORT < 1024 || PORT > 65535) {
+  console.warn(`Invalid PORT ${PORT}, using default 3001`);
+  app.set('port', 3001);
+} else {
+  app.set('port', PORT);
+}
 
 // Static files
 app.use('/assets', express.static('assets'));

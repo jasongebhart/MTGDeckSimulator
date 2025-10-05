@@ -191,6 +191,7 @@ export const Fetchlands = {
       const sacrificedFetchland = battlefield.lands.splice(fetchlandIndex, 1)[0];
       const graveyard = this.gameState.turnState.activePlayer === 'player' ? this.gameState.player.graveyard : this.gameState.opponent.graveyard;
       graveyard.push(sacrificedFetchland);
+      this.onGraveyardChange(); // Update Tarmogoyf stats
       this.gameState.addToGameLog(`Sacrifice ${fetchlandName}`, 'info');
     }
 
@@ -255,6 +256,7 @@ export const Fetchlands = {
     // Sacrifice the fetchland to graveyard
     const fetchland = currentPlayer.battlefield.lands.splice(fetchlandIndex, 1)[0];
     currentPlayer.graveyard.push(fetchland);
+    this.onGraveyardChange(); // Update Tarmogoyf stats
 
     // Remove the found land from library
     const libraryIndex = library.findIndex(card => card.id === targetLand.id);

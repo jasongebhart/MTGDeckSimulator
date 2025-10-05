@@ -6,20 +6,24 @@
  */
 
 import { CardImageService } from '/src/services/cardImageService.mjs';
-import { loadXMLDoc, getCardNameXML } from './config.mjs';
 import { GameState } from './modules/game-state.mjs';
-import { CardMechanics, DFC_DATABASE } from './modules/card-mechanics.mjs';
-import { UIManager } from './modules/ui-updates.mjs';
+import { CardMechanics } from './modules/card-mechanics.mjs';
+import { UIManager } from './modules/ui-updates.mjs?v=2';
 import { EnhancedCombatManager } from './modules/combat-enhanced.mjs';
-import { CoreMethods } from './modules/core-methods.mjs';
+import { CoreMethods } from './modules/core-methods.mjs?v=2';
 import { LibraryModals } from './modules/library-modals.mjs';
 import { TriggeredAbilities } from './modules/triggered-abilities.mjs';
 import { Fetchlands } from './modules/fetchlands.mjs';
-import { OpponentMethods } from './modules/opponent-methods.mjs';
+import { OpponentMethods } from './modules/opponent-methods.mjs?v=3';
 import { ContextMenus } from './modules/context-menus.mjs';
 import { Planeswalker } from './modules/planeswalker.mjs';
 import { Adventure } from './modules/adventure.mjs';
 import { Delirium } from './modules/delirium.mjs';
+import { DeckLoader } from './modules/deck-loader.mjs?v=5';
+import { CardActions } from './modules/card-actions.mjs?v=3';
+import { HandSorting } from './modules/hand-sorting.mjs?v=3';
+import { ModalManager } from './modules/modal-manager.mjs?v=3';
+import { DynamicStats } from './modules/dynamic-stats.mjs?v=2';
 
 class ModernHandSimulator {
   constructor() {
@@ -38,26 +42,12 @@ class ModernHandSimulator {
     // Connect uiManager back to gameState for game log updates
     this.gameState.uiManager = this.uiManager;
 
-    // Legacy compatibility - create proxies to old properties
-    this.createLegacyProxies();
-
     // Sorted hand order for keyboard shortcuts
     this.sortedHandOrder = [];
     this.sortedOpponentHandOrder = [];
 
-    // Predefined decks
-    this.predefinedDecks = [
-      './xml/BigRedMachine.xml',
-      './xml/Stasis.xml',
-      './xml/ZombieRenewal.xml',
-      './xml/Rith.xml',
-      './xml/BlackRack.xml',
-      './decks/classic/goblins.xml',
-      './decks/classic/dredge.xml',
-      './decks/classic/trix.xml',
-      './decks/classic/landstill.xml',
-      './decks/classic/hightide.xml'
-    ];
+    // Predefined decks - will be loaded dynamically from server
+    this.predefinedDecks = [];
 
     // Initialize enhanced UI features
     this.soundsEnabled = localStorage.getItem('mtg-sounds-enabled') !== 'false';
@@ -65,68 +55,6 @@ class ModernHandSimulator {
     this.playerTargetClickListener = this.playerTargetClickListener.bind(this);
     this.detectLayoutMode();
     this.init();
-  }
-
-  // Create legacy proxies for backward compatibility
-  createLegacyProxies() {
-    // Proxy player state properties
-    Object.defineProperty(this, 'library', {
-      get: () => this.gameState.player.library,
-      set: (val) => { this.gameState.player.library = val; }
-    });
-    Object.defineProperty(this, 'hand', {
-      get: () => this.gameState.player.hand,
-      set: (val) => { this.gameState.player.hand = val; }
-    });
-    Object.defineProperty(this, 'battlefield', {
-      get: () => this.gameState.player.battlefield,
-      set: (val) => { this.gameState.player.battlefield = val; }
-    });
-    Object.defineProperty(this, 'graveyard', {
-      get: () => this.gameState.player.graveyard,
-      set: (val) => { this.gameState.player.graveyard = val; }
-    });
-    Object.defineProperty(this, 'exile', {
-      get: () => this.gameState.player.exile,
-      set: (val) => { this.gameState.player.exile = val; }
-    });
-    Object.defineProperty(this, 'gameStats', {
-      get: () => this.gameState.player.gameStats,
-      set: (val) => { this.gameState.player.gameStats = val; }
-    });
-    Object.defineProperty(this, 'manaPool', {
-      get: () => this.gameState.player.manaPool,
-      set: (val) => { this.gameState.player.manaPool = val; }
-    });
-
-    // Proxy opponent state
-    Object.defineProperty(this, 'opponent', {
-      get: () => this.gameState.opponent,
-      set: (val) => { this.gameState.opponent = val; }
-    });
-
-    // Proxy game state properties
-    Object.defineProperty(this, 'turnState', {
-      get: () => this.gameState.turnState,
-      set: (val) => { this.gameState.turnState = val; }
-    });
-    Object.defineProperty(this, 'combatState', {
-      get: () => this.gameState.combatState,
-      set: (val) => { this.gameState.combatState = val; }
-    });
-    Object.defineProperty(this, 'stack', {
-      get: () => this.gameState.stack,
-      set: (val) => { this.gameState.stack = val; }
-    });
-    Object.defineProperty(this, 'targetingMode', {
-      get: () => this.gameState.targetingMode,
-      set: (val) => { this.gameState.targetingMode = val; }
-    });
-
-    // Proxy DFC database
-    Object.defineProperty(this, 'dfcDatabase', {
-      get: () => DFC_DATABASE
-    });
   }
 
   detectLayoutMode() {
@@ -166,6 +94,9 @@ class ModernHandSimulator {
   async init() {
     this.setupTheme();
 
+    // Load deck list from server
+    await this.loadDeckList();
+
     setTimeout(() => {
       this.setupEventListeners();
       this.setupKeyboardShortcuts();
@@ -174,6 +105,22 @@ class ModernHandSimulator {
       // Don't show empty state - default deck will load automatically
       this.loadDefaultDeck();
     }, 500);
+  }
+
+  async loadDeckList() {
+    try {
+      const response = await fetch(`${this.apiBase}/decks/list`);
+      if (response.ok) {
+        const decks = await response.json();
+        // Extract just the file paths
+        this.predefinedDecks = decks.map(deck => deck.path);
+        console.log(`Loaded ${this.predefinedDecks.length} decks from server`);
+      }
+    } catch (error) {
+      console.error('Failed to load deck list:', error);
+      // Fallback to empty array - user can still upload decks
+      this.predefinedDecks = [];
+    }
   }
 
   async loadDefaultDeck() {
@@ -371,7 +318,7 @@ class ModernHandSimulator {
       sortButton.textContent = modeLabels[savedSortMode] || modeLabels['hands-first'];
 
       // Manual dropdown toggle (fallback if Bootstrap isn't working)
-      sortButton.addEventListener('click', (e) => {
+      sortButton.addEventListener('click', (_e) => {
         const dropdownMenu = sortButton.nextElementSibling;
         if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
           dropdownMenu.classList.toggle('show');
@@ -384,7 +331,7 @@ class ModernHandSimulator {
       sortOpponentButton.textContent = modeLabels[savedOpponentSortMode] || modeLabels['hands-first'];
 
       // Manual dropdown toggle
-      sortOpponentButton.addEventListener('click', (e) => {
+      sortOpponentButton.addEventListener('click', (_e) => {
         const dropdownMenu = sortOpponentButton.nextElementSibling;
         if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
           dropdownMenu.classList.toggle('show');
@@ -722,7 +669,7 @@ class ModernHandSimulator {
     // TODO: Implement tutor interface for ramp
   }
 
-  showScryInterface(amount, source, options) {
+  showScryInterface(amount, _source, _options) {
     this.uiManager.showToast(`Scry ${amount} - View top ${amount} cards (not yet implemented)`, 'warning');
     // TODO: Implement scry UI
   }
@@ -763,6 +710,7 @@ class ModernHandSimulator {
     if (milled.length > 0) {
       this.uiManager.updateZoneDisplay('graveyard', 'player');
       this.uiManager.updateZoneCounts();
+      this.onGraveyardChange(); // Update Tarmogoyf stats
       this.uiManager.showToast(`Milled ${milled.length} card(s): ${milled.join(', ')}`, 'info');
     } else {
       this.uiManager.showToast('Library is empty!', 'warning');
@@ -935,7 +883,7 @@ class ModernHandSimulator {
         }
         break;
 
-      case 'draw':
+      case 'draw': {
         const oscDraw = ctx.createOscillator();
         const gainDraw = ctx.createGain();
         oscDraw.connect(gainDraw);
@@ -947,8 +895,9 @@ class ModernHandSimulator {
         oscDraw.start(now);
         oscDraw.stop(now + 0.1);
         break;
+      }
 
-      case 'play':
+      case 'play': {
         const oscPlay = ctx.createOscillator();
         const gainPlay = ctx.createGain();
         oscPlay.connect(gainPlay);
@@ -960,8 +909,9 @@ class ModernHandSimulator {
         oscPlay.start(now);
         oscPlay.stop(now + 0.15);
         break;
+      }
 
-      case 'success':
+      case 'success': {
         const oscSuccess = ctx.createOscillator();
         const gainSuccess = ctx.createGain();
         oscSuccess.connect(gainSuccess);
@@ -974,8 +924,9 @@ class ModernHandSimulator {
         oscSuccess.start(now);
         oscSuccess.stop(now + 0.25);
         break;
+      }
 
-      default:
+      default: {
         const oscDefault = ctx.createOscillator();
         const gainDefault = ctx.createGain();
         oscDefault.connect(gainDefault);
@@ -985,6 +936,7 @@ class ModernHandSimulator {
         gainDefault.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
         oscDefault.start(now);
         oscDefault.stop(now + 0.1);
+      }
     }
   }
 
@@ -1020,7 +972,7 @@ class ModernHandSimulator {
     });
   }
 
-  playerTargetClickListener(event) {
+  playerTargetClickListener(_event) {
     console.log('playerTargetClickListener - stub method, needs implementation from original');
     // TODO: Copy implementation from original file
   }
@@ -1143,7 +1095,7 @@ class ModernHandSimulator {
     event.preventDefault();
 
     // Search both hands to find the card
-    let currentHand = this.hand;
+    let currentHand = this.gameState.player.hand;
     let cardIndex = currentHand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
@@ -1151,7 +1103,7 @@ class ModernHandSimulator {
 
     // If not found in player hand, try opponent hand
     if (cardIndex === -1) {
-      currentHand = this.opponent.hand;
+      currentHand = this.gameState.opponent.hand;
       cardIndex = currentHand.findIndex((card, idx) => {
         const actualCardId = card.id || `${card.name}_${idx}`;
         return actualCardId === cardId;
@@ -1239,10 +1191,10 @@ class ModernHandSimulator {
   moveHandCardToGraveyard(cardId) {
     console.log('=== moveHandCardToGraveyard called ===');
     console.log('Looking for cardId:', cardId);
-    console.log('Current hand:', this.hand);
+    console.log('Current hand:', this.gameState.player.hand);
 
     // Find card in hand
-    const cardIndex = this.hand.findIndex((card, idx) => {
+    const cardIndex = this.gameState.player.hand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       console.log(`  Checking card ${idx}: actualCardId="${actualCardId}" vs cardId="${cardId}"`);
       return actualCardId === cardId;
@@ -1253,13 +1205,14 @@ class ModernHandSimulator {
     if (cardIndex === -1) {
       console.error('Card not found in hand');
       console.error('Searched for:', cardId);
-      console.error('Hand cards:', this.hand.map((c, i) => c.id || `${c.name}_${i}`));
+      console.error('Hand cards:', this.gameState.player.hand.map((c, i) => c.id || `${c.name}_${i}`));
       return;
     }
 
-    const card = this.hand.splice(cardIndex, 1)[0];
-    this.graveyard.push(card);
+    const card = this.gameState.player.hand.splice(cardIndex, 1)[0];
+    this.gameState.player.graveyard.push(card);
 
+    this.onGraveyardChange(); // Update Tarmogoyf stats
     this.uiManager.showToast(`${card.name} moved to graveyard`, 'info');
     this.uiManager.updateAll();
   }
@@ -1267,7 +1220,7 @@ class ModernHandSimulator {
   moveHandCardToExile(cardId) {
     console.log('moveHandCardToExile:', cardId);
 
-    const cardIndex = this.hand.findIndex((card, idx) => {
+    const cardIndex = this.gameState.player.hand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       return actualCardId === cardId;
     });
@@ -1277,8 +1230,8 @@ class ModernHandSimulator {
       return;
     }
 
-    const card = this.hand.splice(cardIndex, 1)[0];
-    this.exile.push(card);
+    const card = this.gameState.player.hand.splice(cardIndex, 1)[0];
+    this.gameState.player.exile.push(card);
 
     this.uiManager.showToast(`${card.name} exiled`, 'info');
     this.uiManager.updateAll();
@@ -1287,10 +1240,10 @@ class ModernHandSimulator {
   moveHandCardToLibrary(cardId) {
     console.log('=== moveHandCardToLibrary called ===');
     console.log('Looking for cardId:', cardId);
-    console.log('Current hand:', this.hand);
-    console.log('Library before:', this.library.length);
+    console.log('Current hand:', this.gameState.player.hand);
+    console.log('Library before:', this.gameState.player.library.length);
 
-    const cardIndex = this.hand.findIndex((card, idx) => {
+    const cardIndex = this.gameState.player.hand.findIndex((card, idx) => {
       const actualCardId = card.id || `${card.name}_${idx}`;
       console.log(`  Checking card ${idx}: actualCardId="${actualCardId}" vs cardId="${cardId}"`);
       return actualCardId === cardId;
@@ -1301,15 +1254,15 @@ class ModernHandSimulator {
     if (cardIndex === -1) {
       console.error('Card not found in hand');
       console.error('Searched for:', cardId);
-      console.error('Hand cards:', this.hand.map((c, i) => c.id || `${c.name}_${i}`));
+      console.error('Hand cards:', this.gameState.player.hand.map((c, i) => c.id || `${c.name}_${i}`));
       return;
     }
 
-    const card = this.hand.splice(cardIndex, 1)[0];
-    this.library.push(card);
+    const card = this.gameState.player.hand.splice(cardIndex, 1)[0];
+    this.gameState.player.library.push(card);
 
     console.log('Card moved:', card.name);
-    console.log('Library after:', this.library.length);
+    console.log('Library after:', this.gameState.player.library.length);
 
     this.uiManager.showToast(`${card.name} moved to library`, 'info');
     this.uiManager.updateAll();
@@ -1336,10 +1289,10 @@ class ModernHandSimulator {
 
   playPlayerCardDirectly(cardId, _event) {
     console.log('Playing player card:', cardId);
-    console.log('Current hand:', this.hand);
+    console.log('Current hand:', this.gameState.player.hand);
 
     // Find the card in hand by ID - handle both actual IDs and generated IDs
-    const cardIndex = this.hand.findIndex((card, index) => {
+    const cardIndex = this.gameState.player.hand.findIndex((card, index) => {
       const actualCardId = card.id || `${card.name}_${index}`;
       return actualCardId === cardId;
     });
@@ -1349,19 +1302,19 @@ class ModernHandSimulator {
       return;
     }
 
-    const card = this.hand[cardIndex];
+    const card = this.gameState.player.hand[cardIndex];
     console.log('Found card:', card);
 
     // Check for delve
     if (this.delirium.hasDelve(card)) {
       const genericCost = this.cardMechanics.getGenericManaCost(card.cost);
 
-      this.delirium.startDelveSelection(card, genericCost, (reduction, exiledCards) => {
+      this.delirium.startDelveSelection(card, genericCost, (reduction, _exiledCards) => {
         // After delve selection, play the card
         this.playCard(card);
 
         // Remove from hand
-        this.hand.splice(cardIndex, 1);
+        this.gameState.player.hand.splice(cardIndex, 1);
 
         // Update displays
         this.uiManager.updateZoneDisplay('hand', 'player');
@@ -1386,7 +1339,7 @@ class ModernHandSimulator {
       this.playCard(card);
 
       // Remove from hand
-      this.hand.splice(cardIndex, 1);
+      this.gameState.player.hand.splice(cardIndex, 1);
 
       // Update displays
       this.uiManager.updateZoneDisplay('hand', 'player');
@@ -1432,12 +1385,12 @@ class ModernHandSimulator {
 
   playOpponentCardDirectly(cardId, _event) {
     // Find the card in opponent's hand
-    const cardIndex = this.opponent.hand.findIndex(card => card.id === cardId);
+    const cardIndex = this.gameState.opponent.hand.findIndex(card => card.id === cardId);
 
     if (cardIndex !== -1) {
-      const card = this.opponent.hand[cardIndex];
+      const card = this.gameState.opponent.hand[cardIndex];
       this.playCard(card);
-      this.opponent.hand.splice(cardIndex, 1);
+      this.gameState.opponent.hand.splice(cardIndex, 1);
 
       this.uiManager.updateZoneDisplay('hand', 'opponent');
       this.uiManager.updateZoneDisplay('battlefield', 'opponent');
@@ -1452,9 +1405,9 @@ class ModernHandSimulator {
 
     // Determine which player's zones to use based on the card's owner
     const isOpponentCard = card.id && card.id.startsWith('opponent_');
-    const playerState = isOpponentCard ? this.opponent : this.gameState.player;
-    const battlefield = isOpponentCard ? this.opponent.battlefield : this.battlefield;
-    const graveyard = isOpponentCard ? this.opponent.graveyard : this.graveyard;
+    const playerState = isOpponentCard ? this.gameState.opponent : this.gameState.player;
+    const battlefield = isOpponentCard ? this.gameState.opponent.battlefield : this.gameState.player.battlefield;
+    const graveyard = isOpponentCard ? this.gameState.opponent.graveyard : this.gameState.player.graveyard;
 
     if (cardType === 'Land') {
       battlefield.lands.push(card);
@@ -1469,6 +1422,7 @@ class ModernHandSimulator {
       graveyard.push(card);
       if (playerState.gameStats) playerState.gameStats.spellsCast++;
 
+      this.onGraveyardChange(); // Update Tarmogoyf stats
       this.uiManager.updateZoneDisplay('graveyard', isOpponentCard ? 'opponent' : 'player');
       const playerName = isOpponentCard ? 'Opponent' : 'Player';
       this.uiManager.showToast(`${playerName}'s ${card.name} resolves and goes to graveyard`, 'info');
@@ -1531,7 +1485,7 @@ class ModernHandSimulator {
       const bCost = this.parseManaValue(b.cost);
 
       switch(mode) {
-        case 'hands-first':
+        case 'hands-first': {
           // Non-lands first (sorted by CMC), then lands (sorted by name)
           const aIsLand = aType === 'Land';
           const bIsLand = bType === 'Land';
@@ -1548,8 +1502,9 @@ class ModernHandSimulator {
 
           // Both are lands, sort by name
           return a.name.localeCompare(b.name);
+        }
 
-        case 'lands-first':
+        case 'lands-first': {
           // Lands first, then by card type, then by cost
           const typeOrder = { 'Land': 0, 'Creature': 1, 'Artifact': 2, 'Enchantment': 3, 'Sorcery': 4, 'Instant': 5 };
           const aOrder = typeOrder[aType] !== undefined ? typeOrder[aType] : 6;
@@ -1560,8 +1515,9 @@ class ModernHandSimulator {
           }
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
-        case 'cmc':
+        case 'cmc': {
           // Sort by mana cost (lands at end), then by name
           const aIsLandCMC = aType === 'Land';
           const bIsLandCMC = bType === 'Land';
@@ -1574,8 +1530,9 @@ class ModernHandSimulator {
           // For non-lands, sort by CMC
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
-        case 'type':
+        case 'type': {
           // Sort by card type, then by cost
           const typeOrderFull = { 'Creature': 0, 'Artifact': 1, 'Enchantment': 2, 'Planeswalker': 3, 'Sorcery': 4, 'Instant': 5, 'Land': 6 };
           if (typeOrderFull[aType] !== typeOrderFull[bType]) {
@@ -1583,6 +1540,7 @@ class ModernHandSimulator {
           }
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
         case 'name':
           // Sort alphabetically by name
@@ -1636,7 +1594,7 @@ class ModernHandSimulator {
       const bCost = this.parseManaValue(b.cost);
 
       switch(mode) {
-        case 'hands-first':
+        case 'hands-first': {
           const aIsLand = aType === 'Land';
           const bIsLand = bType === 'Land';
           if (aIsLand !== bIsLand) return aIsLand ? 1 : -1;
@@ -1645,29 +1603,33 @@ class ModernHandSimulator {
             return a.name.localeCompare(b.name);
           }
           return a.name.localeCompare(b.name);
+        }
 
-        case 'lands-first':
+        case 'lands-first': {
           const typeOrder = { 'Land': 0, 'Creature': 1, 'Artifact': 2, 'Enchantment': 3, 'Sorcery': 4, 'Instant': 5 };
           const aOrder = typeOrder[aType] !== undefined ? typeOrder[aType] : 6;
           const bOrder = typeOrder[bType] !== undefined ? typeOrder[bType] : 6;
           if (aOrder !== bOrder) return aOrder - bOrder;
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
-        case 'cmc':
+        case 'cmc': {
           const aIsLandCMC = aType === 'Land';
           const bIsLandCMC = bType === 'Land';
           if (aIsLandCMC !== bIsLandCMC) return aIsLandCMC ? 1 : -1;
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
-        case 'type':
+        case 'type': {
           const typeOrderFull = { 'Creature': 0, 'Artifact': 1, 'Enchantment': 2, 'Planeswalker': 3, 'Sorcery': 4, 'Instant': 5, 'Land': 6 };
           const aOrderFull = typeOrderFull[aType] !== undefined ? typeOrderFull[aType] : 7;
           const bOrderFull = typeOrderFull[bType] !== undefined ? typeOrderFull[bType] : 7;
           if (aOrderFull !== bOrderFull) return aOrderFull - bOrderFull;
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
         case 'name':
           return a.name.localeCompare(b.name);
@@ -1703,7 +1665,7 @@ class ModernHandSimulator {
       const bCost = this.parseManaValue(b.cost);
 
       switch(savedMode) {
-        case 'hands-first':
+        case 'hands-first': {
           const aIsLand = aType === 'Land';
           const bIsLand = bType === 'Land';
           if (aIsLand !== bIsLand) return aIsLand ? 1 : -1;
@@ -1712,8 +1674,9 @@ class ModernHandSimulator {
             return a.name.localeCompare(b.name);
           }
           return a.name.localeCompare(b.name);
+        }
 
-        case 'lands-first':
+        case 'lands-first': {
           const typeOrder = { 'Land': 0, 'Creature': 1, 'Artifact': 2, 'Enchantment': 3, 'Sorcery': 4, 'Instant': 5 };
           const aOrder = typeOrder[aType] !== undefined ? typeOrder[aType] : 6;
           const bOrder = typeOrder[bType] !== undefined ? typeOrder[bType] : 6;
@@ -1722,8 +1685,9 @@ class ModernHandSimulator {
           }
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
-        case 'cmc':
+        case 'cmc': {
           const aIsLandCMC2 = aType === 'Land';
           const bIsLandCMC2 = bType === 'Land';
           if (aIsLandCMC2 !== bIsLandCMC2) {
@@ -1731,8 +1695,9 @@ class ModernHandSimulator {
           }
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
-        case 'type':
+        case 'type': {
           const typeOrderFull = { 'Creature': 0, 'Artifact': 1, 'Enchantment': 2, 'Planeswalker': 3, 'Sorcery': 4, 'Instant': 5, 'Land': 6 };
           const aOrderFull = typeOrderFull[aType] !== undefined ? typeOrderFull[aType] : 7;
           const bOrderFull = typeOrderFull[bType] !== undefined ? typeOrderFull[bType] : 7;
@@ -1741,6 +1706,7 @@ class ModernHandSimulator {
           }
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
         case 'name':
           return a.name.localeCompare(b.name);
@@ -1765,7 +1731,7 @@ class ModernHandSimulator {
       const bCost = this.parseManaValue(b.cost);
 
       switch(savedMode) {
-        case 'hands-first':
+        case 'hands-first': {
           const aIsLand = aType === 'Land';
           const bIsLand = bType === 'Land';
           if (aIsLand !== bIsLand) return aIsLand ? 1 : -1;
@@ -1774,8 +1740,9 @@ class ModernHandSimulator {
             return a.name.localeCompare(b.name);
           }
           return a.name.localeCompare(b.name);
+        }
 
-        case 'lands-first':
+        case 'lands-first': {
           const typeOrder = { 'Land': 0, 'Creature': 1, 'Artifact': 2, 'Enchantment': 3, 'Sorcery': 4, 'Instant': 5 };
           const aOrder = typeOrder[aType] !== undefined ? typeOrder[aType] : 6;
           const bOrder = typeOrder[bType] !== undefined ? typeOrder[bType] : 6;
@@ -1784,8 +1751,9 @@ class ModernHandSimulator {
           }
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
-        case 'cmc':
+        case 'cmc': {
           const aIsLandCMC2 = aType === 'Land';
           const bIsLandCMC2 = bType === 'Land';
           if (aIsLandCMC2 !== bIsLandCMC2) {
@@ -1793,8 +1761,9 @@ class ModernHandSimulator {
           }
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
-        case 'type':
+        case 'type': {
           const typeOrderFull = { 'Creature': 0, 'Artifact': 1, 'Enchantment': 2, 'Planeswalker': 3, 'Sorcery': 4, 'Instant': 5, 'Land': 6 };
           const aOrderFull = typeOrderFull[aType] !== undefined ? typeOrderFull[aType] : 7;
           const bOrderFull = typeOrderFull[bType] !== undefined ? typeOrderFull[bType] : 7;
@@ -1803,6 +1772,7 @@ class ModernHandSimulator {
           }
           if (aCost !== bCost) return aCost - bCost;
           return a.name.localeCompare(b.name);
+        }
 
         case 'name':
           return a.name.localeCompare(b.name);
@@ -1835,6 +1805,7 @@ class ModernHandSimulator {
       }
     }
 
+    this.onGraveyardChange(); // Update Tarmogoyf stats
     // Update UI
     this.uiManager.updateZoneDisplay('hand', targetPlayer);
     this.uiManager.updateZoneDisplay('graveyard', targetPlayer);
@@ -1930,7 +1901,7 @@ class ModernHandSimulator {
 
   showLibraryModal(player = 'player') {
     console.log('showLibraryModal called for:', player);
-    const library = player === 'player' ? this.library : this.opponent.library;
+    const library = player === 'player' ? this.gameState.player.library : this.gameState.opponent.library;
     console.log('Library cards:', library?.length);
     const title = player === 'player' ? '📚 Library' : '📚 Opponent Library';
     console.log('Calling showSimpleModal with:', title, library?.length, 'cards');
@@ -1939,24 +1910,24 @@ class ModernHandSimulator {
 
   showGraveyardModal() {
     console.log('showGraveyardModal called');
-    this.showSimpleModal('graveyard', this.graveyard, '🪦 Graveyard');
+    this.showSimpleModal('graveyard', this.gameState.player.graveyard, '🪦 Graveyard');
   }
 
   showExileModal() {
     console.log('showExileModal called');
-    this.showSimpleModal('exile', this.exile, '🚫 Exile');
+    this.showSimpleModal('exile', this.gameState.player.exile, '🚫 Exile');
   }
 
   showOpponentGraveyardModal() {
-    this.showSimpleModal('opponent-graveyard', this.opponent.graveyard, '🪦 Opponent Graveyard');
+    this.showSimpleModal('opponent-graveyard', this.gameState.opponent.graveyard, '🪦 Opponent Graveyard');
   }
 
   showOpponentExileModal() {
-    this.showSimpleModal('opponent-exile', this.opponent.exile, '🚫 Opponent Exile');
+    this.showSimpleModal('opponent-exile', this.gameState.opponent.exile, '🚫 Opponent Exile');
   }
 
   async showSimpleModal(modalId, cards, title) {
-    console.log(`showSimpleModal called: ${modalId}, cards: ${cards.length}`);
+    console.log(`showSimpleModal called: ${modalId}, cards: ${cards?.length || 0}`);
 
     // Remove any existing modal with this ID
     const existingModal = document.getElementById(`simple-modal-${modalId}`);
@@ -2009,7 +1980,7 @@ class ModernHandSimulator {
 
     const titleH3 = document.createElement('h3');
     titleH3.style.cssText = 'margin: 0; color: #000;';
-    titleH3.textContent = `${title} (${cards.length} cards)`;
+    titleH3.textContent = `${title} (${cards?.length || 0} cards)`;
     header.appendChild(titleH3);
 
     const closeButton = document.createElement('button');
@@ -2029,7 +2000,7 @@ class ModernHandSimulator {
       padding: 10px;
     `;
 
-    if (cards.length === 0) {
+    if (!cards || cards.length === 0) {
       const emptyDiv = document.createElement('div');
       emptyDiv.style.cssText = 'text-align: center; color: var(--text-secondary); padding: 40px; grid-column: 1 / -1;';
       emptyDiv.textContent = 'No cards in this zone';
@@ -2159,7 +2130,7 @@ class ModernHandSimulator {
   }
 }
 
-// Mixin core methods, library modals, triggered abilities, fetchlands, opponent methods, and context menus into the class
+// Mixin all modular methods into the class prototype
 Object.assign(ModernHandSimulator.prototype, CoreMethods);
 Object.assign(ModernHandSimulator.prototype, LibraryModals);
 Object.assign(ModernHandSimulator.prototype, TriggeredAbilities);
@@ -2168,6 +2139,11 @@ Object.assign(ModernHandSimulator.prototype, OpponentMethods);
 Object.assign(ModernHandSimulator.prototype, ContextMenus);
 Object.assign(ModernHandSimulator.prototype, Planeswalker);
 Object.assign(ModernHandSimulator.prototype, Adventure);
+Object.assign(ModernHandSimulator.prototype, DeckLoader);
+Object.assign(ModernHandSimulator.prototype, CardActions);
+Object.assign(ModernHandSimulator.prototype, HandSorting);
+Object.assign(ModernHandSimulator.prototype, ModalManager);
+Object.assign(ModernHandSimulator.prototype, DynamicStats);
 
 // Initialize when DOM is loaded
 if (document.readyState === 'loading') {

@@ -60,7 +60,7 @@ realistic game simulations.
 
 5. Open your browser and navigate to:
    ```
-   http://localhost:3000
+   http://localhost:3001
    ```
 
 ## Usage
@@ -73,7 +73,7 @@ realistic game simulations.
    npm start
    ```
 
-2. **Access the Web Interface**: Open `http://localhost:3000` in your browser
+2. **Access the Web Interface**: Open `http://localhost:3001` in your browser
 
 3. **Create or Load Decks**:
    - Use the web interface to create new decks
@@ -213,7 +213,7 @@ npm test
 
 # Manual testing via web interface
 npm start
-# Navigate to http://localhost:3000
+# Navigate to http://localhost:3001
 ```
 
 ## Contributing
@@ -239,7 +239,7 @@ npm start
 1. **Node Version**: Ensure you're using Node.js 18.17.1 as specified in
    package.json
 2. **Dependencies**: Run `npm install` if experiencing module errors
-3. **Port Conflicts**: The default port is 3000; modify in startapp.mjs if
+3. **Port Conflicts**: The default port is 3001; modify in startapp.mjs if
    needed
 4. **Deck Loading**: Verify deck files are in the correct format in the `decks/`
    directory

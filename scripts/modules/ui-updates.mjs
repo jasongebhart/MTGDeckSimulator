@@ -371,7 +371,7 @@ export class UIManager {
       const isDRC = isBattlefieldZone && card.name.toLowerCase().includes("dragon's rage channeler");
       const hasDelirium = this.delirium && this.delirium.checkDelirium(this.gameState.player.graveyard);
       const deliriumBadge = isDRC && hasDelirium ?
-        `<div class="delirium-indicator" style="position: absolute; top: 24px; left: 2px; background: rgba(34, 197, 94, 0.95); border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: bold; color: white; z-index: 100; pointer-events: none;" title="Delirium active: +1/+0, Flying">🌀</div>` : '';
+        '<div class="delirium-indicator" style="position: absolute; top: 24px; left: 2px; background: rgba(34, 197, 94, 0.95); border-radius: 3px; padding: 2px 5px; font-size: 10px; font-weight: bold; color: white; z-index: 100; pointer-events: none;" title="Delirium active: +1/+0, Flying">🌀</div>' : '';
 
       return `
       <div class="${cardClass} ${isRecentlyDrawn ? 'recently-drawn' : ''}"
@@ -381,7 +381,7 @@ export class UIManager {
            draggable="true"
            style="animation-delay: ${index * 0.1}s; position: relative; cursor: grab; ${highlightStyle}">
         ${index < 9 && isHandZone ? `<div class="card-number" style="position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.8); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; z-index: 10;">${index + 1}</div>` : ''}
-        ${isRecentlyDrawn && isHandZone ? `<div class="recently-drawn-badge" style="position: absolute; top: 5px; right: 5px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: bold; z-index: 10;">NEW</div>` : ''}
+        ${isRecentlyDrawn && isHandZone ? '<div class="recently-drawn-badge" style="position: absolute; top: 5px; right: 5px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: bold; z-index: 10;">NEW</div>' : ''}
         <div class="card-content">
           <div class="card-image-container" style="position: relative;">
             <img class="card-image-lazy"
@@ -403,7 +403,7 @@ export class UIManager {
           </div>
         </div>
       </div>
-    `}).join('');
+    `;}).join('');
 
     console.log('renderCards: HTML set, innerHTML length:', container.innerHTML.length);
 
@@ -421,14 +421,24 @@ export class UIManager {
       const cardName = cardElement.getAttribute('data-card-name');
       const cardId = cardElement.getAttribute('data-card-id');
 
-      // Click on card to play it
+      // Click on card to play it (only for hand cards)
       cardElement.addEventListener('click', (e) => {
         // Don't trigger if clicking on the image (image shows preview)
         if (e.target.closest('.card-image-container')) {
           return;
         }
-        e.stopPropagation();
-        this.playCardFromHand(cardId, cardName);
+
+        // Only play cards from hand, not from other zones
+        const container = cardElement.closest('.zone-content');
+        const isHandCard = container && (
+          container.id.includes('hand') ||
+          container.id.includes('Hand')
+        );
+
+        if (isHandCard) {
+          e.stopPropagation();
+          this.playCardFromHand(cardId, cardName);
+        }
       });
 
       // Click on card image to show preview
@@ -454,7 +464,7 @@ export class UIManager {
         cardElement.classList.add('dragging');
       });
 
-      cardElement.addEventListener('dragend', (e) => {
+      cardElement.addEventListener('dragend', (_e) => {
         cardElement.classList.remove('dragging');
       });
     });
@@ -495,15 +505,23 @@ export class UIManager {
       return;
     }
 
-    // Determine if this is a hand card or battlefield card
-    const container = event.target.closest('.zone-content');
+    // Determine which zone the card is in (check both zone-content and modal containers)
+    const container = event.target.closest('.zone-content') || event.target.closest('[data-zone-type]');
+    const zoneType = container?.getAttribute('data-zone-type');
+
     const isHandCard = container && (
       container.id.includes('hand') ||
       container.id.includes('Hand')
     );
+    const isGraveyardCard = (container && container.id.includes('graveyard')) || zoneType === 'graveyard';
+    const isExileCard = (container && container.id.includes('exile')) || zoneType === 'exile';
 
     if (isHandCard && typeof window.handSimulator.showHandCardMenu === 'function') {
       window.handSimulator.showHandCardMenu(event, cardId);
+    } else if (isGraveyardCard && typeof window.handSimulator.showGraveyardCardMenu === 'function') {
+      window.handSimulator.showGraveyardCardMenu(event, cardId);
+    } else if (isExileCard && typeof window.handSimulator.showExileCardMenu === 'function') {
+      window.handSimulator.showExileCardMenu(event, cardId);
     } else if (typeof window.handSimulator.showBattlefieldCardMenu === 'function') {
       window.handSimulator.showBattlefieldCardMenu(event, cardId);
     } else {
@@ -514,7 +532,7 @@ export class UIManager {
   async loadCardImages(container) {
     const images = container.querySelectorAll('.card-image-lazy');
     console.log(`Loading images for ${images.length} cards`);
-    console.log(`CardImageService available:`, typeof CardImageService, CardImageService);
+    console.log('CardImageService available:', typeof CardImageService, CardImageService);
 
     for (const img of images) {
       const cardName = img.getAttribute('data-card-name');

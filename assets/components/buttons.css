@@ -1,0 +1,395 @@
+/**
+ * Semantic Button System
+ * Replaces inline styles with semantic, accessible button classes
+ */
+
+/* ===================================
+   Base Button Styles
+   =================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-family);
+  font-weight: var(--font-medium);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  transition: all var(--transition-base);
+  border-radius: var(--border-radius);
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn:hover:not(:disabled) {
+  transform: var(--transform-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn:active:not(:disabled) {
+  transform: var(--transform-active);
+}
+
+
+/* ===================================
+   Button Sizes
+   =================================== */
+
+.btn-xl {
+  min-height: 48px;
+  padding: 14px 24px;
+  font-size: var(--font-lg);
+  font-weight: var(--font-semibold);
+}
+
+.btn-lg {
+  min-height: 44px;
+  padding: 12px 20px;
+  font-size: var(--font-base);
+  font-weight: var(--font-medium);
+}
+
+.btn-md {
+  min-height: 36px;
+  padding: 8px 16px;
+  font-size: var(--font-base);
+}
+
+.btn-sm {
+  min-height: 32px;
+  padding: 6px 12px;
+  font-size: var(--font-sm);
+}
+
+.btn-xs {
+  min-height: 28px;
+  padding: 4px 10px;
+  font-size: var(--font-xs);
+  font-weight: var(--font-normal);
+}
+
+
+/* ===================================
+   Game Action Button Hierarchy
+   =================================== */
+
+/* Primary Game Actions - Most important (Draw, End Turn, Combat) */
+.btn-game-primary {
+  min-height: 40px;
+  padding: 10px 20px;
+  font-size: var(--font-base);
+  font-weight: var(--font-semibold);
+  background: var(--primary);
+  color: white;
+  border: none;
+  box-shadow: var(--shadow);
+}
+
+.btn-game-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+/* Secondary Game Actions - Common but not essential (Mulligan, Untap) */
+.btn-game-secondary {
+  min-height: 36px;
+  padding: 8px 16px;
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.btn-game-secondary:hover:not(:disabled) {
+  background: var(--bg-tertiary);
+  border-color: var(--primary);
+}
+
+/* Tertiary Game Actions - Advanced/rare (Cascade, Board Wipes) */
+.btn-game-tertiary {
+  min-height: 32px;
+  padding: 6px 12px;
+  font-size: var(--font-sm);
+  font-weight: var(--font-normal);
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  opacity: 0.85;
+}
+
+.btn-game-tertiary:hover:not(:disabled) {
+  opacity: 1;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+
+/* ===================================
+   Semantic Intent Buttons
+   =================================== */
+
+/* Setup Actions (New Game, Quick Setup, Shuffle) */
+.btn-setup {
+  background: var(--success);
+  color: white;
+  border: none;
+}
+
+.btn-setup:hover:not(:disabled) {
+  background: #0d9668;
+}
+
+/* Utility Actions (Untap, Shuffle, View Library) */
+.btn-utility {
+  background: var(--info);
+  color: white;
+  border: none;
+}
+
+.btn-utility:hover:not(:disabled) {
+  background: #0891b2;
+}
+
+/* Destructive Actions (Board Wipe, Discard, Exile) */
+.btn-destructive {
+  background: var(--error);
+  color: white;
+  border: none;
+}
+
+.btn-destructive:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+/* Warning Actions (Mulligan, End Turn without plays) */
+.btn-caution {
+  background: var(--warning);
+  color: white;
+  border: none;
+}
+
+.btn-caution:hover:not(:disabled) {
+  background: #d97706;
+}
+
+
+/* ===================================
+   Outline Variants
+   =================================== */
+
+.btn-outline-primary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.btn-outline-primary:hover:not(:disabled) {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-outline-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.btn-outline-secondary:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  border-color: var(--text-primary);
+}
+
+.btn-outline-success {
+  background: transparent;
+  color: var(--success);
+  border: 2px solid var(--success);
+}
+
+.btn-outline-success:hover:not(:disabled) {
+  background: var(--success);
+  color: white;
+}
+
+.btn-outline-danger {
+  background: transparent;
+  color: var(--error);
+  border: 2px solid var(--error);
+}
+
+.btn-outline-danger:hover:not(:disabled) {
+  background: var(--error);
+  color: white;
+}
+
+.btn-outline-warning {
+  background: transparent;
+  color: var(--warning);
+  border: 2px solid var(--warning);
+}
+
+.btn-outline-warning:hover:not(:disabled) {
+  background: var(--warning);
+  color: white;
+}
+
+.btn-outline-info {
+  background: transparent;
+  color: var(--info);
+  border: 2px solid var(--info);
+}
+
+.btn-outline-info:hover:not(:disabled) {
+  background: var(--info);
+  color: white;
+}
+
+
+/* ===================================
+   Utility Classes
+   =================================== */
+
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+.btn-icon-only {
+  padding: 8px;
+  min-width: 36px;
+  justify-content: center;
+}
+
+.btn-with-shortcut {
+  justify-content: space-between;
+}
+
+
+/* ===================================
+   Dropdown Menu Buttons
+   =================================== */
+
+.dropdown-item {
+  width: 100%;
+  text-align: left;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+  font-size: var(--font-sm);
+  transition: background-color var(--transition-fast);
+  border-radius: 4px;
+  margin: 2px 0;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-secondary);
+}
+
+.dropdown-item:focus-visible {
+  background: var(--bg-tertiary);
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.dropdown-item:active {
+  background: var(--bg-tertiary);
+}
+
+
+/* ===================================
+   Progressive Disclosure States
+   =================================== */
+
+/* Hide advanced/expert actions by default */
+[data-expertise-level]:not([data-expertise-level="expert"]) .action-expert {
+  display: none !important;
+}
+
+[data-expertise-level="beginner"] .action-advanced,
+[data-expertise-level="beginner"] .action-expert {
+  display: none !important;
+}
+
+/* Show all actions in expert mode */
+[data-expertise-level="expert"] .action-beginner,
+[data-expertise-level="expert"] .action-advanced,
+[data-expertise-level="expert"] .action-expert {
+  display: inline-flex !important;
+}
+
+
+/* ===================================
+   Loading State
+   =================================== */
+
+.btn-loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+}
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ===================================
+   Dark Theme Adjustments
+   =================================== */
+
+[data-theme="dark"] .btn-game-secondary {
+  background: var(--gray-700);
+  border-color: var(--gray-600);
+}
+
+[data-theme="dark"] .btn-game-secondary:hover:not(:disabled) {
+  background: var(--gray-600);
+}
+
+[data-theme="dark"] .btn-game-tertiary {
+  color: var(--gray-400);
+  border-color: var(--gray-600);
+}
+
+[data-theme="dark"] .btn-game-tertiary:hover:not(:disabled) {
+  color: var(--gray-200);
+  background: var(--gray-700);
+}
+
+[data-theme="dark"] .dropdown-item {
+  color: var(--gray-200);
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+  background: var(--gray-700);
+}

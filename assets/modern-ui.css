@@ -1,7 +1,16 @@
 /**
  * Modern MTG Simulator UI Framework
  * Features: CSS Grid, Flexbox, Mobile-first, Dark/Light themes
+ * Phase 1: Accessibility & Performance Improvements
  */
+
+/* ===================================
+   Component Imports
+   =================================== */
+@import url('./components/accessibility.css');
+@import url('./components/buttons.css');
+@import url('./components/dropdown.css');
+@import url('./components/color-fixes.css');
 
 /* CSS Custom Properties (Variables) */
 :root {

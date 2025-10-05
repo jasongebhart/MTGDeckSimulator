@@ -128,6 +128,7 @@ export const Planeswalker = {
 
     if (removed) {
       playerState.graveyard.push(card);
+      this.onGraveyardChange(); // Update Tarmogoyf stats
       this.uiManager.updateZoneDisplay('battlefield', owner);
       this.uiManager.updateZoneDisplay('graveyard', owner);
     }

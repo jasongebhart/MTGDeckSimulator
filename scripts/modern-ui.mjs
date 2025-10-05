@@ -1616,11 +1616,11 @@ class ModernUI {
     this.currentDeck.cards.forEach(card => {
       const quantity = card.quantity || 1;
       for (let i = 0; i < quantity; i++) {
-        xml += `    <card>\n`;
+        xml += '    <card>\n';
         xml += `      <cardname>${this.escapeXml(card.name)}</cardname>\n`;
         xml += `      <cost>${this.escapeXml(card.cost)}</cost>\n`;
         xml += `      <type>${this.escapeXml(card.type)}</type>\n`;
-        xml += `    </card>\n`;
+        xml += '    </card>\n';
       }
     });
 

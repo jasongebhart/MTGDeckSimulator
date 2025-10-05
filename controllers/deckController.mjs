@@ -87,6 +87,7 @@ export class DeckController {
       throw new ApiError('File name is required', 400, 'MISSING_FILENAME');
     }
 
+    // fileName can include subdirectory path (e.g., 'legacy/Red-Delver.xml')
     const filePath = `./xml/${fileName}`;
 
     try {

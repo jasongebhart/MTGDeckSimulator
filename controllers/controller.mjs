@@ -100,7 +100,7 @@ export function setupRoutes(app) {
   const upload = multer({
     storage: storage,
     limits: {
-      fileSize: 1 * 1024 * 1024, // 5 MB maximum file size
+      fileSize: 1 * 1024 * 1024, // 1 MB maximum file size
     },
     fileFilter: (req, file, cb) => {
       const allowedExtensions = ['xml'];
@@ -206,15 +206,36 @@ export function setupRoutes(app) {
   app.get('/api/v1/decks/:filename', (req, res) => {
     try {
       const filename = req.params.filename;
-      const deckPath = path.join('xml', filename);
+
+      // Try to find the file - check main xml folder first, then subdirectories
+      let deckPath = path.join('xml', filename);
+
+      console.log('Looking for deck:', filename);
+
+      if (!fs.existsSync(deckPath)) {
+        // Search in subdirectories
+        const subdirs = ['legacy', 'Brothers_War', 'crimson_vow'];
+        for (const subdir of subdirs) {
+          const subdirPath = path.join('xml', subdir, filename);
+          console.log('Checking:', subdirPath);
+          if (fs.existsSync(subdirPath)) {
+            deckPath = subdirPath;
+            console.log('Found in subdirectory:', subdir);
+            break;
+          }
+        }
+      }
 
       // Check if file exists and has .xml extension
       if (!fs.existsSync(deckPath) || !filename.toLowerCase().endsWith('.xml')) {
+        console.log('Deck not found - returning 404');
         return res.status(404).json({
           success: false,
           error: { message: 'Deck not found' }
         });
       }
+
+      console.log('Loading deck from:', deckPath);
 
       const xmlContent = fs.readFileSync(deckPath, 'utf8');
 

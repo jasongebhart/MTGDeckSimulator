@@ -255,10 +255,35 @@ export const OpponentMethods = {
 
   resetAndDrawOpponent7() {
     // Reset opponent and draw 7 cards (like New Game button)
+    // Check if opponent library has cards
+    if (!this.gameState.opponent.library || this.gameState.opponent.library.length === 0) {
+      this.uiManager.showToast('No opponent deck loaded. Please select a deck first.', 'warning');
+      return;
+    }
+
+    // Reset life
     this.gameState.opponent.life = 20;
+
+    // Clear all opponent zones
+    this.gameState.opponent.hand = [];
+    this.gameState.opponent.battlefield = { lands: [], creatures: [], others: [] };
+    this.gameState.opponent.graveyard = [];
+    this.gameState.opponent.exile = [];
+
+    // Reset stats
+    this.gameState.opponent.gameStats.cardsDrawn = 0;
     this.gameState.opponent.gameStats.mulligans = 0;
+    this.gameState.opponent.gameStats.landsPlayed = 0;
+    this.gameState.opponent.gameStats.spellsCast = 0;
+
+    // Shuffle and draw
     this.shuffleOpponentLibrary();
     this.drawOpponentHand(7);
+
+    // Update UI
+    this.uiManager.updateAll();
+
     this.uiManager.showToast('Player 2: New game started!', 'success');
+    this.playSound('shuffle');
   }
 };

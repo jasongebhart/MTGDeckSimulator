@@ -1,6 +1,31 @@
+# Large asset directories (optional ignore)
 # assets/magicimages/*
-decks/xml
-topdecks
-package-lock.json
-xml/
+
+# Build artifacts and dependencies
 node_modules/
+package-lock.json
+
+# User data (should be ignored)
+topdecks
+
+# XML deck files strategy:
+# Keep reference/seed decks committed for the app to function
+# All XML files are tracked - users can modify locally without commits
+# To ignore future user deck additions, uncomment below:
+# xml/user-decks/
+# decks/user-uploads/
+
+# Environment files (actual secrets only - keep .env.example in git)
+.env
+.env.local
+.env.production
+
+# Documentation
+BUGFIXES.md
+Devnotes.md
+IMPLEMENTATION-STATUS.md
+OPPONENT-FEATURES.md
+QUICK-REFERENCE.md
+REFACTORING-COMPLETE.md
+REFACTORING-SUMMARY.md
+TECHNICAL_DEBT_IMPROVEMENTS.md

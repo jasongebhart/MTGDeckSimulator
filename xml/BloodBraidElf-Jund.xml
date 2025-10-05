@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Decklist Deck="BloodBraidElf-Jund">
+  <DesignGoal>Optimized Jund Cascade Midrange - Modern Legal</DesignGoal>
+
+  <!-- 1-Drops (8) -->
+  <Card>
+    <Name>Birds of Paradise</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Bird</Type>
+    <Cost>{G}</Cost>
+    <RulesText>Flying
+{T}: Add one mana of any color.</RulesText>
+  </Card>
+  <Card>
+    <Name>Ragavan, Nimble Pilferer</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Creature — Monkey Pirate</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Whenever Ragavan, Nimble Pilferer deals combat damage to a player, create a Treasure token and exile the top card of that player's library. Until end of turn, you may cast that card.
+Dash {1}{R}</RulesText>
+  </Card>
+  <Card>
+    <Name>Fatal Push</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Destroy target creature if it has mana value 2 or less.
+Revolt — Destroy that creature if it has mana value 4 or less instead if a permanent you controlled left the battlefield this turn.</RulesText>
+  </Card>
+
+  <!-- 2-Drops (11) -->
+  <Card>
+    <Name>Wrenn and Six</Name>
+    <Quantity>3</Quantity>
+    <Type>Legendary Planeswalker — Wrenn</Type>
+    <Cost>{R}{G}</Cost>
+    <RulesText>+1: Return up to one target land card from your graveyard to your hand.
+−1: Wrenn and Six deals 1 damage to any target.
+−7: You get an emblem with "Instant and sorcery cards in your graveyard have retrace."
+Loyalty: 3</RulesText>
+  </Card>
+  <Card>
+    <Name>Scavenging Ooze</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Ooze</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>{G}: Exile target card from a graveyard. If it was a creature card, put a +1/+1 counter on Scavenging Ooze and you gain 1 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Tarmogoyf</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Lhurgoyf</Type>
+    <Cost>{1}{G}</Cost>
+    <RulesText>Tarmogoyf's power is equal to the number of card types among cards in all graveyards and its toughness is equal to that number plus 1.</RulesText>
+  </Card>
+  <Card>
+    <Name>Terminate</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}{R}</Cost>
+    <RulesText>Destroy target creature. It can't be regenerated.</RulesText>
+  </Card>
+
+  <!-- 3-Drops (10) -->
+  <Card>
+    <Name>Kitchen Finks</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Ouphe</Type>
+    <Cost>{1}{G/W}{G/W}</Cost>
+    <RulesText>When Kitchen Finks enters the battlefield, you gain 2 life.
+Persist (When this creature dies, if it had no -1/-1 counters on it, return it to the battlefield under its owner's control with a -1/-1 counter on it.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Tireless Tracker</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Scout</Type>
+    <Cost>{2}{G}</Cost>
+    <RulesText>Whenever a land enters the battlefield under your control, investigate.
+Whenever you sacrifice a Clue, put a +1/+1 counter on Tireless Tracker.</RulesText>
+  </Card>
+  <Card>
+    <Name>Klothys, God of Destiny</Name>
+    <Quantity>2</Quantity>
+    <Type>Legendary Enchantment Creature — God</Type>
+    <Cost>{1}{R}{G}</Cost>
+    <RulesText>Indestructible
+As long as your devotion to red and green is less than seven, Klothys isn't a creature.
+At the beginning of your precombat main phase, exile target card from a graveyard. If it was a land card, add {R} or {G}. Otherwise, you gain 2 life and Klothys deals 2 damage to each opponent.</RulesText>
+  </Card>
+  <Card>
+    <Name>Kolaghan's Command</Name>
+    <Quantity>2</Quantity>
+    <Type>Instant</Type>
+    <Cost>{1}{B}{R}</Cost>
+    <RulesText>Choose two —
+• Return target creature card from your graveyard to your hand.
+• Target player discards a card.
+• Destroy target artifact.
+• Kolaghan's Command deals 2 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Seasoned Pyromancer</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Shaman</Type>
+    <Cost>{1}{R}{R}</Cost>
+    <RulesText>When Seasoned Pyromancer enters the battlefield, discard two cards, then draw two cards. For each nonland card discarded this way, create a 1/1 red Elemental creature token.
+{3}{R}{R}, Exile Seasoned Pyromancer from your graveyard: Create two 1/1 red Elemental creature tokens.</RulesText>
+  </Card>
+
+  <!-- 4-Drops (8) -->
+  <Card>
+    <Name>Bloodbraid Elf</Name>
+    <Quantity>4</Quantity>
+    <Type>Creature — Elf Berserker</Type>
+    <Cost>{2}{R}{G}</Cost>
+    <RulesText>Haste
+Cascade (When you cast this spell, exile cards from the top of your library until you exile a nonland card that costs less. You may cast it without paying its mana cost. Put the exiled cards on the bottom of your library in a random order.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Huntmaster of the Fells</Name>
+    <Quantity>2</Quantity>
+    <Type>Creature — Human Werewolf</Type>
+    <Cost>{2}{R}{G}</Cost>
+    <RulesText>Whenever this creature enters the battlefield or transforms into Huntmaster of the Fells, create a 2/2 green Wolf creature token and you gain 2 life.
+At the beginning of each upkeep, if no spells were cast last turn, transform Huntmaster of the Fells.</RulesText>
+  </Card>
+  <Card>
+    <Name>Chandra, Torch of Defiance</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Planeswalker — Chandra</Type>
+    <Cost>{2}{R}{R}</Cost>
+    <RulesText>+1: Exile the top card of your library. You may cast that card. If you don't, Chandra, Torch of Defiance deals 2 damage to each opponent.
++1: Add {R}{R}.
+−3: Chandra, Torch of Defiance deals 4 damage to target creature.
+−7: You get an emblem with "Whenever you cast a spell, this emblem deals 5 damage to any target."
+Loyalty: 4</RulesText>
+  </Card>
+  <Card>
+    <Name>Questing Beast</Name>
+    <Quantity>1</Quantity>
+    <Type>Legendary Creature — Beast</Type>
+    <Cost>{2}{G}{G}</Cost>
+    <RulesText>Vigilance, deathtouch, haste
+Questing Beast can't be blocked by creatures with power 2 or less.
+Combat damage that would be dealt by creatures you control can't be prevented.
+Whenever Questing Beast deals combat damage to an opponent, it deals that much damage to target planeswalker that player controls.</RulesText>
+  </Card>
+
+  <!-- Removal & Disruption (8) -->
+  <Card>
+    <Name>Lightning Bolt</Name>
+    <Quantity>4</Quantity>
+    <Type>Instant</Type>
+    <Cost>{R}</Cost>
+    <RulesText>Lightning Bolt deals 3 damage to any target.</RulesText>
+  </Card>
+  <Card>
+    <Name>Thoughtseize</Name>
+    <Quantity>3</Quantity>
+    <Type>Sorcery</Type>
+    <Cost>{B}</Cost>
+    <RulesText>Target player reveals their hand. You choose a nonland card from it. That player discards that card. You lose 2 life.</RulesText>
+  </Card>
+  <Card>
+    <Name>Abrupt Decay</Name>
+    <Quantity>1</Quantity>
+    <Type>Instant</Type>
+    <Cost>{B}{G}</Cost>
+    <RulesText>This spell can't be countered.
+Destroy target nonland permanent with mana value 3 or less.</RulesText>
+  </Card>
+
+  <!-- Lands (23) -->
+  <Card>
+    <Name>Verdant Catacombs</Name>
+    <Quantity>4</Quantity>
+    <Type>Land</Type>
+    <Cost></Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Verdant Catacombs: Search your library for a Swamp or Forest card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Wooded Foothills</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost></Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Wooded Foothills: Search your library for a Mountain or Forest card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Bloodstained Mire</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost></Cost>
+    <RulesText>{T}, Pay 1 life, Sacrifice Bloodstained Mire: Search your library for a Swamp or Mountain card, put it onto the battlefield, then shuffle.</RulesText>
+  </Card>
+  <Card>
+    <Name>Overgrown Tomb</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Swamp Forest</Type>
+    <Cost></Cost>
+    <RulesText>({T}: Add {B} or {G}.)
+As Overgrown Tomb enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Stomping Ground</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Mountain Forest</Type>
+    <Cost></Cost>
+    <RulesText>({T}: Add {R} or {G}.)
+As Stomping Ground enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blood Crypt</Name>
+    <Quantity>2</Quantity>
+    <Type>Land — Swamp Mountain</Type>
+    <Cost></Cost>
+    <RulesText>({T}: Add {B} or {R}.)
+As Blood Crypt enters the battlefield, you may pay 2 life. If you don't, it enters the battlefield tapped.</RulesText>
+  </Card>
+  <Card>
+    <Name>Blackcleave Cliffs</Name>
+    <Quantity>2</Quantity>
+    <Type>Land</Type>
+    <Cost></Cost>
+    <RulesText>Blackcleave Cliffs enters the battlefield tapped unless you control two or fewer other lands.
+{T}: Add {B} or {R}.</RulesText>
+  </Card>
+  <Card>
+    <Name>Nurturing Peatland</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost></Cost>
+    <RulesText>{T}: Add {B} or {G}.
+{1}, {T}, Sacrifice Nurturing Peatland: Draw a card.</RulesText>
+  </Card>
+  <Card>
+    <Name>Raging Ravine</Name>
+    <Quantity>1</Quantity>
+    <Type>Land</Type>
+    <Cost></Cost>
+    <RulesText>Raging Ravine enters the battlefield tapped.
+{T}: Add {R} or {G}.
+{2}{R}{G}: Until end of turn, Raging Ravine becomes a 3/3 red and green Elemental creature with "Whenever this creature attacks, put a +1/+1 counter on it." It's still a land.</RulesText>
+  </Card>
+  <Card>
+    <Name>Forest</Name>
+    <Quantity>2</Quantity>
+    <Type>Basic Land — Forest</Type>
+    <Cost></Cost>
+    <RulesText>({T}: Add {G}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Mountain</Name>
+    <Quantity>2</Quantity>
+    <Type>Basic Land — Mountain</Type>
+    <Cost></Cost>
+    <RulesText>({T}: Add {R}.)</RulesText>
+  </Card>
+  <Card>
+    <Name>Swamp</Name>
+    <Quantity>2</Quantity>
+    <Type>Basic Land — Swamp</Type>
+    <Cost></Cost>
+    <RulesText>({T}: Add {B}.)</RulesText>
+  </Card>
+</Decklist>

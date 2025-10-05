@@ -29,7 +29,9 @@
     "lint": "eslint scripts/ controllers/ __tests__/ --ext .mjs --ignore-pattern scripts/archive/",
     "lint:fix": "eslint scripts/ controllers/ __tests__/ --ext .mjs --fix --ignore-pattern scripts/archive/",
     "format": "prettier --write \"**/*.{mjs,js,json,md}\"",
-    "format:check": "prettier --check \"**/*.{mjs,js,json,md}\""
+    "format:check": "prettier --check \"**/*.{mjs,js,json,md}\"",
+    "clean": "node -e \"const fs = require('fs'); try { fs.unlinkSync('nul'); } catch(e) {} console.log('Cleaned up temporary files');\"",
+    "fresh-install": "npm run clean && npm install"
   },
   "author": "Jason Gebhart",
   "license": "ISC",
