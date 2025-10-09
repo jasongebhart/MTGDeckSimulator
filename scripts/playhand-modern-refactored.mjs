@@ -1092,7 +1092,26 @@ class ModernHandSimulator {
   showHandCardMenu(event, cardId) {
     console.log('=== showHandCardMenu called ===');
     console.log('cardId:', cardId);
-    event.preventDefault();
+    // event.preventDefault(); // No longer needed as it's a click event
+
+    // Find the card element to position the menu
+    const cardElement = event.target.closest('.card-hand, .zone-card');
+    if (!cardElement) return;
+
+    // Remove any existing context menus
+    document.querySelectorAll('.context-menu').forEach(menu => menu.remove());
+
+    // Create context menu
+    const rect = cardElement.getBoundingClientRect();
+    const menu = document.createElement('div');
+    menu.className = 'context-menu';
+    menu.style.cssText = `
+      position: fixed;
+      top: ${rect.top + rect.height / 2}px;
+      left: ${rect.left + rect.width / 2}px;
+      transform: translate(-50%, -50%);
+      z-index: 1000000;
+    `;
 
     // Search both hands to find the card
     let currentHand = this.gameState.player.hand;
@@ -1116,21 +1135,6 @@ class ModernHandSimulator {
     }
 
     const card = currentHand[cardIndex];
-
-    // Create context menu
-    const menu = document.createElement('div');
-    menu.className = 'hand-context-menu';
-    menu.style.cssText = `
-      position: fixed;
-      top: ${event.clientY}px;
-      left: ${event.clientX}px;
-      background: var(--bg-primary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--border-radius);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 1000000;
-      min-width: 140px;
-    `;
 
     const cardType = this.uiManager.getCardMainType(card.type || '').toLowerCase();
     const isLand = cardType === 'land';
@@ -1158,7 +1162,7 @@ class ModernHandSimulator {
 
     // Remove menu when clicking elsewhere
     const removeMenu = (e) => {
-      if (!menu.contains(e.target)) {
+      if (!menu.contains(e.target) && !event.target.contains(e.target)) {
         menu.remove();
         document.removeEventListener('click', removeMenu);
       }
@@ -1172,7 +1176,7 @@ class ModernHandSimulator {
    */
   createHandMenuItem(text, clickHandler) {
     const div = document.createElement('div');
-    div.className = 'menu-item';
+    div.className = 'context-menu-option';
     div.textContent = text;
 
     if (clickHandler) {
@@ -1180,7 +1184,7 @@ class ModernHandSimulator {
         e.stopPropagation();
         clickHandler();
         // Remove menu
-        const menu = div.closest('.hand-context-menu');
+        const menu = div.closest('.context-menu');
         if (menu) menu.remove();
       });
     }

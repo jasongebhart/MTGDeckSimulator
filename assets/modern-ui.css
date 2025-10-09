@@ -11,6 +11,8 @@
 @import url('./components/buttons.css');
 @import url('./components/dropdown.css');
 @import url('./components/color-fixes.css');
+@import url('./components/panels.css');
+@import url('./components/cards.css');
 
 /* CSS Custom Properties (Variables) */
 :root {
@@ -8851,5 +8853,54 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.life-total {
+  font-size: 1.75rem; /* was 2.5rem */
+  font-weight: bold;
+  min-width: 70px;
+  text-align: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.shortcut {
+  font-size: 0.75rem;
+  padding: 2px 4px;
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+  margin-left: 4px;
+  border: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+}
+
+.context-menu {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2);
+  min-width: 180px;
+}
+
+.context-menu-option {
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.context-menu-option:hover {
+  background: var(--primary);
+  color: white;
 }
 

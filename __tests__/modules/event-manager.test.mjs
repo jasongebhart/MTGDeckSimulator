@@ -132,6 +132,7 @@ describe('EventManager', () => {
     // Mock simulator with all required methods
     mockSimulator = {
       // Top bar actions
+      openDeckSelectionModal: jest.fn(e => EventManager.openDeckSelectionModal(e)),
       quickTwoPlayerSetup: jest.fn(),
       endTurn: jest.fn(),
       initializeCombat: jest.fn(),

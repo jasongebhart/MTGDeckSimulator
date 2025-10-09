@@ -12,7 +12,9 @@
     <link rel="manifest" href="/assets/site.webmanifest">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" type="text/css" href="/assets/modern-ui.css?v=22">
+    <link rel="stylesheet" type="text/css" href="/assets/modern-ui.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/assets/playhand-whitequeen.css?v=2">
+
 
     <!-- Scripts -->
     <!-- REFACTORED VERSION - Using modular architecture -->
@@ -167,7 +169,7 @@
         });
 
         // Function to open deck selection modal and sync current decks
-        function openDeckSelectionModal(event) {
+        async function openDeckSelectionModal(event) {
             if (event) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -182,6 +184,16 @@
                     setTimeout(() => modalContent.classList.add('show'), 10);
                 }
 
+                // Fetch and populate decks
+                try {
+                    const response = await fetch('/api/v1/decks/list');
+                    const decks = await response.json();
+                    populateDeckSelect(decks, 'deckSelectModal');
+                    populateDeckSelect(decks, 'opponentDeckSelectModal');
+                } catch (error) {
+                    console.error('Error fetching deck list:', error);
+                }
+
                 // Update current deck displays in modal from game state
                 const playerDeckNameModal = document.getElementById('playerDeckNameModal');
                 const opponentDeckNameModal = document.getElementById('opponentDeckNameModal');
@@ -192,14 +204,72 @@
                     playerDeckNameModal.textContent = 'No Deck';
                 }
 
-                if (opponentDeckNameModal && window.handSimulator?.gameState?.opponent?.deckName) {
-                    opponentDeckNameModal.textContent = window.handSimulator.gameState.opponent.deckName;
-                } else if (opponentDeckNameModal) {
-                    opponentDeckNameModal.textContent = 'No Deck';
+                        if (opponentDeckNameModal && window.handSimulator?.gameState?.opponent?.deckName) {
+                            opponentDeckNameModal.textContent = window.handSimulator.gameState.opponent.deckName;
+                        } else if (opponentDeckNameModal) {
+                            opponentDeckNameModal.textContent = 'No Deck';
+                        }
+                    }
                 }
-            }
+                
+function populateDeckSelect(decks, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Clear existing options
+    container.innerHTML = '';
+
+    // Group decks by category
+    const groupedDecks = decks.reduce((acc, deck) => {
+        const category = deck.category || 'Uncategorized';
+        if (!acc[category]) {
+            acc[category] = [];
         }
-    </script>
+        acc[category].push(deck);
+        return acc;
+    }, {});
+
+    // Populate container with details/summary
+    for (const category in groupedDecks) {
+        const details = document.createElement('details');
+        details.open = true; // Open by default
+        const summary = document.createElement('summary');
+        summary.textContent = category;
+        summary.style.fontWeight = 'bold';
+        summary.style.cursor = 'pointer';
+        summary.style.padding = '8px';
+        summary.style.borderBottom = '1px solid var(--border-color)';
+
+        details.appendChild(summary);
+
+        const deckList = document.createElement('div');
+        groupedDecks[category].forEach(deck => {
+            const deckItem = document.createElement('div');
+            deckItem.textContent = deck.name;
+            deckItem.dataset.path = deck.path;
+            deckItem.style.padding = '8px 12px';
+            deckItem.style.cursor = 'pointer';
+            deckItem.addEventListener('click', () => {
+                if (containerId === 'deckSelectModal') {
+                    window.handSimulator?.loadDeck(deck.path);
+                } else {
+                    window.handSimulator?.loadOpponentDeck(deck.path);
+                }
+                // Close the modal
+                document.getElementById('deckSelectionModal').style.display = 'none';
+            });
+            deckItem.addEventListener('mouseenter', () => {
+                deckItem.style.backgroundColor = 'var(--bg-tertiary)';
+            });
+            deckItem.addEventListener('mouseleave', () => {
+                deckItem.style.backgroundColor = 'transparent';
+            });
+            deckList.appendChild(deckItem);
+        });
+        details.appendChild(deckList);
+        container.appendChild(details);
+    }
+}    </script>
 </head>
 <body>
     <div class="app-container">
@@ -256,24 +326,9 @@
 
             <!-- Board Wipes (right side, collapsible) -->
             <div class="controls-section">
-                <button id="boardWipesToggleBtn" class="btn btn-secondary-action" onclick="document.getElementById('boardWipesPanel').classList.toggle('show')" style="position: relative;">
+                <button id="boardWipesToggleBtn" class="btn btn-secondary-action" onclick="document.getElementById('boardWipesActionPanel').classList.add('show')">
                     💥 Board Wipes
                 </button>
-                <div id="boardWipesPanel" class="dropdown-menu" style="position: absolute; right: 10px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; padding: 12px; min-width: 300px; margin-top: 4px;">
-                    <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600;">💥 Board Wipes</div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.wrathOfGod()" title="Destroy all creatures">💀 Wrath</button>
-                        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.damnation()" title="Destroy all creatures">🌑 Damn</button>
-                        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.supremeVerdict()" title="Can't be countered">⚖️ Verdict</button>
-                        <button class="btn btn-xs btn-outline-warning" onclick="window.handSimulator?.pyroclasm()" title="2 damage to all">🔥 Pyro</button>
-                        <button class="btn btn-xs btn-outline-warning" onclick="window.handSimulator?.angerOfTheGods()" title="3 damage, exile">😡 Anger</button>
-                        <button class="btn btn-xs btn-outline-primary" onclick="window.handSimulator?.cyclonicRift()" title="Bounce all opponent">🌊 Rift</button>
-                        <button class="btn btn-xs btn-outline-secondary" onclick="window.handSimulator?.armageddon()" title="Destroy all lands">💥 Geddon</button>
-                    </div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-color);">
-                        💡 Right-click cards for targeted removal
-                    </div>
-                </div>
 
                 <!-- Delayed Triggers Indicator -->
                 <div id="delayedTriggersIndicator" style="display: none; padding: 6px 10px; background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; border-radius: 4px; font-size: 12px; cursor: pointer; margin-left: 8px;">
@@ -353,7 +408,7 @@
                                     <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Life</div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <button onclick="window.handSimulator.changeOpponentLife(-1)" style="cursor: pointer; min-width: 44px; min-height: 44px; padding: 8px 12px; background: #dc3545; border: none; border-radius: 6px; font-weight: bold; font-size: 1.25rem; color: white; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseenter="this.style.background='#c82333'" onmouseleave="this.style.background='#dc3545'" title="Opponent loses 1 life">−1</button>
-                                        <div id="opponentLife2" style="font-size: 2.5rem; font-weight: bold; min-width: 70px; text-align: center; cursor: pointer; padding: 8px 12px; border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); border: 2px solid var(--border-color);" onclick="const newLife = prompt('Set opponent life:', this.textContent); if(newLife !== null) window.handSimulator.setOpponentLife(parseInt(newLife));" title="Click to set exact life total">20</div>
+                                        <div id="opponentLife2" class="life-total" onclick="const newLife = prompt('Set opponent life:', this.textContent); if(newLife !== null) window.handSimulator.setOpponentLife(parseInt(newLife));" title="Click to set exact life total">20</div>
                                         <button onclick="window.handSimulator.changeOpponentLife(1)" style="cursor: pointer; min-width: 44px; min-height: 44px; padding: 8px 12px; background: #28a745; border: none; border-radius: 6px; font-weight: bold; font-size: 1.25rem; color: white; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseenter="this.style.background='#218838'" onmouseleave="this.style.background='#28a745'" title="Opponent gains 1 life">+1</button>
                                     </div>
                                     <!-- Quick Life Presets -->
@@ -397,71 +452,19 @@
                                 <div style="width: 1px; height: 28px; background: var(--border-color);"></div>
 
                                 <!-- Library Button with Actions Menu for Opponent -->
-                                <div style="position: relative;">
-                                    <button id="opponentLibraryButton" class="btn btn-sm btn-outline-info" onclick="document.getElementById('topOpponentLibraryActionsMenu').classList.toggle('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                <button id="opponentLibraryButton" class="btn btn-sm btn-outline-info" onclick="document.getElementById('opponentLibraryActionPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
                                         📚 Library (<span id="opponentLibraryButtonCount">0</span>)
                                     </button>
-                                    <div id="topOpponentLibraryActionsMenu" class="advanced-actions-panel" style="position: absolute; top: 100%; left: 0; margin-top: 4px; padding: 8px; min-width: 180px; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showLibraryModal('opponent'); document.getElementById('topOpponentLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">👁️ View Library</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showScryInterface(1, 'Scry', {player: 'opponent'}); document.getElementById('topOpponentLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🔍 Scry 1</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.ponder('opponent'); document.getElementById('topOpponentLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🤔 Ponder</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.brainstorm('opponent'); document.getElementById('topOpponentLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🧠 Brainstorm</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(1, 'opponent'); document.getElementById('topOpponentLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🕵️ Surveil 1</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(2, 'opponent'); document.getElementById('topOpponentLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🕵️ Surveil 2</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.triggerManualCascade('opponent'); document.getElementById('topOpponentLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">⚡ Cascade</button>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.shuffleOpponentLibrary(); document.getElementById('topOpponentLibraryActionsMenu').classList.remove('show');" style="width: 100%; text-align: left; padding: 8px;">🔀 Shuffle</button>
-                                    </div>
-                                </div>
 
                                 <!-- Create Token Button for Opponent -->
-                                <div style="position: relative;">
-                                    <button class="btn btn-sm btn-success" onclick="document.getElementById('opponentTokenMenu').classList.toggle('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                <button class="btn btn-sm btn-success" onclick="document.getElementById('opponentTokenCreationPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
                                         🪙 Create Token
                                     </button>
-                                    <div id="opponentTokenMenu" class="advanced-actions-panel" style="position: absolute; top: 100%; left: 0; margin-top: 4px; padding: 12px; min-width: 280px; max-height: 400px; overflow-y: auto; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                                        <!-- Artifact Tokens -->
-                                        <div style="margin-bottom: 12px;">
-                                            <div style="font-weight: 600; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase;">Artifact Tokens</div>
-                                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Treasure', 'Artifact', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">💎 Treasure</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Clue', 'Artifact', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🔍 Clue</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Blood', 'Artifact', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🩸 Blood</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Food', 'Artifact', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🍎 Food</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Map', 'Artifact', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🗺️ Map</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Powerstone', 'Artifact', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">💠 Powerstone</button>
-                                            </div>
-                                        </div>
-                                        <!-- Creature Tokens -->
-                                        <div>
-                                            <div style="font-weight: 600; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase;">Creature Tokens</div>
-                                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Soldier', 'Creature — Soldier', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">⚔️ 1/1 Soldier</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Zombie', 'Creature — Zombie', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🧟 2/2 Zombie</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Goblin', 'Creature — Goblin', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">👹 1/1 Goblin</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Elf', 'Creature — Elf', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🧝 1/1 Elf</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('3/3 Beast', 'Creature — Beast', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🐻 3/3 Beast</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('4/4 Angel', 'Creature — Angel', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">👼 4/4 Angel</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('5/5 Dragon', 'Creature — Dragon', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🐉 5/5 Dragon</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Spirit', 'Creature — Spirit', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">👻 1/1 Spirit</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Knight', 'Creature — Knight', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🛡️ 2/2 Knight</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Insect', 'Creature — Insect', 'opponent'); document.getElementById('opponentTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🐛 1/1 Insect</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <!-- Advanced Actions Dropdown -->
-                                <div style="position: relative;">
-                                    <button class="btn btn-sm btn-outline-success" onclick="document.getElementById('opponentAdvancedMenu').classList.toggle('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem; display: flex; align-items: center; gap: 4px;">
-                                        <span>⚡ Advanced</span>
-                                        <span style="font-size: 0.7rem;">▼</span>
+                                <button class="btn btn-sm btn-outline-success" onclick="document.getElementById('opponentAdvancedActionsPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                        ⚡ Advanced
                                     </button>
-                                    <div id="opponentAdvancedMenu" class="advanced-actions-panel" style="position: absolute; top: 100%; left: 0; margin-top: 4px; padding: 8px; min-width: 200px; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                                        <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.evolvingWilds('opponent'); document.getElementById('opponentAdvancedMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🌍 Fetch Land</button>
-                                        <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.cultivate('opponent'); document.getElementById('opponentAdvancedMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🌱 Ramp</button>
-                                        <button class="btn btn-sm btn-outline-success w-100 text-left" onclick="window.handSimulator.triggerManualCascade('opponent'); document.getElementById('opponentAdvancedMenu').classList.remove('show');" style="padding: 8px; text-align: left;">⚡ Cascade</button>
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
@@ -559,7 +562,7 @@
                                     <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Life</div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <button onclick="window.handSimulator.changeLife(-1)" style="cursor: pointer; min-width: 44px; min-height: 44px; padding: 8px 12px; background: #dc3545; border: none; border-radius: 6px; font-weight: bold; font-size: 1.25rem; color: white; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseenter="this.style.background='#c82333'" onmouseleave="this.style.background='#dc3545'" title="Lose 1 life">−1</button>
-                                        <div id="lifeTotal2" style="font-size: 2.5rem; font-weight: bold; min-width: 70px; text-align: center; cursor: pointer; padding: 8px 12px; border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); border: 2px solid var(--border-color);" onclick="const newLife = prompt('Set life total:', this.textContent); if(newLife !== null) window.handSimulator.setLife(parseInt(newLife));" title="Click to set exact life total">20</div>
+                                        <div id="lifeTotal2" class="life-total" onclick="const newLife = prompt('Set life total:', this.textContent); if(newLife !== null) window.handSimulator.setLife(parseInt(newLife));" title="Click to set exact life total">20</div>
                                         <button onclick="window.handSimulator.changeLife(1)" style="cursor: pointer; min-width: 44px; min-height: 44px; padding: 8px 12px; background: #28a745; border: none; border-radius: 6px; font-weight: bold; font-size: 1.25rem; color: white; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseenter="this.style.background='#218838'" onmouseleave="this.style.background='#28a745'" title="Gain 1 life">+1</button>
                                     </div>
                                     <!-- Quick Life Presets -->
@@ -576,16 +579,16 @@
                                 <!-- Core Actions Group -->
                                 <div style="display: flex; gap: 6px;">
                                     <button class="btn btn-sm btn-success" onclick="window.handSimulator.resetAndDraw7()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Shuffle deck, reset life to 20, draw 7 cards (Keyboard: N)">
-                                        🎲 New Game
+                                        🎲 New Game <kbd class="shortcut">N</kbd>
                                     </button>
                                     <button class="btn btn-sm btn-primary" onclick="window.handSimulator.drawCard()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: D">
-                                        📥 Draw
+                                        📥 Draw <kbd class="shortcut">D</kbd>
                                     </button>
                                     <button class="btn btn-sm btn-warning" onclick="window.handSimulator.mulligan()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: M">
-                                        🔄 Mulligan
+                                        🔄 Mulligan <kbd class="shortcut">M</kbd>
                                     </button>
                                     <button class="btn btn-sm btn-outline-info" onclick="window.handSimulator.passTurn()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: P">
-                                        ⏭️ Pass Turn
+                                        ⏭️ Pass Turn <kbd class="shortcut">P</kbd>
                                     </button>
                                 </div>
 
@@ -594,8 +597,8 @@
 
                                 <!-- Quick Actions Group -->
                                 <div style="display: flex; gap: 6px;">
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.untapAll()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Untap all your permanents (Keyboard: U)">
-                                        ⟳ Untap All
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.untapAll()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;"                                         ⟳ Untap All <kbd class="shortcut">U</kbd>
+
                                     </button>
                                 </div>
 
@@ -603,73 +606,19 @@
                                 <div style="width: 1px; height: 28px; background: var(--border-color);"></div>
 
                                 <!-- Library Dropdown -->
-                                <div style="position: relative;">
-                                    <button id="playerLibraryButton" class="btn btn-sm btn-outline-info" onclick="document.getElementById('topLibraryActionsMenu').classList.toggle('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem; display: flex; align-items: center; gap: 4px;">
-                                        <span>📚 Library (<span id="playerLibraryButtonCount">0</span>)</span>
-                                        <span style="font-size: 0.7rem;">▼</span>
+                                <button id="playerLibraryButton" class="btn btn-sm btn-outline-info" onclick="document.getElementById('libraryActionPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                        📚 Library (<span id="playerLibraryButtonCount">0</span>)
                                     </button>
-                                    <div id="topLibraryActionsMenu" class="advanced-actions-panel" style="position: absolute; top: 100%; left: 0; margin-top: 4px; padding: 8px; min-width: 180px; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showLibraryModal('player'); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">👁️ View Library</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.viewTopCard(); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🔝 View Top Card</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showScryInterface(1, 'Scry'); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🔍 Scry 1</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.ponder(); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🤔 Ponder</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.brainstorm(); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🧠 Brainstorm</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(1); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🕵️ Surveil 1</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(2); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">🕵️ Surveil 2</button>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.triggerManualCascade('player'); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">⚡ Cascade</button>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.viewTopCards(3); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">👀 View Top 3</button>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.millCards(2); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; margin-bottom: 4px; text-align: left; padding: 8px;">⚰️ Mill 2</button>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.shuffleLibrary(); document.getElementById('topLibraryActionsMenu').classList.remove('show');" style="width: 100%; text-align: left; padding: 8px;">🔀 Shuffle</button>
-                                    </div>
-                                </div>
 
                                 <!-- Advanced Actions Dropdown -->
-                                <div style="position: relative;">
-                                    <button class="btn btn-sm btn-outline-success" onclick="document.getElementById('playerAdvancedMenu').classList.toggle('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem; display: flex; align-items: center; gap: 4px;">
-                                        <span>⚡ Advanced</span>
-                                        <span style="font-size: 0.7rem;">▼</span>
+                                <button class="btn btn-sm btn-success" onclick="document.getElementById('playerTokenCreationPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                        🪙 Create Token
                                     </button>
-                                    <div id="playerAdvancedMenu" class="advanced-actions-panel" style="position: absolute; top: 100%; left: 0; margin-top: 4px; padding: 8px; min-width: 200px; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                                        <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="showTokenMenu(event); document.getElementById('playerAdvancedMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🪙 Create Token</button>
-                                        <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.evolvingWilds(); document.getElementById('playerAdvancedMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🌍 Fetch Land</button>
-                                        <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.cultivate(); document.getElementById('playerAdvancedMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🌱 Ramp</button>
-                                        <button class="btn btn-sm btn-outline-success w-100 text-left" onclick="window.handSimulator.triggerManualCascade('player'); document.getElementById('playerAdvancedMenu').classList.remove('show');" style="padding: 8px; text-align: left;">⚡ Cascade</button>
-                                    </div>
-                                </div>
+                                    <button class="btn btn-sm btn-outline-success" onclick="document.getElementById('playerAdvancedActionsPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                        ⚡ Advanced
+                                    </button>
 
-                                <!-- Token Submenu (nested) -->
-                                <div id="playerTokenMenuContainer" style="position: fixed; z-index: 101; display: none;">
-                                    <div id="playerTokenMenu" class="advanced-actions-panel" style="padding: 12px; min-width: 280px; max-height: 400px; overflow-y: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                                        <!-- Artifact Tokens -->
-                                        <div style="margin-bottom: 12px;">
-                                            <div style="font-weight: 600; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase;">Artifact Tokens</div>
-                                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Treasure', 'Artifact', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">💎 Treasure</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Clue', 'Artifact', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🔍 Clue</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Blood', 'Artifact', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🩸 Blood</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Food', 'Artifact', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🍎 Food</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Map', 'Artifact', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🗺️ Map</button>
-                                                <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Powerstone', 'Artifact', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">💠 Powerstone</button>
-                                            </div>
-                                        </div>
-                                        <!-- Creature Tokens -->
-                                        <div>
-                                            <div style="font-weight: 600; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase;">Creature Tokens</div>
-                                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Soldier', 'Creature — Soldier', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">⚔️ 1/1 Soldier</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Zombie', 'Creature — Zombie', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🧟 2/2 Zombie</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Goblin', 'Creature — Goblin', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">👹 1/1 Goblin</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Elf', 'Creature — Elf', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🧝 1/1 Elf</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('3/3 Beast', 'Creature — Beast', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🐻 3/3 Beast</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('4/4 Angel', 'Creature — Angel', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">👼 4/4 Angel</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('5/5 Dragon', 'Creature — Dragon', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🐉 5/5 Dragon</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Spirit', 'Creature — Spirit', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">👻 1/1 Spirit</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Knight', 'Creature — Knight', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🛡️ 2/2 Knight</button>
-                                                <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Insect', 'Creature — Insect', 'player'); document.getElementById('playerTokenMenu').classList.remove('show');" style="padding: 8px; text-align: left;">🐛 1/1 Insect</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- This is now handled by the playerTokenCreationPanel slide-out panel -->
 
                             </div>
                         </div>
@@ -946,82 +895,14 @@
                 <button onclick="document.getElementById('deckSelectionModal').style.display='none'" class="btn btn-secondary btn-sm">✕</button>
             </div>
             <div class="modal-body" style="padding: var(--space-4); overflow-y: auto; flex: 1; background: var(--bg-secondary); color: var(--text-primary);">
+                <input type="search" id="deckSearchInput" aria-label="Search decks" placeholder="Search decks..." oninput="filterDecks(this.value)" style="width: 100%; padding: 12px; margin-bottom: 16px; font-size: 1rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+
 
                 <!-- Player Deck Selection -->
                 <div style="margin-bottom: var(--space-6); padding: var(--space-4); border: 2px solid #0d6efd; border-radius: 8px; background: rgba(13, 110, 253, 0.05);">
                     <h4 style="color: #0d6efd; margin-bottom: var(--space-3);">🧙‍♂️ Player 1 Deck</h4>
                     <div class="d-flex gap-2 flex-wrap" style="margin-bottom: var(--space-2);">
-                        <select id="deckSelectModal" class="form-select" style="flex: 1; min-width: 200px; padding: 8px 12px;">
-                            <option value="">Select a deck...</option>
-                            <optgroup label="Featured Decks">
-                                <option value="./xml/BigRedMachine.xml">Big Red Machine</option>
-                                <option value="./xml/Stasis.xml">Stasis</option>
-                                <option value="./decks/classic/affinity.xml">Affinity</option>
-                                <option value="./decks/classic/goblins.xml">Goblins</option>
-                            </optgroup>
-                            <optgroup label="Legacy Decks">
-                                <option value="./xml/legacy/Elves.xml">Elves</option>
-                                <option value="./xml/legacy/Red-Delver.xml">Red Delver</option>
-                                <option value="./decks/classic/hightide.xml">High Tide</option>
-                                <option value="./decks/classic/belcher.xml">Belcher</option>
-                                <option value="./decks/classic/dredge.xml">Dredge</option>
-                                <option value="./decks/classic/landstill.xml">Landstill</option>
-                            </optgroup>
-                            <optgroup label="Limited Decks">
-                                <option value="./xml/Brothers_War/Limited-BrothersWar.xml">Brothers War Limited</option>
-                                <option value="./xml/crimson_vow/Limited-Red.xml">Crimson Vow - Red</option>
-                                <option value="./xml/crimson_vow/Limited-RedGreen.xml">Crimson Vow - RG</option>
-                                <option value="./xml/crimson_vow/Limited-GreenBlack.xml">Crimson Vow - GB</option>
-                                <option value="./xml/crimson_vow/Limited-WhiteSplash.xml">Crimson Vow - White</option>
-                                <option value="./xml/crimson_vow/Limited-GreenBlue.xml">Crimson Vow - UG</option>
-                                <option value="./xml/crimson_vow/Limited-GreenWhite.xml">Crimson Vow - GW</option>
-                            </optgroup>
-                            <optgroup label="Casual Decks">
-                                <option value="./xml/MulchandLoam.xml">Mulch and Loam</option>
-                                <option value="./xml/BlackRack.xml">Black Rack</option>
-                                <option value="./xml/BlackDread.xml">Black Dread</option>
-                                <option value="./xml/BloodBraidElf.xml">Bloodbraid Elf</option>
-                                <option value="./xml/BloodBraidElf-Optimized.xml">⭐ Bloodbraid Elf - Optimized</option>
-                                <option value="./xml/BloodBraidEnchantress.xml">Bloodbraid Enchantress</option>
-                                <option value="./xml/Brood.xml">Brood</option>
-                                <option value="./xml/CharredDiscard.xml">Charred Discard</option>
-                                <option value="./xml/Classic.xml">Classic</option>
-                                <option value="./xml/Dimir_Inverter.xml">Dimir Inverter</option>
-                                <option value="./xml/FireandIce.xml">Fire and Ice</option>
-                                <option value="./xml/GreenWaste.xml">Green Waste</option>
-                                <option value="./xml/GreenWasteOrder.xml">Green Waste Order</option>
-                                <option value="./xml/GreenWasteTomorrow.xml">Green Waste Tomorrow</option>
-                                <option value="./xml/GreenWasteSakura.xml">Green Waste Sakura</option>
-                                <option value="./xml/WelderGamble.xml">Welder Gamble</option>
-                                <option value="./xml/CloudpostWelder.xml">Cloudpost Welder</option>
-                                <option value="./xml/JunkDiver.xml">Junk Diver</option>
-                                <option value="./xml/JeskaiPioneer.xml">Jeskai Pioneer</option>
-                                <option value="./xml/KindofBlue.xml">Kind of Blue</option>
-                                <option value="./xml/IxalanCannons.xml">Ixalan Cannons</option>
-                                <option value="./xml/Ixalan_BlackRedBlue.xml">Ixalan BRU</option>
-                                <option value="./xml/Ixalan_Cannons_RedBlue.xml">Ixalan Cannons RU</option>
-                                <option value="./xml/Ixalan_Green_White.xml">Ixalan GW</option>
-                                <option value="./xml/Lumberjack.xml">Lumberjack</option>
-                                <option value="./xml/MantisRiderPioneer.xml">Mantis Rider Pioneer</option>
-                                <option value="./xml/Napoleon.xml">Napoleon</option>
-                                <option value="./xml/Nishoba.xml">Nishoba</option>
-                                <option value="./xml/Outpost.xml">Outpost</option>
-                                <option value="./xml/PatriotBlock.xml">Patriot Block</option>
-                                <option value="./xml/Patriot.xml">Patriot</option>
-                                <option value="./xml/Pernicious.xml">Pernicious</option>
-                                <option value="./xml/Plum.xml">Plum</option>
-                                <option value="./xml/PlumGoneBlock.xml">Plum Gone Block</option>
-                                <option value="./xml/RayneForest.xml">Rayne Forest</option>
-                                <option value="./xml/RedPatrol.xml">Red Patrol</option>
-                                <option value="./xml/Rith.xml">Rith</option>
-                                <option value="./xml/TronTate.xml">Tron Tate</option>
-                                <option value="./xml/Welder.xml">Welder</option>
-                                <option value="./xml/ZombieRenewal.xml">Zombie Renewal</option>
-                                <option value="./decks/classic/oath.xml">Oath</option>
-                                <option value="./decks/classic/trix.xml">Trix</option>
-                                <option value="./decks/classic/counterbalance.xml">Counterbalance</option>
-                            </optgroup>
-                        </select>
+                        <div id="deckSelectModal" class="deck-list-container" style="border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; max-height: 300px; overflow-y: auto;"></div>
                         <button class="btn btn-primary btn-sm" onclick="const sel = document.getElementById('deckSelectModal'); if(sel.value) window.handSimulator?.loadDeck(sel.value)">Load Deck</button>
                         <button class="btn btn-secondary btn-sm" onclick="document.getElementById('xmlFile').click()">📁 Upload XML</button>
                     </div>
@@ -1042,77 +923,7 @@
                 <div style="margin-bottom: var(--space-4); padding: var(--space-4); border: 2px solid #d63384; border-radius: 8px; background: rgba(214, 51, 132, 0.05);">
                     <h4 style="color: #d63384; margin-bottom: var(--space-3);">👤 Player 2 Deck</h4>
                     <div class="d-flex gap-2 flex-wrap" style="margin-bottom: var(--space-2);">
-                        <select id="opponentDeckSelectModal" class="form-select" style="flex: 1; min-width: 200px; padding: 8px 12px;">
-                            <option value="">Select Player 2 deck...</option>
-                            <optgroup label="Featured Decks">
-                                <option value="./xml/BigRedMachine.xml">Big Red Machine</option>
-                                <option value="./xml/Stasis.xml">Stasis</option>
-                                <option value="./decks/classic/affinity.xml">Affinity</option>
-                                <option value="./decks/classic/goblins.xml">Goblins</option>
-                            </optgroup>
-                            <optgroup label="Legacy Decks">
-                                <option value="./xml/legacy/Elves.xml">Elves</option>
-                                <option value="./xml/legacy/Red-Delver.xml">Red Delver</option>
-                                <option value="./decks/classic/hightide.xml">High Tide</option>
-                                <option value="./decks/classic/belcher.xml">Belcher</option>
-                                <option value="./decks/classic/dredge.xml">Dredge</option>
-                                <option value="./decks/classic/landstill.xml">Landstill</option>
-                            </optgroup>
-                            <optgroup label="Limited Decks">
-                                <option value="./xml/Brothers_War/Limited-BrothersWar.xml">Brothers War Limited</option>
-                                <option value="./xml/crimson_vow/Limited-Red.xml">Crimson Vow - Red</option>
-                                <option value="./xml/crimson_vow/Limited-RedGreen.xml">Crimson Vow - RG</option>
-                                <option value="./xml/crimson_vow/Limited-GreenBlack.xml">Crimson Vow - GB</option>
-                                <option value="./xml/crimson_vow/Limited-WhiteSplash.xml">Crimson Vow - White</option>
-                                <option value="./xml/crimson_vow/Limited-GreenBlue.xml">Crimson Vow - UG</option>
-                                <option value="./xml/crimson_vow/Limited-GreenWhite.xml">Crimson Vow - GW</option>
-                            </optgroup>
-                            <optgroup label="Casual Decks">
-                                <option value="./xml/MulchandLoam.xml">Mulch and Loam</option>
-                                <option value="./xml/BlackRack.xml">Black Rack</option>
-                                <option value="./xml/BlackDread.xml">Black Dread</option>
-                                <option value="./xml/BloodBraidElf.xml">Bloodbraid Elf</option>
-                                <option value="./xml/BloodBraidElf-Optimized.xml">⭐ Bloodbraid Elf - Optimized</option>
-                                <option value="./xml/BloodBraidEnchantress.xml">Bloodbraid Enchantress</option>
-                                <option value="./xml/Brood.xml">Brood</option>
-                                <option value="./xml/CharredDiscard.xml">Charred Discard</option>
-                                <option value="./xml/Classic.xml">Classic</option>
-                                <option value="./xml/Dimir_Inverter.xml">Dimir Inverter</option>
-                                <option value="./xml/FireandIce.xml">Fire and Ice</option>
-                                <option value="./xml/GreenWaste.xml">Green Waste</option>
-                                <option value="./xml/GreenWasteOrder.xml">Green Waste Order</option>
-                                <option value="./xml/GreenWasteTomorrow.xml">Green Waste Tomorrow</option>
-                                <option value="./xml/GreenWasteSakura.xml">Green Waste Sakura</option>
-                                <option value="./xml/WelderGamble.xml">Welder Gamble</option>
-                                <option value="./xml/CloudpostWelder.xml">Cloudpost Welder</option>
-                                <option value="./xml/JunkDiver.xml">Junk Diver</option>
-                                <option value="./xml/JeskaiPioneer.xml">Jeskai Pioneer</option>
-                                <option value="./xml/KindofBlue.xml">Kind of Blue</option>
-                                <option value="./xml/IxalanCannons.xml">Ixalan Cannons</option>
-                                <option value="./xml/Ixalan_BlackRedBlue.xml">Ixalan BRU</option>
-                                <option value="./xml/Ixalan_Cannons_RedBlue.xml">Ixalan Cannons RU</option>
-                                <option value="./xml/Ixalan_Green_White.xml">Ixalan GW</option>
-                                <option value="./xml/Lumberjack.xml">Lumberjack</option>
-                                <option value="./xml/MantisRiderPioneer.xml">Mantis Rider Pioneer</option>
-                                <option value="./xml/Napoleon.xml">Napoleon</option>
-                                <option value="./xml/Nishoba.xml">Nishoba</option>
-                                <option value="./xml/Outpost.xml">Outpost</option>
-                                <option value="./xml/PatriotBlock.xml">Patriot Block</option>
-                                <option value="./xml/Patriot.xml">Patriot</option>
-                                <option value="./xml/Pernicious.xml">Pernicious</option>
-                                <option value="./xml/Plum.xml">Plum</option>
-                                <option value="./xml/PlumGoneBlock.xml">Plum Gone Block</option>
-                                <option value="./xml/RayneForest.xml">Rayne Forest</option>
-                                <option value="./xml/RedPatrol.xml">Red Patrol</option>
-                                <option value="./xml/Rith.xml">Rith</option>
-                                <option value="./xml/TronTate.xml">Tron Tate</option>
-                                <option value="./xml/Welder.xml">Welder</option>
-                                <option value="./xml/ZombieRenewal.xml">Zombie Renewal</option>
-                                <option value="./decks/classic/oath.xml">Oath</option>
-                                <option value="./decks/classic/trix.xml">Trix</option>
-                                <option value="./decks/classic/counterbalance.xml">Counterbalance</option>
-                            </optgroup>
-                        </select>
+                        <div id="opponentDeckSelectModal" class="deck-list-container" style="border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; max-height: 300px; overflow-y: auto;"></div>
                         <button class="btn btn-primary btn-sm" onclick="const sel = document.getElementById('opponentDeckSelectModal'); if(sel.value) window.handSimulator?.loadOpponentDeck(sel.value)">Load Deck</button>
                     </div>
                     <div class="d-flex gap-2" style="margin-top: var(--space-2);">
@@ -1311,5 +1122,187 @@
             }
         });
     </script>
+<script>
+function filterDecks(query) {
+  const lowerQuery = query.toLowerCase();
+  const deckContainers = [document.getElementById('deckSelectModal'), document.getElementById('opponentDeckSelectModal')];
+
+  deckContainers.forEach(container => {
+    if (container) {
+      const detailsElements = container.getElementsByTagName('details');
+      for (let i = 0; i < detailsElements.length; i++) {
+        const details = detailsElements[i];
+        const summary = details.getElementsByTagName('summary')[0];
+        const deckItems = details.getElementsByTagName('div')[0].getElementsByTagName('div');
+        let hasVisibleDecks = false;
+
+        for (let j = 0; j < deckItems.length; j++) {
+          const deckItem = deckItems[j];
+          const name = deckItem.textContent.toLowerCase();
+          if (name.includes(lowerQuery)) {
+            deckItem.style.display = '';
+            hasVisibleDecks = true;
+          } else {
+            deckItem.style.display = 'none';
+          }
+        }
+
+        // Hide category if it has no visible decks
+        if (hasVisibleDecks) {
+          details.style.display = '';
+        } else {
+          details.style.display = 'none';
+        }
+      }
+    }
+  });
+}
+</script>
+<aside id="libraryActionPanel" class="action-panel">
+  <header>
+    <h3>📚 Library Actions</h3>
+    <button class="close-panel" onclick="document.getElementById('libraryActionPanel').classList.remove('show')">×</button>
+  </header>
+  <section>
+    <h4>View</h4>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showLibraryModal('player')">👁️ View Library</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.viewTopCard()">🔝 View Top Card</button>
+    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.viewTopCards(3)">👀 View Top 3</button>
+  </section>
+  <section>
+    <h4>Manipulate</h4>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showScryInterface(1, 'Scry')">🔍 Scry 1</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.ponder()">🤔 Ponder</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.brainstorm()">🧠 Brainstorm</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(1)">🕵️ Surveil 1</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(2)">🕵️ Surveil 2</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.triggerManualCascade('player')">⚡ Cascade</button>
+    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.shuffleLibrary()">🔀 Shuffle</button>
+    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.millCards(2)">⚰️ Mill 2</button>
+  </section>
+</aside>
+<aside id="opponentLibraryActionPanel" class="action-panel">
+  <header>
+    <h3>📚 Opponent's Library</h3>
+    <button class="close-panel" onclick="document.getElementById('opponentLibraryActionPanel').classList.remove('show')">×</button>
+  </header>
+  <section>
+    <h4>View</h4>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showLibraryModal('opponent')">👁️ View Library</button>
+  </section>
+  <section>
+    <h4>Manipulate</h4>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showScryInterface(1, 'Scry', {player: 'opponent'})">🔍 Scry 1</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.ponder('opponent')">🤔 Ponder</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.brainstorm('opponent')">🧠 Brainstorm</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(1, 'opponent')">🕵️ Surveil 1</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(2, 'opponent')">🕵️ Surveil 2</button>
+    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.triggerManualCascade('opponent')">⚡ Cascade</button>
+    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.shuffleOpponentLibrary()">🔀 Shuffle</button>
+  </section>
+</aside>
+<aside id="boardWipesActionPanel" class="action-panel">
+  <header>
+    <h3>💥 Board Wipes</h3>
+    <button class="close-panel" onclick="document.getElementById('boardWipesActionPanel').classList.remove('show')">×</button>
+  </header>
+  <section>
+    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.wrathOfGod()">💀 Wrath</button>
+        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.damnation()">🌑 Damn</button>
+        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.supremeVerdict()">⚖️ Verdict</button>
+        <button class="btn btn-xs btn-outline-warning" onclick="window.handSimulator?.pyroclasm()">🔥 Pyro</button>
+        <button class="btn btn-xs btn-outline-warning" onclick="window.handSimulator?.angerOfTheGods()">😡 Anger</button>
+        <button class="btn btn-xs btn-outline-primary" onclick="window.handSimulator?.cyclonicRift()">🌊 Rift</button>
+        <button class="btn btn-xs btn-outline-secondary" onclick="window.handSimulator?.armageddon()">💥 Geddon</button>
+    </div>
+  </section>
+</aside>
+<aside id="playerTokenCreationPanel" class="action-panel">
+  <header>
+    <h3>🪙 Create Token</h3>
+    <button class="close-panel" onclick="document.getElementById('playerTokenCreationPanel').classList.remove('show')">×</button>
+  </header>
+  <section>
+    <h4>Artifact Tokens</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Treasure', 'Artifact', 'player')">💎 Treasure</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Clue', 'Artifact', 'player')">🔍 Clue</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Blood', 'Artifact', 'player')">🩸 Blood</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Food', 'Artifact', 'player')">🍎 Food</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Map', 'Artifact', 'player')">🗺️ Map</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Powerstone', 'Artifact', 'player')">💠 Powerstone</button>
+    </div>
+  </section>
+  <section>
+    <h4>Creature Tokens</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Soldier', 'Creature — Soldier', 'player')">⚔️ 1/1 Soldier</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Zombie', 'Creature — Zombie', 'player')">🧟 2/2 Zombie</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Goblin', 'Creature — Goblin', 'player')">👹 1/1 Goblin</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Elf', 'Creature — Elf', 'player')">🧝 1/1 Elf</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('3/3 Beast', 'Creature — Beast', 'player')">🐻 3/3 Beast</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('4/4 Angel', 'Creature — Angel', 'player')">👼 4/4 Angel</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('5/5 Dragon', 'Creature — Dragon', 'player')">🐉 5/5 Dragon</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Spirit', 'Creature — Spirit', 'player')">👻 1/1 Spirit</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Knight', 'Creature — Knight', 'player')">🛡️ 2/2 Knight</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Insect', 'Creature — Insect', 'player')">🐛 1/1 Insect</button>
+    </div>
+  </section>
+</aside>
+<aside id="opponentTokenCreationPanel" class="action-panel">
+  <header>
+    <h3>🪙 Opponent's Tokens</h3>
+    <button class="close-panel" onclick="document.getElementById('opponentTokenCreationPanel').classList.remove('show')">×</button>
+  </header>
+  <section>
+    <h4>Artifact Tokens</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Treasure', 'Artifact', 'opponent')">💎 Treasure</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Clue', 'Artifact', 'opponent')">🔍 Clue</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Blood', 'Artifact', 'opponent')">🩸 Blood</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Food', 'Artifact', 'opponent')">🍎 Food</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Map', 'Artifact', 'opponent')">🗺️ Map</button>
+        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Powerstone', 'Artifact', 'opponent')">💠 Powerstone</button>
+    </div>
+  </section>
+  <section>
+    <h4>Creature Tokens</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Soldier', 'Creature — Soldier', 'opponent')">⚔️ 1/1 Soldier</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Zombie', 'Creature — Zombie', 'opponent')">🧟 2/2 Zombie</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Goblin', 'Creature — Goblin', 'opponent')">👹 1/1 Goblin</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Elf', 'Creature — Elf', 'opponent')">🧝 1/1 Elf</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('3/3 Beast', 'Creature — Beast', 'opponent')">🐻 3/3 Beast</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('4/4 Angel', 'Creature — Angel', 'opponent')">👼 4/4 Angel</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('5/5 Dragon', 'Creature — Dragon', 'opponent')">🐉 5/5 Dragon</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Spirit', 'Creature — Spirit', 'opponent')">👻 1/1 Spirit</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Knight', 'Creature — Knight', 'opponent')">🛡️ 2/2 Knight</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Insect', 'Creature — Insect', 'opponent')">🐛 1/1 Insect</button>
+    </div>
+  </section>
+</aside>
+<aside id="playerAdvancedActionsPanel" class="action-panel">
+  <header>
+    <h3>⚡ Advanced Actions</h3>
+    <button class="close-panel" onclick="document.getElementById('playerAdvancedActionsPanel').classList.remove('show')">×</button>
+  </header>
+  <section>
+    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.evolvingWilds(); document.getElementById('playerAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">🌍 Fetch Land</button>
+    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.cultivate(); document.getElementById('playerAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">🌱 Ramp</button>
+    <button class="btn btn-sm btn-outline-success w-100 text-left" onclick="window.handSimulator.triggerManualCascade('player'); document.getElementById('playerAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">⚡ Cascade</button>
+  </section>
+</aside>
+<aside id="opponentAdvancedActionsPanel" class="action-panel">
+  <header>
+    <h3>⚡ Opponent's Advanced</h3>
+    <button class="close-panel" onclick="document.getElementById('opponentAdvancedActionsPanel').classList.remove('show')">×</button>
+  </header>
+  <section>
+    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.evolvingWilds('opponent'); document.getElementById('opponentAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">🌍 Fetch Land</button>
+    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.cultivate('opponent'); document.getElementById('opponentAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">🌱 Ramp</button>
+    <button class="btn btn-sm btn-outline-success w-100 text-left" onclick="window.handSimulator.triggerManualCascade('opponent'); document.getElementById('opponentAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">⚡ Cascade</button>
+  </section>
+</aside>
 </body>
 </html>

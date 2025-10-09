@@ -440,22 +440,27 @@
 }
 
 /* Style for the context menu */
-.context-menu {
+.card-hand > .context-menu,
+.zone-card > .context-menu {
   display: none;
   position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: var(--bg-secondary, #fff);
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 5px;
   padding: 5px;
   z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  color: var(--text-primary, #000);
 }
+
 /* Style for context menu options */
 .context-menu-option {
   cursor: pointer;
-  padding: 5px;
+  padding: 8px 12px;
 }
 
 .context-menu-option:hover {
-  background-color: #f0f0f0;
+  background-color: var(--bg-tertiary, #f0f0f0);
 }
 /* Hover Menu Styles */
 .hover-menu {

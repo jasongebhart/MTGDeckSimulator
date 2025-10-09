@@ -402,6 +402,7 @@ export class UIManager {
             </div>
           </div>
         </div>
+        <button class="card-action-trigger" aria-label="Card actions">⋯</button>
       </div>
     `;}).join('');
 
@@ -423,8 +424,8 @@ export class UIManager {
 
       // Click on card to play it (only for hand cards)
       cardElement.addEventListener('click', (e) => {
-        // Don't trigger if clicking on the image (image shows preview)
-        if (e.target.closest('.card-image-container')) {
+        // Don't trigger if clicking on the image or action trigger
+        if (e.target.closest('.card-image-container') || e.target.closest('.card-action-trigger')) {
           return;
         }
 
@@ -451,12 +452,14 @@ export class UIManager {
         imageContainer.style.cursor = 'pointer';
       }
 
-      // Right-click for context menu
-      cardElement.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        this.showCardMenu(e, cardId, cardName);
-        return false;
-      });
+      // Click on action trigger button for context menu
+      const actionTrigger = cardElement.querySelector('.card-action-trigger');
+      if (actionTrigger) {
+        actionTrigger.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent card click from playing card
+          this.showCardMenu(e, cardId, cardName);
+        });
+      }
 
       // Drag and drop handlers
       cardElement.addEventListener('dragstart', (e) => {
@@ -727,17 +730,31 @@ export class UIManager {
     const opponentDeckSelectModal = document.getElementById('opponentDeckSelectModal');
 
     if (opponentDeckSelect) {
-      const option = Array.from(opponentDeckSelect.options).find(opt => opt.value === deckPath);
-      if (option) {
-        opponentDeckSelect.value = deckPath;
+      if (opponentDeckSelect.tagName === 'SELECT') {
+        const option = Array.from(opponentDeckSelect.options).find(opt => opt.value === deckPath);
+        if (option) {
+          opponentDeckSelect.value = deckPath;
+        }
       }
     }
 
     if (opponentDeckSelectModal) {
-      const option = Array.from(opponentDeckSelectModal.options).find(opt => opt.value === deckPath);
-      if (option) {
-        opponentDeckSelectModal.value = deckPath;
-      }
+        if (opponentDeckSelectModal.tagName === 'SELECT') {
+            const option = Array.from(opponentDeckSelectModal.options).find(opt => opt.value === deckPath);
+            if (option) {
+                opponentDeckSelectModal.value = deckPath;
+            }
+        } else {
+            // Handle the div case
+            const deckItems = opponentDeckSelectModal.querySelectorAll('[data-path]');
+            deckItems.forEach(item => {
+                if (item.dataset.path === deckPath) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        }
     }
 
     // Update opponent deck name displays

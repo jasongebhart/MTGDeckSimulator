@@ -44,12 +44,14 @@ describe('XML Integration Tests', () => {
         quantity: 4,
         type: 'instant',
         cost: '{B}',
+        rulesText: 'Add {B}{B}{B}.',
       });
 
       expect(cardInfo).toHaveProperty('Swamp');
       expect(cardInfo['Swamp']).toEqual({
         quantity: 21,
         type: 'basic land — swamp',
+        rulesText: '({T}: Add {B}.)',
       });
 
       // Validate deck size

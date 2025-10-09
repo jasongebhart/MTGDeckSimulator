@@ -8,8 +8,8 @@ const dom = new JSDOM(`
     <body>
       <div id="currentTurnDisplay"></div>
       <div id="currentPhaseDisplay"></div>
-      <div id="playerLifeTotal"></div>
-      <div id="opponentLifeTotal"></div>
+      <div id="lifeTotal2"></div>
+      <div id="opponentLife2"></div>
       <div id="playerHandCount"></div>
       <div id="opponentHandCount"></div>
       <div id="handContainer2"></div>
@@ -55,6 +55,12 @@ describe('UIManager', () => {
         { turn: 1, phase: 'Draw', type: 'action', message: 'Player drew a card' }
       ],
       getPlayerState: jest.fn((player) => ({
+        gameStats: {
+          life: 20,
+          cardsDrawn: 0,
+          landsPlayed: 0,
+          spellsCast: 0,
+        },
         life: 20,
         hand: [
           { name: 'Lightning Bolt', cost: 'R', type: 'Instant' },
@@ -91,12 +97,12 @@ describe('UIManager', () => {
   describe('Life Display', () => {
     test('should update player life total', () => {
       uiManager.updateLifeDisplay('player');
-      expect(document.getElementById('playerLifeTotal').textContent).toBe('20');
+      expect(document.getElementById('lifeTotal2').textContent).toBe('20');
     });
 
     test('should update opponent life total', () => {
       uiManager.updateLifeDisplay('opponent');
-      expect(document.getElementById('opponentLifeTotal').textContent).toBe('20');
+      expect(document.getElementById('opponentLife2').textContent).toBe('20');
     });
   });
 

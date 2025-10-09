@@ -31,7 +31,9 @@ export const EventManager = {
       deckBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        this.openDeckSelectionModal(e);
+        if (this.simulator && typeof this.simulator.openDeckSelectionModal === 'function') {
+            this.simulator.openDeckSelectionModal(e);
+        }
       });
     }
 
@@ -39,7 +41,9 @@ export const EventManager = {
     const setupBtn = document.querySelector('[data-action="quickSetup"]');
     if (setupBtn) {
       setupBtn.addEventListener('click', () => {
-        this.simulator?.quickTwoPlayerSetup();
+        if (this.simulator && typeof this.simulator.quickTwoPlayerSetup === 'function') {
+          this.simulator.quickTwoPlayerSetup();
+        }
       });
     }
 
@@ -55,7 +59,9 @@ export const EventManager = {
     const combatBtn = document.querySelector('[data-action="combat"]');
     if (combatBtn) {
       combatBtn.addEventListener('click', () => {
-        this.simulator?.initializeCombat();
+        if (this.simulator && typeof this.simulator.initializeCombat === 'function') {
+            this.simulator.initializeCombat();
+        }
       });
     }
 
@@ -74,7 +80,9 @@ export const EventManager = {
     const startGameBtn = document.querySelector('[data-action="startGame"]');
     if (startGameBtn) {
       startGameBtn.addEventListener('click', () => {
-        this.simulator?.startTwoPlayerGame();
+        if (this.simulator && typeof this.simulator.startTwoPlayerGame === 'function') {
+            this.simulator.startTwoPlayerGame();
+        }
         this.closeDropdown(startGameBtn);
       });
     }
@@ -92,7 +100,9 @@ export const EventManager = {
     const soundToggleBtn = document.querySelector('[data-action="toggleSound"]');
     if (soundToggleBtn) {
       soundToggleBtn.addEventListener('click', () => {
-        this.simulator?.toggleSounds();
+        if (this.simulator && typeof this.simulator.toggleSounds === 'function') {
+            this.simulator.toggleSounds();
+        }
         this.closeDropdown(soundToggleBtn);
       });
     }
@@ -106,7 +116,9 @@ export const EventManager = {
     const newGameBtn = document.querySelector('[data-action="newGame"][data-player="player"]');
     if (newGameBtn) {
       newGameBtn.addEventListener('click', () => {
-        this.simulator?.resetAndDraw7();
+        if (this.simulator && typeof this.simulator.resetAndDraw7 === 'function') {
+          this.simulator.resetAndDraw7();
+        }
       });
     }
 
