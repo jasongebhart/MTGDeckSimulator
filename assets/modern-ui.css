@@ -373,7 +373,7 @@ body {
 /* Adjust main content when using play controls bar */
 .play-controls-bar + .app-sidebar ~ .app-main,
 .app-container:has(.play-controls-bar) .app-main {
-  padding-top: 110px;
+  padding-top: 70px;
 }
 
 /* Modern Navigation */
@@ -3184,13 +3184,15 @@ body {
   z-index: 50;
   background: var(--bg-secondary);
   border-bottom: 2px solid var(--primary);
-  padding: var(--space-3) var(--space-4);
-  display: flex !important;
+  padding: var(--space-2) var(--space-4);
+  display: grid !important;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  min-height: 48px;
+  gap: var(--space-4);
+  height: 48px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .controls-section {
@@ -3199,6 +3201,15 @@ body {
   gap: var(--space-2);
   padding: 0;
   margin: 0;
+  min-width: 0;
+}
+
+.controls-section:nth-child(2) {
+  justify-content: center;
+}
+
+.controls-section:nth-child(3) {
+  justify-content: flex-end;
 }
 
 .control-label {
@@ -3223,13 +3234,24 @@ body {
 
 .hand-controls {
   display: flex;
-  gap: 0;
+  gap: var(--space-2);
   margin: 0;
   padding: 0;
 }
 
 .hand-controls .btn-sm {
   white-space: nowrap;
+}
+
+/* Compact buttons in play controls bar */
+.play-controls-bar .btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.play-controls-bar .btn-tertiary-action {
+  padding: 6px 12px;
 }
 
 .turn-indicator {
@@ -6508,6 +6530,15 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-6);
     height: calc(100vh - 100px);
+  }
+
+  /* Swap player positions - Player on left, Opponent on right */
+  .two-player-layout #playerArea {
+    order: 1;
+  }
+
+  .two-player-layout #opponentArea {
+    order: 2;
   }
 
   .player-area {

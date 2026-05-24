@@ -11,10 +11,9 @@ import { loadXMLDoc, xmlDoc } from './scripts/config.mjs';
 // Create an instance of Express
 const app = express();
 
-// Secure CSP policy - allow unsafe-inline temporarily due to EJS inline styles/scripts
-// TODO: Refactor to remove inline styles and onclick handlers, then tighten CSP
+// CSP policy - Phase 1: Removed unsafe-inline from script-src
 const cspHeader =
-  "default-src 'self'; connect-src 'self' https://api.scryfall.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';";
+  "default-src 'self'; connect-src 'self' https://api.scryfall.com; img-src 'self' data: https:; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';";
 app.use((req, res, next) => {
   res.setHeader('Content-Security-Policy', cspHeader);
   res.setHeader('X-Content-Type-Options', 'nosniff');

@@ -4,10 +4,11 @@
  */
 
 export class EnhancedCombatManager {
-  constructor(gameState, cardMechanics, uiManager) {
+  constructor(gameState, cardMechanics, uiManager, cardImageService = null) {
     this.gameState = gameState;
     this.cardMechanics = cardMechanics;
     this.uiManager = uiManager;
+    this.cardImageService = cardImageService;
     this.combatState = {
       step: 'none',
       attackers: new Map(), // cardId => { creature, blocked: boolean, blockedBy: [] }
@@ -16,11 +17,12 @@ export class EnhancedCombatManager {
       selectedAttacker: null,
       selectedBlocker: null
     };
+    this.creatureImages = new Map(); // Cache for creature images
   }
 
   // ==================== COMBAT INITIALIZATION ====================
 
-  initializeCombat() {
+  async initializeCombat() {
     this.combatState = {
       step: 'beginning',
       attackers: new Map(),
@@ -34,8 +36,213 @@ export class EnhancedCombatManager {
     this.gameState.turnState.step = 'beginning-combat';
     this.gameState.addToGameLog('⚔️ Entering Combat Phase', 'combat');
 
+    // Preload all creature images
+    await this.preloadCreatureImages();
+
     this.showCombatOverlay();
     this.uiManager.updateTurnDisplay();
+  }
+
+  async preloadCreatureImages() {
+    if (!this.cardImageService) return;
+
+    const allCreatures = [
+      ...this.gameState.player.battlefield.creatures,
+      ...this.gameState.opponent.battlefield.creatures
+    ];
+
+    // Fetch all images and card data in parallel
+    await Promise.all(
+      allCreatures.map(async (creature) => {
+        try {
+          // Fetch image URL (which also caches card data)
+          const imageUrl = await this.cardImageService.getCardImageUrl(creature.name, 'normal');
+
+          if (imageUrl) {
+            this.creatureImages.set(creature.id, imageUrl);
+            creature.imageUrl = imageUrl;
+          }
+
+          // Fetch full card data from Scryfall to get P/T
+          const response = await fetch(`https://api.scryfall.com/cards/named?exact=${encodeURIComponent(creature.name)}`);
+          if (response.ok) {
+            const cardData = await response.json();
+
+            // Store P/T data if it's a creature
+            if (cardData.power && cardData.toughness) {
+              creature.power = cardData.power;
+              creature.toughness = cardData.toughness;
+              creature.powerToughness = `${cardData.power}/${cardData.toughness}`;
+            }
+
+            // Store card text for abilities (only if not already present)
+            if (cardData.oracle_text && !creature.text) {
+              creature.text = cardData.oracle_text;
+            }
+          }
+        } catch (error) {
+          console.warn(`Failed to load data for ${creature.name}:`, error);
+        }
+      })
+    );
+  }
+
+  getCreatureImage(creature) {
+    return this.creatureImages.get(creature.id) || creature.imageUrl || '';
+  }
+
+  // Unified card rendering function for consistent visuals
+  renderCreatureCard(creature, options = {}) {
+    const {
+      role = 'neutral', // 'attacker', 'blocker', 'neutral'
+      isAttacker = false,
+      isBlocker = false,
+      canAttack = false,
+      canBlock = false,
+      isSelected = false,
+      isTapped = false,
+      hasSummoningSickness = false,
+      isDraggable = false,
+      dataAction = '',
+      dataCardId = creature.id
+    } = options;
+
+    const power = this.getCreaturePower(creature);
+    const toughness = this.getCreatureToughness(creature);
+    const cardImageUrl = this.getCreatureImage(creature);
+    const abilities = this.getAbilityIcons(creature);
+
+    // Determine background gradient based on state
+    let bgGradient = '';
+    if (!cardImageUrl) {
+      if (isAttacker) {
+        bgGradient = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+      } else if (isBlocker) {
+        bgGradient = 'linear-gradient(135deg, #d63384 0%, #be185d 100%)';
+      } else if (canAttack) {
+        bgGradient = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+      } else if (canBlock) {
+        bgGradient = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+      } else {
+        bgGradient = 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)';
+      }
+    }
+
+    // Determine border color
+    let borderColor = 'transparent';
+    if (isSelected) {
+      borderColor = '#fbbf24';
+    } else if (isAttacker) {
+      borderColor = '#1e40af';
+    } else if (isBlocker) {
+      borderColor = '#9f1239';
+    } else if (role === 'attacker') {
+      borderColor = '#3b82f6';
+    } else if (role === 'blocker') {
+      borderColor = '#d63384';
+    }
+
+    // Determine cursor
+    let cursor = 'default';
+    if (canAttack || canBlock) {
+      cursor = 'pointer';
+    } else if (isDraggable) {
+      cursor = 'grab';
+    } else if (!canAttack && !canBlock && (isAttacker || isBlocker || canAttack === false)) {
+      cursor = 'not-allowed';
+    }
+
+    // Determine opacity
+    const opacity = (canAttack || canBlock || isAttacker || isBlocker) ? '1' : '0.6';
+
+    // Determine box shadow
+    let boxShadow = '0 4px 12px rgba(0,0,0,0.4)';
+    if (canAttack || canBlock) {
+      boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)';
+    }
+
+    return `
+      <div
+        ${dataCardId ? `data-card-id="${dataCardId}"` : ''}
+        ${dataAction ? `data-action="${dataAction}"` : ''}
+        ${isDraggable ? `draggable="true"` : ''}
+        class="combat-creature-card"
+        style="
+          position: relative;
+          background: ${cardImageUrl ? `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('${cardImageUrl}')` : bgGradient};
+          background-size: cover;
+          background-position: center 25%;
+          color: white;
+          border-radius: 8px;
+          padding: 12px;
+          cursor: ${cursor};
+          border: 3px solid ${borderColor};
+          opacity: ${opacity};
+          transition: all 0.2s;
+          box-shadow: ${boxShadow};
+          min-height: 160px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        "
+      >
+        <!-- Status Icons -->
+        <div style="position: absolute; top: 6px; right: 6px; display: flex; gap: 4px; font-size: 18px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));">
+          ${isAttacker ? '⚔️' : ''}
+          ${isBlocker ? '🛡️' : ''}
+          ${isTapped ? '↻' : ''}
+          ${hasSummoningSickness ? '💤' : ''}
+        </div>
+
+        <!-- Card Name -->
+        <div style="
+          font-weight: bold;
+          font-size: 13px;
+          margin-bottom: 8px;
+          padding: 4px 8px;
+          background: rgba(0, 0, 0, 0.7);
+          border-radius: 4px;
+          padding-right: 40px;
+          line-height: 1.2;
+        ">
+          ${creature.name}
+        </div>
+
+        <!-- Abilities -->
+        ${abilities ? `
+          <div style="
+            font-size: 18px;
+            margin: 4px 0;
+            min-height: 24px;
+            padding: 4px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 4px;
+            text-align: center;
+          ">
+            ${abilities}
+          </div>
+        ` : '<div style="flex: 1;"></div>'}
+
+        <!-- Power/Toughness Box -->
+        <div style="
+          position: absolute;
+          bottom: 8px;
+          right: 8px;
+          background: rgba(0, 0, 0, 0.85);
+          border: 2px solid rgba(255, 255, 255, 0.9);
+          border-radius: 4px;
+          padding: 4px 8px;
+          font-weight: bold;
+          font-size: 18px;
+          min-width: 50px;
+          text-align: center;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        ">
+          ${power}/${toughness}
+        </div>
+      </div>
+    `;
   }
 
   // ==================== COMBAT OVERLAY UI ====================
@@ -70,31 +277,30 @@ export class EnhancedCombatManager {
     const stepInfo = this.getStepInfo();
 
     return `
-      <!-- Combat Header -->
-      <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 16px 24px; border-radius: 12px 12px 0 0; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h2 style="margin: 0; font-size: 24px; font-weight: bold;">⚔️ Combat Phase</h2>
-            <p style="margin: 4px 0 0 0; opacity: 0.9; font-size: 14px;">${stepInfo.description}</p>
-          </div>
-          <div style="display: flex; gap: 12px; align-items: center;">
-            ${this.renderStepIndicators()}
-          </div>
+      <!-- Compact Combat Header -->
+      <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <h2 style="margin: 0; font-size: 18px; font-weight: bold;">⚔️ Combat</h2>
+          <div style="font-size: 13px; opacity: 0.9;">${stepInfo.name}</div>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          ${this.renderCompactStepIndicators()}
+          ${this.renderQuickActions()}
         </div>
       </div>
 
-      <!-- Combat Main Area -->
-      <div style="flex: 1; display: grid; grid-template-columns: 1fr 400px; gap: 20px; overflow: hidden; background: var(--bg-secondary); padding: 20px; border-radius: 0 0 12px 12px;">
+      <!-- Horizontal Combat Layout (Split Screen) -->
+      <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; overflow: hidden; background: var(--bg-secondary); padding: 16px;">
 
-        <!-- Battlefield View -->
-        <div style="display: flex; flex-direction: column; gap: 16px; overflow-y: auto;">
-          ${this.renderBattlefieldSection()}
+        <!-- Left: Active Player's Creatures -->
+        <div style="display: flex; flex-direction: column; gap: 12px; overflow-y: auto;">
+          ${this.renderActivePlayerSection()}
         </div>
 
-        <!-- Combat Control Panel -->
-        <div style="display: flex; flex-direction: column; gap: 16px;">
-          ${this.renderControlPanel()}
-          ${this.renderActionButtons()}
+        <!-- Right: Defending Player's Creatures & Combat Zone -->
+        <div style="display: flex; flex-direction: column; gap: 12px; overflow-y: auto;">
+          ${this.renderDefendingPlayerSection()}
+          ${this.renderCompactCombatZone()}
         </div>
       </div>
     `;
@@ -147,69 +353,96 @@ export class EnhancedCombatManager {
     return steps[this.combatState.step] || steps['beginning'];
   }
 
-  renderStepIndicators() {
+  renderCompactStepIndicators() {
     const steps = ['beginning', 'declare-attackers', 'declare-blockers', 'regular-damage', 'end-combat'];
     const currentIndex = steps.indexOf(this.combatState.step);
-
-    return steps.map((step, index) => {
-      const isActive = index === currentIndex;
-      const isPast = index < currentIndex;
-      const emoji = ['⚡', '⚔️', '🛡️', '💥', '✓'][index];
-
-      return `
-        <div style="
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: ${isActive ? '#fff' : isPast ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.1)'};
-          color: ${isActive ? '#dc2626' : '#fff'};
-          font-size: 20px;
-          border: 2px solid ${isActive ? '#fff' : 'transparent'};
-          opacity: ${isPast ? '0.5' : '1'};
-        ">
-          ${emoji}
-        </div>
-      `;
-    }).join('');
-  }
-
-  renderBattlefieldSection() {
-    const activePlayer = this.gameState.turnState.activePlayer;
-    const defendingPlayer = activePlayer === 'player' ? 'opponent' : 'player';
-    const activeState = this.gameState.getPlayerState(activePlayer);
-    const defendingState = this.gameState.getPlayerState(defendingPlayer);
+    const emoji = ['⚡', '⚔️', '🛡️', '💥', '✓'][currentIndex];
 
     return `
-      <!-- Defending Player's Creatures -->
-      <div style="background: rgba(214, 51, 132, 0.1); border: 2px solid #d63384; border-radius: 8px; padding: 16px;">
-        <h3 style="margin: 0 0 12px 0; color: #d63384; font-size: 16px;">
-          🛡️ ${defendingPlayer === 'player' ? 'Your' : "Opponent's"} Defenders
-        </h3>
-        <div style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 80px;">
-          ${this.renderDefendingCreatures(defendingState, defendingPlayer)}
-        </div>
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 14px;">
+        <span style="font-size: 18px;">${emoji}</span>
+        <span>${currentIndex + 1}/5</span>
       </div>
+    `;
+  }
 
-      <!-- Combat Zone (Attackers with Blockers) -->
-      <div style="background: linear-gradient(to bottom, rgba(220, 38, 38, 0.1), rgba(153, 27, 27, 0.1)); border: 2px solid #dc2626; border-radius: 8px; padding: 16px; flex: 1;">
-        <h3 style="margin: 0 0 12px 0; color: #dc2626; font-size: 16px;">
-          ⚔️ Combat Zone
-        </h3>
-        <div style="display: flex; flex-direction: column; gap: 16px; min-height: 120px;">
-          ${this.renderCombatZone()}
-        </div>
+  renderQuickActions() {
+    return `
+      <div style="display: flex; gap: 8px;">
+        ${this.combatState.step === 'declare-attackers' ? `
+          <button
+            data-action="combat-confirm-attackers"
+            class="btn btn-sm"
+            style="background: white; color: #dc2626; font-weight: bold; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer;"
+          >
+            Confirm (${this.combatState.attackers.size})
+          </button>
+        ` : ''}
+        ${this.combatState.step === 'declare-blockers' ? `
+          <button
+            data-action="combat-confirm-blockers"
+            class="btn btn-sm"
+            style="background: white; color: #dc2626; font-weight: bold; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer;"
+          >
+            Confirm (${this.combatState.blockers.size})
+          </button>
+        ` : ''}
+        ${this.combatState.step !== 'declare-attackers' && this.combatState.step !== 'declare-blockers' ? `
+          <button
+            data-action="combat-advance-step"
+            class="btn btn-sm"
+            style="background: white; color: #dc2626; font-weight: bold; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer;"
+          >
+            Continue →
+          </button>
+        ` : ''}
+        <button
+          data-action="combat-cancel"
+          class="btn btn-sm"
+          style="background: rgba(255,255,255,0.2); color: white; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; cursor: pointer;"
+        >
+          Cancel
+        </button>
       </div>
+    `;
+  }
 
-      <!-- Attacking Player's Creatures -->
-      <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 8px; padding: 16px;">
-        <h3 style="margin: 0 0 12px 0; color: #3b82f6; font-size: 16px;">
-          ⚔️ ${activePlayer === 'player' ? 'Your' : "Opponent's"} Attackers
-        </h3>
-        <div style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 80px;">
+  renderActivePlayerSection() {
+    const activePlayer = this.gameState.turnState.activePlayer;
+    const activeState = this.gameState.getPlayerState(activePlayer);
+    const playerLabel = activePlayer === 'player' ? 'Player 1' : 'Player 2';
+
+    return `
+      <div style="background: var(--bg-primary); border: 2px solid #3b82f6; border-radius: 8px; padding: 12px; height: fit-content;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h3 style="margin: 0; color: #3b82f6; font-size: 14px; font-weight: bold;">
+            ⚔️ ${playerLabel} (Attacking)
+          </h3>
+          <span style="font-size: 12px; opacity: 0.7;">${this.combatState.attackers.size} attacking</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px;">
           ${this.renderAttackingCreatures(activeState, activePlayer)}
+        </div>
+      </div>
+    `;
+  }
+
+  renderDefendingPlayerSection() {
+    const activePlayer = this.gameState.turnState.activePlayer;
+    const defendingPlayer = activePlayer === 'player' ? 'opponent' : 'player';
+    const defendingState = this.gameState.getPlayerState(defendingPlayer);
+    const playerLabel = defendingPlayer === 'player' ? 'Player 1' : 'Player 2';
+
+    return `
+      <div style="background: var(--bg-primary); border: 2px solid #d63384; border-radius: 8px; padding: 12px; height: fit-content;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h3 style="margin: 0; color: #d63384; font-size: 14px; font-weight: bold;">
+            🛡️ ${playerLabel} (Defending)
+          </h3>
+          <span style="font-size: 12px; opacity: 0.7;">${this.combatState.blockers.size} blocking</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px;">
+          ${this.renderDefendingCreatures(defendingState, defendingPlayer)}
         </div>
       </div>
     `;
@@ -217,238 +450,147 @@ export class EnhancedCombatManager {
 
   renderAttackingCreatures(playerState, _owner) {
     if (!playerState.battlefield.creatures || playerState.battlefield.creatures.length === 0) {
-      return '<p style="opacity: 0.5; margin: 0;">No creatures available</p>';
+      return '<div style="padding: 20px; text-align: center; opacity: 0.5; grid-column: 1/-1;">No creatures available</div>';
     }
 
     return playerState.battlefield.creatures.map(creature => {
       const isAttacker = this.combatState.attackers.has(creature.id);
       const canAttack = !creature.tapped && !creature.summoningSickness && this.combatState.step === 'declare-attackers';
-      const pt = this.cardMechanics.getPowerToughness(creature);
       const isSelected = this.combatState.selectedAttacker === creature.id;
 
-      return `
-        <div
-          data-card-id="${creature.id}"
-          onclick="window.handSimulator.combatManager.toggleAttacker('${creature.id}')"
-          style="
-            position: relative;
-            padding: 8px 12px;
-            border-radius: 6px;
-            background: ${isAttacker ? '#3b82f6' : canAttack ? '#10b981' : '#6b7280'};
-            color: white;
-            cursor: ${canAttack ? 'pointer' : 'not-allowed'};
-            border: 3px solid ${isSelected ? '#fbbf24' : 'transparent'};
-            opacity: ${canAttack || isAttacker ? '1' : '0.5'};
-            transition: all 0.2s;
-            ${canAttack ? 'box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);' : ''}
-          "
-        >
-          <div style="font-weight: bold; font-size: 14px;">${creature.name}</div>
-          <div style="font-size: 12px; opacity: 0.9;">${pt ? `${pt.power}/${pt.toughness}` : ''}</div>
-          ${creature.tapped ? '<div style="position: absolute; top: 4px; right: 4px; font-size: 10px;">↻</div>' : ''}
-          ${creature.summoningSickness ? '<div style="position: absolute; top: 4px; right: 4px; font-size: 10px;">💤</div>' : ''}
-          ${isAttacker ? '<div style="position: absolute; top: 4px; left: 4px; font-size: 12px;">⚔️</div>' : ''}
-        </div>
-      `;
+      return this.renderCreatureCard(creature, {
+        isAttacker,
+        canAttack,
+        isSelected,
+        isTapped: creature.tapped,
+        hasSummoningSickness: creature.summoningSickness,
+        dataAction: 'combat-toggle-attacker',
+        dataCardId: creature.id
+      });
     }).join('');
   }
 
   renderDefendingCreatures(playerState, _owner) {
     if (!playerState.battlefield.creatures || playerState.battlefield.creatures.length === 0) {
-      return '<p style="opacity: 0.5; margin: 0;">No creatures to block with</p>';
+      return '<div style="padding: 20px; text-align: center; opacity: 0.5; grid-column: 1/-1;">No creatures to block with</div>';
     }
 
     return playerState.battlefield.creatures.map(creature => {
       const blocker = this.combatState.blockers.get(creature.id);
       const canBlock = !creature.tapped && this.combatState.step === 'declare-blockers';
-      const pt = this.cardMechanics.getPowerToughness(creature);
       const isSelected = this.combatState.selectedBlocker === creature.id;
 
-      return `
-        <div
-          data-card-id="${creature.id}"
-          onclick="window.handSimulator.combatManager.selectBlocker('${creature.id}')"
-          style="
-            position: relative;
-            padding: 8px 12px;
-            border-radius: 6px;
-            background: ${blocker ? '#d63384' : canBlock ? '#10b981' : '#6b7280'};
-            color: white;
-            cursor: ${canBlock ? 'pointer' : 'not-allowed'};
-            border: 3px solid ${isSelected ? '#fbbf24' : 'transparent'};
-            opacity: ${canBlock || blocker ? '1' : '0.5'};
-            transition: all 0.2s;
-          "
-        >
-          <div style="font-weight: bold; font-size: 14px;">${creature.name}</div>
-          <div style="font-size: 12px; opacity: 0.9;">${pt ? `${pt.power}/${pt.toughness}` : ''}</div>
-          ${blocker ? '<div style="position: absolute; top: 4px; left: 4px; font-size: 12px;">🛡️</div>' : ''}
-          ${creature.tapped ? '<div style="position: absolute; top: 4px; right: 4px; font-size: 10px;">↻</div>' : ''}
-        </div>
-      `;
+      return this.renderCreatureCard(creature, {
+        isBlocker: !!blocker,
+        canBlock,
+        isSelected,
+        isTapped: creature.tapped,
+        isDraggable: canBlock,
+        dataAction: 'combat-select-blocker',
+        dataCardId: creature.id
+      });
     }).join('');
   }
 
-  renderCombatZone() {
+  renderCompactCombatZone() {
     if (this.combatState.attackers.size === 0) {
-      return '<p style="opacity: 0.5; text-align: center; margin: 40px 0;">No attackers declared yet</p>';
+      return `
+        <div style="background: var(--bg-primary); border: 2px dashed var(--border-color); border-radius: 8px; padding: 20px; text-align: center;">
+          <div style="opacity: 0.5; font-size: 14px;">⚔️ No attackers declared yet</div>
+          ${this.combatState.step === 'declare-attackers' ? '<div style="opacity: 0.5; font-size: 12px; margin-top: 8px;">Click creatures on the left to attack</div>' : ''}
+        </div>
+      `;
     }
 
     const entries = Array.from(this.combatState.attackers.entries());
-    const canAssignBlockers = this.combatState.step === 'declare-blockers' && this.combatState.selectedBlocker;
-
-    return entries.map(([attackerId, attackerData]) => {
-      const blockersList = attackerData.blockedBy || [];
-      const pt = this.cardMechanics.getPowerToughness(attackerData.creature);
-
-      return `
-        <div style="background: rgba(255,255,255,0.05); border-radius: 6px; padding: 12px;">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <!-- Attacker -->
-            <div
-              ${canAssignBlockers ? `onclick="window.handSimulator.combatManager.handleAttackerClick('${attackerId}')"` : ''}
-              style="flex: 1; background: rgba(59, 130, 246, 0.2); padding: 8px; border-radius: 4px; border-left: 3px solid #3b82f6; ${canAssignBlockers ? 'cursor: pointer; transition: all 0.2s;' : ''}"
-              ${canAssignBlockers ? 'onmouseenter="this.style.background=\'rgba(59, 130, 246, 0.4)\'" onmouseleave="this.style.background=\'rgba(59, 130, 246, 0.2)\'"' : ''}
-            >
-              <div style="font-weight: bold;">${attackerData.creature.name}</div>
-              <div style="font-size: 12px; opacity: 0.8;">${pt ? `${pt.power}/${pt.toughness}` : ''}</div>
-            </div>
-
-            <!-- Arrow -->
-            <div style="font-size: 24px; color: #dc2626;">→</div>
-
-            <!-- Blockers or Direct Damage -->
-            <div style="flex: 1;">
-              ${blockersList.length > 0 ? `
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                  ${blockersList.map(blockerId => {
-                    const blocker = this.findCreatureById(blockerId);
-                    const blockerPt = blocker ? this.cardMechanics.getPowerToughness(blocker) : null;
-                    return `
-                      <div style="background: rgba(214, 51, 132, 0.2); padding: 6px; border-radius: 4px; border-left: 3px solid #d63384;">
-                        <div style="font-weight: bold; font-size: 13px;">${blocker ? blocker.name : 'Unknown'}</div>
-                        <div style="font-size: 11px; opacity: 0.8;">${blockerPt ? `${blockerPt.power}/${blockerPt.toughness}` : ''}</div>
-                      </div>
-                    `;
-                  }).join('')}
-                </div>
-              ` : `
-                <div style="background: rgba(220, 38, 38, 0.2); padding: 8px; border-radius: 4px; text-align: center; border: 2px dashed #dc2626;">
-                  <div style="font-weight: bold;">Unblocked!</div>
-                  <div style="font-size: 12px; opacity: 0.8;">${pt ? pt.power : '?'} damage to player</div>
-                </div>
-              `}
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  renderControlPanel() {
-    const attackerCount = this.combatState.attackers.size;
-    const blockerCount = this.combatState.blockers.size;
-
-    return `
-      <div style="background: var(--bg-primary); border-radius: 8px; padding: 16px; border: 1px solid var(--border-color);">
-        <h4 style="margin: 0 0 12px 0; font-size: 14px; text-transform: uppercase; opacity: 0.7;">Combat Summary</h4>
-
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 4px;">
-            <span>⚔️ Attackers:</span>
-            <span style="font-weight: bold;">${attackerCount}</span>
-          </div>
-
-          <div style="display: flex; justify-content: space-between; padding: 8px; background: rgba(214, 51, 132, 0.1); border-radius: 4px;">
-            <span>🛡️ Blockers:</span>
-            <span style="font-weight: bold;">${blockerCount}</span>
-          </div>
-
-          ${this.renderDamageSummary()}
-        </div>
-
-        ${this.combatState.step === 'declare-blockers' && this.combatState.selectedBlocker ? `
-          <div style="margin-top: 16px; padding: 12px; background: rgba(251, 191, 36, 0.1); border-radius: 6px; border: 2px solid #fbbf24;">
-            <div style="font-weight: bold; margin-bottom: 8px;">Selected Blocker: ${this.findCreatureById(this.combatState.selectedBlocker)?.name}</div>
-            <div style="font-size: 13px; opacity: 0.8;">Click an attacker to assign this blocker</div>
-          </div>
-        ` : ''}
-      </div>
-    `;
-  }
-
-  renderDamageSummary() {
-    if (this.combatState.step !== 'regular-damage' && this.combatState.step !== 'end-combat') {
-      return '';
-    }
-
+    const canAssignBlockers = this.combatState.step === 'declare-blockers';
     const summary = this.calculateDamageSummary();
 
     return `
-      <div style="margin-top: 12px; padding: 12px; background: rgba(220, 38, 38, 0.1); border-radius: 6px; border-left: 3px solid #dc2626;">
-        <div style="font-weight: bold; margin-bottom: 8px;">💥 Damage Summary:</div>
-        ${summary.playerDamage > 0 ? `<div>Player takes: ${summary.playerDamage} damage</div>` : ''}
-        ${summary.opponentDamage > 0 ? `<div>Opponent takes: ${summary.opponentDamage} damage</div>` : ''}
-        ${summary.creaturesDestroyed.length > 0 ? `
-          <div style="margin-top: 8px;">
-            <div style="font-size: 12px; opacity: 0.8;">Creatures destroyed:</div>
-            ${summary.creaturesDestroyed.map(c => `<div style="font-size: 12px;">• ${c}</div>`).join('')}
+      <div style="background: var(--bg-primary); border: 2px solid #dc2626; border-radius: 8px; padding: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h3 style="margin: 0; color: #dc2626; font-size: 14px; font-weight: bold;">
+            💥 Combat Matchups
+          </h3>
+          ${this.combatState.step === 'regular-damage' || this.combatState.step === 'end-combat' ? `
+            <div style="font-size: 12px; padding: 4px 8px; background: rgba(220, 38, 38, 0.2); border-radius: 4px;">
+              ${summary.playerDamage > 0 ? `P1: ${summary.playerDamage} dmg` : ''}
+              ${summary.opponentDamage > 0 ? `P2: ${summary.opponentDamage} dmg` : ''}
+            </div>
+          ` : ''}
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; max-height: 400px; overflow-y: auto;">
+          ${entries.map(([attackerId, attackerData]) => {
+            const blockersList = attackerData.blockedBy || [];
+
+            return `
+              <div
+                ${canAssignBlockers ? `data-attacker-drop-zone="${attackerId}" data-action="combat-assign-blocker" data-attacker-id="${attackerId}"` : ''}
+                class="${canAssignBlockers ? 'combat-drop-zone' : ''}"
+                style="
+                  background: rgba(255,255,255,0.03);
+                  border-radius: 6px;
+                  padding: 10px;
+                  display: grid;
+                  grid-template-columns: 140px auto 140px;
+                  align-items: center;
+                  gap: 12px;
+                  ${canAssignBlockers ? 'cursor: pointer; transition: all 0.2s;' : ''}
+                  min-height: 180px;
+                "
+              >
+                <!-- Attacker Card -->
+                ${this.renderCombatZoneCard(attackerData.creature, 'attacker')}
+
+                <!-- Arrow -->
+                <div style="font-size: 28px; color: #dc2626; text-align: center; font-weight: bold;">→</div>
+
+                <!-- Blockers or Direct Damage -->
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  ${blockersList.length > 0 ? blockersList.map(blockerId => {
+                    const blocker = this.findCreatureById(blockerId);
+                    return blocker ? this.renderCombatZoneCard(blocker, 'blocker') : '';
+                  }).join('') : `
+                    <div style="
+                      background: rgba(220, 38, 38, 0.2);
+                      padding: 16px;
+                      border-radius: 8px;
+                      border: 2px dashed #dc2626;
+                      text-align: center;
+                      min-height: 160px;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                    ">
+                      <div style="font-weight: 700; font-size: 16px; margin-bottom: 8px;">💥 Direct Damage</div>
+                      <div style="font-size: 32px; font-weight: bold; color: #fca5a5;">${this.getCreaturePower(attackerData.creature)}</div>
+                    </div>
+                  `}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        ${canAssignBlockers ? `
+          <div style="margin-top: 10px; padding: 8px; background: rgba(251, 191, 36, 0.1); border-radius: 4px; font-size: 11px; text-align: center; opacity: 0.8;">
+            💡 Drag defenders onto attackers or click to assign
           </div>
         ` : ''}
       </div>
     `;
   }
 
-  renderActionButtons() {
-    const stepInfo = this.getStepInfo();
-
-    return `
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        ${this.combatState.step === 'declare-attackers' ? `
-          <button
-            onclick="window.handSimulator.combatManager.finalizeDeclareAttackers()"
-            class="btn btn-lg"
-            style="background: #dc2626; color: white; font-weight: bold; padding: 16px;"
-          >
-            ✓ Confirm Attackers (${this.combatState.attackers.size})
-          </button>
-        ` : ''}
-
-        ${this.combatState.step === 'declare-blockers' ? `
-          <button
-            onclick="window.handSimulator.combatManager.finalizeDeclareBlockers()"
-            class="btn btn-lg"
-            style="background: #d63384; color: white; font-weight: bold; padding: 16px;"
-          >
-            ✓ Confirm Blockers (${this.combatState.blockers.size})
-          </button>
-        ` : ''}
-
-        ${this.combatState.step !== 'declare-attackers' && this.combatState.step !== 'declare-blockers' ? `
-          <button
-            onclick="window.handSimulator.combatManager.advanceCombatStep()"
-            class="btn btn-lg btn-primary"
-            style="padding: 16px; font-weight: bold;"
-          >
-            Continue ➜
-          </button>
-        ` : ''}
-
-        <button
-          onclick="window.handSimulator.combatManager.cancelCombat()"
-          class="btn btn-secondary"
-          style="padding: 12px;"
-        >
-          Cancel Combat
-        </button>
-
-        <div style="margin-top: 8px; padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 6px; font-size: 12px;">
-          <div style="font-weight: bold; margin-bottom: 4px;">💡 Tips:</div>
-          <div>${stepInfo.description}</div>
-        </div>
-      </div>
-    `;
+  renderCombatZoneCard(creature, role) {
+    return this.renderCreatureCard(creature, {
+      role,
+      isAttacker: role === 'attacker',
+      isBlocker: role === 'blocker'
+    });
   }
+
 
   // ==================== COMBAT LOGIC ====================
 
@@ -530,6 +672,12 @@ export class EnhancedCombatManager {
       this.combatState.blockers.delete(blockerId);
       this.gameState.addToGameLog(`${blocker.name} no longer blocking ${attackerData.creature.name}`, 'combat');
     } else {
+      // Check if blocker can block this attacker (flying/reach rules)
+      if (!this.canBlock(blocker, attackerData.creature)) {
+        this.uiManager.showToast(`${blocker.name} cannot block ${attackerData.creature.name} (flying)`, 'warning');
+        return;
+      }
+
       // Add the block
       attackerData.blockedBy.push(blockerId);
       this.combatState.blockers.set(blockerId, {
@@ -554,9 +702,11 @@ export class EnhancedCombatManager {
       return;
     }
 
-    // Tap all attackers
+    // Tap all attackers (except those with vigilance)
     this.combatState.attackers.forEach((data, _cardId) => {
-      this.cardMechanics.tap(data.creature);
+      if (!this.hasVigilance(data.creature)) {
+        this.cardMechanics.tap(data.creature);
+      }
     });
 
     const attackerNames = Array.from(this.combatState.attackers.values())
@@ -608,6 +758,8 @@ export class EnhancedCombatManager {
       const attacker = attackerData.creature;
       const attackerPower = this.getCreaturePower(attacker);
       const attackerToughness = this.getCreatureToughness(attacker);
+      const attackerHasDeathtouch = this.hasDeathtouch(attacker);
+      const attackerHasTrample = this.hasTrample(attacker);
 
       if (attackerData.blockedBy.length === 0) {
         // Unblocked - damage to player
@@ -615,13 +767,24 @@ export class EnhancedCombatManager {
         this.gameState.addToGameLog(`${attacker.name} deals ${attackerPower} damage to ${defendingPlayer}`, 'combat');
       } else {
         // Blocked - damage to blockers
+        let totalBlockerToughness = 0;
+        const blockers = [];
+
+        // Calculate total blocker toughness for trample
         attackerData.blockedBy.forEach(blockerId => {
           const blockerData = this.combatState.blockers.get(blockerId);
           if (!blockerData) return;
-
           const blocker = blockerData.creature;
+          const blockerToughness = this.getCreatureToughness(blocker);
+          totalBlockerToughness += blockerToughness;
+          blockers.push({ blocker, blockerData });
+        });
+
+        // Deal damage to blockers
+        blockers.forEach(({ blocker, blockerData }) => {
           const blockerPower = this.getCreaturePower(blocker);
           const blockerToughness = this.getCreatureToughness(blocker);
+          const blockerHasDeathtouch = this.hasDeathtouch(blocker);
 
           // Deal damage
           this.gameState.addToGameLog(
@@ -630,13 +793,24 @@ export class EnhancedCombatManager {
           );
 
           // Check for lethal damage
-          if (blockerPower >= attackerToughness) {
+          // Deathtouch: any amount of damage is lethal
+          if (blockerHasDeathtouch || blockerPower >= attackerToughness) {
             creaturesToDestroy.push({ creature: attacker, owner: this.gameState.turnState.activePlayer });
           }
-          if (attackerPower >= blockerToughness) {
+          if (attackerHasDeathtouch || attackerPower >= blockerToughness) {
             creaturesToDestroy.push({ creature: blocker, owner: defendingPlayer });
           }
         });
+
+        // Trample: excess damage tramples over to defending player
+        if (attackerHasTrample && attackerPower > totalBlockerToughness) {
+          const trampleDamage = attackerPower - totalBlockerToughness;
+          defendingState.gameStats.life -= trampleDamage;
+          this.gameState.addToGameLog(
+            `${attacker.name} tramples for ${trampleDamage} damage to ${defendingPlayer}`,
+            'combat'
+          );
+        }
       }
     });
 
@@ -694,25 +868,45 @@ export class EnhancedCombatManager {
   }
 
   getCreaturePower(creature) {
+    // Try card mechanics method first
     const pt = this.cardMechanics.getPowerToughness(creature);
-    if (!pt) return 0;
-    if (pt.power.includes('*')) return 0;
-    if (pt.power.includes('+')) {
-      const parts = pt.power.split('+');
-      return parseInt(parts[0]) || 0;
+    if (pt && pt.power) {
+      if (pt.power.includes('*')) return 0;
+      if (pt.power.includes('+')) {
+        const parts = pt.power.split('+');
+        return parseInt(parts[0]) || 0;
+      }
+      return parseInt(pt.power) || 0;
     }
-    return parseInt(pt.power) || 0;
+
+    // Fallback: check for power property directly
+    if (creature.power !== undefined) {
+      return parseInt(creature.power) || 0;
+    }
+
+    // Default for unknown creatures
+    return 2;
   }
 
   getCreatureToughness(creature) {
+    // Try card mechanics method first
     const pt = this.cardMechanics.getPowerToughness(creature);
-    if (!pt) return 1;
-    if (pt.toughness.includes('*')) return 1;
-    if (pt.toughness.includes('+')) {
-      const parts = pt.toughness.split('+');
-      return parseInt(parts[0]) || 1;
+    if (pt && pt.toughness) {
+      if (pt.toughness.includes('*')) return 1;
+      if (pt.toughness.includes('+')) {
+        const parts = pt.toughness.split('+');
+        return parseInt(parts[0]) || 1;
+      }
+      return parseInt(pt.toughness) || 1;
     }
-    return parseInt(pt.toughness) || 1;
+
+    // Fallback: check for toughness property directly
+    if (creature.toughness !== undefined) {
+      return parseInt(creature.toughness) || 1;
+    }
+
+    // Default for unknown creatures
+    return 2;
   }
 
   destroyCreature(creature, owner) {
@@ -734,6 +928,56 @@ export class EnhancedCombatManager {
       if (creature) return creature;
     }
     return null;
+  }
+
+  // ==================== COMBAT ABILITIES ====================
+
+  hasFlying(creature) {
+    return this.cardMechanics.hasAbility(creature, 'flying');
+  }
+
+  hasReach(creature) {
+    return this.cardMechanics.hasAbility(creature, 'reach');
+  }
+
+  hasTrample(creature) {
+    return this.cardMechanics.hasAbility(creature, 'trample');
+  }
+
+  hasFirstStrike(creature) {
+    return this.cardMechanics.hasAbility(creature, 'first strike');
+  }
+
+  hasDoubleStrike(creature) {
+    return this.cardMechanics.hasAbility(creature, 'double strike');
+  }
+
+  hasDeathtouch(creature) {
+    return this.cardMechanics.hasAbility(creature, 'deathtouch');
+  }
+
+  hasVigilance(creature) {
+    return this.cardMechanics.hasAbility(creature, 'vigilance');
+  }
+
+  canBlock(blocker, attacker) {
+    // Flying can only be blocked by flying or reach
+    if (this.hasFlying(attacker)) {
+      return this.hasFlying(blocker) || this.hasReach(blocker);
+    }
+    return true;
+  }
+
+  getAbilityIcons(creature) {
+    const icons = [];
+    if (this.hasFlying(creature)) icons.push('🪽');
+    if (this.hasReach(creature)) icons.push('🎯');
+    if (this.hasTrample(creature)) icons.push('🦏');
+    if (this.hasFirstStrike(creature)) icons.push('⚡');
+    if (this.hasDoubleStrike(creature)) icons.push('⚡⚡');
+    if (this.hasDeathtouch(creature)) icons.push('💀');
+    if (this.hasVigilance(creature)) icons.push('👁️');
+    return icons.join(' ');
   }
 
   cancelCombat() {

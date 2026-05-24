@@ -4,6 +4,68 @@
  */
 
 export const ContextMenus = {
+  showHandCardMenu(event, cardId) {
+    event.preventDefault();
+
+    // Find the card in player's hand
+    const card = this.gameState.player.hand.find(c => c.id === cardId);
+    if (!card) {
+      console.error('Card not found in hand');
+      return;
+    }
+
+    this.removeExistingMenus();
+
+    const menu = document.createElement('div');
+    menu.className = 'smart-context-menu';
+    menu.style.cssText = `
+      position: fixed;
+      top: ${event.clientY}px;
+      left: ${event.clientX}px;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000000;
+      min-width: 180px;
+    `;
+
+    const headerDiv = this.createMenuHeader(`🃏 ${card.name}`);
+    menu.appendChild(headerDiv);
+
+    // Play card
+    menu.appendChild(this.createMenuItem('▶️ Play Card', () => {
+      this.playCardFromHand(cardId, card.name);
+      this.removeExistingMenus();
+    }));
+
+    // Move to Graveyard
+    menu.appendChild(this.createMenuItem('🪦 To Graveyard', () => {
+        this.moveHandCardToGraveyard(cardId);
+        this.removeExistingMenus();
+    }));
+
+    // Exile
+    menu.appendChild(this.createMenuItem('🚫 Exile', () => {
+        this.moveHandCardToExile(cardId);
+        this.removeExistingMenus();
+    }));
+
+    // Move to Library
+    menu.appendChild(this.createMenuItem('📚 To Library', () => {
+        this.moveHandCardToLibrary(cardId);
+        this.removeExistingMenus();
+    }));
+
+    document.body.appendChild(menu);
+
+    // Close menu on click outside
+    setTimeout(() => {
+      document.addEventListener('click', () => this.removeExistingMenus(), { once: true });
+    }, 0);
+  },
+
   /**
    * Show context menu for battlefield cards
    */

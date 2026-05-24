@@ -169,7 +169,6 @@ export const DeckLoader = {
       console.error('Error loading deck:', error);
       this.showErrorState(`Failed to load deck: ${error.message}`);
       this.uiManager.showToast('Failed to load deck', 'error');
-      throw error; // Rethrow so caller knows it failed
     }
   },
 
@@ -205,6 +204,17 @@ export const DeckLoader = {
     // Update all UI
     this.updateUI();
     this.uiManager.updateTurnDisplay();
+
+    // Update deck name displays
+    const playerDeckName2 = document.getElementById('playerDeckName2');
+    if (playerDeckName2 && this.currentDeck?.name) {
+      playerDeckName2.textContent = this.currentDeck.name;
+    }
+
+    const playerDeckNameModal = document.getElementById('playerDeckNameModal');
+    if (playerDeckNameModal && this.currentDeck?.name) {
+      playerDeckNameModal.textContent = this.currentDeck.name;
+    }
 
     // Enable "Set as Default" button
     const setBtn = document.getElementById('setPlayer1DefaultBtnModal');

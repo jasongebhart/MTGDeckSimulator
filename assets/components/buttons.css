@@ -393,3 +393,103 @@
 [data-theme="dark"] .dropdown-item:hover {
   background: var(--gray-700);
 }
+
+
+/* ===================================
+   Life Counter Buttons
+   =================================== */
+
+/* Large life change buttons (-1, +1) */
+.btn-life-change {
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: white;
+  user-select: none;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-life-decrease {
+  background: #dc3545;
+}
+
+.btn-life-decrease:hover:not(:disabled) {
+  background: #c82333;
+}
+
+.btn-life-increase {
+  background: #28a745;
+}
+
+.btn-life-increase:hover:not(:disabled) {
+  background: #218838;
+}
+
+/* Quick life preset buttons (-3, -2, +3) */
+.btn-life-preset {
+  cursor: pointer;
+  min-width: 38px;
+  min-height: 28px;
+  padding: 4px 8px;
+  background: #6c757d;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: white;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.btn-life-preset:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.btn-life-preset.btn-life-gain {
+  background: #17a2b8;
+}
+
+.btn-life-preset.btn-life-gain:hover:not(:disabled) {
+  background: #138496;
+}
+
+/* Life total display (clickable) */
+.life-total {
+  cursor: pointer;
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  user-select: none;
+  transition: all 0.2s;
+  min-width: 80px;
+  text-align: center;
+}
+
+.life-total:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary);
+  transform: scale(1.02);
+}
+
+.life-total:active {
+  transform: scale(0.98);
+}
+
+
+/* ===================================
+   Combat System Styles
+   =================================== */
+
+/* Combat attacker assignable hover effect */
+.combat-attacker-assignable:hover {
+  background: rgba(59, 130, 246, 0.4) !important;
+}

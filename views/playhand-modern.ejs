@@ -272,40 +272,44 @@ function populateDeckSelect(decks, containerId) {
 }    </script>
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <div class="app-container">
         <%- include('partials/nav-modern', { activePage: 'playhand' }); -%>
 
         <!-- Compact Top Control Bar -->
-        <div class="play-controls-bar" role="toolbar" aria-label="Game Controls">
+        <header class="play-controls-bar" role="banner">
+            <nav role="navigation" aria-label="Game Controls">
             <!-- Main Game Actions -->
             <div class="controls-section">
                 <div class="hand-controls" role="group" aria-label="Hand Actions" style="display: flex; gap: 8px; align-items: center;">
-                    <button class="btn btn-primary-action" onclick="openDeckSelectionModal(event)" title="Select decks">
+                    <button class="btn btn-primary-action" data-action="open-deck-modal" title="Select decks" aria-label="Open deck selection modal">
                         🎴 Decks
                     </button>
-                    <button class="btn btn-primary-action" onclick="window.handSimulator?.quickTwoPlayerSetup()" title="Quick setup">
+                    <button class="btn btn-primary-action" data-action="quick-setup" title="Quick setup" aria-label="Quick two-player setup">
                         ⚡ Setup
                     </button>
-                    <button id="endTurnButton" class="btn btn-secondary-action">
+                    <button id="endTurnButton" class="btn btn-secondary-action" data-action="end-turn" aria-label="End current turn">
                         ⏭️ End Turn
                     </button>
-                    <button id="combatButton" class="btn btn-danger" onclick="window.handSimulator?.initializeCombat()" title="Start combat phase">
+                    <button id="combatButton" class="btn btn-danger" data-action="combat" title="Start combat phase" aria-label="Initialize combat phase">
                         ⚔️ Combat
                     </button>
 
                     <!-- Dropdown menu for less-used actions -->
                     <div class="dropdown" style="position: relative; display: inline-block;">
-                        <button class="btn btn-tertiary-action" onclick="this.nextElementSibling.classList.toggle('show')" style="padding: 6px 12px;">
+                        <button class="btn btn-tertiary-action" data-action="toggle-dropdown" data-target="moreActionsMenu" style="padding: 6px 12px;" aria-label="More actions" aria-haspopup="true" aria-expanded="false">
                             ⋯
                         </button>
-                        <div class="dropdown-menu" style="display: none; position: absolute; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; min-width: 150px; top: 100%; left: 0; margin-top: 4px;">
-                            <button class="dropdown-item" onclick="window.handSimulator?.startTwoPlayerGame(); this.parentElement.classList.remove('show')" style="width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; display: block; color: var(--text-primary);" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background='none'">
+                        <div id="moreActionsMenu" class="dropdown-menu" role="menu" style="display: none; position: absolute; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; min-width: 150px; top: 100%; left: 0; margin-top: 4px;">
+                            <button class="dropdown-item" data-action="start-two-player" role="menuitem" style="width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; display: block; color: var(--text-primary);">
                                 🎮 Start Game
                             </button>
-                            <button class="dropdown-item" id="testCountersButton" onclick="this.parentElement.classList.remove('show')" style="width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; display: block; color: var(--text-primary);" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background='none'">
+                            <button class="dropdown-item" id="testCountersButton" data-action="test-counters" role="menuitem" style="width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; display: block; color: var(--text-primary);">
                                 🧪 Test Counters
                             </button>
-                            <button class="dropdown-item" id="soundToggle" onclick="window.handSimulator?.toggleSounds(); this.parentElement.classList.remove('show')" style="width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; display: block; color: var(--text-primary);" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background='none'">
+                            <button class="dropdown-item" id="soundToggle" data-action="toggle-sounds" role="menuitem" style="width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; display: block; color: var(--text-primary);">
                                 🔊 Toggle Sound
                             </button>
                         </div>
@@ -317,7 +321,7 @@ function populateDeckSelect(decks, containerId) {
             <div class="controls-section" style="flex: 1; display: flex; justify-content: center;">
                 <div id="turnIndicator" class="turn-indicator">
                     <div class="turn-info">
-                        <span class="turn-player">Your Turn</span>
+                        <span class="turn-player">Player 1's Turn</span>
                         <span class="turn-number">Turn 1</span>
                         <span class="turn-phase">Main Phase 1</span>
                     </div>
@@ -326,29 +330,30 @@ function populateDeckSelect(decks, containerId) {
 
             <!-- Board Wipes (right side, collapsible) -->
             <div class="controls-section">
-                <button id="boardWipesToggleBtn" class="btn btn-secondary-action" onclick="document.getElementById('boardWipesActionPanel').classList.add('show')">
+                <button id="boardWipesToggleBtn" class="btn btn-secondary-action" data-action="toggle-board-wipes" aria-label="Show board wipes panel">
                     💥 Board Wipes
                 </button>
 
                 <!-- Delayed Triggers Indicator -->
-                <div id="delayedTriggersIndicator" style="display: none; padding: 6px 10px; background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; border-radius: 4px; font-size: 12px; cursor: pointer; margin-left: 8px;">
+                <div id="delayedTriggersIndicator" style="display: none; padding: 6px 10px; background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; border-radius: 4px; font-size: 12px; cursor: pointer; margin-left: 8px;" role="status" aria-live="polite">
                 </div>
             </div>
-        </div>
+            </nav>
+        </header>
 
         <!-- Combat Panel (appears during combat) -->
         <div id="combatPanel" style="display: none; position: fixed; top: 180px; left: 50%; transform: translateX(-50%); z-index: 100; min-width: 400px; max-width: 600px;">
         </div>
 
         <!-- Sidebar (Simplified) -->
-        <aside class="app-sidebar">
+        <aside class="app-sidebar" role="complementary" aria-label="Game Log">
             <div id="gameLogContainer" style="height: 100%; display: flex; flex-direction: column;">
                 <h3 style="padding: 12px; margin: 0; border-bottom: 1px solid var(--border-color); font-size: 14px; font-weight: 600;">📜 Game Log</h3>
-                <div id="gameLogPanel" style="flex: 1; overflow-y: auto; padding: 12px; font-size: 12px;"></div>
+                <div id="gameLogPanel" role="log" aria-live="polite" aria-atomic="false" style="flex: 1; overflow-y: auto; padding: 12px; font-size: 12px;"></div>
             </div>        </aside>
 
         <!-- Main Content -->
-        <main class="app-main">
+        <main id="main-content" class="app-main" role="main" aria-label="Game Board">
             <!-- Loading State -->
             <div id="loadingState" class="card loading" style="display: none;">
                 <div class="card-body text-center">
@@ -368,12 +373,14 @@ function populateDeckSelect(decks, containerId) {
                         Select a deck to start simulating, or use <strong>Quick Setup</strong> above for instant two-player testing.
                     </p>
                     <div class="d-flex gap-4 justify-content-center">
-                        <button onclick="document.querySelector('.deck-search-input')?.focus()"
-                                class="btn btn-primary">
+                        <button data-action="focus-deck-search"
+                                class="btn btn-primary"
+                                aria-label="Choose pre-defined deck">
                             Choose Pre-defined Deck
                         </button>
-                        <button onclick="document.getElementById('loadXMLFileButton').click()"
-                                class="btn btn-secondary">
+                        <button data-action="trigger-file-upload"
+                                class="btn btn-secondary"
+                                aria-label="Upload deck file">
                             Upload Deck File
                         </button>
                     </div>
@@ -399,7 +406,7 @@ function populateDeckSelect(decks, containerId) {
                                         <div style="font-size: 0.85rem; color: var(--text-secondary);">
                                             <span id="opponentHandCount2">0 cards</span> • <span id="opponentMulliganCount2">0 mulligans</span>
                                         </div>
-                                        <button class="btn btn-link" onclick="openDeckSelectionModal(event)" style="padding: 0; font-size: 0.85rem; text-decoration: underline; text-align: left; color: var(--primary); margin-top: 2px;" title="Click to change deck"><span id="opponentDeckName2">No Deck</span></button>
+                                        <button class="btn btn-link" data-action="open-deck-modal" style="padding: 0; font-size: 0.85rem; text-decoration: underline; text-align: left; color: var(--primary); margin-top: 2px;" title="Click to change deck" aria-label="Change Player 2 deck"><span id="opponentDeckName2">No Deck</span></button>
                                     </div>
                                 </div>
 
@@ -407,15 +414,15 @@ function populateDeckSelect(decks, containerId) {
                                 <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
                                     <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Life</div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
-                                        <button onclick="window.handSimulator.changeOpponentLife(-1)" style="cursor: pointer; min-width: 44px; min-height: 44px; padding: 8px 12px; background: #dc3545; border: none; border-radius: 6px; font-weight: bold; font-size: 1.25rem; color: white; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseenter="this.style.background='#c82333'" onmouseleave="this.style.background='#dc3545'" title="Opponent loses 1 life">−1</button>
-                                        <div id="opponentLife2" class="life-total" onclick="const newLife = prompt('Set opponent life:', this.textContent); if(newLife !== null) window.handSimulator.setOpponentLife(parseInt(newLife));" title="Click to set exact life total">20</div>
-                                        <button onclick="window.handSimulator.changeOpponentLife(1)" style="cursor: pointer; min-width: 44px; min-height: 44px; padding: 8px 12px; background: #28a745; border: none; border-radius: 6px; font-weight: bold; font-size: 1.25rem; color: white; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseenter="this.style.background='#218838'" onmouseleave="this.style.background='#28a745'" title="Opponent gains 1 life">+1</button>
+                                        <button class="btn-life-change btn-life-decrease" data-action="change-opponent-life" data-amount="-1" title="Player 2 loses 1 life" aria-label="Decrease Player 2 life by 1">−1</button>
+                                        <div id="opponentLife2" class="life-total" title="Click to set exact life total" aria-label="Player 2 life total">20</div>
+                                        <button class="btn-life-change btn-life-increase" data-action="change-opponent-life" data-amount="1" title="Player 2 gains 1 life" aria-label="Increase Player 2 life by 1">+1</button>
                                     </div>
                                     <!-- Quick Life Presets -->
                                     <div style="display: flex; gap: 4px; margin-top: 4px;">
-                                        <button onclick="window.handSimulator.changeOpponentLife(-3)" style="cursor: pointer; min-width: 38px; min-height: 28px; padding: 4px 8px; background: #6c757d; border: none; border-radius: 4px; font-weight: 600; font-size: 0.8rem; color: white; user-select: none; transition: all 0.2s;" onmouseenter="this.style.background='#5a6268'" onmouseleave="this.style.background='#6c757d'" title="Lightning Bolt damage">−3</button>
-                                        <button onclick="window.handSimulator.changeOpponentLife(-2)" style="cursor: pointer; min-width: 38px; min-height: 28px; padding: 4px 8px; background: #6c757d; border: none; border-radius: 4px; font-weight: 600; font-size: 0.8rem; color: white; user-select: none; transition: all 0.2s;" onmouseenter="this.style.background='#5a6268'" onmouseleave="this.style.background='#6c757d'" title="Lose 2 life">−2</button>
-                                        <button onclick="window.handSimulator.changeOpponentLife(3)" style="cursor: pointer; min-width: 38px; min-height: 28px; padding: 4px 8px; background: #17a2b8; border: none; border-radius: 4px; font-weight: 600; font-size: 0.8rem; color: white; user-select: none; transition: all 0.2s;" onmouseenter="this.style.background='#138496'" onmouseleave="this.style.background='#17a2b8'" title="Gain 3 life">+3</button>
+                                        <button class="btn-life-preset" data-action="change-opponent-life" data-amount="-3" title="Lightning Bolt damage" aria-label="Decrease Player 2 life by 3">−3</button>
+                                        <button class="btn-life-preset" data-action="change-opponent-life" data-amount="-2" title="Lose 2 life" aria-label="Decrease Player 2 life by 2">−2</button>
+                                        <button class="btn-life-preset btn-life-gain" data-action="change-opponent-life" data-amount="3" title="Gain 3 life" aria-label="Increase Player 2 life by 3">+3</button>
                                     </div>
                                 </div>
                             </div>
@@ -424,16 +431,16 @@ function populateDeckSelect(decks, containerId) {
                             <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
                                 <!-- Core Actions Group -->
                                 <div style="display: flex; gap: 6px;">
-                                    <button class="btn btn-sm btn-success" onclick="window.handSimulator.resetAndDrawOpponent7()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Shuffle deck, reset life to 20, draw 7 cards">
+                                    <button class="btn btn-sm btn-success" data-action="new-game-opponent" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Shuffle deck, reset life to 20, draw 7 cards" aria-label="Start new game for Player 2">
                                         🎲 New Game
                                     </button>
-                                    <button class="btn btn-sm btn-primary" onclick="window.handSimulator.drawOpponentCard()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                    <button class="btn btn-sm btn-primary" data-action="draw-opponent-card" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Draw card for Player 2">
                                         📥 Draw
                                     </button>
-                                    <button class="btn btn-sm btn-warning" onclick="window.handSimulator.mulliganOpponent()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                    <button class="btn btn-sm btn-warning" data-action="mulligan-opponent" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Mulligan for Player 2">
                                         🔄 Mulligan
                                     </button>
-                                    <button class="btn btn-sm btn-outline-info" onclick="window.handSimulator.passTurn()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                    <button class="btn btn-sm btn-outline-info" data-action="pass-turn" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Pass turn">
                                         ⏭️ Pass Turn
                                     </button>
                                 </div>
@@ -443,7 +450,7 @@ function populateDeckSelect(decks, containerId) {
 
                                 <!-- Quick Actions Group -->
                                 <div style="display: flex; gap: 6px;">
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.untapAllOpponent()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Untap all opponent's permanents">
+                                    <button class="btn btn-sm btn-outline-secondary" data-action="untap-all-opponent" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Untap all Player 2's permanents" aria-label="Untap all Player 2's permanents">
                                         ⟳ Untap All
                                     </button>
                                 </div>
@@ -452,17 +459,17 @@ function populateDeckSelect(decks, containerId) {
                                 <div style="width: 1px; height: 28px; background: var(--border-color);"></div>
 
                                 <!-- Library Button with Actions Menu for Opponent -->
-                                <button id="opponentLibraryButton" class="btn btn-sm btn-outline-info" onclick="document.getElementById('opponentLibraryActionPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                <button id="opponentLibraryButton" class="btn btn-sm btn-outline-info" data-action="toggle-panel" data-panel-id="opponentLibraryActionPanel" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Show Player 2 library actions">
                                         📚 Library (<span id="opponentLibraryButtonCount">0</span>)
                                     </button>
 
                                 <!-- Create Token Button for Opponent -->
-                                <button class="btn btn-sm btn-success" onclick="document.getElementById('opponentTokenCreationPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                <button class="btn btn-sm btn-success" data-action="toggle-panel" data-panel-id="opponentTokenCreationPanel" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Show Player 2 token creation panel">
                                         🪙 Create Token
                                     </button>
 
                                 <!-- Advanced Actions Dropdown -->
-                                <button class="btn btn-sm btn-outline-success" onclick="document.getElementById('opponentAdvancedActionsPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                <button class="btn btn-sm btn-outline-success" data-action="toggle-panel" data-panel-id="opponentAdvancedActionsPanel" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Show Player 2 advanced actions panel">
                                         ⚡ Advanced
                                     </button>
 
@@ -485,8 +492,8 @@ function populateDeckSelect(decks, containerId) {
                                                 <li><a class="dropdown-item" href="#" data-sort-mode="name" data-player="opponent">🔤 Alphabetical</a></li>
                                             </ul>
                                         </div>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator?.executeDiscard('opponent', 1, 'random')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Discard 1 random card">💀 Discard 1</button>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator?.executeDiscard('opponent', 2, 'random')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Discard 2 random cards">💀 Discard 2</button>
+                                        <button class="btn btn-sm btn-outline-secondary" data-action="execute-discard" data-player="opponent" data-amount="1" data-mode="random" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Discard 1 random card" aria-label="Opponent discard 1 random card">💀 Discard 1</button>
+                                        <button class="btn btn-sm btn-outline-secondary" data-action="execute-discard" data-player="opponent" data-amount="2" data-mode="random" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Discard 2 random cards" aria-label="Opponent discard 2 random cards">💀 Discard 2</button>
                                     </div>
                                 </div>
                                 <div id="opponentHandContainer2" class="zone-content"></div>
@@ -496,8 +503,8 @@ function populateDeckSelect(decks, containerId) {
                                     <div class="zone-title" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px;">
                                         <span style="font-weight: 600; font-size: 1rem;">🏔️ Lands</span>
                                         <div style="display: flex; gap: 6px;">
-                                            <button class="btn btn-sm btn-outline-success" onclick="window.handSimulator.evolvingWilds('opponent')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Fetch basic land">🌍 Fetch Land</button>
-                                            <button class="btn btn-sm btn-outline-success" onclick="window.handSimulator.cultivate('opponent')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Cultivate - ramp spell">🌱 Ramp</button>
+                                            <button class="btn btn-sm btn-outline-success" data-action="evolving-wilds" data-player="opponent" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Fetch basic land" aria-label="Opponent fetch land">🌍 Fetch Land</button>
+                                            <button class="btn btn-sm btn-outline-success" data-action="cultivate" data-player="opponent" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Cultivate - ramp spell" aria-label="Opponent ramp">🌱 Ramp</button>
                                         </div>
                                     </div>
                                     <div id="opponentBattlefieldLands2" class="zone-content"></div>
@@ -506,8 +513,8 @@ function populateDeckSelect(decks, containerId) {
                                     <div class="zone-title" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px;">
                                         <span style="font-weight: 600; font-size: 1rem;">⚔️ Creatures</span>
                                         <div style="display: flex; gap: 6px;">
-                                            <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('1/1 Soldier', 'Creature — Soldier', 'opponent')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create 1/1 Soldier token">⚔️ 1/1 Token</button>
-                                            <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('2/2 Zombie', 'Creature — Zombie', 'opponent')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create 2/2 Zombie token">🧟 2/2 Token</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="1/1 Soldier" data-token-type="Creature — Soldier" data-player="opponent" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create 1/1 Soldier token" aria-label="Create 1/1 Soldier token for Player 2">⚔️ 1/1 Token</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="2/2 Zombie" data-token-type="Creature — Zombie" data-player="opponent" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create 2/2 Zombie token" aria-label="Create 2/2 Zombie token for Player 2">🧟 2/2 Token</button>
                                         </div>
                                     </div>
                                     <div id="opponentBattlefieldCreatures2" class="zone-content"></div>
@@ -516,20 +523,20 @@ function populateDeckSelect(decks, containerId) {
                                     <div class="zone-title" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px;">
                                         <span style="font-weight: 600; font-size: 1rem;">✨ Artifacts & Enchantments</span>
                                         <div style="display: flex; gap: 6px;">
-                                            <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Treasure', 'Artifact', 'opponent')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create Treasure token">💎 Treasure</button>
-                                            <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Clue', 'Artifact', 'opponent')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create Clue token">🔍 Clue</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Treasure" data-token-type="Artifact" data-player="opponent" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create Treasure token" aria-label="Create Treasure token for Player 2">💎 Treasure</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Clue" data-token-type="Artifact" data-player="opponent" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create Clue token" aria-label="Create Clue token for Player 2">🔍 Clue</button>
                                         </div>
                                     </div>
                                     <div id="opponentBattlefieldOthers2" class="zone-content"></div>
                                 </div>
                             </div>
                             <div class="graveyard-exile-area" style="display: flex; gap: 4px; margin-top: 8px;">
-                                <button class="zone-counter btn btn-sm btn-outline-secondary" onclick="window.handSimulator.showOpponentGraveyardModal()" style="min-height: 44px; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; padding: 6px; flex: 1;" title="View graveyard">
+                                <button class="zone-counter btn btn-sm btn-outline-secondary" data-action="show-graveyard" data-player="opponent" style="min-height: 44px; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; padding: 6px; flex: 1;" title="View graveyard" aria-label="View Player 2's graveyard">
                                     <span style="font-size: 1.1rem;">🪦</span>
                                     <span style="font-weight: 600;">Graveyard</span>
                                     <span style="font-size: 0.85rem; color: var(--text-secondary);"><span id="opponentGraveyardCount2">0</span> cards</span>
                                 </button>
-                                <button class="zone-counter btn btn-sm btn-outline-secondary" onclick="window.handSimulator.showOpponentExileModal()" style="min-height: 44px; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; padding: 6px; flex: 1;" title="View exile zone">
+                                <button class="zone-counter btn btn-sm btn-outline-secondary" data-action="show-exile" data-player="opponent" style="min-height: 44px; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; padding: 6px; flex: 1;" title="View exile zone" aria-label="View Player 2's exile zone">
                                     <span style="font-size: 1.1rem;">🚫</span>
                                     <span style="font-weight: 600;">Exile</span>
                                     <span style="font-size: 0.85rem; color: var(--text-secondary);"><span id="opponentExileCount2">0</span> cards</span>
@@ -553,7 +560,7 @@ function populateDeckSelect(decks, containerId) {
                                         <div style="font-size: 0.85rem; color: var(--text-secondary);">
                                             <span id="handCount2">0 cards</span> • <span id="mulliganCount2">0 mulligans</span>
                                         </div>
-                                        <button class="btn btn-link" onclick="openDeckSelectionModal(event)" style="padding: 0; font-size: 0.85rem; text-decoration: underline; text-align: left; color: var(--primary); margin-top: 2px;" title="Click to change deck"><span id="playerDeckName2">No Deck</span></button>
+                                        <button class="btn btn-link" data-action="open-deck-modal" style="padding: 0; font-size: 0.85rem; text-decoration: underline; text-align: left; color: var(--primary); margin-top: 2px;" title="Click to change deck" aria-label="Change player deck"><span id="playerDeckName2">No Deck</span></button>
                                     </div>
                                 </div>
 
@@ -561,15 +568,15 @@ function populateDeckSelect(decks, containerId) {
                                 <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
                                     <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Life</div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
-                                        <button onclick="window.handSimulator.changeLife(-1)" style="cursor: pointer; min-width: 44px; min-height: 44px; padding: 8px 12px; background: #dc3545; border: none; border-radius: 6px; font-weight: bold; font-size: 1.25rem; color: white; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseenter="this.style.background='#c82333'" onmouseleave="this.style.background='#dc3545'" title="Lose 1 life">−1</button>
-                                        <div id="lifeTotal2" class="life-total" onclick="const newLife = prompt('Set life total:', this.textContent); if(newLife !== null) window.handSimulator.setLife(parseInt(newLife));" title="Click to set exact life total">20</div>
-                                        <button onclick="window.handSimulator.changeLife(1)" style="cursor: pointer; min-width: 44px; min-height: 44px; padding: 8px 12px; background: #28a745; border: none; border-radius: 6px; font-weight: bold; font-size: 1.25rem; color: white; user-select: none; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" onmouseenter="this.style.background='#218838'" onmouseleave="this.style.background='#28a745'" title="Gain 1 life">+1</button>
+                                        <button class="btn-life-change btn-life-decrease" data-action="change-life" data-amount="-1" title="Player 1 loses 1 life" aria-label="Decrease Player 1 life by 1">−1</button>
+                                        <div id="lifeTotal2" class="life-total" title="Click to set exact life total" aria-label="Player 1 life total">20</div>
+                                        <button class="btn-life-change btn-life-increase" data-action="change-life" data-amount="1" title="Player 1 gains 1 life" aria-label="Increase Player 1 life by 1">+1</button>
                                     </div>
                                     <!-- Quick Life Presets -->
                                     <div style="display: flex; gap: 4px; margin-top: 4px;">
-                                        <button onclick="window.handSimulator.changeLife(-3)" style="cursor: pointer; min-width: 38px; min-height: 28px; padding: 4px 8px; background: #6c757d; border: none; border-radius: 4px; font-weight: 600; font-size: 0.8rem; color: white; user-select: none; transition: all 0.2s;" onmouseenter="this.style.background='#5a6268'" onmouseleave="this.style.background='#6c757d'" title="Lightning Bolt damage">−3</button>
-                                        <button onclick="window.handSimulator.changeLife(-2)" style="cursor: pointer; min-width: 38px; min-height: 28px; padding: 4px 8px; background: #6c757d; border: none; border-radius: 4px; font-weight: 600; font-size: 0.8rem; color: white; user-select: none; transition: all 0.2s;" onmouseenter="this.style.background='#5a6268'" onmouseleave="this.style.background='#6c757d'" title="Lose 2 life">−2</button>
-                                        <button onclick="window.handSimulator.changeLife(3)" style="cursor: pointer; min-width: 38px; min-height: 28px; padding: 4px 8px; background: #17a2b8; border: none; border-radius: 4px; font-weight: 600; font-size: 0.8rem; color: white; user-select: none; transition: all 0.2s;" onmouseenter="this.style.background='#138496'" onmouseleave="this.style.background='#17a2b8'" title="Gain 3 life">+3</button>
+                                        <button class="btn-life-preset" data-action="change-life" data-amount="-3" title="Lightning Bolt damage" aria-label="Decrease Player 1 life by 3">−3</button>
+                                        <button class="btn-life-preset" data-action="change-life" data-amount="-2" title="Lose 2 life" aria-label="Decrease Player 1 life by 2">−2</button>
+                                        <button class="btn-life-preset btn-life-gain" data-action="change-life" data-amount="3" title="Gain 3 life" aria-label="Increase Player 1 life by 3">+3</button>
                                     </div>
                                 </div>
                             </div>
@@ -578,16 +585,16 @@ function populateDeckSelect(decks, containerId) {
                             <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
                                 <!-- Core Actions Group -->
                                 <div style="display: flex; gap: 6px;">
-                                    <button class="btn btn-sm btn-success" onclick="window.handSimulator.resetAndDraw7()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Shuffle deck, reset life to 20, draw 7 cards (Keyboard: N)">
+                                    <button class="btn btn-sm btn-success" data-action="new-game" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Shuffle deck, reset life to 20, draw 7 cards (Keyboard: N)" aria-label="Start new game">
                                         🎲 New Game <kbd class="shortcut">N</kbd>
                                     </button>
-                                    <button class="btn btn-sm btn-primary" onclick="window.handSimulator.drawCard()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: D">
+                                    <button class="btn btn-sm btn-primary" data-action="draw-card" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: D" aria-label="Draw card">
                                         📥 Draw <kbd class="shortcut">D</kbd>
                                     </button>
-                                    <button class="btn btn-sm btn-warning" onclick="window.handSimulator.mulligan()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: M">
+                                    <button class="btn btn-sm btn-warning" data-action="mulligan" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: M" aria-label="Mulligan">
                                         🔄 Mulligan <kbd class="shortcut">M</kbd>
                                     </button>
-                                    <button class="btn btn-sm btn-outline-info" onclick="window.handSimulator.passTurn()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: P">
+                                    <button class="btn btn-sm btn-outline-info" data-action="pass-turn" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Keyboard: P" aria-label="Pass turn">
                                         ⏭️ Pass Turn <kbd class="shortcut">P</kbd>
                                     </button>
                                 </div>
@@ -597,8 +604,8 @@ function populateDeckSelect(decks, containerId) {
 
                                 <!-- Quick Actions Group -->
                                 <div style="display: flex; gap: 6px;">
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.untapAll()" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;"                                         ⟳ Untap All <kbd class="shortcut">U</kbd>
-
+                                    <button class="btn btn-sm btn-outline-secondary" data-action="untap-all" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" title="Untap all your permanents (Keyboard: U)" aria-label="Untap all your permanents">
+                                        ⟳ Untap All <kbd class="shortcut">U</kbd>
                                     </button>
                                 </div>
 
@@ -606,15 +613,15 @@ function populateDeckSelect(decks, containerId) {
                                 <div style="width: 1px; height: 28px; background: var(--border-color);"></div>
 
                                 <!-- Library Dropdown -->
-                                <button id="playerLibraryButton" class="btn btn-sm btn-outline-info" onclick="document.getElementById('libraryActionPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                <button id="playerLibraryButton" class="btn btn-sm btn-outline-info" data-action="toggle-panel" data-panel-id="libraryActionPanel" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Show library actions panel">
                                         📚 Library (<span id="playerLibraryButtonCount">0</span>)
                                     </button>
 
                                 <!-- Advanced Actions Dropdown -->
-                                <button class="btn btn-sm btn-success" onclick="document.getElementById('playerTokenCreationPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                <button class="btn btn-sm btn-success" data-action="toggle-panel" data-panel-id="playerTokenCreationPanel" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Show token creation panel">
                                         🪙 Create Token
                                     </button>
-                                    <button class="btn btn-sm btn-outline-success" onclick="document.getElementById('playerAdvancedActionsPanel').classList.add('show')" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;">
+                                    <button class="btn btn-sm btn-outline-success" data-action="toggle-panel" data-panel-id="playerAdvancedActionsPanel" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" aria-label="Show advanced actions panel">
                                         ⚡ Advanced
                                     </button>
 
@@ -641,8 +648,8 @@ function populateDeckSelect(decks, containerId) {
                                                 <li><a class="dropdown-item" href="#" data-sort-mode="name">🔤 Alphabetical</a></li>
                                             </ul>
                                         </div>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator?.executeDiscard('player', 1, 'random')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Discard 1 random card">💀 Discard 1</button>
-                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator?.executeDiscard('player', 2, 'random')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Discard 2 random cards">💀 Discard 2</button>
+                                        <button class="btn btn-sm btn-outline-secondary" data-action="execute-discard" data-player="player" data-amount="1" data-mode="random" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Discard 1 random card" aria-label="Discard 1 random card">💀 Discard 1</button>
+                                        <button class="btn btn-sm btn-outline-secondary" data-action="execute-discard" data-player="player" data-amount="2" data-mode="random" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Discard 2 random cards" aria-label="Discard 2 random cards">💀 Discard 2</button>
                                     </div>
                                 </div>
                                 <div id="handContainer2" class="zone-content"></div>
@@ -653,8 +660,8 @@ function populateDeckSelect(decks, containerId) {
                                     <div class="zone-title" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px;">
                                         <span style="font-weight: 600; font-size: 1rem;">🏔️ Lands</span>
                                         <div style="display: flex; gap: 6px;">
-                                            <button class="btn btn-sm btn-outline-success" onclick="window.handSimulator.evolvingWilds()" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Fetch basic land">🌍 Fetch Land</button>
-                                            <button class="btn btn-sm btn-outline-success" onclick="window.handSimulator.cultivate()" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Cultivate - ramp spell">🌱 Ramp</button>
+                                            <button class="btn btn-sm btn-outline-success" data-action="evolving-wilds" data-player="player" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Fetch basic land" aria-label="Fetch land">🌍 Fetch Land</button>
+                                            <button class="btn btn-sm btn-outline-success" data-action="cultivate" data-player="player" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Cultivate - ramp spell" aria-label="Ramp">🌱 Ramp</button>
                                         </div>
                                     </div>
                                     <div id="battlefieldLands2" class="zone-content"></div>
@@ -663,8 +670,8 @@ function populateDeckSelect(decks, containerId) {
                                     <div class="zone-title" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px;">
                                         <span style="font-weight: 600; font-size: 1rem;">⚔️ Creatures</span>
                                         <div style="display: flex; gap: 6px;">
-                                            <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('1/1 Soldier', 'Creature — Soldier', 'player')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create 1/1 Soldier token">⚔️ 1/1 Token</button>
-                                            <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('2/2 Zombie', 'Creature — Zombie', 'player')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create 2/2 Zombie token">🧟 2/2 Token</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="1/1 Soldier" data-token-type="Creature — Soldier" data-player="player" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create 1/1 Soldier token" aria-label="Create 1/1 Soldier token">⚔️ 1/1 Token</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="2/2 Zombie" data-token-type="Creature — Zombie" data-player="player" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create 2/2 Zombie token" aria-label="Create 2/2 Zombie token">🧟 2/2 Token</button>
                                         </div>
                                     </div>
                                     <div id="battlefieldCreatures2" class="zone-content"></div>
@@ -673,8 +680,8 @@ function populateDeckSelect(decks, containerId) {
                                     <div class="zone-title" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px;">
                                         <span style="font-weight: 600; font-size: 1rem;">✨ Artifacts & Enchantments</span>
                                         <div style="display: flex; gap: 6px;">
-                                            <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Treasure', 'Artifact', 'player')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create Treasure token">💎 Treasure</button>
-                                            <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Clue', 'Artifact', 'player')" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create Clue token">🔍 Clue</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Treasure" data-token-type="Artifact" data-player="player" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create Treasure token" aria-label="Create Treasure token">💎 Treasure</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Clue" data-token-type="Artifact" data-player="player" style="min-height: 32px; padding: 4px 10px; font-size: 0.85rem;" title="Create Clue token" aria-label="Create Clue token">🔍 Clue</button>
                                         </div>
                                     </div>
                                     <div id="battlefieldOthers2" class="zone-content"></div>
@@ -684,7 +691,7 @@ function populateDeckSelect(decks, containerId) {
                             <!-- Clear Zone Counters with Full Names -->
                             <div class="graveyard-exile-area" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-top: 12px;">
                                 <div style="position: relative;">
-                                    <button class="zone-counter btn btn-sm btn-outline-secondary" onclick="window.handSimulator.showGraveyardModal()" onmouseenter="window.handSimulator.showZonePreview('graveyard', event)" onmouseleave="window.handSimulator.hideZonePreview()" style="min-height: 44px; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; padding: 6px;" title="View graveyard">
+                                    <button class="zone-counter btn btn-sm btn-outline-secondary" data-action="show-graveyard" data-player="player" style="min-height: 44px; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; padding: 6px;" title="View graveyard" aria-label="View your graveyard">
                                         <span style="font-size: 1.1rem;">🪦</span>
                                         <span style="font-weight: 600;">Graveyard</span>
                                         <span style="font-size: 0.85rem; color: var(--text-secondary);"><span id="graveyardCount2">0</span> cards</span>
@@ -693,7 +700,7 @@ function populateDeckSelect(decks, containerId) {
                                 </div>
 
                                 <div style="position: relative;">
-                                    <button class="zone-counter btn btn-sm btn-outline-secondary" onclick="window.handSimulator.showExileModal()" onmouseenter="window.handSimulator.showZonePreview('exile', event)" onmouseleave="window.handSimulator.hideZonePreview()" style="min-height: 44px; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; padding: 6px;" title="View exile zone">
+                                    <button class="zone-counter btn btn-sm btn-outline-secondary" data-action="show-exile" data-player="player" style="min-height: 44px; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; padding: 6px;" title="View exile zone" aria-label="View your exile zone">
                                         <span style="font-size: 1.1rem;">🚫</span>
                                         <span style="font-weight: 600;">Exile</span>
                                         <span style="font-size: 0.85rem; color: var(--text-secondary);"><span id="exileCount2">0</span> cards</span>
@@ -833,13 +840,13 @@ function populateDeckSelect(decks, containerId) {
                                 </button>
                             </div>
                             <div class="d-flex gap-2">
-                                <button class="btn btn-xs btn-secondary" onclick="window.handSimulator?.addTestCardToGraveyard()" title="Add test card to graveyard">
+                                <button class="btn btn-xs btn-secondary" data-action="add-test-card-to-graveyard" title="Add test card to graveyard" aria-label="Add test card to graveyard">
                                     +Test GY
                                 </button>
-                                <button class="btn btn-xs btn-secondary" onclick="window.handSimulator?.addTestCardToExile()" title="Add test card to exile">
+                                <button class="btn btn-xs btn-secondary" data-action="add-test-card-to-exile" title="Add test card to exile" aria-label="Add test card to exile">
                                     +Test Exile
                                 </button>
-                                <button class="btn btn-xs btn-success" onclick="window.handSimulator?.addTestCreatureWithCounters()" title="Add test creature with counters">
+                                <button class="btn btn-xs btn-success" data-action="add-test-creature-with-counters" title="Add test creature with counters" aria-label="Add test creature with counters">
                                     +Test Creature
                                 </button>
                             </div>
@@ -861,7 +868,7 @@ function populateDeckSelect(decks, containerId) {
     </div>
 
     <!-- Mobile Navigation -->
-    <div class="mobile-overlay" onclick="document.body.classList.remove('mobile-sidebar-open')"></div>
+    <div class="mobile-overlay" data-action="close-mobile-sidebar" aria-label="Close mobile sidebar"></div>
     <nav class="mobile-nav-bottom">
         <div class="mobile-nav-tabs">
             <a href="/decks-modern" class="mobile-nav-tab">
@@ -888,14 +895,14 @@ function populateDeckSelect(decks, containerId) {
     </nav>
 
     <!-- Deck Selection Modal -->
-    <div id="deckSelectionModal" class="modal" style="display: none;" onclick="if(event.target.id === 'deckSelectionModal') this.style.display='none'">
-        <div class="modal-content" style="max-width: 900px; max-height: 90vh; display: flex; flex-direction: column; background: var(--bg-secondary); color: var(--text-primary);" onclick="event.stopPropagation()">
+    <div id="deckSelectionModal" class="modal" style="display: none;" data-action="close-modal-on-backdrop" data-modal-id="deckSelectionModal">
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh; display: flex; flex-direction: column; background: var(--bg-secondary); color: var(--text-primary);" data-action="stop-propagation">
             <div class="modal-header" style="background: var(--bg-secondary); color: var(--text-primary);">
                 <h3 style="color: var(--text-primary);">🎴 Select Decks</h3>
-                <button onclick="document.getElementById('deckSelectionModal').style.display='none'" class="btn btn-secondary btn-sm">✕</button>
+                <button data-action="close-modal" data-modal-id="deckSelectionModal" class="btn btn-secondary btn-sm" aria-label="Close deck selection modal">✕</button>
             </div>
             <div class="modal-body" style="padding: var(--space-4); overflow-y: auto; flex: 1; background: var(--bg-secondary); color: var(--text-primary);">
-                <input type="search" id="deckSearchInput" aria-label="Search decks" placeholder="Search decks..." oninput="filterDecks(this.value)" style="width: 100%; padding: 12px; margin-bottom: 16px; font-size: 1rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+                <input type="search" id="deckSearchInput" class="deck-search-input" aria-label="Search decks" placeholder="Search decks..." data-action="filter-decks" style="width: 100%; padding: 12px; margin-bottom: 16px; font-size: 1rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
 
 
                 <!-- Player Deck Selection -->
@@ -903,14 +910,14 @@ function populateDeckSelect(decks, containerId) {
                     <h4 style="color: #0d6efd; margin-bottom: var(--space-3);">🧙‍♂️ Player 1 Deck</h4>
                     <div class="d-flex gap-2 flex-wrap" style="margin-bottom: var(--space-2);">
                         <div id="deckSelectModal" class="deck-list-container" style="border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; max-height: 300px; overflow-y: auto;"></div>
-                        <button class="btn btn-primary btn-sm" onclick="const sel = document.getElementById('deckSelectModal'); if(sel.value) window.handSimulator?.loadDeck(sel.value)">Load Deck</button>
-                        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('xmlFile').click()">📁 Upload XML</button>
+                        <button class="btn btn-primary btn-sm" data-action="load-player-deck" data-select-id="deckSelectModal" aria-label="Load selected player deck">Load Deck</button>
+                        <button class="btn btn-secondary btn-sm" data-action="trigger-xml-upload" aria-label="Upload XML deck file">📁 Upload XML</button>
                     </div>
                     <div class="d-flex gap-2" style="margin-top: var(--space-2);">
-                        <button id="setPlayer1DefaultBtnModal" class="btn btn-info btn-sm" onclick="window.handSimulator.setPlayer1DeckAsDefault()" title="Set as default Player 1 deck" disabled>
+                        <button id="setPlayer1DefaultBtnModal" class="btn btn-info btn-sm" data-action="set-player1-deck-default" title="Set as default Player 1 deck" aria-label="Set as default Player 1 deck" disabled>
                             ⭐ Set Default
                         </button>
-                        <button id="clearPlayer1DefaultBtnModal" class="btn btn-secondary btn-sm" onclick="window.handSimulator.clearDefaultPlayer1Deck()" title="Clear default Player 1 deck" disabled>
+                        <button id="clearPlayer1DefaultBtnModal" class="btn btn-secondary btn-sm" data-action="clear-default-player1-deck" title="Clear default Player 1 deck" aria-label="Clear default Player 1 deck" disabled>
                             ✕ Clear Default
                         </button>
                     </div>
@@ -924,13 +931,13 @@ function populateDeckSelect(decks, containerId) {
                     <h4 style="color: #d63384; margin-bottom: var(--space-3);">👤 Player 2 Deck</h4>
                     <div class="d-flex gap-2 flex-wrap" style="margin-bottom: var(--space-2);">
                         <div id="opponentDeckSelectModal" class="deck-list-container" style="border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; max-height: 300px; overflow-y: auto;"></div>
-                        <button class="btn btn-primary btn-sm" onclick="const sel = document.getElementById('opponentDeckSelectModal'); if(sel.value) window.handSimulator?.loadOpponentDeck(sel.value)">Load Deck</button>
+                        <button class="btn btn-primary btn-sm" data-action="load-opponent-deck" data-select-id="opponentDeckSelectModal" aria-label="Load selected opponent deck">Load Deck</button>
                     </div>
                     <div class="d-flex gap-2" style="margin-top: var(--space-2);">
-                        <button id="setOpponentDefaultBtnModal" class="btn btn-info btn-sm" onclick="window.handSimulator.setOpponentDeckAsDefault()" title="Set as default opponent deck" disabled>
+                        <button id="setOpponentDefaultBtnModal" class="btn btn-info btn-sm" data-action="set-opponent-deck-default" title="Set as default opponent deck" aria-label="Set as default opponent deck" disabled>
                             ⭐ Set Default
                         </button>
-                        <button id="clearOpponentDefaultBtnModal" class="btn btn-secondary btn-sm" onclick="window.handSimulator.clearDefaultOpponentDeck()" title="Clear default opponent deck" disabled>
+                        <button id="clearOpponentDefaultBtnModal" class="btn btn-secondary btn-sm" data-action="clear-default-opponent-deck" title="Clear default opponent deck" aria-label="Clear default opponent deck" disabled>
                             ✕ Clear Default
                         </button>
                     </div>
@@ -1161,147 +1168,147 @@ function filterDecks(query) {
 <aside id="libraryActionPanel" class="action-panel">
   <header>
     <h3>📚 Library Actions</h3>
-    <button class="close-panel" onclick="document.getElementById('libraryActionPanel').classList.remove('show')">×</button>
+    <button class="close-panel" data-action="close-panel" data-panel-id="libraryActionPanel" aria-label="Close library actions panel">×</button>
   </header>
   <section>
     <h4>View</h4>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showLibraryModal('player')">👁️ View Library</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.viewTopCard()">🔝 View Top Card</button>
-    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.viewTopCards(3)">👀 View Top 3</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="show-library" data-player="player" aria-label="View your library">👁️ View Library</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="view-top-card" data-player="player" aria-label="View top card of library">🔝 View Top Card</button>
+    <button class="btn btn-sm btn-outline-secondary" data-action="view-top-cards" data-player="player" data-amount="3" aria-label="View top 3 cards of library">👀 View Top 3</button>
   </section>
   <section>
     <h4>Manipulate</h4>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showScryInterface(1, 'Scry')">🔍 Scry 1</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.ponder()">🤔 Ponder</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.brainstorm()">🧠 Brainstorm</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(1)">🕵️ Surveil 1</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(2)">🕵️ Surveil 2</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.triggerManualCascade('player')">⚡ Cascade</button>
-    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.shuffleLibrary()">🔀 Shuffle</button>
-    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.millCards(2)">⚰️ Mill 2</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="scry" data-player="player" data-amount="1" aria-label="Scry 1">🔍 Scry 1</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="ponder" data-player="player" aria-label="Ponder">🤔 Ponder</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="brainstorm" data-player="player" aria-label="Brainstorm">🧠 Brainstorm</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="surveil" data-player="player" data-amount="1" aria-label="Surveil 1">🕵️ Surveil 1</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="surveil" data-player="player" data-amount="2" aria-label="Surveil 2">🕵️ Surveil 2</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="cascade" data-player="player" aria-label="Trigger manual cascade">⚡ Cascade</button>
+    <button class="btn btn-sm btn-outline-secondary" data-action="shuffle-library" data-player="player" aria-label="Shuffle library">🔀 Shuffle</button>
+    <button class="btn btn-sm btn-outline-secondary" data-action="mill-cards" data-player="player" data-amount="2" aria-label="Mill 2 cards">⚰️ Mill 2</button>
   </section>
 </aside>
 <aside id="opponentLibraryActionPanel" class="action-panel">
   <header>
     <h3>📚 Opponent's Library</h3>
-    <button class="close-panel" onclick="document.getElementById('opponentLibraryActionPanel').classList.remove('show')">×</button>
+    <button class="close-panel" data-action="close-panel" data-panel-id="opponentLibraryActionPanel" aria-label="Close opponent library actions panel">×</button>
   </header>
   <section>
     <h4>View</h4>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showLibraryModal('opponent')">👁️ View Library</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="show-library" data-player="opponent" aria-label="View opponent's library">👁️ View Library</button>
   </section>
   <section>
     <h4>Manipulate</h4>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.showScryInterface(1, 'Scry', {player: 'opponent'})">🔍 Scry 1</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.ponder('opponent')">🤔 Ponder</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.brainstorm('opponent')">🧠 Brainstorm</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(1, 'opponent')">🕵️ Surveil 1</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.surveil(2, 'opponent')">🕵️ Surveil 2</button>
-    <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.triggerManualCascade('opponent')">⚡ Cascade</button>
-    <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.shuffleOpponentLibrary()">🔀 Shuffle</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="scry" data-player="opponent" data-amount="1" aria-label="Opponent scry 1">🔍 Scry 1</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="ponder" data-player="opponent" aria-label="Opponent ponder">🤔 Ponder</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="brainstorm" data-player="opponent" aria-label="Opponent brainstorm">🧠 Brainstorm</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="surveil" data-player="opponent" data-amount="1" aria-label="Opponent surveil 1">🕵️ Surveil 1</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="surveil" data-player="opponent" data-amount="2" aria-label="Opponent surveil 2">🕵️ Surveil 2</button>
+    <button class="btn btn-sm btn-outline-primary" data-action="cascade" data-player="opponent" aria-label="Opponent trigger manual cascade">⚡ Cascade</button>
+    <button class="btn btn-sm btn-outline-secondary" data-action="shuffle-library" data-player="opponent" aria-label="Shuffle opponent library">🔀 Shuffle</button>
   </section>
 </aside>
 <aside id="boardWipesActionPanel" class="action-panel">
   <header>
     <h3>💥 Board Wipes</h3>
-    <button class="close-panel" onclick="document.getElementById('boardWipesActionPanel').classList.remove('show')">×</button>
+    <button class="close-panel" data-action="close-panel" data-panel-id="boardWipesActionPanel" aria-label="Close board wipes panel">×</button>
   </header>
   <section>
     <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.wrathOfGod()">💀 Wrath</button>
-        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.damnation()">🌑 Damn</button>
-        <button class="btn btn-xs btn-outline-danger" onclick="window.handSimulator?.supremeVerdict()">⚖️ Verdict</button>
-        <button class="btn btn-xs btn-outline-warning" onclick="window.handSimulator?.pyroclasm()">🔥 Pyro</button>
-        <button class="btn btn-xs btn-outline-warning" onclick="window.handSimulator?.angerOfTheGods()">😡 Anger</button>
-        <button class="btn btn-xs btn-outline-primary" onclick="window.handSimulator?.cyclonicRift()">🌊 Rift</button>
-        <button class="btn btn-xs btn-outline-secondary" onclick="window.handSimulator?.armageddon()">💥 Geddon</button>
+        <button class="btn btn-xs btn-outline-danger" data-action="cast-board-wipe" data-spell="Wrath of God" aria-label="Cast Wrath of God">💀 Wrath</button>
+        <button class="btn btn-xs btn-outline-danger" data-action="cast-board-wipe" data-spell="Damnation" aria-label="Cast Damnation">🌑 Damn</button>
+        <button class="btn btn-xs btn-outline-danger" data-action="cast-board-wipe" data-spell="Supreme Verdict" aria-label="Cast Supreme Verdict">⚖️ Verdict</button>
+        <button class="btn btn-xs btn-outline-warning" data-action="cast-board-wipe" data-spell="Pyroclasm" aria-label="Cast Pyroclasm">🔥 Pyro</button>
+        <button class="btn btn-xs btn-outline-warning" data-action="cast-board-wipe" data-spell="Anger of the Gods" aria-label="Cast Anger of the Gods">😡 Anger</button>
+        <button class="btn btn-xs btn-outline-primary" data-action="cast-board-wipe" data-spell="Cyclonic Rift" aria-label="Cast Cyclonic Rift">🌊 Rift</button>
+        <button class="btn btn-xs btn-outline-secondary" data-action="cast-board-wipe" data-spell="Armageddon" aria-label="Cast Armageddon">💥 Geddon</button>
     </div>
   </section>
 </aside>
 <aside id="playerTokenCreationPanel" class="action-panel">
   <header>
     <h3>🪙 Create Token</h3>
-    <button class="close-panel" onclick="document.getElementById('playerTokenCreationPanel').classList.remove('show')">×</button>
+    <button class="close-panel" data-action="close-panel" data-panel-id="playerTokenCreationPanel" aria-label="Close token creation panel">×</button>
   </header>
   <section>
     <h4>Artifact Tokens</h4>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Treasure', 'Artifact', 'player')">💎 Treasure</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Clue', 'Artifact', 'player')">🔍 Clue</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Blood', 'Artifact', 'player')">🩸 Blood</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Food', 'Artifact', 'player')">🍎 Food</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Map', 'Artifact', 'player')">🗺️ Map</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Powerstone', 'Artifact', 'player')">💠 Powerstone</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Treasure" data-token-type="Artifact" data-player="player" aria-label="Create Treasure token">💎 Treasure</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Clue" data-token-type="Artifact" data-player="player" aria-label="Create Clue token">🔍 Clue</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Blood" data-token-type="Artifact" data-player="player" aria-label="Create Blood token">🩸 Blood</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Food" data-token-type="Artifact" data-player="player" aria-label="Create Food token">🍎 Food</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Map" data-token-type="Artifact" data-player="player" aria-label="Create Map token">🗺️ Map</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Powerstone" data-token-type="Artifact" data-player="player" aria-label="Create Powerstone token">💠 Powerstone</button>
     </div>
   </section>
   <section>
     <h4>Creature Tokens</h4>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Soldier', 'Creature — Soldier', 'player')">⚔️ 1/1 Soldier</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Zombie', 'Creature — Zombie', 'player')">🧟 2/2 Zombie</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Goblin', 'Creature — Goblin', 'player')">👹 1/1 Goblin</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Elf', 'Creature — Elf', 'player')">🧝 1/1 Elf</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('3/3 Beast', 'Creature — Beast', 'player')">🐻 3/3 Beast</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('4/4 Angel', 'Creature — Angel', 'player')">👼 4/4 Angel</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('5/5 Dragon', 'Creature — Dragon', 'player')">🐉 5/5 Dragon</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Spirit', 'Creature — Spirit', 'player')">👻 1/1 Spirit</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Knight', 'Creature — Knight', 'player')">🛡️ 2/2 Knight</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Insect', 'Creature — Insect', 'player')">🐛 1/1 Insect</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Soldier" data-token-type="Creature — Soldier" data-player="player" aria-label="Create 1/1 Soldier token">⚔️ 1/1 Soldier</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="2/2 Zombie" data-token-type="Creature — Zombie" data-player="player" aria-label="Create 2/2 Zombie token">🧟 2/2 Zombie</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Goblin" data-token-type="Creature — Goblin" data-player="player" aria-label="Create 1/1 Goblin token">👹 1/1 Goblin</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Elf" data-token-type="Creature — Elf" data-player="player" aria-label="Create 1/1 Elf token">🧝 1/1 Elf</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="3/3 Beast" data-token-type="Creature — Beast" data-player="player" aria-label="Create 3/3 Beast token">🐻 3/3 Beast</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="4/4 Angel" data-token-type="Creature — Angel" data-player="player" aria-label="Create 4/4 Angel token">👼 4/4 Angel</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="5/5 Dragon" data-token-type="Creature — Dragon" data-player="player" aria-label="Create 5/5 Dragon token">🐉 5/5 Dragon</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Spirit" data-token-type="Creature — Spirit" data-player="player" aria-label="Create 1/1 Spirit token">👻 1/1 Spirit</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="2/2 Knight" data-token-type="Creature — Knight" data-player="player" aria-label="Create 2/2 Knight token">🛡️ 2/2 Knight</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Insect" data-token-type="Creature — Insect" data-player="player" aria-label="Create 1/1 Insect token">🐛 1/1 Insect</button>
     </div>
   </section>
 </aside>
 <aside id="opponentTokenCreationPanel" class="action-panel">
   <header>
     <h3>🪙 Opponent's Tokens</h3>
-    <button class="close-panel" onclick="document.getElementById('opponentTokenCreationPanel').classList.remove('show')">×</button>
+    <button class="close-panel" data-action="close-panel" data-panel-id="opponentTokenCreationPanel" aria-label="Close opponent token creation panel">×</button>
   </header>
   <section>
     <h4>Artifact Tokens</h4>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Treasure', 'Artifact', 'opponent')">💎 Treasure</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Clue', 'Artifact', 'opponent')">🔍 Clue</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Blood', 'Artifact', 'opponent')">🩸 Blood</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Food', 'Artifact', 'opponent')">🍎 Food</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Map', 'Artifact', 'opponent')">🗺️ Map</button>
-        <button class="btn btn-sm btn-outline-primary" onclick="window.handSimulator.createToken('Powerstone', 'Artifact', 'opponent')">💠 Powerstone</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Treasure" data-token-type="Artifact" data-player="opponent" aria-label="Create Treasure token for Player 2">💎 Treasure</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Clue" data-token-type="Artifact" data-player="opponent" aria-label="Create Clue token for Player 2">🔍 Clue</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Blood" data-token-type="Artifact" data-player="opponent" aria-label="Create Blood token for opponent">🩸 Blood</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Food" data-token-type="Artifact" data-player="opponent" aria-label="Create Food token for opponent">🍎 Food</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Map" data-token-type="Artifact" data-player="opponent" aria-label="Create Map token for opponent">🗺️ Map</button>
+        <button class="btn btn-sm btn-outline-primary" data-action="create-token" data-token-name="Powerstone" data-token-type="Artifact" data-player="opponent" aria-label="Create Powerstone token for opponent">💠 Powerstone</button>
     </div>
   </section>
   <section>
     <h4>Creature Tokens</h4>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Soldier', 'Creature — Soldier', 'opponent')">⚔️ 1/1 Soldier</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Zombie', 'Creature — Zombie', 'opponent')">🧟 2/2 Zombie</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Goblin', 'Creature — Goblin', 'opponent')">👹 1/1 Goblin</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Elf', 'Creature — Elf', 'opponent')">🧝 1/1 Elf</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('3/3 Beast', 'Creature — Beast', 'opponent')">🐻 3/3 Beast</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('4/4 Angel', 'Creature — Angel', 'opponent')">👼 4/4 Angel</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('5/5 Dragon', 'Creature — Dragon', 'opponent')">🐉 5/5 Dragon</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Spirit', 'Creature — Spirit', 'opponent')">👻 1/1 Spirit</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('2/2 Knight', 'Creature — Knight', 'opponent')">🛡️ 2/2 Knight</button>
-        <button class="btn btn-sm btn-outline-secondary" onclick="window.handSimulator.createToken('1/1 Insect', 'Creature — Insect', 'opponent')">🐛 1/1 Insect</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Soldier" data-token-type="Creature — Soldier" data-player="opponent" aria-label="Create 1/1 Soldier token for Player 2">⚔️ 1/1 Soldier</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="2/2 Zombie" data-token-type="Creature — Zombie" data-player="opponent" aria-label="Create 2/2 Zombie token for Player 2">🧟 2/2 Zombie</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Goblin" data-token-type="Creature — Goblin" data-player="opponent" aria-label="Create 1/1 Goblin token for opponent">👹 1/1 Goblin</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Elf" data-token-type="Creature — Elf" data-player="opponent" aria-label="Create 1/1 Elf token for opponent">🧝 1/1 Elf</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="3/3 Beast" data-token-type="Creature — Beast" data-player="opponent" aria-label="Create 3/3 Beast token for opponent">🐻 3/3 Beast</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="4/4 Angel" data-token-type="Creature — Angel" data-player="opponent" aria-label="Create 4/4 Angel token for opponent">👼 4/4 Angel</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="5/5 Dragon" data-token-type="Creature — Dragon" data-player="opponent" aria-label="Create 5/5 Dragon token for opponent">🐉 5/5 Dragon</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Spirit" data-token-type="Creature — Spirit" data-player="opponent" aria-label="Create 1/1 Spirit token for opponent">👻 1/1 Spirit</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="2/2 Knight" data-token-type="Creature — Knight" data-player="opponent" aria-label="Create 2/2 Knight token for opponent">🛡️ 2/2 Knight</button>
+        <button class="btn btn-sm btn-outline-secondary" data-action="create-token" data-token-name="1/1 Insect" data-token-type="Creature — Insect" data-player="opponent" aria-label="Create 1/1 Insect token for opponent">🐛 1/1 Insect</button>
     </div>
   </section>
 </aside>
 <aside id="playerAdvancedActionsPanel" class="action-panel">
   <header>
     <h3>⚡ Advanced Actions</h3>
-    <button class="close-panel" onclick="document.getElementById('playerAdvancedActionsPanel').classList.remove('show')">×</button>
+    <button class="close-panel" data-action="close-panel" data-panel-id="playerAdvancedActionsPanel" aria-label="Close advanced actions panel">×</button>
   </header>
   <section>
-    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.evolvingWilds(); document.getElementById('playerAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">🌍 Fetch Land</button>
-    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.cultivate(); document.getElementById('playerAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">🌱 Ramp</button>
-    <button class="btn btn-sm btn-outline-success w-100 text-left" onclick="window.handSimulator.triggerManualCascade('player'); document.getElementById('playerAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">⚡ Cascade</button>
+    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" data-action="evolving-wilds" data-player="player" data-close-panel="playerAdvancedActionsPanel" style="padding: 8px; text-align: left;" aria-label="Fetch land and close panel">🌍 Fetch Land</button>
+    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" data-action="cultivate" data-player="player" data-close-panel="playerAdvancedActionsPanel" style="padding: 8px; text-align: left;" aria-label="Ramp and close panel">🌱 Ramp</button>
+    <button class="btn btn-sm btn-outline-success w-100 text-left" data-action="cascade" data-player="player" data-close-panel="playerAdvancedActionsPanel" style="padding: 8px; text-align: left;" aria-label="Trigger cascade and close panel">⚡ Cascade</button>
   </section>
 </aside>
 <aside id="opponentAdvancedActionsPanel" class="action-panel">
   <header>
     <h3>⚡ Opponent's Advanced</h3>
-    <button class="close-panel" onclick="document.getElementById('opponentAdvancedActionsPanel').classList.remove('show')">×</button>
+    <button class="close-panel" data-action="close-panel" data-panel-id="opponentAdvancedActionsPanel" aria-label="Close opponent advanced actions panel">×</button>
   </header>
   <section>
-    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.evolvingWilds('opponent'); document.getElementById('opponentAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">🌍 Fetch Land</button>
-    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" onclick="window.handSimulator.cultivate('opponent'); document.getElementById('opponentAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">🌱 Ramp</button>
-    <button class="btn btn-sm btn-outline-success w-100 text-left" onclick="window.handSimulator.triggerManualCascade('opponent'); document.getElementById('opponentAdvancedActionsPanel').classList.remove('show');" style="padding: 8px; text-align: left;">⚡ Cascade</button>
+    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" data-action="evolving-wilds" data-player="opponent" data-close-panel="opponentAdvancedActionsPanel" style="padding: 8px; text-align: left;" aria-label="Opponent fetch land and close panel">🌍 Fetch Land</button>
+    <button class="btn btn-sm btn-outline-success w-100 mb-2 text-left" data-action="cultivate" data-player="opponent" data-close-panel="opponentAdvancedActionsPanel" style="padding: 8px; text-align: left;" aria-label="Opponent ramp and close panel">🌱 Ramp</button>
+    <button class="btn btn-sm btn-outline-success w-100 text-left" data-action="cascade" data-player="opponent" data-close-panel="opponentAdvancedActionsPanel" style="padding: 8px; text-align: left;" aria-label="Opponent trigger cascade and close panel">⚡ Cascade</button>
   </section>
 </aside>
 </body>

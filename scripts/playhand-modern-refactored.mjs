@@ -24,6 +24,7 @@ import { CardActions } from './modules/card-actions.mjs?v=3';
 import { HandSorting } from './modules/hand-sorting.mjs?v=3';
 import { ModalManager } from './modules/modal-manager.mjs?v=3';
 import { DynamicStats } from './modules/dynamic-stats.mjs?v=2';
+import { EventListenerManager } from './modules/event-listeners.mjs';
 
 class ModernHandSimulator {
   constructor() {
@@ -37,7 +38,8 @@ class ModernHandSimulator {
     this.cardMechanics = new CardMechanics(this.gameState);
     this.delirium = new Delirium(this.gameState);
     this.uiManager = new UIManager(this.gameState, this.cardMechanics, this.delirium);
-    this.combatManager = new EnhancedCombatManager(this.gameState, this.cardMechanics, this.uiManager);
+    this.combatManager = new EnhancedCombatManager(this.gameState, this.cardMechanics, this.uiManager, CardImageService);
+    this.eventListenerManager = new EventListenerManager(this);
 
     // Connect uiManager back to gameState for game log updates
     this.gameState.uiManager = this.uiManager;
@@ -68,7 +70,9 @@ class ModernHandSimulator {
       }
     });
 
+    // Set initial layout mode after DOM is ready
     setTimeout(() => {
+      this.updateLayoutMode();
       this.initializeEnhancedUI();
     }, 100);
   }
@@ -100,6 +104,7 @@ class ModernHandSimulator {
     setTimeout(() => {
       this.setupEventListeners();
       this.setupKeyboardShortcuts();
+      this.eventListenerManager.init(); // Initialize new event listener system
       this.populatePredefinedDecks();
       this.setupZoneTabs();
       // Don't show empty state - default deck will load automatically
