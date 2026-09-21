@@ -3,6 +3,7 @@
 
 # Build artifacts and dependencies
 node_modules/
+coverage/
 package-lock.json
 
 # User data (should be ignored)
